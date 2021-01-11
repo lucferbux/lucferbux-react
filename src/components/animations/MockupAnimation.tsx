@@ -36,10 +36,7 @@ const Wrapper = styled.div`
 
   }
 
-  .profile-overflow {
-    
-  }
-
+ 
   .profile {
     position: absolute;
     width: 301px;
@@ -80,7 +77,6 @@ const Wrapper = styled.div`
     background: url("/images/animations/bulb.png");
     background-size: cover;
     animation: float-bulb 4s ease-out infinite;
-    filter: drop-shadow(0px 16px 32.78px rgba(31, 31, 71, 0.2));
   }
 
   @keyframes float-bulb {
@@ -105,7 +101,6 @@ const Wrapper = styled.div`
     background: url("/images/animations/headphones.png");
     background-size: cover;
     animation: float-headphones 4s ease-out infinite;
-    filter: drop-shadow(0px 16px 32.78px rgba(31, 31, 71, 0.2));
   }
 
   @keyframes float-headphones {
@@ -130,7 +125,6 @@ const Wrapper = styled.div`
     background: url("/images/animations/folder.png");
     background-size: cover;
     animation: float-folder 4s ease-out infinite;
-    filter: drop-shadow(0px 16px 32.78px rgba(31, 31, 71, 0.2));
   }
 
   @keyframes float-folder {
@@ -155,7 +149,6 @@ const Wrapper = styled.div`
     background: url("/images/animations/turntable.png") center no-repeat;
     background-size: cover;
     animation: float-turntable 4s ease-out infinite;
-    filter: drop-shadow(0px 16px 32.78px rgba(31, 31, 71, 0.2));
   }
 
   @keyframes float-turntable {
@@ -180,7 +173,6 @@ const Wrapper = styled.div`
     background: url("/images/animations/gamepad.png");
     background-size: cover;
     animation: float-gamepad 4s ease-out infinite;
-    filter: drop-shadow(0px 16px 32.78px rgba(31, 31, 71, 0.2));
   }
 
   @keyframes float-gamepad {
@@ -205,7 +197,6 @@ const Wrapper = styled.div`
     background: url("/images/animations/computer.png");
     background-size: cover;
     animation: float-computer 4s ease-out infinite;
-    filter: drop-shadow(0px 16px 32.78px rgba(31, 31, 71, 0.2));
   }
 
   @keyframes float-computer {

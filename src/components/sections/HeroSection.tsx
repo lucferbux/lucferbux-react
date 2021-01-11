@@ -5,7 +5,7 @@ import { themes } from "../styles/ColorStyles"
 import SocialButton from "../buttons/SocialButton"
 import Typewriter from "typewriter-effect"
 import MockupAnimation from "../animations/MockupAnimation"
-import WaveBackground from "../backgrounds/WaveBackground"
+import WaveHero from "../backgrounds/WaveHero"
 
 const socialLinks = [
   { name: "twitter", link: "https://twitter.com/lucferbux" },
@@ -18,7 +18,7 @@ const HeroSection = () => {
 
   return (
     <Wrapper>
-      <WaveBackground />
+      <WaveHero />
       <ContentWrapper>
         <TextWrapper>
           <Title>
