@@ -45,7 +45,7 @@ const Wrapper = styled.a`
   justify-content: center;
   align-items: center;
   *, & {
-    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 
   :hover {
@@ -94,14 +94,14 @@ const IconWrapper = styled.div`
 
 const Ring = styled.img`
     position: absolute;
-    top: -15px;
-    left: -17px;
+    top: -5px;
+    left: -5px;
 
     ${Wrapper}:hover & {
-      transform: rotate(30deg) scale(1.2) translate(1px, 1px);
+      transform: rotate(30deg) scale(1.2);
     }
 
     ${Wrapper}:active & {
-      transform: rotate(10deg) scale(1.1) translate(1px, 1px);
+      transform: rotate(10deg) scale(1.1);
     }
 `
