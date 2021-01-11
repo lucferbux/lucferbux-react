@@ -25,14 +25,19 @@ const SEO: React.FC<SEOProps> = ({
             title
             description
             author
+            url
+            image
+            twitterUsername
           }
         }
       }
     `
   )
 
-  const metaDescription = description || site.siteMetadata.description
-  const defaultTitle = site.siteMetadata?.title
+  const metaDescription = description || site.siteMetadata.description;
+  const defaultTitle = site.siteMetadata?.title;
+  const twitter = site.siteMetadata.twitterUsername;
+  const image = site.siteMetadata.image;
 
   return (
     <Helmet
@@ -59,12 +64,16 @@ const SEO: React.FC<SEOProps> = ({
           content: `website`,
         },
         {
+          name: `og:image`,
+          content: image,
+        },
+        {
           name: `twitter:card`,
           content: `summary`,
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata?.author || ``,
+          content: twitter || ``,
         },
         {
           name: `twitter:title`,
@@ -74,6 +83,7 @@ const SEO: React.FC<SEOProps> = ({
           name: `twitter:description`,
           content: metaDescription,
         },
+        
       ].concat(meta)}
     />
   )

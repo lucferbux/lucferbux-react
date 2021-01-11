@@ -7,10 +7,11 @@ const WaveBackground = () => {
       <Background />
       <Wave
         src="/images/waves/hero-wave1.svg"
+        alt="Background Image"
         style={{ top: "100px", filter: `blur(60px)` }}
       />
-      <Wave src="/images/waves/hero-wave2.svg" style={{ top: "350px" }} />
-      <BottomWave src="/images/waves/hero-wave3.svg" style={{ top: "550px" }} />
+      <Wave src="/images/waves/hero-wave2.svg" alt="Background Image" style={{ top: "350px" }} />
+      <BottomWave src="/images/waves/hero-wave3.svg" alt="Background Image" style={{ top: "550px" }} />
     </Wrapper>
   )
 }

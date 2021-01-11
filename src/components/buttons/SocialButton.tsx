@@ -13,10 +13,10 @@ const  SocialButton = (props: SocialButton) =>
   const { icon, link } = props
 
   return (
-      <Wrapper href={link} target="_blank">
+      <Wrapper href={link} target="_blank" rel="noopener">
         <IconWrapper>
-            <Icon src={`/images/icons/${icon}.svg`} className="icon"/>
-            <Ring src="/images/icons/icon-ring.svg"/>
+            <Icon src={`/images/icons/${icon}.svg`} className="icon" alt="Logo Social Button"/>
+            <Ring src="/images/icons/icon-ring.svg" alt="Decorative Ring"/>
         </IconWrapper>
       </Wrapper>
   )
