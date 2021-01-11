@@ -13,8 +13,8 @@
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
 </filter>
 <radialGradient id="paint0_angular" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(38.5 37.5) rotate(107.904) scale(34.1541)">
-<stop offset="0.0870822" stop-color="#844FFC"/>
-<stop offset="0.69191" stop-color="#E1467C"/>
+<stop offset="0.0870822" stop-color="#C98C31"/>
+<stop offset="0.69191" stop-color="#007789"/>
 </radialGradient>
 </defs>
 </svg>
