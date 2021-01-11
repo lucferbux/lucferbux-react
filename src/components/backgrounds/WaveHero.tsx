@@ -11,7 +11,7 @@ const WaveHero = () => {
         style={{ top: "100px" }}
       />
       <BackgroundBlur />
-      <Wave
+      <Wave2
         src="/images/waves/hero-wave2.svg"
         alt="Background Image"
         style={{ top: "350px" }}
@@ -64,9 +64,15 @@ const Background = styled.div`
   width: 100%;
   height: 800px;
   background: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
-  z-index: -1;
+  z-index: -10;
 `
+const Wave2 = styled(Wave)`
+  z-index: 0;
+
+`
+
 const BottomWave = styled(Wave)`
+  z-index: 0;
   @media (prefers-color-scheme: dark) {
     content: url("/images/waves/hero-wave3-dark.svg");
   }
