@@ -16,7 +16,7 @@ const WaveHero = () => {
         alt="Background Image"
         style={{ top: "350px" }}
       />
-      <BottomWave src="/images/waves/hero-wave3.svg" style={{ top: "550px" }} />
+      <BottomWave src="/images/waves/hero-wave3.svg" alt="Background Image" style={{ top: "550px" }} />
       <WaveStars/>
     </Wrapper>
   )
