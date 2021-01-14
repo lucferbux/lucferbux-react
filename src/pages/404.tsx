@@ -2,7 +2,7 @@ import React from "react"
 import Layout from "../components/layout/layout"
 import SEO from "../components/layout/seo"
 
-function NotFoundPage() {
+const NotFoundPage = () => {
   return (
     <Layout>
       <SEO title="404: Not found" />

@@ -27,7 +27,10 @@ module.exports = {
         theme_color: `#EABE7D`,
         display: `standalone`,
         description: `Personal PWA`,
-        icon: `static/images/logos/logo.svg`
+        icon: `static/images/logos/logo.svg`,
+        icon_options: {
+          purpose: `maskable`,
+        }
       }
     },
     'gatsby-plugin-offline',
