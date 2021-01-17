@@ -8,7 +8,7 @@ const Posts = () => {
   return (
     <Layout>
       <SEO title="Posts" meta={[]}/>
-      <InConstructionSection/>
+      <InConstructionSection icon="vector" text="Old Web" link="https://lucferbux.dev/posts"/>
     </Layout>
   )
 }

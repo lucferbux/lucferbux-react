@@ -3,9 +3,19 @@ import styled from "styled-components"
 import { H1 } from "../styles/TextStyles"
 import { themes } from "../styles/ColorStyles"
 import WaveInConstruction from "../backgrounds/WaveInConstruction"
+import FlatButton from "../buttons/FlatButton"
 
-const InConstructionSection = () => {
+interface InConstructionProps {
+  icon: string;
+  text: string; 
+  link: string;
+}
+
+
+const InConstructionSection = (props: InConstructionProps) => {
   useEffect(() => {})
+
+  const { icon, text, link } = props
 
   return (
     <Wrapper>
@@ -14,7 +24,10 @@ const InConstructionSection = () => {
       <WaveStars />
       <ContentWrapper>
         <TextWrapper>
-          <Title>In construction...</Title>
+          <Title>In construction</Title>
+          <ButtonWrapper>
+            <FlatButton icon={icon} text={text} link={link} />
+          </ButtonWrapper>
         </TextWrapper>
       </ContentWrapper>
     </Wrapper>
@@ -26,6 +39,13 @@ export default InConstructionSection
 const Wrapper = styled.div`
   overflow: hidden;
   height: 2000px;
+`
+
+const ButtonWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const WaveStars = styled.div`
@@ -71,6 +91,7 @@ const ContentWrapper = styled.div`
   grid-template-columns: auto;
   align-items: center;
   justify-content: center;
+  
 
   @media (max-width: 450px) {
     grid-template-columns: auto;
@@ -83,6 +104,8 @@ const TextWrapper = styled.div`
   max-width: 600px;
   display: grid;
   gap: 30px;
+  align-items: center;
+  z-index: 1;
 `
 
 const Title = styled(H1)`

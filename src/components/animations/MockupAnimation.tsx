@@ -21,21 +21,47 @@ const Wrapper = styled.div`
   position: relative;
 
   @media (max-width: 1160px) {
-    transform: scale(0.8);
+    transform: scale(0.8) translateY(30px);
     transform-origin: top right;
   }
 
-
-  @media (max-width: 948px) {
-    transform: scale(0.6);
+  @media (max-width: 970px) {
+    transform: scale(0.7) translateY(50px);
     transform-origin: top right;
     
   }
-  @media (max-width: 450px) {
-    transform: scale(0.4) translateX(-40px);
+
+  @media (max-width: 948px) {
+    transform: scale(0.6) translateY(90px);
+    transform-origin: top right;
+    
+  }
+
+  @media (max-width: 870px) {
+    transform: scale(0.5)  translateX(-50px) translateY(190px);
+    
 
   }
 
+  @media (max-width: 800px) {
+    transform: scale(0.45)  translateX(-50px)  translateY(220px);
+
+  }
+
+  @media (max-width: 750px) {
+    transform: scale(0.45)  translateX(-50px);
+
+  }
+
+  @media (max-width: 450px) {
+    transform: scale(0.4) translateX(-60px);
+
+  }
+
+  @media (max-width: 370px) {
+    transform: scale(0.35) translateX(-50px);
+
+  }
  
   .profile {
     position: absolute;

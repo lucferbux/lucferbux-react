@@ -67,6 +67,10 @@ const MenuItem = styled.div`
   border-radius: 10px;
   transition: 0.5s ease-out;
 
+  @media (max-width: 450px) {
+    display: block;
+  }
+
   :hover {
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1),
