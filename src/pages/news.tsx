@@ -2,13 +2,21 @@ import React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout/layout"
 import SEO from "../components/layout/seo"
-import InConstructionSection from "../components/sections/InConstructionSection"
+import InConstructionSection from "../components/home/InConstruction"
+import NewsSection from "../components/news/NewsSection"
+
+
 
 const News = () => {
+
+  
+
+
+
   return (
     <Layout>
       <SEO title="News" meta={[]}/>
-      <InConstructionSection icon="courses" text="Old Web" link="https://lucferbux.dev/news"/>
+      <NewsSection />
     </Layout>
   )
 }

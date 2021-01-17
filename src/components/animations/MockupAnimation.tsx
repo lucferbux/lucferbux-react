@@ -49,17 +49,17 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 750px) {
-    transform: scale(0.45)  translateX(-50px);
+    transform: scale(0.45)  translateX(-50px) translateY(90px);
 
   }
 
   @media (max-width: 450px) {
-    transform: scale(0.4) translateX(-60px);
+    transform: scale(0.4) translateX(-60px) translateY(90px);
 
   }
 
   @media (max-width: 370px) {
-    transform: scale(0.35) translateX(-50px);
+    transform: scale(0.35) translateX(-20px) translateY(100px);
 
   }
  

@@ -30,10 +30,10 @@ module.exports = {
         icon: `static/images/logos/logo.svg`,
         icon_options: {
           purpose: `maskable`,
-        }
-      }
+        },
+      },
     },
-    'gatsby-plugin-offline',
+    "gatsby-plugin-offline",
     {
       resolve: `gatsby-plugin-typescript`,
       options: {

@@ -64,11 +64,14 @@ const Background = styled.div`
   width: 100%;
   height: 800px;
   background: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(200.44deg, #A08153 13.57%, #674716 98.38%);
+  }
   z-index: -10;
 `
 const Wave2 = styled(Wave)`
   z-index: 0;
-
+  opacity: 0.2;
 `
 
 const BottomWave = styled(Wave)`

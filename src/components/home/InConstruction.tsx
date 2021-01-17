@@ -18,8 +18,7 @@ const InConstructionSection = (props: InConstructionProps) => {
   const { icon, text, link } = props
 
   return (
-    <Wrapper>
-      <Background />
+    <Wrapper>  
       <WaveInConstruction />
       <WaveStars />
       <ContentWrapper>
@@ -54,7 +53,7 @@ const WaveStars = styled.div`
   background-position: center top;
   background-repeat: repeat;
   background-image: url("/images/backgrounds/stars.svg");
-  height: 500px;
+  height: 420px;
   top: 0px;
   display: none;
 
@@ -63,25 +62,7 @@ const WaveStars = styled.div`
   }
 `
 
-const Background = styled.div`
-  z-index: -1;
-  position: absolute;
-  width: 100%;
-  height: 1200px;
-  background: linear-gradient(
-    189.16deg,
-    rgb(0, 119, 137) 13.57%,
-    rgb(176, 196, 199) 98.38%
-  );
 
-  @media (prefers-color-scheme: dark) {
-    background: linear-gradient(
-    189.16deg,
-    rgb(43, 40, 48) 13.57%,
-    rgb(40, 119, 137) 98.38%
-  );
-  }
-`
 
 const ContentWrapper = styled.div`
   max-width: 1234px;

@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import styled from "styled-components"
 import { menuData } from "../../data/menuData"
 import { number } from "prop-types"
+import NavButton from "../buttons/NavButton"
 
 const Header = () => {
   return (
@@ -13,12 +14,7 @@ const Header = () => {
 
       <MenuWrapper count={menuData.length}>
         {menuData.map((item, index) => (
-          <Link to={item.link} key={index}>
-            <MenuItem>
-              <img className="icon-item" src={item.icon} alt={item.title} />
-              <TitleItem>{item.title}</TitleItem>
-            </MenuItem>
-          </Link>
+          <NavButton icon={item.icon} text={item.title} link={item.link} key={index} collapse={true}/>
         ))}
       </MenuWrapper>
     </Wrapper>
@@ -56,37 +52,4 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   gap: 30px;
 `
 
-const MenuItem = styled.div`
-  color: rgba(255, 255, 255, 0.7);
-  display: grid;
-  grid-template-columns: 24px auto;
-  gap: 10px;
-  align-items: center;
-  padding: 10px;
 
-  border-radius: 10px;
-  transition: 0.5s ease-out;
-
-  @media (max-width: 450px) {
-    display: block;
-  }
-
-  :hover {
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1),
-      inset 0px 0px 0px 0.5px rgba(255, 255, 255, 0.2);
-  }
-
-  .icon-item {
-    @media (max-width: 450px) {
-      width: 30px;
-      height: 30px;
-    }
-  }
-`
-
-const TitleItem = styled.div`
-  @media (max-width: 450px) {
-    display: none;
-  }
-`

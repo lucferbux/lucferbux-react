@@ -1,64 +1,71 @@
+import { Link } from "gatsby"
 import React from "react"
 import styled from "styled-components"
 import { Caption } from "../styles/TextStyles"
 
-
 interface NavButtonProps {
-  icon: string;
-  text: string; 
-  link: string;
+  icon: string
+  text: string
+  link: string
+  collapse?: boolean
 }
 
-
-const  NavButton = (props: NavButtonProps) => 
-{
-  const { icon, text, link } = props
+const NavButton = (props: NavButtonProps) => {
+  const { icon, text, link, collapse } = props
 
   return (
-    <a href={link} target="_blank" rel="noopener">
-      <Wrapper >
-        <Icon src={`/images/icons/${icon}.svg`} className="icon" alt="Logo Social Button"/>
-        <Title>{text}</Title>
-      </Wrapper>
-    </a>
-      
+    <Link to={link}>
+      <MenuItem displayText={collapse ? collapse : false}>
+        <img className="icon-item" src={icon} alt={text} />
+        <TitleItem displayText={collapse ? collapse : false}>{text}</TitleItem>
+      </MenuItem>
+    </Link>
   )
 }
 
-export default NavButton;
+export default NavButton
 
-const Icon = styled.img`
-    :hover {
-      transform: scale(1.1);
-    }
-`
-
-const Title = styled(Caption)`
-  margin: auto auto auto 8px;
-`
+interface MenuItemProps {
+  displayText: Boolean;
+}
 
 
+const MenuItem = styled.div<MenuItemProps>`
+  color: rgba(255, 255, 255, 0.7);
+  display: grid;
+  grid-template-columns: 24px auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
 
-const Wrapper = styled.button`
-  display: flex;
-  background: linear-gradient(rgba(24, 32, 79, 0.4) 0%, rgba(24, 32, 79, 0.25) 100%);
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 20px 40px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0.5px inset;
-  border-radius: 30px;
-  border: none;
-  padding: 10px 30px 10px 12px;
-  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.5s ease-out;
 
-
-  *, & {
-    transition: 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+  @media (max-width: 450px) {
+    display: ${props => props.displayText ? "block" : "grid"};
   }
 
   :hover {
-    transform: translateY(-2px);
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 20px 40px, rgba(0, 0, 0, 0.3) 0px 0px 0px 0.5px inset, rgba(0, 0, 0, 0.3) 0px 10px 40px inset;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1),
+      inset 0px 0px 0px 0.5px rgba(255, 255, 255, 0.2);
   }
 
-
+  .icon-item {
+    @media (max-width: 450px) {
+      width: ${props => props.displayText ? "30px" : "auto"};
+      height: ${props => props.displayText ? "30px" : "auto"};
+    }
   }
 `
 
+interface TitleItemProps {
+  displayText: Boolean;
+}
+
+
+const TitleItem = styled.div<TitleItemProps>`
+  @media (max-width: 450px) {
+    display: ${props => props.displayText ? "none" : "block"};
+  }
+`

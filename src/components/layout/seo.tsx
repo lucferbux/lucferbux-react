@@ -83,6 +83,10 @@ const SEO: React.FC<SEOProps> = ({
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'default'
+        },
         
       ].concat(meta)}
     />

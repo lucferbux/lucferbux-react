@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.12.0",
+    "firebase": "^8.2.4",
     "gatsby": "^2.30.1",
     "gatsby-image": "^2.9.0",
     "gatsby-plugin-manifest": "^2.10.0",
@@ -18,6 +19,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
+    "reactfire": "^3.0.0-rc.0",
     "styled-components": "^5.2.1",
     "typewriter-effect": "^2.17.0"
   },
