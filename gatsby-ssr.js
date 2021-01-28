@@ -9,7 +9,6 @@
 import React from "react"
 import { FirebaseAppProvider } from "reactfire"
 import "firebase/firestore"
-import styled from "styled-components"
 
 const firebaseConfig = {
   apiKey: process.env.GATSBY_FIREBASE_API,
@@ -23,30 +22,10 @@ const firebaseConfig = {
 }
 
 export const wrapRootElement = ({ element }) => {
-  if (typeof window === "undefined")return (<p>Loading...</p>)
+  if (typeof window === "undefined") return (<p></p>)
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       {element}
     </FirebaseAppProvider>
   )
 }
-
-const Padding = styled.div`
-  height: 1200px;
-`
-
-
-const ContentWrapper = styled.div`
-  max-width: 1234px;
-  margin: 0 auto;
-  padding: 200px 30px;
-  display: grid;
-  grid-template-columns: 360px auto;
-
-  @media (max-width: 750px) {
-    grid-template-columns: auto;
-    justify-content: center;
-    padding: 150px 20px 290px;
-    gap: 60px;
-  }
-`
