@@ -9,10 +9,7 @@
 import React from "react"
 import { FirebaseAppProvider } from "reactfire"
 import "firebase/firestore"
-import Layout from "./src/components/layout/layout"
-import HeroSection from "./src/components/home/HeroSection"
 import styled from "styled-components"
-import SEO from "./src/components/layout/seo"
 
 const firebaseConfig = {
   apiKey: process.env.GATSBY_FIREBASE_API,
@@ -26,14 +23,7 @@ const firebaseConfig = {
 }
 
 export const wrapRootElement = ({ element }) => {
-  if (typeof window === "undefined")
-    return (
-      <Layout>
-        <SEO title="Home" />
-        <HeroSection />
-        <Padding />
-      </Layout>
-    )
+  if (typeof window === "undefined")return (<p>Loading...</p>)
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       {element}
@@ -43,4 +33,20 @@ export const wrapRootElement = ({ element }) => {
 
 const Padding = styled.div`
   height: 1200px;
+`
+
+
+const ContentWrapper = styled.div`
+  max-width: 1234px;
+  margin: 0 auto;
+  padding: 200px 30px;
+  display: grid;
+  grid-template-columns: 360px auto;
+
+  @media (max-width: 750px) {
+    grid-template-columns: auto;
+    justify-content: center;
+    padding: 150px 20px 290px;
+    gap: 60px;
+  }
 `

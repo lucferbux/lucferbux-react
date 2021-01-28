@@ -22,14 +22,7 @@ const firebaseConfig = {
 }
 
 export const wrapRootElement = ({ element }) => {
-  if (typeof window === "undefined")
-    return (
-      <Layout>
-        <SEO title="Home" />
-        <HeroSection />
-        <Padding />
-      </Layout>
-    )
+  if (typeof window === "undefined")return (<p>Loading...</p>)
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       {element}
