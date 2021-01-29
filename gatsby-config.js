@@ -42,6 +42,14 @@ module.exports = {
         allExtensions: true, // defaults to false
       },
     },
-    `gatsby-plugin-typescript`
+    `gatsby-plugin-typescript`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/assets/`,
+      },
+    },
   ],
 }
