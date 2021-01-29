@@ -3,6 +3,7 @@ import styled from "styled-components"
 import WaveFooter from "../backgrounds/WaveFooter"
 import { footerData } from "../../data/footerData"
 import NavButton from "../buttons/NavButton"
+import NavButtonExternal from "../buttons/NavButtonExternal"
 
 const Footer = () => {
   return (
@@ -10,17 +11,26 @@ const Footer = () => {
       <WaveFooter />
       <ContentWrapper>
         <LinkWrapper>
-          {footerData.map((item, index) => (
-            <NavButton
-              icon={item.icon}
-              text={item.title}
-              link={item.link}
-              key={index}
-            />
-          ))}
+          {footerData.map((item, index) => {
+            return item.external ? (
+              <NavButtonExternal
+                icon={item.icon}
+                text={item.title}
+                link={item.link}
+                key={index}
+              />
+            ) : (
+              <NavButton
+                icon={item.icon}
+                text={item.title}
+                link={item.link}
+                key={index}
+              />
+            )
+          })}
         </LinkWrapper>
         <FooterText>
-            <p>This site does not track any information about  usage</p>
+          <p>This site does not track any information about usage</p>
         </FooterText>
       </ContentWrapper>
     </Wrapper>
