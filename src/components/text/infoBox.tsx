@@ -2,7 +2,7 @@ import React from "react"
 import { string } from "prop-types"
 import styled from "styled-components"
 import FlatButtonLink from "../buttons/FlatButtonLink"
-import { H3, MediumText } from "../styles/TextStyles"
+import { H1, MediumText } from "../styles/TextStyles"
 import { themes } from "../styles/ColorStyles"
 
 interface InfoBoxProps {
@@ -42,8 +42,10 @@ const InfoWrapper = styled.div`
   }
 `
 
-const Title = styled(H3)`
+const Title = styled(H1)`
   color: ${themes.dark.text1};
+  font-weight: bold;
+  font-size: 30px;
 `
 
 const Description = styled(MediumText)`

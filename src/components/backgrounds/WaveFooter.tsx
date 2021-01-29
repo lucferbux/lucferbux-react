@@ -5,8 +5,8 @@ const WaveFooter = () => {
   return (
     <Wrapper>
       <Background />
-      <Wave />
-      <Wave2 />
+      <Wave alt="Background wave 1"/>
+      <Wave2 alt="Background wave 2"/>
 
     </Wrapper>
   )
