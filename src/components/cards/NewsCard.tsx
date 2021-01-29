@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { News } from "../../data/model/news"
 import { Caption, H2, H3, MediumText } from "../styles/TextStyles"
@@ -10,16 +10,37 @@ interface NewsCardProps {
 const NewsCard = (props: NewsCardProps) => {
   const { news } = props
 
-  const handleClick = () => {
-    window.location.href = news.url;
+  const [load, setLoaded] = useState(false);
+
+  const loadImage = () => {
+    setLoaded(true);
   }
 
   return (
     <Wrapper href={news.url} target="_blank" rel="noopener">
-      <CardWrapper>
-        <HeaderImage src={news.image} />
+      <CardWrapper isRow={false}>
+        <HeaderImageWrapper>
+          <HeaderImage
+            src={news.image}
+            alt={"News Header Image"}
+            onLoad={loadImage}
+            visible={load}
+          />
+
+          <HeaderImage
+            src={"/images/animations/loading.gif"}
+            alt={"News Header Image"}
+            visible={!load}
+          />
+        </HeaderImageWrapper>
         <CardTitle>{news.title_en}</CardTitle>
-        <CardDate>{new Date(news.timestamp.seconds * 1000).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</CardDate>
+        <CardDate>
+          {new Date(news.timestamp.seconds * 1000).toLocaleDateString([], {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </CardDate>
       </CardWrapper>
     </Wrapper>
   )
@@ -49,12 +70,21 @@ const CardTitle = styled(MediumText)`
   }
 `
 
-const HeaderImage = styled.img`
+const HeaderImageWrapper = styled.div`
   width: 100%;
   margin: 0px;
-  -webkit-animation: 1s ease 0s 1 normal forwards running jBcSpD;
-  animation: 1s ease 0s 1 normal forwards running jBcSpD;
+  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
+`
+
+interface HeaderImageProps {
+  visible: Boolean
+}
+
+const HeaderImage = styled.img<HeaderImageProps>`
+  width: 100%;
+  margin: 0px;
   border-radius: 12px;
+  display: ${props => (props.visible ? "block" : "none")};
 `
 
 const Wrapper = styled.a`
@@ -62,6 +92,9 @@ const Wrapper = styled.a`
   cursor: pointer;
   :hover {
     transform: scale(1.1);
+    ${HeaderImageWrapper} {
+      transform: scale(0.95);
+    }
   }
 
   :active {
@@ -86,7 +119,7 @@ const CardWrapper = styled.div<CardWrapperProps>`
   height: 360px;
   border-radius: 20px;
   text-align: center;
-  background: linear-gradient(200.44deg, #EABE7D 13.57%, #C98C31 98.38%);
+  background: linear-gradient(200.44deg, #eabe7d 13.57%, #c98c31 98.38%);
   box-shadow: rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px;
   padding: 8px;
 
