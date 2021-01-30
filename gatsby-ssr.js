@@ -22,7 +22,7 @@ const firebaseConfig = {
 }
 
 export const wrapRootElement = ({ element }) => {
-  if (typeof window === "undefined") return (<p></p>)
+  if (typeof window === "undefined") return <p></p>
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       {element}
@@ -30,8 +30,58 @@ export const wrapRootElement = ({ element }) => {
   )
 }
 
-export const onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  setHeadComponents([
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>,
+export const onRenderBody = ({ setPreBodyComponents }) => {
+  setPreBodyComponents([
+    <noscript key="noscript">
+      <style>
+        {`
+
+        html {
+          height: 100%;
+        }
+
+        body {
+            background: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%) !important;
+            height: 100%;
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .no-script {
+          max-width: 1234px;
+          margin: 0 auto;
+          padding: 200px 30px;
+          display: grid;
+          text-align: center;
+          justify-item: center;
+        }
+
+        .title-fallback{
+          color: #fff;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          background-clip: text;
+          -webkit-background-clip: text;
+          font-weight: bold;
+          font-size: 50px;
+          @media (max-width: 450px) {
+            font-size: 48px;
+          }
+        }
+
+        .description-fallback {
+          font-size: 22px;
+          line-height: 130%;
+          color: #fff;
+        }
+
+        `}
+      </style>
+
+      <div class="no-script">
+          <h1 class="title-fallback">Please, enable javascript</h1>
+          <p class="description-fallback">This page need javascript to run, it doesn't collect any usage nor navigation, please, enable javascript</p>
+      </div>
+    </noscript>,
   ])
 }

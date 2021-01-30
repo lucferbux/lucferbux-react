@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 const MockupAnimation = () => {
-  const data = useStaticQuery(queryProfile)
+  const data = useStaticQuery(queryProfile);
 
   return (
     <Wrapper>
@@ -51,7 +51,7 @@ export default MockupAnimation
 
 const queryProfile = graphql`
   query MyQuery {
-    profile: file(relativePath: { eq: "profile.png" }) {
+    profile: file(relativePath: { eq: "animation/profile.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
@@ -59,7 +59,7 @@ const queryProfile = graphql`
       }
     }
 
-    turntable: file(relativePath: { eq: "turntable.png" }) {
+    turntable: file(relativePath: { eq: "animation/turntable.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
@@ -67,7 +67,7 @@ const queryProfile = graphql`
       }
     }
 
-    bulb: file(relativePath: { eq: "bulb.png" }) {
+    bulb: file(relativePath: { eq: "animation/bulb.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
@@ -75,7 +75,7 @@ const queryProfile = graphql`
       }
     }
 
-    headphones: file(relativePath: { eq: "headphones.png" }) {
+    headphones: file(relativePath: { eq: "animation/headphones.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
@@ -83,7 +83,7 @@ const queryProfile = graphql`
       }
     }
 
-    folder: file(relativePath: { eq: "folder.png" }) {
+    folder: file(relativePath: { eq: "animation/folder.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
@@ -91,7 +91,7 @@ const queryProfile = graphql`
       }
     }
 
-    gamepad: file(relativePath: { eq: "gamepad.png" }) {
+    gamepad: file(relativePath: { eq: "animation/gamepad.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
@@ -99,7 +99,7 @@ const queryProfile = graphql`
       }
     }
 
-    computer: file(relativePath: { eq: "computer.png" }) {
+    computer: file(relativePath: { eq: "animation/computer.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid_withWebp_noBase64
