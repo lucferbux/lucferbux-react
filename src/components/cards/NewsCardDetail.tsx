@@ -46,7 +46,8 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  width: 586px;
+  max-width: 586px;
+  min-width: 426px;
   height: 400px;
   display: grid;
   grid-template-columns: auto auto;
@@ -59,15 +60,13 @@ const Wrapper = styled.div<WrapperProps>`
   border-radius: 20px;
   direction: ${props => (props.inverted ? "rtl" : "ltr")};
 
-  ${Text} {
-  }
-
   @media (max-width: 650px) {
     grid-template-columns: auto;
     grid-template-rows: auto auto;
     justify-items: center;
     gap: 20px;
-    width: auto;
+    max-width: 1000px;
+    min-width: 100px;
     height: 520px;
   }
 `
@@ -91,7 +90,8 @@ const NewsCardCollapsedWrapper = styled.div`
 
 const TextWrapper = styled.div`
   overflow-y: scroll;
-  width: 287px;
+  max-width: 287px;
+  min-width: 180px;
   height: 360px;
   white-space: pre-line;
   ::-webkit-scrollbar {
@@ -101,6 +101,8 @@ const TextWrapper = styled.div`
   @media (max-width: 650px) {
     width: auto;
     height: auto;
+    max-width: 3000px;
+    min-width: 40px;
   }
 `
 

@@ -37,7 +37,7 @@ const InfoWrapper = styled.div`
   max-width: 360px;
   display: grid;
   gap: 30px;
-  @media (max-width: 1000px) {
+  @media (max-width: 650px) {
     text-align: center;
   }
 `

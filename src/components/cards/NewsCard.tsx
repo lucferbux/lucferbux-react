@@ -56,6 +56,7 @@ const CardDate = styled(Caption)`
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
   margin: 10px 0px 0px;
+  direction: ltr;
 `
 
 const CardTitle = styled(MediumText)`

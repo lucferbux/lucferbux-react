@@ -93,35 +93,12 @@ const NewsWrapper = styled.div`
   grid-template-columns: auto auto;
   gap: 40px;
 
-  @media(max-width: 1200px) {
+  @media(max-width: 1020px) {
     grid-template-columns: auto;
     justify-items: center;
   }
 
   @media(max-width: 650px) {
     gap: 26px;
-  }
-`
-
-const TextWrapper = styled.div`
-  max-width: 600px;
-  display: grid;
-  gap: 30px;
-  align-items: center;
-  z-index: 1;
-`
-
-const Title = styled(H1)`
-  color: ${themes.dark.text1};
-
-  @media (max-width: 450px) {
-    font-size: 48px;
-  }
-
-  span {
-    background: linear-gradient(180deg, #d7fff8 0%, #ffd9b6 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
   }
 `
