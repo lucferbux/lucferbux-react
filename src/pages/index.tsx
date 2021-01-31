@@ -3,7 +3,6 @@ import Layout from "../components/layout/layout"
 import SEO from "../components/layout/seo"
 import HeroSection from "../components/home/HeroSection"
 import styled from "styled-components"
-import { FirebaseAppProvider, SuspenseWithPerf } from "reactfire"
 import NewsSection from "../components/home/NewsSectionHome"
 
 
