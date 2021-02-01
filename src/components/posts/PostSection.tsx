@@ -9,24 +9,24 @@ import {
   useFirestore,
   useFirestoreCollectionData,
 } from "reactfire"
-import { News } from "../../data/model/news"
 import InfoBox from "../text/infoBox"
-import NewsCardDetail from "../cards/NewsCardDetail"
+import { Post } from "../../data/model/post"
+import PostCard from "../cards/PostCard"
 
 const info = {
-  title: "Latest News",
-  description: "Here are the latest news related to my professional work",
+  title: "Tech Posts",
+  description: "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
 }
 
-const NewsSection = () => {
+const PostSection = () => {
   useEffect(() => {})
 
-  const newsCollection = useFirestore()
-    .collection("intro")
-    .orderBy("timestamp", "desc")
+  const postCollection = useFirestore()
+    .collection("patent")
+    .orderBy("date", "desc")
 
-  const news: ObservableStatus<Array<News>> = useFirestoreCollectionData(
-    newsCollection
+  const posts: ObservableStatus<Array<Post>> = useFirestoreCollectionData(
+    postCollection
   )
 
   return (
@@ -40,16 +40,16 @@ const NewsSection = () => {
           displayButton={false}
         />
       </ContentWrapper>
-      <NewsWrapper>
-        {news?.data?.map((newsEntry, index) => (
-          <NewsCardDetail news={newsEntry} inverted={index % 2 == 0} key={index}/>
+      <PostWrapper>
+        {posts?.data?.map((postEntry, index) => (
+          <PostCard post={postEntry} key={index}/>
         ))}
-      </NewsWrapper>
+      </PostWrapper>
     </Wrapper>
   )
 }
 
-export default NewsSection
+export default PostSection
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -85,7 +85,7 @@ const ContentWrapper = styled.div`
   }
 `
 
-const NewsWrapper = styled.div`
+const PostWrapper = styled.div`
   max-width: 1234px;
   min-height: 1000px;
   margin: 0 auto;
@@ -102,6 +102,4 @@ const NewsWrapper = styled.div`
   @media(max-width: 650px) {
     gap: 26px;
   }
-
-  
 `

@@ -3,12 +3,13 @@ import { Link } from "gatsby"
 import Layout from "../components/layout/layout"
 import SEO from "../components/layout/seo"
 import InConstructionSection from "../components/home/InConstruction"
+import ProjectSection from "../components/projects/ProjectSection"
 
 const Projects = () => {
   return (
     <Layout>
       <SEO title="Projects" meta={[]}/>
-      <InConstructionSection icon="code" text="Old Web" link="https://lucferbux-web-page.web.app/projects"/>
+      <ProjectSection />
     </Layout>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import { News } from "../../data/model/news"
-import { Caption, H2, H3, MediumText } from "../styles/TextStyles"
+import { Caption, H2, H3, DescriptionCard } from "../styles/TextStyles"
 import NewsCard from "./NewsCard"
 import NewsCardCollapsed from "./NewsCardCollapsed"
 
@@ -31,15 +31,13 @@ const NewsCardDetail = (props: NewsCardDetailProps) => {
 
 export default NewsCardDetail
 
-const Text = styled(Caption)`
-  font-size: 18px;
+const Text = styled(DescriptionCard)`
   line-height: 130%;
   color: #ffffff;
   mix-blend-mode: normal;
   opacity: 0.8;
   text-align: left;
   direction: ltr;
-
 `
 interface WrapperProps {
   inverted: Boolean
@@ -59,6 +57,7 @@ const Wrapper = styled.div<WrapperProps>`
   backdrop-filter: blur(44.8399px);
   border-radius: 20px;
   direction: ${props => (props.inverted ? "rtl" : "ltr")};
+  animation: fadein 0.4s;
 
   @media (max-width: 650px) {
     grid-template-columns: auto;
@@ -68,6 +67,11 @@ const Wrapper = styled.div<WrapperProps>`
     max-width: 1000px;
     min-width: 100px;
     height: 520px;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 `
 

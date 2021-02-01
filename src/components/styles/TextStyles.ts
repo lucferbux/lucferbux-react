@@ -10,9 +10,9 @@ export const H1 = styled.h1`
 
 export const H2 = styled.h2`
   font-weight: bold;
-  font-size: 40px;
+  font-size: 32px;
   @media (max-width: 450px) {
-    font-size: 28px;
+    font-size: 24px;
   }
 `
 
@@ -40,6 +40,21 @@ export const MediumText = styled.p`
   font-weight: normal;
   font-size: 17px;
   line-height: 130%;
+  @media (max-width: 450px) {
+    font-size: 15px;
+    line-height: 100%;
+  }
+`
+
+
+export const DescriptionCard = styled.p`
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 130%;
+  @media (max-width: 450px) {
+    font-size: 14px;
+    line-height: 100%;
+  }
 `
 
 export const Caption = styled.p`

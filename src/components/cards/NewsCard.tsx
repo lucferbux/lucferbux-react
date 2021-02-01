@@ -66,7 +66,7 @@ const CardTitle = styled(MediumText)`
   color: #ffffff;
   word-break: break-word;
 
-  @media (max-width: 414px) {
+  @media (max-width: 470px) {
     font-size: 18px;
   }
 `

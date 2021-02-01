@@ -2,7 +2,7 @@ import React from "react"
 import { string } from "prop-types"
 import styled from "styled-components"
 import FlatButtonLink from "../buttons/FlatButtonLink"
-import { H1, MediumText } from "../styles/TextStyles"
+import { H1, H2, H3, MediumText } from "../styles/TextStyles"
 import { themes } from "../styles/ColorStyles"
 
 interface InfoBoxProps {
@@ -18,13 +18,16 @@ interface InfoBoxProps {
 const InfoBox = (props: InfoBoxProps) => {
   return (
     <InfoWrapper>
-      <Title>Latest News</Title>
+      <Title>{props.title}</Title>
       <Description>
-        Here are the latest news related to my professional work
+        {props.description}
       </Description>
       {props.displayButton && (
         <ButtonWrapper>
-          <FlatButtonLink icon="courses" text="Browse news" link="news" />
+          <FlatButtonLink 
+            icon={props.iconButton ? props.iconButton : "news"} 
+            text={props.textButton ? props.textButton : "News"} 
+            link={props.linkButton ? props.linkButton : "news"}  />
         </ButtonWrapper>
       )}
     </InfoWrapper>
@@ -36,16 +39,16 @@ export default InfoBox
 const InfoWrapper = styled.div`
   max-width: 360px;
   display: grid;
-  gap: 30px;
+  gap: 20px;
+  color: ${themes.dark.text1};
   @media (max-width: 650px) {
     text-align: center;
+    gap: 10px;
   }
 `
 
-const Title = styled(H1)`
+const Title = styled(H2)`
   color: ${themes.dark.text1};
-  font-weight: bold;
-  font-size: 30px;
 `
 
 const Description = styled(MediumText)`

@@ -8,11 +8,6 @@ import NewsSection from "../components/news/NewsSection"
 
 
 const News = () => {
-
-  
-
-
-
   return (
     <Layout>
       <SEO title="News" meta={[]}/>

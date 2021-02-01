@@ -9,24 +9,24 @@ import {
   useFirestore,
   useFirestoreCollectionData,
 } from "reactfire"
-import { News } from "../../data/model/news"
 import InfoBox from "../text/infoBox"
-import NewsCardDetail from "../cards/NewsCardDetail"
+import { Project } from "../../data/model/project"
+import ProjectCard from "../cards/ProjectCard"
 
 const info = {
-  title: "Latest News",
-  description: "Here are the latest news related to my professional work",
+  title: "Explore Projects",
+  description: "These are a few of my latests projects I've been working on. Some of them are propieatry, so there's no source code",
 }
 
-const NewsSection = () => {
+const ProjectSection = () => {
   useEffect(() => {})
 
-  const newsCollection = useFirestore()
-    .collection("intro")
-    .orderBy("timestamp", "desc")
+  const projectCollection = useFirestore()
+    .collection("project")
+    .orderBy("date", "desc")
 
-  const news: ObservableStatus<Array<News>> = useFirestoreCollectionData(
-    newsCollection
+  const projects: ObservableStatus<Array<Project>> = useFirestoreCollectionData(
+    projectCollection
   )
 
   return (
@@ -40,16 +40,16 @@ const NewsSection = () => {
           displayButton={false}
         />
       </ContentWrapper>
-      <NewsWrapper>
-        {news?.data?.map((newsEntry, index) => (
-          <NewsCardDetail news={newsEntry} inverted={index % 2 == 0} key={index}/>
+      <ProjectWrapper>
+        {projects?.data?.map((projectEntry, index) => (
+          <ProjectCard project={projectEntry}  key={index}/> 
         ))}
-      </NewsWrapper>
+      </ProjectWrapper>
     </Wrapper>
   )
 }
 
-export default NewsSection
+export default ProjectSection
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -81,27 +81,30 @@ const ContentWrapper = styled.div`
   @media(max-width: 650px) {
       grid-template-columns: auto;
       justify-items: center;
-      padding: 120px 30px 10px 30px;
+      padding: 150px 30px 0px 30px;
   }
 `
 
-const NewsWrapper = styled.div`
+const ProjectWrapper = styled.div`
   max-width: 1234px;
   min-height: 1000px;
   margin: 0 auto;
-  padding: 20px 30px 80px 30px;
+  padding: 20px 30px 120px 30px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto auto;  
   gap: 40px;
 
-  @media(max-width: 1020px) {
-    grid-template-columns: auto;
-    justify-items: center;
+  @media(max-width: 1440px) {
+    grid-template-columns: auto auto auto;
   }
 
-  @media(max-width: 650px) {
+  @media(max-width: 990px) {
+    justify-items: center;
+    grid-template-columns: auto auto;
     gap: 26px;
   }
 
-  
+  @media(max-width: 650px) {
+    grid-template-columns: auto;
+  }
 `
