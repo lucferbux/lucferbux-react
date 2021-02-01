@@ -1,7 +1,5 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { H1 } from "../styles/TextStyles"
-import { themes } from "../styles/ColorStyles"
 import WaveInConstruction from "../backgrounds/WaveInConstruction"
 import "firebase/firestore";
 import {

@@ -1,7 +1,5 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { H1 } from "../styles/TextStyles"
-import { themes } from "../styles/ColorStyles"
 import WaveInConstruction from "../backgrounds/WaveInConstruction"
 import "firebase/firestore";
 import {
@@ -81,7 +79,7 @@ const ContentWrapper = styled.div`
   @media(max-width: 650px) {
       grid-template-columns: auto;
       justify-items: center;
-      padding: 150px 30px 0px 30px;
+      padding: 120px 30px 0px 30px;
   }
 `
 

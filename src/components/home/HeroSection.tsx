@@ -63,6 +63,10 @@ export default HeroSection
 
 const Wrapper = styled.div`
   overflow: hidden;
+  @media (min-width: 2500px) {
+    padding-bottom: 100px;
+  }
+
 `
 
 interface SocialWrapperProps {

@@ -8,6 +8,7 @@ import { themes } from "../styles/ColorStyles"
 interface InfoBoxProps {
   title: string;
   description: string;
+  darkColor?: Boolean;
   displayButton: Boolean;
   iconButton?: string;
   textButton?: string;
@@ -18,8 +19,8 @@ interface InfoBoxProps {
 const InfoBox = (props: InfoBoxProps) => {
   return (
     <InfoWrapper>
-      <Title>{props.title}</Title>
-      <Description>
+      <Title dark={props.darkColor ? props.darkColor : false}>{props.title}</Title>
+      <Description dark={props.darkColor ? props.darkColor : false}>
         {props.description}
       </Description>
       {props.displayButton && (
@@ -41,29 +42,40 @@ const InfoWrapper = styled.div`
   display: grid;
   gap: 20px;
   color: ${themes.dark.text1};
+  height: fit-content;
   @media (max-width: 650px) {
     text-align: center;
     gap: 10px;
   }
 `
+interface TextProps {
+  dark: Boolean;
+}
 
-const Title = styled(H2)`
-  color: ${themes.dark.text1};
+const Title = styled(H2)<TextProps>`
+  color: ${props => props.dark ? themes.light.text1 : themes.dark.text1};
+
+  @media (prefers-color-scheme: dark) {
+    color: ${themes.dark.text1};
+  }
 `
 
-const Description = styled(MediumText)`
-  color: ${themes.dark.text2};
+const Description = styled(MediumText)<TextProps>`
+  color: ${props => props.dark ? themes.light.text2 : themes.dark.text2};
+
+  @media (prefers-color-scheme: dark) {
+    color: ${themes.dark.text2};
+  }
 `
 
 const ButtonWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: start;
+  
   @media (max-width: 1000px) {
     justify-content: center;
     margin-bottom: 40px;
   }
-  @media (max-width: 650px) {
-    margin-bottom: 0px;
-  }
+
 `

@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
 import { menuData } from "../../data/menuData"
-import { number } from "prop-types"
 import NavButton from "../buttons/NavButton"
 
 const Header = () => {

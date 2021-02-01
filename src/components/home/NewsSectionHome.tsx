@@ -36,7 +36,7 @@ const NewsSection = () => {
 
       <CardDeatilWrapper>
       <InfoBox title={info.title} description={info.description} displayButton={true}
-       iconButton={info.iconButton} textButton={info.textButton} linkButton={info.linkButton} />
+       iconButton={info.iconButton} textButton={info.textButton} linkButton={info.linkButton}/>
         {news?.data && (
           <NewsCardDetail news={news?.data?.[0]} inverted={true} />
         )}
@@ -67,10 +67,11 @@ const CardDeatilWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
   }
 
   @media (max-width: 650px) {
-    height: 770px;
+    height: 720px;
   }
 `
 
@@ -107,6 +108,10 @@ const CardWrapper = styled.div`
 const Wrapper = styled.div`
   position: relative;
   padding-top: 5px;
-  height: 1362px;
+  height: 1000px;
   overflow: hidden;
+
+  @media (max-width: 1000px) {
+    height: 1200px;
+  }
 `

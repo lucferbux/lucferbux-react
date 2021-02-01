@@ -87,6 +87,7 @@ const HeaderImage = styled.img<HeaderImageProps>`
   margin: 0px;
   border-radius: 12px;
   display: ${props => (props.visible ? "block" : "none")};
+  filter: blur(4px);
 `
 
 const Wrapper = styled.a`
@@ -108,6 +109,8 @@ const CardWrapper = styled.div`
   align-items: center;
   min-width: 200px;
   max-width: 500px;
+  overflow: hidden;
+  border-radius: 12px;
   height: auto;
   animation: fadein 0.4s;
 
@@ -124,38 +127,7 @@ const CardWrapper = styled.div`
     border-radius: 12px;
     width: 100%;
     height: 100%;
-    background: -moz-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(6, 5, 1) 110%
-    ); /* FF3.6+ */
-    background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      color-stop(0%, rgba(6, 5, 1)),
-      color-stop(110%, rgba(0, 0, 0, 0))
-    ); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(6, 5, 1) 110%
-    ); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(6, 5, 1) 110%
-    ); /* Opera 11.10+ */
-    background: -ms-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(6, 5, 1) 110%
-    ); /* IE10+ */
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(6, 5, 1) 110%
-    ); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+    background: rgba(0,0,0,0.6);
+    box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px, rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset;
   }
 `
