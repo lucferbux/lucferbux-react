@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 const Lines = styled.img`
   z-index: -1;
   position: absolute;
-  top: 260px;
+  top: 210px;
   @media (min-width: 1440px) {
     width: 100%;
   }
