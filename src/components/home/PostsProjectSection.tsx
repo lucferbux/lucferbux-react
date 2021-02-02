@@ -57,6 +57,7 @@ const PostProjectSection = () => {
   return (
     <Wrapper>
       <WavePostHome />
+      <Wave5 src="/images/waves/postproject-wave5.svg" alt="Background Image" />
 
       <ProjectCardDeatilWrapper>
         <TextWrapper>
@@ -72,7 +73,11 @@ const PostProjectSection = () => {
         </TextWrapper>
         <ProjectCardWrapper>
           {project?.data?.map((projectEntry, index) => (
-            <ProjectCard project={projectEntry} captionText={"FEATURED"} key={index} />
+            <ProjectCard
+              project={projectEntry}
+              captionText={"FEATURED"}
+              key={index}
+            />
           ))}
         </ProjectCardWrapper>
       </ProjectCardDeatilWrapper>
@@ -91,17 +96,37 @@ const PostProjectSection = () => {
         </TextWrapperInverted>
         <PostCardWrapper>
           {post?.data?.map((postEntry, index) => (
-            <PostCard post={postEntry} key={index}/>
+            <PostCard post={postEntry} key={index} />
           ))}
         </PostCardWrapper>
       </PostCardDeatilWrapper>
-
-
     </Wrapper>
   )
 }
 
 export default PostProjectSection
+
+const Wave5 = styled.img`
+  position: absolute;
+  display: none;
+  z-index: -1;
+  bottom: -10px;
+
+  @media (min-width: 1440px) {
+    width: 100%;
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    content: url("/images/waves/postproject-wave5-dark.svg");
+    display: none;
+
+    @media (min-width: 2780px) {
+      width: 100%;
+      display: block;
+    }
+  }
+`
 
 const Wrapper = styled.div`
   position: relative;
@@ -113,7 +138,6 @@ const Wrapper = styled.div`
     height: 1420px;
   }
 `
-
 
 const ProjectCardDeatilWrapper = styled.div`
   max-width: 1234px;
@@ -134,6 +158,13 @@ const ProjectCardDeatilWrapper = styled.div`
     padding: 40px 30px;
   }
 
+  @media (min-width: 1950px) {
+    padding: 60px 30px;
+  }
+
+  @media (min-width: 2600px) {
+    padding: 80px 30px;
+  }
 `
 
 const ProjectCardWrapper = styled.div`
@@ -159,7 +190,6 @@ const ProjectCardWrapper = styled.div`
 
   @media (max-width: 640px) {
     justify-content: flex-start;
-
   }
 `
 
@@ -187,7 +217,6 @@ const PostCardDeatilWrapper = styled.div`
   @media (min-width: 1000px) {
     padding: 40px 30px;
   }
-
 `
 
 const PostCardWrapper = styled.div`
@@ -200,7 +229,6 @@ const PostCardWrapper = styled.div`
 `
 
 const TextWrapper = styled.div`
-  
   @media (max-width: 1000px) {
     display: grid;
     justify-items: center;
@@ -211,4 +239,3 @@ const TextWrapperInverted = styled(TextWrapper)`
   direction: ltr;
   padding: 0px 20px;
 `
-

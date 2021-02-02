@@ -45,6 +45,10 @@ const Wave2 = styled(Wave)`
     top: 490px;
   }
 
+  @media (min-width: 2100px) {
+    top: 420px;
+  }
+
   @media (prefers-color-scheme: dark) {
     content: url("/images/waves/course-wave2-dark.svg");
   }

@@ -23,6 +23,7 @@ const WavePostHome = () => {
         alt="Background Image"
        
       />
+      
       <Lines
         src="/images/waves/postproject-lines.svg"
         alt="Background Image"
@@ -80,4 +81,6 @@ const Wave4 = styled(Wave)`
   }
 
 `
+
+
 
