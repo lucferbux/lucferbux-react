@@ -64,6 +64,7 @@ const PostProjectSection = () => {
             title={infoProject.title}
             description={infoProject.description}
             displayButton={true}
+            darkColor={true}
             iconButton={infoProject.iconButton}
             textButton={infoProject.textButton}
             linkButton={infoProject.linkButton}
@@ -123,10 +124,6 @@ const ProjectCardDeatilWrapper = styled.div`
   justify-content: space-between;
 
   @media (max-width: 1000px) {
-    /* grid-template-columns:  auto;
-    justify-items: center;
-    justify-content: center;
-    text-align: center; */
     display: block;
     padding: 20px 0px;
     text-align: center;

@@ -36,7 +36,7 @@ const NewsSection = () => {
 
       <CardDeatilWrapper>
       <InfoBox title={info.title} description={info.description} displayButton={true}
-       iconButton={info.iconButton} textButton={info.textButton} linkButton={info.linkButton}/>
+       iconButton={info.iconButton} textButton={info.textButton} linkButton={info.linkButton} darkColor={true}/>
         {news?.data && (
           <NewsCardDetail news={news?.data?.[0]} inverted={true} />
         )}

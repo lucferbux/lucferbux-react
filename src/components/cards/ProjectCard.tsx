@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Project } from "../../data/model/project"
+import { themes } from "../styles/ColorStyles"
 import {
     BodyMain,
   Caption,
@@ -98,7 +99,7 @@ const CardWrapper = styled.div`
   transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
   position: relative;
   display: grid;
-  color: #ffffff;
+  color: ${themes.light.text1};
   gap: 12px;
   text-align: left;
   width: 280px;
@@ -110,6 +111,10 @@ const CardWrapper = styled.div`
   box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px,
   rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset;
   animation: fadein 0.4s;
+
+  @media (prefers-color-scheme: dark) {
+    color: ${themes.dark.text1};
+  }
 
   @media (max-width: 450px) {
     width: 240px;
