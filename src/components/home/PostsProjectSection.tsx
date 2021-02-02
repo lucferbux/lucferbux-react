@@ -62,7 +62,7 @@ const PostProjectSection = () => {
 
         <ProjectCardWrapper>
           {project?.data?.map((projectEntry, index) => (
-            <ProjectCard project={projectEntry} key={index} />
+            <ProjectCard project={projectEntry} captionText={"FEATURED"} key={index} />
           ))}
         </ProjectCardWrapper>
       </CardDeatilWrapper>
@@ -90,6 +90,10 @@ const CardDeatilWrapper = styled.div`
     text-align: center;
   }
 
+  @media (min-width: 1000px) {
+    padding: 40px 30px;
+  }
+
 `
 
 const TextWrapper = styled.div`
@@ -110,13 +114,19 @@ const ProjectCardWrapper = styled.div`
   top: -40px;
 
   @media (max-width: 1000px) {
-    grid-template-columns: repeat(2, minmax(250px, 2fr));
+    grid-template-columns: auto auto;
     padding-bottom: 120px;
     overflow-x: scroll;
+    justify-items: center;
 
     ::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  @media (max-width: 640px) {
+    justify-content: flex-start;
+
   }
 
 

@@ -42,7 +42,7 @@ const Wave2 = styled(Wave)`
   }
 
   @media (min-width: 1850px) {
-    top: 600px;
+    top: 490px;
   }
 
   @media (prefers-color-scheme: dark) {

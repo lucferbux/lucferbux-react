@@ -70,6 +70,9 @@ const CardDescription = styled(MediumText)`
     max-height: 80px;
     overflow-y: scroll;
  }
+ ::-webkit-scrollbar {
+      display: none;
+    }
 `
 
 const HeaderImageWrapper = styled.div`

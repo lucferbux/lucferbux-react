@@ -59,28 +59,11 @@ const Wave = styled.img`
 const Wave2 = styled(Wave)`
   z-index: -3;
   top: 69px;
-
-  @media (min-width: 1560px) {
-    top: 420px;
-  }
-
-  @media (min-width: 1850px) {
-    top: 600px;
-  }
-
 `
 
 const Wave3 = styled(Wave)`
   z-index: -3;
   top: 210px;
-
-  @media (min-width: 1560px) {
-    top: 420px;
-  }
-
-  @media (min-width: 1850px) {
-    top: 600px;
-  }
 
   @media (prefers-color-scheme: dark) {
     content: url("/images/waves/postproject-wave3-dark.svg");
@@ -91,14 +74,6 @@ const Wave3 = styled(Wave)`
 const Wave4 = styled(Wave)`
   z-index: -1;
   top: 328px;
-
-  @media (min-width: 1560px) {
-    top: 420px;
-  }
-
-  @media (min-width: 1850px) {
-    top: 600px;
-  }
 
   @media (prefers-color-scheme: dark) {
     content: url("/images/waves/postproject-wave4-dark.svg");

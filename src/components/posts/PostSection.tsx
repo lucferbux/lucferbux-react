@@ -78,6 +78,12 @@ const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 360px auto;
 
+  @media(max-width: 1000px) {
+      grid-template-columns: auto;
+      justify-items: center;
+      text-align: center;
+  }
+
   @media(max-width: 650px) {
       grid-template-columns: auto;
       justify-items: center;
