@@ -39,9 +39,9 @@ const Wrapper = styled.div`
 `
 
 const Lines = styled.img`
+  z-index: -1;
   position: absolute;
   top: 260px;
-  z-index: 0;
   @media (min-width: 1440px) {
     width: 100%;
   }
@@ -62,7 +62,7 @@ const Wave2 = styled(Wave)`
 `
 
 const Wave3 = styled(Wave)`
-  z-index: -3;
+  z-index: -2;
   top: 210px;
 
   @media (prefers-color-scheme: dark) {

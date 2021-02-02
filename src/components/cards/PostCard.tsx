@@ -116,6 +116,7 @@ const CardWrapper = styled.div`
   border-radius: 12px;
   height: auto;
   animation: fadein 0.4s;
+  box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px;
 
   @keyframes fadein {
     from { opacity: 0; }
@@ -131,6 +132,6 @@ const CardWrapper = styled.div`
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.6);
-    box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px, rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset;
+    box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
   }
 `

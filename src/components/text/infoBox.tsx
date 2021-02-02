@@ -13,7 +13,6 @@ interface InfoBoxProps {
   iconButton?: string;
   textButton?: string;
   linkButton?: string;
-  blackText?: Boolean;
 }
 
 const InfoBox = (props: InfoBoxProps) => {

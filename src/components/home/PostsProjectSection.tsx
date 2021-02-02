@@ -15,6 +15,7 @@ import { Post } from "../../data/model/post"
 import { Project } from "../../data/model/project"
 import ProjectCard from "../cards/ProjectCard"
 import WavePostHome from "../backgrounds/WavePostHome"
+import PostCard from "../cards/PostCard"
 
 const infoProject = {
   title: "Recent Projects",
@@ -44,11 +45,20 @@ const PostProjectSection = () => {
     projectCollection
   )
 
+  const postCollection = useFirestore()
+    .collection("patent")
+    .orderBy("date", "desc")
+    .limit(1)
+
+  const post: ObservableStatus<Array<Post>> = useFirestoreCollectionData(
+    postCollection
+  )
+
   return (
     <Wrapper>
       <WavePostHome />
 
-      <CardDeatilWrapper>
+      <ProjectCardDeatilWrapper>
         <TextWrapper>
           <InfoBox
             title={infoProject.title}
@@ -59,22 +69,54 @@ const PostProjectSection = () => {
             linkButton={infoProject.linkButton}
           />
         </TextWrapper>
-
         <ProjectCardWrapper>
           {project?.data?.map((projectEntry, index) => (
             <ProjectCard project={projectEntry} captionText={"FEATURED"} key={index} />
           ))}
         </ProjectCardWrapper>
-      </CardDeatilWrapper>
+      </ProjectCardDeatilWrapper>
+
+      <PostCardDeatilWrapper>
+        <TextWrapperInverted>
+          <InfoBox
+            title={infoPosts.title}
+            description={infoPosts.description}
+            displayButton={true}
+            darkColor={true}
+            iconButton={infoPosts.iconButton}
+            textButton={infoPosts.textButton}
+            linkButton={infoPosts.linkButton}
+          />
+        </TextWrapperInverted>
+        <PostCardWrapper>
+          {post?.data?.map((postEntry, index) => (
+            <PostCard post={postEntry} key={index}/>
+          ))}
+        </PostCardWrapper>
+      </PostCardDeatilWrapper>
+
+
     </Wrapper>
   )
 }
 
 export default PostProjectSection
 
-const CardDeatilWrapper = styled.div`
+const Wrapper = styled.div`
+  position: relative;
+  padding-top: 5px;
+  height: 1220px;
+  overflow: hidden;
+
+  @media (max-width: 1000px) {
+    height: 1420px;
+  }
+`
+
+
+const ProjectCardDeatilWrapper = styled.div`
   max-width: 1234px;
-  margin: 100px auto;
+  margin: 100px auto 20px auto;
   padding: 20px 30px;
   display: grid;
   grid-template-columns: 360px auto;
@@ -88,19 +130,13 @@ const CardDeatilWrapper = styled.div`
     display: block;
     padding: 20px 0px;
     text-align: center;
+    margin: 120px auto 20px auto;
   }
 
   @media (min-width: 1000px) {
     padding: 40px 30px;
   }
 
-`
-
-const TextWrapper = styled.div`
-  @media (max-width: 1000px) {
-    display: grid;
-    justify-items: center;
-  }
 `
 
 const ProjectCardWrapper = styled.div`
@@ -115,9 +151,9 @@ const ProjectCardWrapper = styled.div`
 
   @media (max-width: 1000px) {
     grid-template-columns: auto auto;
-    padding-bottom: 120px;
     overflow-x: scroll;
     justify-items: center;
+    padding-bottom: 150px;
 
     ::-webkit-scrollbar {
       display: none;
@@ -128,13 +164,54 @@ const ProjectCardWrapper = styled.div`
     justify-content: flex-start;
 
   }
+`
 
+const PostCardDeatilWrapper = styled.div`
+  max-width: 1234px;
+  padding: 20px 30px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 360px auto;
+  justify-content: space-between;
+  direction: rtl;
+
+  @media (max-width: 1000px) {
+    /* grid-template-columns:  auto;
+    justify-items: center;
+    justify-content: center;
+    text-align: center; */
+    display: block;
+    padding: 20px 0px;
+    text-align: center;
+    top: -150px;
+    position: relative;
+  }
+
+  @media (min-width: 1000px) {
+    padding: 40px 30px;
+  }
 
 `
 
-const Wrapper = styled.div`
+const PostCardWrapper = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+  justify-items: center;
   position: relative;
-  padding-top: 5px;
-  height: 1362px;
-  overflow: hidden;
+  direction: ltr;
+  padding: 0px 20px;
 `
+
+const TextWrapper = styled.div`
+  
+  @media (max-width: 1000px) {
+    display: grid;
+    justify-items: center;
+  }
+`
+
+const TextWrapperInverted = styled(TextWrapper)`
+  direction: ltr;
+  padding: 0px 20px;
+`
+
