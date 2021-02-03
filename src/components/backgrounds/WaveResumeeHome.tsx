@@ -82,7 +82,7 @@ const Wave6 = styled(Wave)`
   top: 770px;
   display: block;
 
-  @media (min-width: 1000px) {
+  @media (min-width: 1500px) {
     display: none;
   }
 

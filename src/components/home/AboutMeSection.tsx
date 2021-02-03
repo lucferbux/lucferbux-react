@@ -54,7 +54,7 @@ const WaveBottom = styled.img`
   z-index: -1;
   bottom: -10px;
 
-  @media (min-width: 1000px) {
+  @media (min-width: 1500px) {
     width: 100%;
     display: block;
   }
