@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { News } from "../../data/model/news"
+import { themes } from "../styles/ColorStyles"
 import { Caption, H2, H3, MediumText } from "../styles/TextStyles"
 
 interface NewsCardProps {
@@ -54,20 +55,29 @@ const CardDate = styled(Caption)`
   font-size: 15px;
   line-height: 40px;
   text-align: center;
-  color: rgba(255, 255, 255, 0.7);
+  color: ${themes.light.text2};
   margin: 10px 0px 0px;
   direction: ltr;
+
+  @media (prefers-color-scheme: dark) {
+    color: ${themes.dark.text2};
+  }
 `
 
 const CardTitle = styled(MediumText)`
   font-size: 24px;
   line-height: 29px;
   font-weight: 600;
-  color: #ffffff;
+  color: ${themes.light.text1};
   word-break: break-word;
 
   @media (max-width: 470px) {
     font-size: 18px;
+    line-height: 22px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: ${themes.dark.text1};
   }
 `
 
@@ -120,7 +130,7 @@ const CardWrapper = styled.div<CardWrapperProps>`
   height: 360px;
   border-radius: 20px;
   text-align: center;
-  background: linear-gradient(200.44deg, #eabe7d 13.57%, #c98c31 98.38%);
+  background: linear-gradient(200.44deg, #EBCA9B 13.57%, #D6A153 98.38%);
   box-shadow: rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px;
   padding: 8px;
 
@@ -128,7 +138,8 @@ const CardWrapper = styled.div<CardWrapperProps>`
     height: 330px;
   }
 
-  @media (prefers-color-scheme) {
+  @media (prefers-color-scheme: dark) {
     box-shadow: rgb(11 58 105 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px;
+    background: linear-gradient(200.44deg, #E3B877 13.57%, #906421 98.38%);
   }
 `

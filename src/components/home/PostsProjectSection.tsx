@@ -121,9 +121,10 @@ const Wave5 = styled.img`
     content: url("/images/waves/postproject-wave5-dark.svg");
     display: none;
 
-    @media (min-width: 2780px) {
+    @media (min-width: 3340px) {
       width: 100%;
       display: block;
+      bottom: -400px;
     }
   }
 `
@@ -203,10 +204,6 @@ const PostCardDeatilWrapper = styled.div`
   direction: rtl;
 
   @media (max-width: 1000px) {
-    /* grid-template-columns:  auto;
-    justify-items: center;
-    justify-content: center;
-    text-align: center; */
     display: block;
     padding: 20px 0px;
     text-align: center;

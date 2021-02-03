@@ -99,11 +99,12 @@ const ProjectWrapper = styled.div`
   gap: 40px;
 
   @media(max-width: 1440px) {
+    justify-items: center;
     grid-template-columns: auto auto auto;
   }
 
   @media(max-width: 990px) {
-    justify-items: center;
+    
     grid-template-columns: auto auto;
     gap: 26px;
   }

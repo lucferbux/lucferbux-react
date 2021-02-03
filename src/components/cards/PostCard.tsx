@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Post } from "../../data/model/post"
+import { themes } from "../styles/ColorStyles"
 import { H3, MediumText } from "../styles/TextStyles"
 
 interface PostCardCollapsedCollapsedProps {
@@ -54,7 +55,12 @@ const CardTitle = styled(H3)`
   @media(max-width: 520px) {
     top: 20px;
     font-size: 20px;
- }
+  }
+
+  @media(max-width: 350px) {
+    top: 12px;
+    font-size: 16px;
+  }
 `
 
 const CardDescription = styled(MediumText)`
@@ -69,6 +75,11 @@ const CardDescription = styled(MediumText)`
     bottom: 20px;
     max-height: 80px;
     overflow-y: scroll;
+ }
+
+ @media(max-width: 350px) {
+    max-height: 48px;
+    bottom: 12px;
  }
  ::-webkit-scrollbar {
       display: none;
@@ -108,8 +119,8 @@ const Wrapper = styled.a`
 
 const CardWrapper = styled.div`
   position: relative;
-  color: #ffffff;
   align-items: center;
+  color: ${themes.light.text1};
   min-width: 200px;
   max-width: 500px;
   overflow: hidden;
@@ -117,6 +128,10 @@ const CardWrapper = styled.div`
   height: auto;
   animation: fadein 0.4s;
   box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px;
+
+  @media (prefers-color-scheme: dark) {
+    color: ${themes.dark.text1};
+  }
 
   @keyframes fadein {
     from { opacity: 0; }
@@ -131,7 +146,12 @@ const CardWrapper = styled.div`
     border-radius: 12px;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
-    box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
+    background: rgb(152 152 152 / 60%);
+    box-shadow: rgb(0 0 0 / 50%) 0px 0px 0px 1px inset;
+
+    @media (prefers-color-scheme: dark) {
+      background: rgba(0,0,0,0.6);
+      box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
+    }
   }
 `
