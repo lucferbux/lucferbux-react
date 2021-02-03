@@ -11,10 +11,10 @@ interface PostCardCollapsedCollapsedProps {
 const PostCard = (props: PostCardCollapsedCollapsedProps) => {
   const { post } = props
 
-  const [load, setLoaded] = useState(false);
+  const [load, setLoaded] = useState(false)
 
   const loadImage = () => {
-    setLoaded(true);
+    setLoaded(true)
   }
 
   return (
@@ -37,7 +37,6 @@ const PostCard = (props: PostCardCollapsedCollapsedProps) => {
         <CardTitle>{post.title_en}</CardTitle>
         <CardDescription>{post.description_en}</CardDescription>
       </CardWrapper>
-      
     </Wrapper>
   )
 }
@@ -52,12 +51,12 @@ const CardTitle = styled(H3)`
   word-break: break-word;
   z-index: 3;
 
-  @media(max-width: 520px) {
+  @media (max-width: 520px) {
     top: 20px;
     font-size: 20px;
   }
 
-  @media(max-width: 350px) {
+  @media (max-width: 350px) {
     top: 12px;
     font-size: 16px;
   }
@@ -70,20 +69,21 @@ const CardDescription = styled(MediumText)`
   margin: 0px 20px;
   word-break: break-word;
   z-index: 3;
-  @media(max-width: 520px) {
+  font-weight: 500;
+  @media (max-width: 520px) {
     font-size: 12px;
     bottom: 20px;
-    max-height: 80px;
+    max-height: 70px;
     overflow-y: scroll;
- }
+  }
 
- @media(max-width: 350px) {
+  @media (max-width: 350px) {
     max-height: 48px;
     bottom: 12px;
- }
- ::-webkit-scrollbar {
-      display: none;
-    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const HeaderImageWrapper = styled.div`
@@ -134,8 +134,12 @@ const CardWrapper = styled.div`
   }
 
   @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   &:after {
@@ -146,11 +150,11 @@ const CardWrapper = styled.div`
     border-radius: 12px;
     width: 100%;
     height: 100%;
-    background: rgb(152 152 152 / 60%);
+    background: rgb(206 206 206 / 60%);
     box-shadow: rgb(0 0 0 / 50%) 0px 0px 0px 1px inset;
 
     @media (prefers-color-scheme: dark) {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
     }
   }

@@ -36,11 +36,11 @@ const Text = styled(DescriptionCard)`
   line-height: 130%;
   color: ${themes.light.text1};
   mix-blend-mode: normal;
-  opacity: 0.8;
   text-align: left;
   direction: ltr;
 
   @media (prefers-color-scheme: dark) {
+    opacity: 0.8;
     color: ${themes.dark.text1};
   }
 `
