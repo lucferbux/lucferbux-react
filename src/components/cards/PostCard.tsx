@@ -151,11 +151,11 @@ const CardWrapper = styled.div`
     width: 100%;
     height: 100%;
     background: rgb(206 206 206 / 60%);
-    box-shadow: rgb(0 0 0 / 50%) 0px 0px 0px 1px inset;
+    box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
 
     @media (prefers-color-scheme: dark) {
       background: rgba(0, 0, 0, 0.6);
-      box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
+      
     }
   }
 `

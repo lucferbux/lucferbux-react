@@ -109,7 +109,7 @@ const CardWrapper = styled.div`
   padding: 20px;
   background: rgba(66, 66, 66, 0.3);
   box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px,
-  rgb(0 0 0 / 50%) 0px 0px 0px 0.5px inset;
+  rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset;
   animation: fadein 0.4s;
 
   @media (prefers-color-scheme: dark) {
