@@ -54,6 +54,11 @@ const CardTitle = styled(MediumText)`
   font-weight: 600;
   word-break: break-word;
   z-index: 3;
+  color: ${themes.light.text1};
+
+  @media (prefers-color-scheme: dark) {
+      color: ${themes.dark.text1};
+    }
 `
 
 const HeaderImageWrapper = styled.div`

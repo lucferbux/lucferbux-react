@@ -11,6 +11,9 @@ import WaveResumeeHome from "../backgrounds/WaveResumeeHome";
 import NewsCard from "../cards/NewsCard";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import InfoBox from "../text/infoBox";
+import FlatButton from "../buttons/FlatButton";
+import { H1, H3 } from "../styles/TextStyles";
+import { themes } from "../styles/ColorStyles";
 
 const info = {
   title: "My Resumée",
@@ -37,7 +40,7 @@ const AboutMeSection = () => {
       </TextWrapper>
 
       <CardWrapper>
-
+          <Title>In construction...</Title>
       </CardWrapper>
     </Wrapper>
   )
@@ -92,33 +95,8 @@ const TextWrapper = styled.div`
 `
 
 const CardWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 218px);
+  display: grid;  
   justify-items: center;
-  gap: 20px;
-  max-width: 1234px;
-  margin: 40px auto;
-  padding: 40px 30px;
-  position: relative;
-  top: -40px;
-
-  @media (max-width: 650px) {
-    top: -60px;
-  }
-
-  @media (max-width: 500px) {
-    padding: 40px 20px;
-  }
-
-  @media (max-width: 1234px) {
-    grid-template-columns: repeat(5, minmax(200px, 1fr));
-    padding-bottom: 120px;
-    overflow-x: scroll;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
 `
 
 const Wrapper = styled.div`
@@ -131,4 +109,9 @@ const Wrapper = styled.div`
   @media (max-width: 1000px) {
     height: 1400px;
   }
+`
+
+
+const Title = styled(H3)`
+  color: ${themes.dark.text1};
 `

@@ -56,7 +56,7 @@ const Wave = styled.img`
 
 const Wave2 = styled(Wave)`
   z-index: -3;
-  top: 180px;
+  top: 230px;
 `
 
 const Wave3 = styled(Wave)`
