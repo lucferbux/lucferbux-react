@@ -1,125 +1,134 @@
-import React, { useEffect } from "react"
-import styled from "styled-components"
-import { H1 } from "../styles/TextStyles"
-import { themes } from "../styles/ColorStyles"
-import SocialButton from "../buttons/SocialButton"
-import Typewriter from "typewriter-effect"
-import MockupAnimation from "../animations/MockupAnimation"
-import WaveHero from "../backgrounds/WaveHero"
+import React, { useContext, useEffect } from "react";
+import {
+  ObservableStatus,
+  useFirestore,
+  useFirestoreCollectionData,
+} from "reactfire";
+import "firebase/firestore";
+import styled from "styled-components";
+import { News } from "../../data/model/news";
+import WaveResumeeHome from "../backgrounds/WaveResumeeHome";
+import NewsCard from "../cards/NewsCard";
+import NewsCardDetail from "../cards/NewsCardDetail";
+import InfoBox from "../text/infoBox";
 
-const socialLinks = [
-  { name: "twitter", link: "https://twitter.com/lucferbux" },
-  { name: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
-  { name: "github", link: "https://github.com/lucferbux" },
-]
+const info = {
+  title: "My Resumée",
+  description: "Here are the most important roles I’ve taken  so far",
+}
 
-const HeroSection = () => {
-  useEffect(() => {})
+const AboutMeSection = () => {
+
+  const newsCollection = useFirestore()
+    .collection("intro")
+    .orderBy("timestamp", "desc")
+    .limit(6)
+  const news: ObservableStatus<Array<News>> = useFirestoreCollectionData(
+    newsCollection
+  )
 
   return (
     <Wrapper>
-      <WaveHero />
-      <ContentWrapper>
-        <TextWrapper>
-          <Title>
-            Hi! I’m Lucas,
-            <br />
-            <span>
-              <Typewriter
-                onInit={() => {}}
-                options={{
-                  strings: [
-                    "a Web",
-                    "an iOS",
-                    "an Android",
-                    "a ML",
-                    "a Backend",
-                  ],
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
-            </span>
-            Developer
-          </Title>
-          <Description>
-            Welcome to my web. In this site I gather all the news, posts,
-            conferences and projects that I take part in.
-          </Description>
-          <SocialWrapper count={socialLinks.length}>
-            {socialLinks.map((item, index) => (
-              <SocialButton icon={item.name} link={item.link} key={index} />
-            ))}
-          </SocialWrapper>
-        </TextWrapper>
+      <WaveResumeeHome />
+      <WaveBottom src="/images/waves/resumee-wave6.svg" alt="Background Image" />
 
-        <MockupAnimation />
-      </ContentWrapper>
+      <TextWrapper>
+        <InfoBox title={info.title} description={info.description} displayButton={false} darkColor={false}/>
+      </TextWrapper>
+
+      <CardWrapper>
+
+      </CardWrapper>
     </Wrapper>
   )
 }
 
-export default HeroSection
+export default AboutMeSection;
 
-const Wrapper = styled.div`
-  overflow: hidden;
-`
+const WaveBottom = styled.img`
+  position: absolute;
+  display: none;
+  z-index: -1;
+  bottom: -10px;
 
-interface SocialWrapperProps {
-  count: number;
-}
-
-const SocialWrapper = styled.div<SocialWrapperProps>`
-  display: grid;
-  grid-template-columns: repeat(${props => props.count}, auto);
-  gap: 0px;
-  @media (max-width: 450px) {
-    justify-content: space-around;
+  @media (min-width: 1000px) {
+    width: 100%;
+    display: block;
   }
-  
-`
 
-const ContentWrapper = styled.div`
-  max-width: 1234px;
-  margin: 0 auto;
-  padding: 200px 30px;
-  display: grid;
-  grid-template-columns: 360px auto;
+  @media (min-width: 2500px) {
+    width: 100%;
+    display: block;
+    bottom: -280px;
+  }
 
-  @media (max-width: 750px) {
-    grid-template-columns: auto;
-    justify-content: center;
-    padding: 150px 20px 250px;
-    gap: 60px;
+  @media (prefers-color-scheme: dark) {
+    content: url("/images/waves/resumee-wave6-dark.svg");
+    /* display: none;
+
+    @media (min-width: 3340px) {
+      width: 100%;
+      display: block;
+      bottom: -400px;
+    } */
   }
 `
+
 
 const TextWrapper = styled.div`
-  max-width: 360px;
   display: grid;
-  gap: 30px;
-`
-
-const Title = styled(H1)`
-  color: ${themes.dark.text1};
-  background: linear-gradient(180deg, #613a00 0%, #007789 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-
-  @media (max-width: 450px) {
-    font-size: 48px;
+  justify-items: center;
+  max-width: 1234px;
+  margin: 40px auto;
+  padding: 120px 30px 20px 20px;
+  text-align: center !important;
+  @media (min-width: 1700px) {
+    padding: 170px 30px 20px 20px;
   }
 
-  span {
-    background: linear-gradient(180deg, #d7fff8 0%, #ffd9b6 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+  @media (min-width: 2300px) {
+    padding: 200px 30px 20px 20px;
   }
 `
 
-const Description = styled.div`
-  font-size: 17px;
-  line-height: 130%;
+const CardWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 218px);
+  justify-items: center;
+  gap: 20px;
+  max-width: 1234px;
+  margin: 40px auto;
+  padding: 40px 30px;
+  position: relative;
+  top: -40px;
+
+  @media (max-width: 650px) {
+    top: -60px;
+  }
+
+  @media (max-width: 500px) {
+    padding: 40px 20px;
+  }
+
+  @media (max-width: 1234px) {
+    grid-template-columns: repeat(5, minmax(200px, 1fr));
+    padding-bottom: 120px;
+    overflow-x: scroll;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+`
+
+const Wrapper = styled.div`
+  position: relative;
+  padding-top: 5px;
+  height: 1400px;
+  overflow: hidden;
+
+
+  @media (max-width: 1000px) {
+    height: 1400px;
+  }
 `

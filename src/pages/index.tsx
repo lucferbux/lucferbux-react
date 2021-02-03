@@ -5,6 +5,7 @@ import HeroSection from "../components/home/HeroSection"
 import styled from "styled-components"
 import NewsSection from "../components/home/NewsSectionHome"
 import PostProjectSection from "../components/home/PostsProjectSection"
+import AboutMeSection from "../components/home/AboutMeSection"
 
 
 function IndexPage() {
@@ -14,6 +15,7 @@ function IndexPage() {
         <HeroSection />
         <NewsSection/>
         <PostProjectSection/>
+        <AboutMeSection/>
         <Padding />
       </Layout>
   )
@@ -22,5 +24,5 @@ function IndexPage() {
 export default IndexPage
 
 const Padding = styled.div`
-  height: 1200px;
+  height: 200px;
 `
