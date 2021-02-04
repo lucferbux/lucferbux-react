@@ -6,11 +6,12 @@ import SocialButton from "../buttons/SocialButton";
 import Typewriter from "typewriter-effect";
 import MockupAnimation from "../animations/MockupAnimation";
 import WaveHero from "../backgrounds/WaveHero";
+import { ExternalLink } from "../../data/model/externalLink";
 
-const socialLinks = [
-  { name: "twitter", link: "https://twitter.com/lucferbux" },
-  { name: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
-  { name: "github", link: "https://github.com/lucferbux" },
+const socialLinks: Array<ExternalLink> = [
+  { text: "twitter", image: "twitter", link: "https://twitter.com/lucferbux" },
+  { text: "linkedin", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
+  { text: "github", image: "github", link: "https://github.com/lucferbux" },
 ];
 
 const HeroSection = () => {
@@ -48,7 +49,7 @@ const HeroSection = () => {
           </Description>
           <SocialWrapper count={socialLinks.length}>
             {socialLinks.map((item, index) => (
-              <SocialButton icon={item.name} link={item.link} key={index} />
+              <SocialButton icon={item.image} link={item.link} key={index} />
             ))}
           </SocialWrapper>
         </TextWrapper>

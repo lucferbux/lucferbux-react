@@ -1,5 +1,6 @@
 export interface Work {
     avatar: string
+    icon: string
     name: string
     name_en: string
     description: string

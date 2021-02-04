@@ -16,23 +16,24 @@ import { Project } from "../../data/model/project"
 import ProjectCard from "../cards/ProjectCard"
 import WavePostHome from "../backgrounds/WavePostHome"
 import PostCard from "../cards/PostCard"
+import { ExternalLink } from "../../data/model/externalLink"
+
+const buttonProject: ExternalLink = { text: "Browse projects", image: "code", link: "projects" };
 
 const infoProject = {
   title: "Recent Projects",
   description:
     "These are a few of my latests projects I’ve been working on. Some of them are propietary, so there’s no source code.",
-  iconButton: "code",
-  textButton: "Browse projects",
-  linkButton: "projects",
+  button: buttonProject
 }
+
+const buttonPosts: ExternalLink  = { text: "Browse posts", image: "vector", link: "posts" };
 
 const infoPosts = {
   title: "Tech Posts",
   description:
     "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
-  iconButton: "vector",
-  textButton: "Browse posts",
-  linkButton: "posts",
+  button: buttonPosts
 }
 
 const PostProjectSection = () => {
@@ -66,9 +67,9 @@ const PostProjectSection = () => {
             description={infoProject.description}
             displayButton={true}
             darkColor={true}
-            iconButton={infoProject.iconButton}
-            textButton={infoProject.textButton}
-            linkButton={infoProject.linkButton}
+            iconButton={infoProject.button.image}
+            textButton={infoProject.button.text}
+            linkButton={infoProject.button.link}
           />
         </TextWrapper>
         <ProjectCardWrapper>
@@ -89,9 +90,9 @@ const PostProjectSection = () => {
             description={infoPosts.description}
             displayButton={true}
             darkColor={true}
-            iconButton={infoPosts.iconButton}
-            textButton={infoPosts.textButton}
-            linkButton={infoPosts.linkButton}
+            iconButton={infoProject.button.image}
+            textButton={infoProject.button.text}
+            linkButton={infoProject.button.link}
           />
         </TextWrapperInverted>
         <PostCardWrapper>

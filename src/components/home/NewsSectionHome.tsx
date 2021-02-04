@@ -11,13 +11,14 @@ import WaveNewsHome from "../backgrounds/WaveNewsHome";
 import NewsCard from "../cards/NewsCard";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import InfoBox from "../text/infoBox";
+import { ExternalLink } from "../../data/model/externalLink";
+
+const button: ExternalLink = { text: "Browse news", image: "courses", link: "news" };
 
 const info = {
   title: "Latest News",
   description: "Here are the latest news related to my professional work",
-  iconButton: "courses",
-  textButton: "Browse news",
-  linkButton: "news"
+  button: button
 }
 
 const NewsSection = () => {
@@ -36,7 +37,7 @@ const NewsSection = () => {
 
       <CardDeatilWrapper>
       <InfoBox title={info.title} description={info.description} displayButton={true}
-       iconButton={info.iconButton} textButton={info.textButton} linkButton={info.linkButton} darkColor={true}/>
+       iconButton={info.button.image} textButton={info.button.text} linkButton={info.button.link} darkColor={true}/>
         {news?.data && (
           <NewsCardDetail news={news?.data?.[0]} inverted={true} />
         )}

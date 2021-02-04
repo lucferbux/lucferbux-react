@@ -14,6 +14,8 @@ import InfoBox from "../text/infoBox";
 import FlatButton from "../buttons/FlatButton";
 import { H1, H3 } from "../styles/TextStyles";
 import { themes } from "../styles/ColorStyles";
+import { Work } from "../../data/model/work";
+import ResumeeCard from "../cards/ResumeeCard";
 
 const info = {
   title: "My Resumée",
@@ -22,12 +24,13 @@ const info = {
 
 const AboutMeSection = () => {
 
-  const newsCollection = useFirestore()
-    .collection("intro")
-    .orderBy("timestamp", "desc")
-    .limit(6)
-  const news: ObservableStatus<Array<News>> = useFirestoreCollectionData(
-    newsCollection
+  const workCollection = useFirestore()
+    .collection("team")
+    .orderBy("importance", "asc")
+
+
+  const work: ObservableStatus<Array<Work>> = useFirestoreCollectionData(
+    workCollection
   )
 
   return (
@@ -40,7 +43,10 @@ const AboutMeSection = () => {
       </TextWrapper>
 
       <CardWrapper>
-          <Title>In construction...</Title>
+        {work.data &&
+          <ResumeeCard works={work.data}/>
+        }
+          
       </CardWrapper>
     </Wrapper>
   )
@@ -102,7 +108,7 @@ const CardWrapper = styled.div`
 const Wrapper = styled.div`
   position: relative;
   padding-top: 5px;
-  height: 1400px;
+  height: 1000px;
   overflow: hidden;
 
 

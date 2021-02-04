@@ -16,7 +16,7 @@ function IndexPage() {
         <NewsSection/>
         <PostProjectSection/>
         <AboutMeSection/>
-        <Padding />
+
       </Layout>
   )
 }
