@@ -63,6 +63,10 @@ const Wrapper = styled.div`
     height: 280px;
     padding: 16px;
   }
+
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(200.44deg, #E3B877 13.57%, #906421 98.38%);
+  }
 `
 
 const ContentWrapper = styled.div`

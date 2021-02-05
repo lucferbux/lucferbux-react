@@ -66,7 +66,7 @@ const CardDate = styled(Caption)`
 
 const CardTitle = styled(MediumText)`
   font-size: 24px;
-  line-height: 29px;
+  line-height: 26px;
   font-weight: 600;
   color: ${themes.light.text1};
   word-break: break-word;
@@ -130,7 +130,7 @@ const CardWrapper = styled.div<CardWrapperProps>`
   height: 360px;
   border-radius: 20px;
   text-align: center;
-  background: linear-gradient(200.44deg, #EBCA9B 13.57%, #D6A153 98.38%);
+  background: linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%);
   box-shadow: rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px;
   padding: 8px;
 

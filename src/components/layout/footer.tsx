@@ -58,6 +58,7 @@ const LinkWrapper = styled.div`
   max-width: 340px;
   grid-template-columns: 144px 144px;
   gap: 0px;
+  column-gap: 8px;
 `
 
 const FooterText = styled.div`
