@@ -5,6 +5,7 @@ export interface Project {
     description_en: string
     link: string
     tags: string
+    featured: boolean
     date: Date
     version: string
 }

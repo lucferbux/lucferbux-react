@@ -39,7 +39,7 @@ const infoPosts = {
 const PostProjectSection = () => {
   const projectCollection = useFirestore()
     .collection("project")
-    .orderBy("date", "desc")
+    .where('featured', '==', true)
     .limit(2)
 
   const project: ObservableStatus<Array<Project>> = useFirestoreCollectionData(
