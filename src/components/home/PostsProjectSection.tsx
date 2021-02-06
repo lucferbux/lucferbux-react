@@ -133,12 +133,18 @@ const Wave5 = styled.img`
 const Wrapper = styled.div`
   position: relative;
   padding-top: 5px;
-  height: 1220px;
+  height: 1150px;
   overflow: hidden;
 
   @media (max-width: 1000px) {
     height: 1420px;
   }
+
+  @media (max-width: 450px) {
+    height: 1220px;
+  }
+
+
 `
 
 const ProjectCardDeatilWrapper = styled.div`

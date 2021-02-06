@@ -73,13 +73,6 @@ const WaveBottom = styled.img`
 
   @media (prefers-color-scheme: dark) {
     content: url("/images/waves/resumee-wave6-dark.svg");
-    /* display: none;
-
-    @media (min-width: 3340px) {
-      width: 100%;
-      display: block;
-      bottom: -400px;
-    } */
   }
 `
 
@@ -91,12 +84,21 @@ const TextWrapper = styled.div`
   margin: 40px auto;
   padding: 120px 30px 20px 20px;
   text-align: center !important;
+
   @media (min-width: 1700px) {
     padding: 170px 30px 20px 20px;
   }
 
   @media (min-width: 2300px) {
     padding: 200px 30px 20px 20px;
+  }
+
+  @media (min-width: 3000px) {
+    padding: 250px 30px 20px 20px;
+  }
+
+  @media (max-width: 800px) {
+    padding: 60px 30px 20px 20px;
   }
 `
 
@@ -112,8 +114,12 @@ const Wrapper = styled.div`
   overflow: hidden;
 
 
-  @media (max-width: 1000px) {
-    height: 1400px;
+  @media (max-width: 650px) {
+    height: 1200px;
+  }
+
+  @media (max-width: 450px) {
+    height: 1180px;
   }
 `
 

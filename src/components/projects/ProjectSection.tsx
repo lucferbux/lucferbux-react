@@ -50,7 +50,6 @@ const ProjectSection = () => {
 export default ProjectSection
 
 const Wrapper = styled.div`
-  overflow: hidden;
   height: auto;
 `
 

@@ -52,7 +52,6 @@ const PostSection = () => {
 export default PostSection
 
 const Wrapper = styled.div`
-  overflow: hidden;
   height: auto;
 `
 

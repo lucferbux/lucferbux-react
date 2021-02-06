@@ -50,7 +50,6 @@ const NewsSection = () => {
 export default NewsSection
 
 const Wrapper = styled.div`
-  overflow: hidden;
   height: auto;
 `
 
