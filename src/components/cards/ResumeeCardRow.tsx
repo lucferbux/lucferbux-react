@@ -93,4 +93,13 @@ const Description = styled.p`
     @media (prefers-color-scheme: dark) {
         color: ${themes.dark.text1};
     }
-`
+
+    @media (max-width: 450px) {
+        -webkit-line-clamp: 5;
+    }
+
+    @media (max-width: 380px) {
+        -webkit-line-clamp: 7;
+    }
+
+ `
