@@ -64,10 +64,6 @@ const SEO: React.FC<SEOProps> = ({
           content: `website`,
         },
         {
-          name: `og:image`,
-          content: image,
-        },
-        {
           name: `twitter:card`,
           content: `summary`,
         },
