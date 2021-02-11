@@ -1,8 +1,7 @@
 import React from "react";
-import Header from "../../src/components/layout/header";
 import {render, fireEvent, screen} from '@testing-library/react';
 import { useStaticQuery } from "gatsby";
-import SEO from "../../src/components/layout/seo";
+import SEO from "../seo";
 import { Helmet } from "react-helmet";
 
 const mockTitle = "Home | Lucferbux";

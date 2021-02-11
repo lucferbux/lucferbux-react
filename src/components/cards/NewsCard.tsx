@@ -30,7 +30,7 @@ const NewsCard = (props: NewsCardProps) => {
 
           <HeaderImage
             src={"/images/animations/loading.gif"}
-            alt={"News Header Image"}
+            alt={"News Header Loading"}
             visible={!load}
           />
         </HeaderImageWrapper>

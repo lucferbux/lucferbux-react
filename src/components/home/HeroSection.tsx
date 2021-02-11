@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { H1 } from "../styles/TextStyles";
+import { H1, MediumText } from "../styles/TextStyles";
 import { themes } from "../styles/ColorStyles";
 import SocialButton from "../buttons/SocialButton";
 import Typewriter from "typewriter-effect";
@@ -124,7 +124,5 @@ const Title = styled(H1)`
   }
 `
 
-const Description = styled.div`
-  font-size: 17px;
-  line-height: 130%;
+const Description = styled(MediumText)`
 `
