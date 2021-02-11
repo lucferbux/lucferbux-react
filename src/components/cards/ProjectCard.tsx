@@ -28,7 +28,7 @@ const ProjectCard = (props: ProjectCardProps) => {
                 {project.version}
             </CardVersionText>
         </CardVersion>
-        <CardCaption>{props.captionText ? props.captionText : ""}</CardCaption>
+        <CardCaption data-testid="caption">{props.captionText ? props.captionText : ""}</CardCaption>
         <CardTitle>{project.title_en}</CardTitle>
         <CardDescription>{project.description_en}</CardDescription>
 
