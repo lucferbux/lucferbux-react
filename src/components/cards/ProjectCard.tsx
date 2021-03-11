@@ -119,8 +119,14 @@ const CardWrapper = styled.div`
   }
 
   @media (max-width: 450px) {
-    width: 240px;
+    width: auto;
     height: 280px;
+  }
+
+  @media (max-width: 650px) {
+      width: auto;
+      max-width: 450px;
+      height: 280px;
   }
 
   :hover {
@@ -144,6 +150,13 @@ const Wrapper = styled.a`
   
   width: 280px;
   @media (max-width: 450px) {
-      width: 240px;
-    }
+      width: auto;
+      margin: 0px 0px;
+  }
+
+  @media (max-width: 650px) {
+      width: auto;
+      max-width: 450px;
+      margin: 0px 0px;
+  }
 `
