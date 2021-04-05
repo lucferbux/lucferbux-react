@@ -90,9 +90,9 @@ const PostProjectSection = () => {
             description={infoPosts.description}
             displayButton={true}
             darkColor={true}
-            iconButton={infoProject.button.image}
-            textButton={infoProject.button.text}
-            linkButton={infoProject.button.link}
+            iconButton={infoPosts.button.image}
+            textButton={infoPosts.button.text}
+            linkButton={infoPosts.button.link}
           />
         </TextWrapperInverted>
         <PostCardWrapper>
