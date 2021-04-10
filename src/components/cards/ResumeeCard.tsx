@@ -143,7 +143,6 @@ const Title = styled.div`
 const ListWrapper = styled.div`
   display: grid;
   gap: 8px;
-  height: 100%;
   margin-top: 12px;
   height: 100%;
   overflow-y: scroll;

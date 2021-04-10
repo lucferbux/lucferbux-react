@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ExternalLink } from "../../data/model/externalLink";
-import Img from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import { BodyIntro, SmallText } from "../styles/TextStyles";
 import ResumeeButton from "../buttons/ResumeeButon";
 
@@ -21,7 +21,10 @@ const ResumeeHeader = (props: ResumeeHeaderProps) => {
   return (
     <Wrapper>
       <ContentWrapper>
-        <Img className="resumee-avatar" fluid={dataQuery.avatar.childImageSharp.fluid} alt="Profile Avatar" />
+        <GatsbyImage
+          image={dataQuery.avatar.childImageSharp.gatsbyImageData}
+          className="resumee-avatar"
+          alt="Profile Avatar" />
         <Name>{title}</Name>
         <Caption>{caption}</Caption>
         <Description>{description}</Description>
@@ -32,21 +35,18 @@ const ResumeeHeader = (props: ResumeeHeaderProps) => {
         ))}
       </ButtonWrapper>
     </Wrapper>
-  )
+  );
 }
 
 export default ResumeeHeader;
 
-const queryAvatar = graphql`
-  query AvatarQuery {
-    avatar: file(relativePath: { eq: "avatars/avatar-lucas.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
+const queryAvatar = graphql`query AvatarQuery {
+  avatar: file(relativePath: {eq: "avatars/avatar-lucas.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
     }
   }
+}
 `
 
 const Wrapper = styled.div`
