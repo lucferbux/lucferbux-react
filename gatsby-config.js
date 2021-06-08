@@ -24,7 +24,6 @@ module.exports = {
         short_name: `Lucferbux`,
         start_url: `/`,
         background_color: `#F2F6FF`,
-        theme_color: `#EABE7D`,
         display: `standalone`,
         description: `Personal PWA`,
         icon: `static/images/logos/logo.svg`,

@@ -83,6 +83,16 @@ const SEO: React.FC<SEOProps> = ({
           name: 'apple-mobile-web-app-status-bar-style',
           content: 'default'
         },
+        {
+          name: "theme-color",
+          content: "#CA8F36",
+          media: "(prefers-color-scheme: light)"
+        },
+        {
+          name: "theme-color",
+          content: "#A58154",
+          media: "(prefers-color-scheme: dark)"
+        }
         
       ].concat(meta)}
     />
