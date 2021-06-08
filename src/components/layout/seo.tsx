@@ -90,7 +90,7 @@ const SEO: React.FC<SEOProps> = ({
         },
         {
           name: "theme-color",
-          content: "#A58154",
+          content: "#9D7E50",
           media: "(prefers-color-scheme: dark)"
         }
         

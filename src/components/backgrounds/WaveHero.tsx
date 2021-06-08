@@ -8,7 +8,7 @@ const WaveHero = () => {
       <Wave
         src="/images/waves/hero-wave1.svg"
         alt="Background Image"
-        style={{ top: "100px" }}
+        style={{ top: "140px" }}
       />
       <BackgroundBlur />
       <Wave2
@@ -65,7 +65,8 @@ const Background = styled.div`
   height: 800px;
   background: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
   @media (prefers-color-scheme: dark) {
-    background: linear-gradient(200.44deg, #A08153 13.57%, #674716 98.38%);
+    //background: linear-gradient(200.44deg, #A08153 13.57%, #674716 98.38%);
+    background: linear-gradient(180deg, #A08153 0%, #674716 100%);
   }
   z-index: -10;
 `
