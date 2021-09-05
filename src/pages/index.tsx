@@ -7,8 +7,8 @@ import NewsSection from "../components/home/NewsSectionHome"
 import PostProjectSection from "../components/home/PostsProjectSection"
 import AboutMeSection from "../components/home/AboutMeSection"
 
-
 function IndexPage() {
+
   return (
       <Layout>
         <SEO title="Home" />
@@ -16,7 +16,6 @@ function IndexPage() {
         <NewsSection/>
         <PostProjectSection/>
         <AboutMeSection/>
-
       </Layout>
   )
 }

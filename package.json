@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "lucferbux-react",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "description": "Personal Webpage of Lucas Fernandez",
+  "version": "1.0.0",
+  "author": "Lucas Fernandez <lucasfernandezaragon@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.12.0",
     "firebase": "^8.3.0",
@@ -20,6 +20,7 @@
     "lottie-web": "^5.7.6",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "reactfire": "^3.0.0-rc.0",

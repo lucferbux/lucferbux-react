@@ -32,6 +32,13 @@ module.exports = {
         icon_options: {
           purpose: `any maskable`,
         },
+        prefer_related_applications: true,
+        related_applications: [
+          {
+            platform: "play",
+            id: "com.lucferbux.lucferbux"
+          }
+        ]
       },
     },
     "gatsby-plugin-offline",
