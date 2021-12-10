@@ -78,9 +78,9 @@ export const onRenderBody = ({ setPreBodyComponents }) => {
         `}
       </style>
 
-      <div class="no-script">
-          <h1 class="title-fallback">Please, enable javascript</h1>
-          <p class="description-fallback">This page need javascript to run, it doesn't collect any usage nor navigation, please, enable javascript</p>
+      <div className="no-script">
+          <h1 className="title-fallback">Please, enable javascript</h1>
+          <p className="description-fallback">This page need javascript to run, it doesn't collect any usage nor navigation, please, enable javascript</p>
       </div>
     </noscript>,
   ])
