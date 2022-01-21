@@ -17,7 +17,10 @@ const info = {
 }
 
 const NewsSection = () => {
-  useEffect(() => {})
+  useEffect(() => {
+
+    console.log(news?.data);
+  })
 
   const newsCollection = useFirestore()
     .collection("intro")

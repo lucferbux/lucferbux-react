@@ -21,14 +21,14 @@ const Background = styled.div`
   width: 100%;
   height: 800px;
   background: linear-gradient(
-    189.16deg,
+    180.00deg,
     rgb(0, 119, 137) 13.57%,
     rgb(176, 196, 199) 98.38%
   );
 
   @media (prefers-color-scheme: dark) {
     background: linear-gradient(
-    189.16deg,
+    180.00deg,
     rgb(43, 40, 48) 13.57%,
     rgb(40, 119, 137) 98.38%
   );

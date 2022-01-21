@@ -7,7 +7,7 @@ import ProjectSection from "../components/projects/ProjectSection"
 const Projects = () => {
   return (
     <Layout>
-      <SEO title="Projects" meta={[]}/>
+      <SEO title="Projects" themeColor="#007789" themeColorDark="#2b2830" meta={[]}/>
       <ProjectSection />
     </Layout>
   )

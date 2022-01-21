@@ -8,7 +8,7 @@ import TermsSection from "../components/terms/termsSection"
 const Terms = () => {
   return (
     <Layout>
-      <SEO title="Posts" meta={[]}/>
+      <SEO title="Terms" themeColor="#007789" themeColorDark="#2b2830" meta={[]}/>
       <TermsSection/>
     </Layout>
   )

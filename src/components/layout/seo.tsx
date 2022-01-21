@@ -9,6 +9,8 @@ interface SEOProps {
   lang?: string;
   meta?: any[];
   title: string;
+  themeColor?: string;
+  themeColorDark?: string;
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -85,12 +87,12 @@ const SEO: React.FC<SEOProps> = ({
         },
         {
           name: "theme-color",
-          content: "#CA8F36",
+          content: props.themeColor ?? "#CA8F36",
           media: "(prefers-color-scheme: light)"
         },
         {
           name: "theme-color",
-          content: "#9D7E50",
+          content: props.themeColorDark ?? "#9D7E50",
           media: "(prefers-color-scheme: dark)"
         }
         

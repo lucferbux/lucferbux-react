@@ -9,7 +9,7 @@ import PrivacySection from "../components/terms/privacySection"
 const Privacy = () => {
   return (
     <Layout>
-      <SEO title="Posts" meta={[]}/>
+      <SEO title="Privacy" themeColor="#007789" themeColorDark="#2b2830" meta={[]}/>
       <PrivacySection/>
     </Layout>
   )

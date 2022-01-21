@@ -9,7 +9,7 @@ import NewsSection from "../components/news/NewsSection"
 const News = () => {
   return (
     <Layout>
-      <SEO title="News" meta={[]}/>
+      <SEO title="News" themeColor="#007789" themeColorDark="#2b2830" meta={[]}/>
       <NewsSection />
     </Layout>
   )

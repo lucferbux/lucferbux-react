@@ -7,7 +7,7 @@ import PostSection from "../components/posts/PostSection"
 const Posts = () => {
   return (
     <Layout>
-      <SEO title="Posts" meta={[]}/>
+      <SEO title="Posts" themeColor="#007789" themeColorDark="#2b2830" meta={[]}/>
       <PostSection />
     </Layout>
   )
