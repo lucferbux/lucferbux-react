@@ -11,45 +11,52 @@ import { Post } from "../../data/model/post"
 import { Project } from "../../data/model/project"
 import ProjectCard from "../cards/ProjectCard"
 import WavePostHome from "../backgrounds/WavePostHome"
+import Tilt from "react-parallax-tilt"
 import PostCard from "../cards/PostCard"
 import { ExternalLink } from "../../data/model/externalLink"
 
-const buttonProject: ExternalLink = { text: "Browse projects", image: "code", link: "projects" };
+const buttonProject: ExternalLink = {
+  text: "Browse projects",
+  image: "code",
+  link: "projects",
+}
 
 const infoProject = {
   title: "Recent Projects",
   description:
     "These are a few of my latests projects I’ve been working on. Some of them are propietary, so there’s no source code.",
-  button: buttonProject
+  button: buttonProject,
 }
 
-const buttonPosts: ExternalLink  = { text: "Browse posts", image: "vector", link: "posts" };
+const buttonPosts: ExternalLink = {
+  text: "Browse posts",
+  image: "vector",
+  link: "posts",
+}
 
 const infoPosts = {
   title: "Tech Posts",
   description:
     "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
-  button: buttonPosts
+  button: buttonPosts,
 }
 
 const PostProjectSection = () => {
   const projectCollection = useFirestore()
     .collection("project")
-    .where('featured', '==', true)
+    .where("featured", "==", true)
     .limit(2)
 
-  const project: ObservableStatus<Array<Project>> = useFirestoreCollectionData(
-    projectCollection
-  )
+  const project: ObservableStatus<Array<Project>> =
+    useFirestoreCollectionData(projectCollection)
 
   const postCollection = useFirestore()
     .collection("patent")
     .orderBy("date", "desc")
     .limit(1)
 
-  const post: ObservableStatus<Array<Post>> = useFirestoreCollectionData(
-    postCollection
-  )
+  const post: ObservableStatus<Array<Post>> =
+    useFirestoreCollectionData(postCollection)
 
   return (
     <Wrapper>
@@ -81,19 +88,19 @@ const PostProjectSection = () => {
 
       <PostCardDeatilWrapper>
         <TextWrapperInverted>
-          <InfoBox
-            title={infoPosts.title}
-            description={infoPosts.description}
-            displayButton={true}
-            darkColor={true}
-            iconButton={infoPosts.button.image}
-            textButton={infoPosts.button.text}
-            linkButton={infoPosts.button.link}
-          />
+            <InfoBox
+              title={infoPosts.title}
+              description={infoPosts.description}
+              displayButton={true}
+              darkColor={true}
+              iconButton={infoPosts.button.image}
+              textButton={infoPosts.button.text}
+              linkButton={infoPosts.button.link}
+            />
         </TextWrapperInverted>
         <PostCardWrapper>
           {post?.data?.map((postEntry, index) => (
-            <PostCard post={postEntry} key={index} />
+            <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5}><PostCard post={postEntry} key={index} /></Tilt>
           ))}
         </PostCardWrapper>
       </PostCardDeatilWrapper>
@@ -139,8 +146,6 @@ const Wrapper = styled.div`
   @media (max-width: 450px) {
     height: 1220px;
   }
-
-
 `
 
 const ProjectCardDeatilWrapper = styled.div`
