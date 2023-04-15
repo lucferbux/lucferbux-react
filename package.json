@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "author": "Lucas Fernandez <lucasfernandezaragon@gmail.com>",
   "dependencies": {
-    "babel-plugin-styled-components": "^1.12.0",
-    "firebase": "^9.19.1",
+    "babel-plugin-styled-components": "^2.1.1",
+    "firebase": "^8.3.0",
     "gatsby": "^5.8.1",
     "gatsby-plugin-image": "^3.8.0",
     "gatsby-plugin-manifest": "^5.8.0",
@@ -16,6 +16,7 @@
     "gatsby-plugin-styled-components": "^6.8.0",
     "gatsby-plugin-typescript": "^5.8.0",
     "gatsby-source-filesystem": "^5.8.0",
+    "gatsby-transformer-remark": "^6.8.0",
     "gatsby-transformer-sharp": "^5.8.0",
     "lottie-web": "^5.11.0",
     "prop-types": "^15.8.1",
@@ -24,7 +25,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-parallax-tilt": "^1.7.128",
-    "reactfire": "^4.2.2",
+    "reactfire": "^3.0.0",
     "styled-components": "^5.3.9",
     "typewriter-effect": "^2.19.0"
   },
@@ -39,11 +40,16 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.26",
     "babel-jest": "^29.5.0",
-    "babel-preset-gatsby": "^2.1.1",
+    "babel-preset-gatsby": "^3.8.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
     "prettier": "^2.8.7",
     "react-test-renderer": "^18.2.0"
+  },
+  "overrides": {
+    "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
+      "react": "^18.2.0"
+    }
   },
   "keywords": [
     "gatsby"

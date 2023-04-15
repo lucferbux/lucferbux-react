@@ -1,171 +1,85 @@
 import React from "react"
 import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
-import { StaticImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 
 const MockupAnimation = () => {
   const data = useStaticQuery(queryProfile);
-  const profileImage = getImage(data.profile);
-  const bulbImage = getImage(data.bulb);
-  const headphonesImages = getImage(data.headphones);
-  const folderImage = getImage(data.folder);
-  const turntable = getImage(data.turntable);
-  const gamepadImage = getImage(data.gamepad);
-  const computerImage = getImage(data.computer);
-  
+
   return (
     <Wrapper>
       <GatsbyImage
+        image={data.profile.childImageSharp.gatsbyImageData}
         className="profile"
-        image={profileImage}
-        alt="Profile Image Header"
-      />
+        alt="Profile Image Header" />
       <GatsbyImage
+        image={data.bulb.childImageSharp.gatsbyImageData}
         className="bulb"
-        image={bulbImage}
-        alt="Bulb Image Header"
-      />
+        alt="Bulb Image Header" />
       <GatsbyImage
+        image={data.headphones.childImageSharp.gatsbyImageData}
         className="headphones"
-        image={headphonesImages}
-        alt="Headphone Image Header"
-      />
+        alt="Headphone Image Header" />
       <GatsbyImage
+        image={data.folder.childImageSharp.gatsbyImageData}
         className="folder"
-        image={folderImage}
-        alt="Folder Image Header"
-      />
+        alt="Folder Image Header" />
       <GatsbyImage
+        image={data.turntable.childImageSharp.gatsbyImageData}
         className="turntable"
-        image={turntable}
-        alt="Turntable Image Header"
-      />
+        alt="Turntable Image Header" />
       <GatsbyImage
+        image={data.gamepad.childImageSharp.gatsbyImageData}
         className="gamepad"
-        image={gamepadImage}
-        alt="Gamepad Image Header"
-      />
+        alt="Gamepad Image Header" />
       <GatsbyImage
+        image={data.computer.childImageSharp.gatsbyImageData}
         className="computer"
-        image={computerImage}
-        alt="Computer Image Header"
-      />
+        alt="Computer Image Header" />
     </Wrapper>
-  )
+  );
 }
 
 export default MockupAnimation
 
 
-const queryProfile = graphql`
-  query MyQuery {
-    profile: file(relativePath: { eq: "animation/profile.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    turntable: file(relativePath: { eq: "animation/turntable.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    bulb: file(relativePath: { eq: "animation/bulb.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    headphones: file(relativePath: { eq: "animation/headphones.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    folder: file(relativePath: { eq: "animation/folder.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    gamepad: file(relativePath: { eq: "animation/gamepad.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    computer: file(relativePath: { eq: "animation/computer.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
+const queryProfile = graphql`query MyQuery {
+  profile: file(relativePath: {eq: "animation/profile.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
     }
   }
-`
-
-
-
-const queryProfilePluginImage = graphql`
-  query MyQuery {
-    profile: file(relativePath: { eq: "animation/profile.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
-    }
-
-    turntable: file(relativePath: { eq: "animation/turntable.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
-    }
-
-    bulb: file(relativePath: { eq: "animation/bulb.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
-    }
-
-    headphones: file(relativePath: { eq: "animation/headphones.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
-    }
-
-    folder: file(relativePath: { eq: "animation/folder.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
-    }
-
-    gamepad: file(relativePath: { eq: "animation/gamepad.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
-    }
-
-    computer: file(relativePath: { eq: "animation/computer.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: CONSTRAINED, formats: [AUTO, WEBP], placeholder: NONE)
-      }
+  turntable: file(relativePath: {eq: "animation/turntable.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
     }
   }
-`;
-
-
+  bulb: file(relativePath: {eq: "animation/bulb.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  headphones: file(relativePath: {eq: "animation/headphones.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  folder: file(relativePath: {eq: "animation/folder.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  gamepad: file(relativePath: {eq: "animation/gamepad.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  computer: file(relativePath: {eq: "animation/computer.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+}`
 
 const Wrapper = styled.div`
   position: relative;
