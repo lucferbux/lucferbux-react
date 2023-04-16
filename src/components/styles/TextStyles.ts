@@ -20,7 +20,7 @@ export const H3 = styled.h3`
   font-weight: bold;
   font-size: 30px;
   @media (max-width: 450px) {
-    font-size: 24px;
+    font-size: 22px;
   }
 `
 

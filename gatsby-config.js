@@ -9,12 +9,63 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/static/images`,
       },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/content`,
+      },
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-classes`,
+            options: {
+              classMap: {
+                "heading[depth=1]": "title-blog",
+                "heading[depth=2]": "subtitle-blog",
+                "heading[depth=3]": "emphasis-title-blog",
+                paragraph: "paragraph-blog",
+                link: "link-blog",
+                "list[ordered=false]": "list-blog-unordered",
+                "list[ordered=true]": "list-blog-ordered",
+                image: "image-container-blog",
+                strong: "strong-blog"
+              }
+            }
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              // Class prefix for <pre> tags containing syntax highlighting;
+              // defaults to 'language-' (e.g. <pre class="language-js">).
+              // If your site loads Prism into the browser at runtime,
+              // (e.g. for use with libraries like react-live),
+              // you may use this to prevent Prism from re-processing syntax.
+              // This is an uncommon use-case though;
+              // If you're unsure, it's best to use the default value.
+              classPrefix: "language-",
+            },
+          },
+          {
+            resolve:"gatsby-remark-codepen",
+            options: {
+              theme: "dark",
+              height: 400
+            }
+          }
+        ]
+      }
     },
     `gatsby-plugin-styled-components`,
     {

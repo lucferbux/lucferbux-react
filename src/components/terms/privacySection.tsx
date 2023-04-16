@@ -160,21 +160,6 @@ const Wrapper = styled.div`
   }
 `
 
-const WaveStars = styled.div`
-  position: absolute;
-  width: 100%;
-  background-position: center top;
-  background-repeat: repeat;
-  background-image: url("/images/backgrounds/stars.svg");
-  height: 420px;
-  top: 0px;
-  display: none;
-
-  @media (prefers-color-scheme: dark) {
-    display: block;
-  }
-`
-
 const ContentWrapper = styled.div`
   max-width: 1234px;
   margin: 0 auto;

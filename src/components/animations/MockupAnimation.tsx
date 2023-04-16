@@ -1,113 +1,85 @@
 import React from "react"
 import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 
 const MockupAnimation = () => {
   const data = useStaticQuery(queryProfile);
 
   return (
     <Wrapper>
-      <Img
+      <GatsbyImage
+        image={data.profile.childImageSharp.gatsbyImageData}
         className="profile"
-        fluid={data.profile.childImageSharp.fluid}
-        alt="Profile Image Header"
-      />
-      <Img
+        alt="Profile Image Header" />
+      <GatsbyImage
+        image={data.bulb.childImageSharp.gatsbyImageData}
         className="bulb"
-        fluid={data.bulb.childImageSharp.fluid}
-        alt="Bulb Image Header"
-      />
-      <Img
+        alt="Bulb Image Header" />
+      <GatsbyImage
+        image={data.headphones.childImageSharp.gatsbyImageData}
         className="headphones"
-        fluid={data.headphones.childImageSharp.fluid}
-        alt="Headphone Image Header"
-      />
-      <Img
+        alt="Headphone Image Header" />
+      <GatsbyImage
+        image={data.folder.childImageSharp.gatsbyImageData}
         className="folder"
-        fluid={data.folder.childImageSharp.fluid}
-        alt="Folder Image Header"
-      />
-      <Img
+        alt="Folder Image Header" />
+      <GatsbyImage
+        image={data.turntable.childImageSharp.gatsbyImageData}
         className="turntable"
-        fluid={data.turntable.childImageSharp.fluid}
-        alt="Turntable Image Header"
-      />
-      <Img
+        alt="Turntable Image Header" />
+      <GatsbyImage
+        image={data.gamepad.childImageSharp.gatsbyImageData}
         className="gamepad"
-        fluid={data.gamepad.childImageSharp.fluid}
-        alt="Gamepad Image Header"
-      />
-      <Img
+        alt="Gamepad Image Header" />
+      <GatsbyImage
+        image={data.computer.childImageSharp.gatsbyImageData}
         className="computer"
-        fluid={data.computer.childImageSharp.fluid}
-        alt="Computer Image Header"
-      />
+        alt="Computer Image Header" />
     </Wrapper>
-  )
+  );
 }
 
 export default MockupAnimation
 
-const queryProfile = graphql`
-  query MyQuery {
-    profile: file(relativePath: { eq: "animation/profile.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
 
-    turntable: file(relativePath: { eq: "animation/turntable.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    bulb: file(relativePath: { eq: "animation/bulb.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    headphones: file(relativePath: { eq: "animation/headphones.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    folder: file(relativePath: { eq: "animation/folder.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    gamepad: file(relativePath: { eq: "animation/gamepad.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
-
-    computer: file(relativePath: { eq: "animation/computer.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
+const queryProfile = graphql`query MyQuery {
+  profile: file(relativePath: {eq: "animation/profile.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
     }
   }
-`
+  turntable: file(relativePath: {eq: "animation/turntable.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  bulb: file(relativePath: {eq: "animation/bulb.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  headphones: file(relativePath: {eq: "animation/headphones.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  folder: file(relativePath: {eq: "animation/folder.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  gamepad: file(relativePath: {eq: "animation/gamepad.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+  computer: file(relativePath: {eq: "animation/computer.png"}) {
+    childImageSharp {
+      gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+    }
+  }
+}`
 
 const Wrapper = styled.div`
   position: relative;
