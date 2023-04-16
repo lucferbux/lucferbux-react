@@ -49,6 +49,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   display: grid;
   grid-template-columns: repeat(${props => props.count}, auto);
   gap: 30px;
+  
 `
 
 
