@@ -15,10 +15,6 @@ export default function BlogPostTemplate({
   const { markdownRemark } = data // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark
 
-  React.useEffect(() => {
-    console.log(frontmatter)
-  }, [])
-
   return (
     <Layout>
       <SEO
