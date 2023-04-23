@@ -39,6 +39,7 @@ module.exports = {
                 link: "link-blog",
                 "list[ordered=false]": "list-blog-unordered",
                 "list[ordered=true]": "list-blog-ordered",
+                "listItem": "list-item",
                 image: "image-container-blog",
                 strong: "strong-blog"
               }

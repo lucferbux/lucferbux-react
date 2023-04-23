@@ -18,7 +18,7 @@ export default function BlogPostTemplate({
   return (
     <Layout>
       <SEO
-        title="Privacy"
+        title="Blog"
         themeColor="#007789"
         themeColorDark="#2b2830"
         meta={[]}
