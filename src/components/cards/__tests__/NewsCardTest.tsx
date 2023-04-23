@@ -1,6 +1,6 @@
 import React from "react";
 
-import {render, fireEvent, screen, getByRole} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import { News } from "../../../data/model/news";
 import NewsCard from "../NewsCard";
 
