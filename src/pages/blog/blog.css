@@ -6,7 +6,11 @@
     margin: 20px 0px;
 }
 
-/* .list-blog-ordered::marker {
+.list-item {
+    margin: 20px 0px;
+}
+
+.list-item::marker {
     content: "👉  ";
     unicode-bidi: isolate;
     font-variant-numeric: tabular-nums;
@@ -15,16 +19,6 @@
     text-align: start !important;
     text-align-last: start !important;
 }
-
-.list-blog-unordered::marker {
-    content: "👉  ";
-    unicode-bidi: isolate;
-    font-variant-numeric: tabular-nums;
-    text-transform: none;
-    text-indent: 0px !important;
-    text-align: start !important;
-    text-align-last: start !important;
-} */
 
 .title-blog {
     font-weight: bold;

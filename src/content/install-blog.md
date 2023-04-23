@@ -49,7 +49,7 @@ La funcionalidad de cada uno es la siguiente:
 
 * **gatsby-remark-prismjs**: Este plugin integra el resaltado de sintaxis de Prism.js en tus publicaciones de blog generadas a partir de archivos de markdown. Cuando incluyes bloques de código en tus archivos de markdown, este plugin aplicará automáticamente el resaltado de sintaxis de Prism.js.
 
-**prismjs**: Prism.js es una biblioteca de resaltado de sintaxis para la web. Proporciona resaltado de sintaxis para una amplia variedad de lenguajes de programación y se integra fácilmente con proyectos de Gatsby a través del plugin gatsby-remark-prismjs.
+* **prismjs**: Prism.js es una biblioteca de resaltado de sintaxis para la web. Proporciona resaltado de sintaxis para una amplia variedad de lenguajes de programación y se integra fácilmente con proyectos de Gatsby a través del plugin gatsby-remark-prismjs.
 
 * **gatsby-source-filesystem**: Este plugin crea nodos File a partir de archivos de tu sistema local. Permite a Gatsby leer archivos de tu sistema y hacer que el contenido esté disponible en tu sitio a través de GraphQL. Es fundamental para trabajar con archivos de markdown y otros tipos de archivos en tus proyectos de Gatsby.
 
