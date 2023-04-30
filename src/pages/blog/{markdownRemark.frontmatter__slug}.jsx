@@ -46,6 +46,7 @@ const Wrapper = styled.div`
 const BlogImg = styled.img`
   width: 100%;
   margin: 30px 0px;
+  position: relative;
 `
 
 const ContentWrapper = styled.div`
