@@ -2,7 +2,7 @@
 slug: "/markdown-blog-gatsby"
 date: "2023-04-23"
 title: "Crear un blog en Gatsby con Markdown"
-featuredImage: "https://user-images.githubusercontent.com/16117276/233856041-c9a85201-f17f-4402-8c57-a74e9fc6410c.png"
+featuredImage: "https://user-images.githubusercontent.com/16117276/235361204-e817a7bd-d044-4bc7-a8c5-d35baf84a1c1.png"
 ---
 Hoy os voy a explicar como he creado una nueva sección en mi página web para renderizar blogs en formato `markdown`. El proceso es bastante sencillo, pero requiere un poco de configuración, lo voy a orientar a un nuevo proyecto, pero luego poniendo de ejemplos mis componentes y configuraciones, que contienen dependencias externas como [styled componentes](https://www.styled-components.com). Aquí os dejo los pasos:
 
