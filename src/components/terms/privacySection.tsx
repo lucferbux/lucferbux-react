@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { H1, H2, MediumText } from "../styles/TextStyles"
 import { themes } from "../styles/ColorStyles"
-import WaveTerms from "../backgrounds/WaveTerms"
+import WaveTerms from "../backgrounds/WaveShort"
 
 const PrivacySection = () => {
   return (
@@ -12,8 +12,8 @@ const PrivacySection = () => {
         <TextWrapper>
           <Title>Privacy Policy</Title>
           <Description>
-            Lucas Fernandez built the Lucferbux App app as a Free app. This SERVICE is provided
-            by at no cost and is intended for use as is.
+            Lucas Fernandez built the Lucferbux App app as a Free app. This
+            SERVICE is provided by at no cost and is intended for use as is.
           </Description>
           <Description>
             This page is used to inform visitors regarding my policies with the
@@ -32,18 +32,18 @@ const PrivacySection = () => {
             our Terms and Conditions, which are accessible at Lucferbux App
             unless otherwise defined in this Privacy Policy.
           </Description>
-          <Description>
-            <Subtitle>Information Collection and Use</Subtitle>
-          </Description>
+
+          <Subtitle>Information Collection and Use</Subtitle>
+
           <Description>
             For a better experience, while using our Service, I may require you
             to provide us with certain personally identifiable information. The
             information that I request will be retained on your device and is
             not collected by me in any way.
           </Description>
-          <Description>
-            <Subtitle>Log Data</Subtitle>
-          </Description>
+
+          <Subtitle>Log Data</Subtitle>
+
           <Description>
             I want to inform you that whenever you use my Service, in a case of
             an error in the app I collect data and information (through
@@ -53,9 +53,9 @@ const PrivacySection = () => {
             the app when utilizing my Service, the time and date of your use of
             the Service, and other statistics.
           </Description>
-          <Description>
-            <Subtitle>Cookies</Subtitle>
-          </Description>
+
+          <Subtitle>Cookies</Subtitle>
+
           <Description>
             Cookies are files with a small amount of data that are commonly used
             as anonymous unique identifiers. These are sent to your browser from
@@ -70,9 +70,9 @@ const PrivacySection = () => {
             being sent to your device. If you choose to refuse our cookies, you
             may not be able to use some portions of this Service.
           </Description>
-          <Description>
-            <Subtitle>Service Providers</Subtitle>
-          </Description>
+
+          <Subtitle>Service Providers</Subtitle>
+
           <Description>
             I may employ third-party companies and individuals due to the
             following reasons:
@@ -89,9 +89,7 @@ const PrivacySection = () => {
             tasks assigned to them on our behalf. However, they are obligated
             not to disclose or use the information for any other purpose.
           </Description>
-          <Description>
-            <Subtitle>Security</Subtitle>
-          </Description>
+          <Subtitle>Security</Subtitle>
           <Description>
             I value your trust in providing us your Personal Information, thus
             we are striving to use commercially acceptable means of protecting
@@ -99,9 +97,9 @@ const PrivacySection = () => {
             or method of electronic storage is 100% secure and reliable, and I
             cannot guarantee its absolute security.
           </Description>
-          <Description>
-            <Subtitle>Links to Other Sites</Subtitle>
-          </Description>
+
+          <Subtitle>Links to Other Sites</Subtitle>
+
           <Description>
             This Service may contain links to other sites. If you click on a
             third-party link, you will be directed to that site. Note that these
@@ -110,9 +108,9 @@ const PrivacySection = () => {
             control over and assume no responsibility for the content, privacy
             policies, or practices of any third-party sites or services.
           </Description>
-          <Description>
-            <Subtitle>Children’s Privacy</Subtitle>
-          </Description>
+
+          <Subtitle>Children’s Privacy</Subtitle>
+
           <Description>
             I do not knowingly collect personally identifiable information from
             children. I encourage all children to never submit any personally
@@ -128,9 +126,9 @@ const PrivacySection = () => {
             information in your country (in some countries we may allow your
             parent or guardian to do so on your behalf).
           </Description>
-          <Description>
-            <Subtitle>Changes to This Privacy Policy</Subtitle>
-          </Description>
+
+          <Subtitle>Changes to This Privacy Policy</Subtitle>
+
           <Description>
             I may update our Privacy Policy from time to time. Thus, you are
             advised to review this page periodically for any changes. I will
@@ -138,9 +136,9 @@ const PrivacySection = () => {
             page.
           </Description>
           <Description>This policy is effective as of 2021-12-10</Description>
-          <Description>
-            <Subtitle>Contact Us</Subtitle>
-          </Description>
+
+          <Subtitle>Contact Us</Subtitle>
+
           <Description>
             If you have any questions or suggestions about my Privacy Policy, do
             not hesitate to contact me at lucasfernandezaragon@gmail.com.

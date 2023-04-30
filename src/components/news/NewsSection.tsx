@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import WaveInConstruction from "../backgrounds/WaveInConstruction"
+import WaveBody from "../backgrounds/WaveBody"
 import "firebase/firestore";
 import {
   ObservableStatus,
@@ -32,8 +32,7 @@ const NewsSection = () => {
 
   return (
     <Wrapper>
-      <WaveInConstruction />
-      <WaveStars />
+      <WaveBody />
       <ContentWrapper>
         <InfoBox
           title={info.title}
@@ -54,21 +53,6 @@ export default NewsSection
 
 const Wrapper = styled.div`
   height: auto;
-`
-
-const WaveStars = styled.div`
-  position: absolute;
-  width: 100%;
-  background-position: center top;
-  background-repeat: repeat;
-  background-image: url("/images/backgrounds/stars.svg");
-  height: 420px;
-  top: 0px;
-  display: none;
-
-  @media (prefers-color-scheme: dark) {
-    display: block;
-  }
 `
 
 const ContentWrapper = styled.div`

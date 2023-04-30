@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { H1, H2, MediumText } from "../styles/TextStyles";
 import { themes } from "../styles/ColorStyles";
-import WaveTerms from "../backgrounds/WaveTerms";
+import WaveTerms from "../backgrounds/WaveShort";
 
 const TermsSection = () => {
   return (
@@ -124,21 +124,6 @@ const Wrapper = styled.div`
   overflow: hidden;
   @media (min-width: 2500px) {
     padding-bottom: 100px;
-  }
-`
-
-const WaveStars = styled.div`
-  position: absolute;
-  width: 100%;
-  background-position: center top;
-  background-repeat: repeat;
-  background-image: url("/images/backgrounds/stars.svg");
-  height: 420px;
-  top: 0px;
-  display: none;
-
-  @media (prefers-color-scheme: dark) {
-    display: block;
   }
 `
 

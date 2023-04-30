@@ -3,11 +3,11 @@ import { graphql } from "gatsby"
 import styled from "styled-components"
 import { H1, Caption } from "../../components/styles/TextStyles"
 import { themes } from "../../components/styles/ColorStyles"
-import WaveTerms from "../../components/backgrounds/WaveTerms"
 import Layout from "../../components/layout/layout"
 import SEO from "../../components/layout/seo"
 import "./blog.css"
 import "./prism.css"
+import WaveBody from "../../components/backgrounds/WaveBody"
 
 export default function BlogPostTemplate({
   data, // this prop will be injected by the GraphQL query below.
@@ -24,7 +24,7 @@ export default function BlogPostTemplate({
         meta={[]}
       />
       <Wrapper>
-        <WaveTerms />
+        <WaveBody />
         <ContentWrapper>
           <Title className="title-blog">{frontmatter.title}</Title>
           <Date>{frontmatter.date}</Date>
@@ -54,26 +54,18 @@ const ContentWrapper = styled.div`
   padding: 140px 30px 30px 30px;
 
   @media (max-width: 750px) {
-    padding: 150px 20px 290px;
+    padding: 150px 20px 20px 20px;
     gap: 60px;
   }
 `
 
 const Title = styled(H1)`
-  color: ${themes.light.text1};
+  color: ${themes.dark.text1};
   margin: 30px 0px 10px 0px;
-
-  @media (prefers-color-scheme: dark) {
-    color: ${themes.dark.text1};
-  }
 `
 
 const Date = styled(Caption)`
-  color: ${themes.light.text1};
-
-  @media (prefers-color-scheme: dark) {
-    color: ${themes.dark.text1};
-  }
+  color: ${themes.dark.text1};
 `
 const Description = styled.div`
   color: ${themes.light.text1};
