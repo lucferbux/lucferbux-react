@@ -7,6 +7,7 @@ export interface Post {
     image: string
     date: Date
     loaded: boolean
+    internalLink?: string
 }
 
 export interface PostsId extends Post {
