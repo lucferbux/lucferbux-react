@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Post } from "../../data/model/post"
 import { themes } from "../styles/ColorStyles"
 import { H3, MediumText } from "../styles/TextStyles"
+import { Link } from "gatsby"
 
 interface PostCardCollapsedCollapsedProps {
   post: Post
@@ -17,26 +18,38 @@ const PostCard = (props: PostCardCollapsedCollapsedProps) => {
     setLoaded(true)
   }
 
+  const Body = (
+    <CardWrapper>
+      <HeaderImageWrapper>
+        <HeaderImage
+          src={post.image}
+          alt={"News Header Image"}
+          onLoad={loadImage}
+          visible={load}
+        />
+
+        <HeaderImage
+          src={"/images/animations/loading.gif"}
+          alt={"News Header Loading"}
+          visible={!load}
+        />
+      </HeaderImageWrapper>
+      <CardTitle>{post.title_en}</CardTitle>
+      <CardDescription>{post.description_en}</CardDescription>
+    </CardWrapper>
+  )
+
+  if (post.internalLink) {
+    return (
+      <WrapperLink>
+        <Link to={`/blog/${post.internalLink}`} >{Body}</Link>
+      </WrapperLink>
+    )
+  }
+
   return (
     <Wrapper href={post.link} target="_blank" rel="noopener">
-      <CardWrapper>
-        <HeaderImageWrapper>
-          <HeaderImage
-            src={post.image}
-            alt={"News Header Image"}
-            onLoad={loadImage}
-            visible={load}
-          />
-
-          <HeaderImage
-            src={"/images/animations/loading.gif"}
-            alt={"News Header Loading"}
-            visible={!load}
-          />
-        </HeaderImageWrapper>
-        <CardTitle>{post.title_en}</CardTitle>
-        <CardDescription>{post.description_en}</CardDescription>
-      </CardWrapper>
+      {Body}
     </Wrapper>
   )
 }
@@ -117,6 +130,19 @@ const Wrapper = styled.a`
   }
 `
 
+const WrapperLink = styled.div`
+  position: relative;
+  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
+  cursor: pointer;
+  :hover {
+    transform: scale(1.05);
+  }
+
+  :active {
+    transform: scale(1.02);
+  }
+`
+
 const CardWrapper = styled.div`
   position: relative;
   align-items: center;
@@ -155,7 +181,6 @@ const CardWrapper = styled.div`
 
     @media (prefers-color-scheme: dark) {
       background: rgba(0, 0, 0, 0.6);
-      
     }
   }
 `
