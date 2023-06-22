@@ -80,7 +80,7 @@ module.exports = {
         theme_color_in_head: false,
         display: `standalone`,
         description: `Personal PWA`,
-        icon: `static/images/logos/logo.svg`,
+        icon: `static/images/logos/logo-icon.svg`,
         icon_options: {
           purpose: `any maskable`,
         },
