@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { H1 } from "../styles/TextStyles"
 import { themes } from "../styles/ColorStyles"
 import WaveBody from "../backgrounds/WaveBody"
-import "firebase/firestore";
+import "firebase/firestore"
 import {
   ObservableStatus,
   useFirestore,
@@ -21,13 +21,15 @@ const info = {
 const PostSection = () => {
   useEffect(() => {})
 
-  const postCollection = useFirestore()
-    .collection("patent")
-    .orderBy("date", "desc")
+  const firestore = useFirestore();
 
-  const posts: ObservableStatus<Array<Post>> = useFirestoreCollectionData(
+  const postCollection = firestore
+    .collection("patent")
+    .orderBy("date", "desc");
+
+  const posts = useFirestoreCollectionData(
     postCollection
-  )
+  ) as ObservableStatus<Array<Post>>;
 
   return (
     <Wrapper>

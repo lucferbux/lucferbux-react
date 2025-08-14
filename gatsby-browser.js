@@ -8,7 +8,6 @@
 
 import React from "react"
 import { FirebaseAppProvider } from "reactfire"
-import "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: process.env.GATSBY_FIREBASE_API,

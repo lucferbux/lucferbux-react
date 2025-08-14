@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import WaveBody from "../backgrounds/WaveBody"
-import "firebase/firestore";
+import "firebase/firestore"
 import {
   ObservableStatus,
   useFirestore,
@@ -19,13 +19,15 @@ const info = {
 const ProjectSection = () => {
   useEffect(() => {})
 
-  const projectCollection = useFirestore()
-    .collection("project")
-    .orderBy("date", "desc")
+  const firestore = useFirestore();
 
-  const projects: ObservableStatus<Array<Project>> = useFirestoreCollectionData(
+  const projectCollection = firestore
+    .collection("project")
+    .orderBy("date", "desc");
+
+  const projects = useFirestoreCollectionData(
     projectCollection
-  )
+  ) as ObservableStatus<Array<Project>>;
 
   return (
     <Wrapper>

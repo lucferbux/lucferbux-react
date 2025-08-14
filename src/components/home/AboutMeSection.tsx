@@ -19,19 +19,18 @@ import ResumeeCard from "../cards/ResumeeCard";
 
 const info = {
   title: "My Resumée",
-  description: "Here are the most important roles I’ve taken  so far",
+  description: "Here are the most important roles I've taken  so far",
 }
 
 const AboutMeSection = () => {
 
   const workCollection = useFirestore()
     .collection("team")
-    .orderBy("importance", "asc")
-
+    .orderBy("importance", "asc");
 
   const work: ObservableStatus<Array<Work>> = useFirestoreCollectionData(
     workCollection
-  )
+  );
 
   return (
     <Wrapper>
