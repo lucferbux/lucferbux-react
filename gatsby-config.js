@@ -77,7 +77,7 @@ module.exports = {
         start_url: `/`,
         background_color: `#F2F6FF`,
         theme_color: `#CA8F36`,
-        theme_color_in_head: false,
+        theme_color_in_head: true,
         display: `standalone`,
         description: `Personal PWA`,
         icon: `static/images/logos/logo-icon.svg`,
