@@ -26,10 +26,11 @@ const NewsSection = () => {
   const newsCollection = useFirestore()
     .collection("intro")
     .orderBy("timestamp", "desc")
-    .limit(6)
+    .limit(6);
+    
   const news: ObservableStatus<Array<News>> = useFirestoreCollectionData(
     newsCollection
-  )
+  );
 
   return (
     <Wrapper>

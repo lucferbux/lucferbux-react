@@ -36,7 +36,13 @@ const NewsCard = (props: NewsCardProps) => {
         </HeaderImageWrapper>
         <CardTitle>{news.title_en}</CardTitle>
         <CardDate>
-          {new Date(news.timestamp.seconds * 1000).toLocaleDateString([], {
+          {new Date(
+            news.timestamp instanceof Date 
+              ? news.timestamp 
+              : (news.timestamp as any).seconds 
+                ? (news.timestamp as any).seconds * 1000 
+                : news.timestamp
+          ).toLocaleDateString([], {
             year: "numeric",
             month: "long",
             day: "numeric",

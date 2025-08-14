@@ -42,21 +42,25 @@ const infoPosts = {
 }
 
 const PostProjectSection = () => {
-  const projectCollection = useFirestore()
+  const firestore = useFirestore();
+
+  const projectCollection = firestore
     .collection("project")
     .where("featured", "==", true)
-    .limit(2)
+    .limit(2);
 
-  const project: ObservableStatus<Array<Project>> =
-    useFirestoreCollectionData(projectCollection)
+  const project = useFirestoreCollectionData(
+    projectCollection
+  ) as ObservableStatus<Array<Project>>;
 
-  const postCollection = useFirestore()
+  const postCollection = firestore
     .collection("patent")
     .orderBy("date", "desc")
-    .limit(1)
+    .limit(1);
 
-  const post: ObservableStatus<Array<Post>> =
-    useFirestoreCollectionData(postCollection)
+  const post = useFirestoreCollectionData(
+    postCollection
+  ) as ObservableStatus<Array<Post>>;
 
   return (
     <Wrapper>
