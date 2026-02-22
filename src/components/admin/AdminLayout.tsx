@@ -1,6 +1,7 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import WaveShort from "@/components/backgrounds/WaveShort";
 
 export default function AdminLayout() {
   const { user, loading, error } = useAuth();
@@ -19,27 +20,35 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark">
-      <nav className="border-b border-gray-200 bg-white px-6 py-3 dark:border-gray-700 dark:bg-gray-800">
+    <div className="relative min-h-screen">
+      {/* Wave background */}
+      <WaveShort />
+
+      {/* Glass nav bar */}
+      <nav className="relative z-20 border-b border-white/10 bg-[rgba(66,66,66,0.3)] px-6 py-3 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <h1 className="text-lg font-bold text-primary">Admin Panel</h1>
+          <Link to="/admin/dashboard" className="text-lg font-bold text-white drop-shadow-sm">
+            Admin Panel
+          </Link>
           <div className="flex items-center gap-4">
-            <a
-              href="/admin/dashboard"
-              className="text-sm text-gray-600 hover:text-primary dark:text-gray-300"
+            <Link
+              to="/admin/dashboard"
+              className="text-sm text-white/80 transition hover:text-primary"
             >
               Dashboard
-            </a>
-            <a
-              href="/"
-              className="text-sm text-gray-600 hover:text-primary dark:text-gray-300"
+            </Link>
+            <Link
+              to="/"
+              className="text-sm text-white/80 transition hover:text-primary"
             >
               Back to Site
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
-      <main className="mx-auto max-w-5xl px-6 py-8">
+
+      {/* Content area */}
+      <main className="relative z-10 mx-auto max-w-5xl px-6 py-8">
         <Outlet />
       </main>
     </div>

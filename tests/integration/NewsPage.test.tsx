@@ -99,8 +99,10 @@ describe("NewsPage", () => {
 
     renderPage();
     await waitFor(() => {
-      expect(screen.getByText("News Item 1")).toBeInTheDocument();
-      expect(screen.getByText("News Item 2")).toBeInTheDocument();
+      // NewsCardDetail renders both NewsCard and NewsCardCollapsed (one hidden via CSS),
+      // so title text appears multiple times in the DOM — use getAllByText
+      expect(screen.getAllByText("News Item 1").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("News Item 2").length).toBeGreaterThanOrEqual(1);
     });
   });
 

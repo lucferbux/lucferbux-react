@@ -344,6 +344,26 @@
    =========================== */
 
 @media (prefers-color-scheme: dark) {
+  .hero-gradient {
+    background: linear-gradient(180deg, #A08153 0%, #674716 100%) !important;
+  }
+
+  .body-gradient {
+    background: linear-gradient(
+      180deg,
+      rgb(43, 40, 48) 13.57%,
+      rgb(40, 119, 137) 98.38%
+    ) !important;
+  }
+
+  .short-gradient {
+    background: linear-gradient(
+      189.16deg,
+      rgb(43, 40, 48) 13.57%,
+      rgb(40, 119, 137) 98.38%
+    ) !important;
+  }
+
   .footer-wave2 {
     content: url("/images/waves/footer-wave2-dark.svg");
   }

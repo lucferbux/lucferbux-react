@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <div className="overflow-hidden 4xl:pb-[100px]">
       <WaveHero />
-      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] py-[200px] max-lg:grid-cols-1 max-lg:justify-center max-lg:gap-[60px] max-lg:px-5 max-lg:pt-[150px] max-lg:pb-[290px]">
+      <div className="relative z-10 mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] py-[200px] max-lg:grid-cols-1 max-lg:justify-center max-lg:gap-[60px] max-lg:px-5 max-lg:pt-[150px] max-lg:pb-[290px]">
         <div className="grid max-w-[360px] gap-[30px]">
           <h1
             className="text-[50px] font-bold max-xs:text-[48px]"
@@ -39,11 +39,9 @@ export default function HeroSection() {
                 onInit={() => {}}
                 options={{
                   strings: [
-                    "a Web",
-                    "an iOS",
-                    "an Android",
-                    "a ML",
-                    "a Backend",
+                    "a Full Stack",
+                    "an AI",
+                    "a Cloud",
                   ],
                   autoStart: true,
                   loop: true,
@@ -52,7 +50,7 @@ export default function HeroSection() {
             </span>
             Developer
           </h1>
-          <p className="text-[17px] font-normal leading-[130%] text-white/70 max-xs:text-[15px]">
+          <p className="text-[17px] font-normal leading-[130%] max-xs:text-[15px]">
             Welcome to my web. In this site I gather all the news, posts,
             conferences and projects that I take part in.
           </p>

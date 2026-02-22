@@ -32,7 +32,7 @@ export const footerData = [
   {
     title: "Admin",
     icon: "/images/icons/account.svg",
-    link: "https://lucferbux-web-page.web.app/login",
-    external: true,
+    link: "/admin/login",
+    external: false,
   }
 ]

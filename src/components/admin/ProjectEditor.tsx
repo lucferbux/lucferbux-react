@@ -96,33 +96,33 @@ export default function ProjectEditor() {
 
   if (creating || editing) {
     return (
-      <div>
-        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+      <div className="rounded-xl border border-white/10 bg-[rgba(66,66,66,0.3)] p-6 backdrop-blur-[40px]">
+        <h2 className="mb-4 text-xl font-bold text-white">
           {creating ? "Create Project" : "Edit Project"}
         </h2>
         <div className="space-y-4">
           {(["title", "title_en", "description", "description_en", "link", "tags", "version"] as const).map(
             (field) => (
               <div key={field}>
-                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="mb-1 block text-sm font-medium text-white/80">
                   {field}{field === "tags" ? " (comma separated)" : ""}
                 </label>
                 <input
                   type="text"
                   value={String(form[field])}
                   onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
                 />
               </div>
             )
           )}
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="flex items-center gap-2 text-sm font-medium text-white/80">
               <input
                 type="checkbox"
                 checked={form.featured}
                 onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-                className="h-4 w-4 rounded border-gray-300"
+                className="h-4 w-4 rounded border-white/20 accent-primary"
               />
               Featured
             </label>
@@ -137,7 +137,7 @@ export default function ProjectEditor() {
             </button>
             <button
               onClick={cancel}
-              className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 dark:border-gray-600 dark:text-gray-300"
+              className="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white transition hover:bg-white/20"
             >
               Cancel
             </button>
@@ -150,7 +150,7 @@ export default function ProjectEditor() {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-bold text-white drop-shadow-sm">
           Projects ({data.length})
         </h2>
         <button
@@ -164,25 +164,25 @@ export default function ProjectEditor() {
         {data.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+            className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(66,66,66,0.3)] p-4 backdrop-blur-[40px] transition hover:bg-[rgba(66,66,66,0.45)]"
           >
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-white">
                   {item.title_en || item.title}
                 </p>
                 {item.featured && (
-                  <span className="rounded bg-primary/10 px-2 py-0.5 text-xs text-primary">
+                  <span className="rounded bg-primary/20 px-2 py-0.5 text-xs text-primary">
                     Featured
                   </span>
                 )}
                 {item.version && (
-                  <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                  <span className="rounded bg-white/10 px-2 py-0.5 text-xs text-white/60">
                     v{item.version}
                   </span>
                 )}
               </div>
-              <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+              <p className="truncate text-sm text-white/60">
                 {item.tags}
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function ProjectEditor() {
               </button>
               <button
                 onClick={() => handleDelete(item.id)}
-                className="rounded px-3 py-1 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                className="rounded px-3 py-1 text-sm text-red-400 hover:bg-red-900/20"
               >
                 Delete
               </button>

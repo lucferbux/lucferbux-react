@@ -27,16 +27,17 @@ export default function AppRoutes() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
-        <Route path="/admin/login" element={<LoginForm />} />
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="news" element={<NewsEditor />} />
-          <Route path="posts" element={<PostEditor />} />
-          <Route path="projects" element={<ProjectEditor />} />
-          <Route path="work" element={<WorkEditor />} />
-        </Route>
         <Route path="*" element={<NotFoundPage />} />
+      </Route>
+      {/* Admin routes outside Layout — own nav, no site Header/Footer */}
+      <Route path="/admin/login" element={<LoginForm />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="news" element={<NewsEditor />} />
+        <Route path="posts" element={<PostEditor />} />
+        <Route path="projects" element={<ProjectEditor />} />
+        <Route path="work" element={<WorkEditor />} />
       </Route>
     </Routes>
   );

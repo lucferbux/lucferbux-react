@@ -64,7 +64,7 @@ export default function PostsProjectSection() {
       />
 
       {/* Projects row */}
-      <div className="mx-auto mt-[100px] mb-5 grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] max-xl:mt-[120px] max-xl:block max-xl:px-0 max-xl:text-center xl:px-[30px] 3xl:px-[30px] 4xl:px-[30px]">
+      <div className="mx-auto mt-[100px] mb-5 grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] py-5 max-xl:mt-[120px] max-xl:block max-xl:px-0 max-xl:py-5 max-xl:text-center xl:py-10 min-[1950px]:py-[60px] min-[2600px]:py-[80px]">
         <div className="max-xl:grid max-xl:justify-items-center">
           <InfoBox
             title={infoProject.title}
@@ -76,7 +76,7 @@ export default function PostsProjectSection() {
             linkButton={infoProject.button.link}
           />
         </div>
-        <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-2 max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-sm:justify-start">
+        <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-[auto_auto] max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-[640px]:justify-start">
           {projects?.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
@@ -88,7 +88,7 @@ export default function PostsProjectSection() {
       </div>
 
       {/* Posts row */}
-      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] [direction:rtl] max-xl:relative max-xl:-top-[150px] max-xl:block max-xl:px-0 max-xl:text-center xl:px-[30px]">
+      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] py-5 [direction:rtl] max-xl:relative max-xl:-top-[150px] max-xl:block max-xl:px-0 max-xl:py-5 max-xl:text-center xl:py-10">
         <div className="px-5 [direction:ltr] max-xl:grid max-xl:justify-items-center">
           <InfoBox
             title={infoPosts.title}

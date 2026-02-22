@@ -25,14 +25,14 @@ export default function ProjectSection() {
   return (
     <div className="h-auto">
       <WaveBody />
-      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] pt-[150px] pb-[30px] max-xl:grid-cols-1 max-xl:justify-items-center max-xl:text-center max-md:grid-cols-1 max-md:justify-items-center max-md:px-[30px] max-md:pt-[120px] max-md:pb-0">
+      <div className="relative mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] pt-[150px] pb-[30px] max-xl:grid-cols-1 max-xl:justify-items-center max-xl:text-center max-md:grid-cols-1 max-md:justify-items-center max-md:px-[30px] max-md:pt-[120px] max-md:pb-0">
         <InfoBox
           title={info.title}
           description={info.description}
           displayButton={false}
         />
       </div>
-      <div className="mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-4 gap-10 px-[30px] pt-5 pb-[120px] max-3xl:grid-cols-3 max-3xl:justify-items-center max-[990px]:grid-cols-2 max-[990px]:gap-[26px] max-md:grid-cols-1">
+      <div className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-4 gap-10 px-[30px] pt-5 pb-[120px] max-3xl:grid-cols-3 max-3xl:justify-items-center max-[990px]:grid-cols-2 max-[990px]:gap-[26px] max-md:grid-cols-1">
         {projects?.map((projectEntry, index) => (
           <ProjectCard project={projectEntry} key={index} />
         ))}

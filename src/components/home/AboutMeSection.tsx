@@ -30,7 +30,7 @@ export default function AboutMeSection() {
         className="resumee-wave6 absolute -bottom-[10px] z-[-1] hidden 3xl:block 3xl:w-full 4xl:-bottom-[280px] 4xl:block 4xl:w-full"
       />
 
-      <div className="mx-auto grid max-w-[1234px] justify-items-center px-5 pt-[120px] pb-5 text-center 3xl:pt-[170px] 4xl:pt-[200px] max-lg:pt-[60px]">
+      <div className="mx-auto my-10 grid max-w-[1234px] justify-items-center px-5 pt-[120px] pb-5 text-center min-[1700px]:pt-[170px] min-[2300px]:pt-[200px] min-[3000px]:pt-[250px] max-[800px]:pt-[60px]">
         <InfoBox
           title={info.title}
           description={info.description}

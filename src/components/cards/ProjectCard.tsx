@@ -11,14 +11,14 @@ export default function ProjectCard({ project, captionText }: ProjectCardProps) 
       href={project.link}
       target="_blank"
       rel="noopener"
-      className="group cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
+      className="group w-[280px] cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] max-md:w-auto max-md:min-w-[240px] max-md:max-w-[450px] max-xs:w-auto max-xs:min-w-[240px]"
     >
       <div
-        className="project-card-bg relative grid w-[280px] gap-4 rounded-[20px] p-5 max-xs:w-[260px]"
+        className="project-card-bg relative grid h-[320px] w-[280px] gap-3 rounded-[20px] p-5 text-left backdrop-blur-[40px] animate-[fadein_0.4s] transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:bg-[rgba(66,66,66,0.25)] hover:scale-[1.03] active:bg-[rgba(66,66,66,0.28)] active:scale-[1.01] max-md:h-[280px] max-md:w-auto max-md:min-w-[240px] max-md:max-w-[450px] max-xs:h-[280px] max-xs:w-auto max-xs:min-w-[240px]"
         style={{
-          background: "rgba(255,255,255,0.6)",
+          background: "rgba(66, 66, 66, 0.3)",
           boxShadow:
-            "0px 50px 100px rgba(34,79,169,0.3), inset 0 0 0 0.5px rgba(255,255,255,0.6)",
+            "rgb(24 32 79 / 25%) 0px 40px 80px, rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset",
         }}
       >
         {project.version && (
@@ -28,7 +28,7 @@ export default function ProjectCard({ project, captionText }: ProjectCardProps) 
             </span>
           </div>
         )}
-        <p className="text-[13px] font-semibold uppercase leading-[130%] text-black/50 dark:text-white/50">
+        <p className="text-[13px] font-semibold uppercase leading-[130%] text-black dark:text-white">
           {captionText ?? ""}
         </p>
         <h3 className="break-words text-[30px] font-bold max-xs:text-[26px] text-black dark:text-white">
@@ -38,7 +38,7 @@ export default function ProjectCard({ project, captionText }: ProjectCardProps) 
           {project.description_en}
         </p>
         <div className="grid grid-cols-[32px_auto] items-center gap-[10px]">
-          <div className="grid items-center justify-items-center rounded-full bg-white/30 p-1">
+          <div className="grid h-8 w-8 items-center justify-items-center rounded-full bg-black/20">
             <img
               src="/images/icons/code.svg"
               alt="Icon Tag Project"
