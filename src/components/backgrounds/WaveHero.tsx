@@ -1,83 +1,32 @@
-import React from "react"
-import styled from "styled-components"
-
-const WaveHero = () => {
+export default function WaveHero() {
   return (
-    <Wrapper>
-      <Background />
-      <Wave
+    <div className="absolute top-0 z-[-1] w-full">
+      <div
+        className="absolute top-[-100px] min-h-[800px] w-full"
+        style={{
+          background: "linear-gradient(180deg, #4316db 0%, #9076e7 100%)",
+        }}
+      />
+      <img
+        src="/images/backgrounds/stars.svg"
+        alt="Stars Background"
+        className="absolute top-0 hidden w-full dark:block"
+      />
+      <img
         src="/images/waves/hero-wave1.svg"
-        alt="Background Image"
-        style={{ top: "140px" }}
+        alt="Hero Wave 1"
+        className="absolute top-[350px] w-full"
       />
-      <BackgroundBlur />
-      <Wave2
+      <img
         src="/images/waves/hero-wave2.svg"
-        alt="Background Image"
-        style={{ top: "350px" }}
+        alt="Hero Wave 2"
+        className="absolute top-[450px] w-full opacity-20"
       />
-      <BottomWave src="/images/waves/hero-wave3.svg" alt="Background Image" style={{ top: "550px" }} />
-      <WaveStars/>
-    </Wrapper>
-  )
+      <img
+        src="/images/waves/hero-wave3.svg"
+        alt="Hero Wave 3"
+        className="hero-wave3 absolute top-[500px] w-full"
+      />
+    </div>
+  );
 }
-
-export default WaveHero
-
-const Wrapper = styled.div`
-  position: relative;
-`
-
-const WaveStars = styled.div`
-  position: absolute;
-  width: 100%;
-  background-position: center top;
-  background-repeat: repeat;
-  background-image: url("/images/backgrounds/stars.svg");
-  height: 224px;
-  top: 10px;
-  display: none;
-
-  @media (prefers-color-scheme: dark) {
-    display: block;
-  }
-`
-
-const Wave = styled.img`
-  position: absolute;
-  z-index: -1;
-  @media (min-width: 1440px) {
-    width: 100%;
-  }
-`
-
-const BackgroundBlur = styled.div`
-  z-index: -1;
-  position: absolute;
-  width: 100%;
-  height: 800px;
-  backdrop-filter: blur(60px);
-`
-
-const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 800px;
-  background: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
-  @media (prefers-color-scheme: dark) {
-    //background: linear-gradient(200.44deg, #A08153 13.57%, #674716 98.38%);
-    background: linear-gradient(180deg, #A08153 0%, #674716 100%);
-  }
-  z-index: -10;
-`
-const Wave2 = styled(Wave)`
-  z-index: 0;
-  opacity: 0.2;
-`
-
-const BottomWave = styled(Wave)`
-  z-index: 0;
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/hero-wave3-dark.svg");
-  }
-`

@@ -1,186 +1,48 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { Post } from "../../data/model/post"
-import { themes } from "../styles/ColorStyles"
-import { H3, MediumText } from "../styles/TextStyles"
-import { Link } from "gatsby"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Post } from "../../data/model/post";
 
-interface PostCardCollapsedCollapsedProps {
-  post: Post
+interface PostCardProps {
+  post: Post;
 }
 
-const PostCard = (props: PostCardCollapsedCollapsedProps) => {
-  const { post } = props
+export default function PostCard({ post }: PostCardProps) {
+  const [loaded, setLoaded] = useState(false);
 
-  const [load, setLoaded] = useState(false)
-
-  const loadImage = () => {
-    setLoaded(true)
-  }
-
-  const Body = (
-    <CardWrapper>
-      <HeaderImageWrapper>
-        <HeaderImage
+  const cardContent = (
+    <div
+      className="news-card-detail-gradient group relative grid h-[360px] w-[280px] cursor-pointer overflow-hidden rounded-[20px] transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02] max-xs:w-[260px]"
+    >
+      <div className="absolute inset-0 overflow-hidden rounded-[20px]">
+        <img
           src={post.image}
-          alt={"News Header Image"}
-          onLoad={loadImage}
-          visible={load}
+          alt="Post Image"
+          onLoad={() => setLoaded(true)}
+          className={`h-full w-full object-cover blur-[2px] transition-transform duration-800 group-hover:scale-110 ${loaded ? "block" : "hidden"}`}
         />
-
-        <HeaderImage
-          src={"/images/animations/loading.gif"}
-          alt={"News Header Loading"}
-          visible={!load}
+        <img
+          src="/images/animations/loading.gif"
+          alt="Post Loading"
+          className={`h-full w-full object-cover ${!loaded ? "block" : "hidden"}`}
         />
-      </HeaderImageWrapper>
-      <CardTitle>{post.title_en}</CardTitle>
-      <CardDescription>{post.description_en}</CardDescription>
-    </CardWrapper>
-  )
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/80" />
+      <div className="relative z-10 flex flex-col justify-end gap-2 p-5">
+        <p className="text-[24px] font-bold leading-[26px] text-white">{post.title_en}</p>
+        <p className="line-clamp-3 text-[15px] leading-[130%] text-white/80">
+          {post.description_en}
+        </p>
+      </div>
+    </div>
+  );
 
   if (post.internalLink) {
-    return (
-      <WrapperLink>
-        <Link to={`/blog/${post.internalLink}`} >{Body}</Link>
-      </WrapperLink>
-    )
+    return <Link to={`/blog/${post.internalLink}`}>{cardContent}</Link>;
   }
 
   return (
-    <Wrapper href={post.link} target="_blank" rel="noopener">
-      {Body}
-    </Wrapper>
-  )
+    <a href={post.link} target="_blank" rel="noopener">
+      {cardContent}
+    </a>
+  );
 }
-
-export default PostCard
-
-const CardTitle = styled(H3)`
-  position: absolute;
-  left: 0px;
-  top: 30px;
-  margin: 0px 20px;
-  word-break: break-word;
-  z-index: 3;
-
-  @media (max-width: 520px) {
-    top: 20px;
-    font-size: 20px;
-  }
-
-  @media (max-width: 350px) {
-    top: 12px;
-    font-size: 16px;
-  }
-`
-
-const CardDescription = styled(MediumText)`
-  position: absolute;
-  left: 0px;
-  bottom: 30px;
-  margin: 0px 20px;
-  word-break: break-word;
-  z-index: 3;
-  font-weight: 500;
-  @media (max-width: 520px) {
-    font-size: 12px;
-    bottom: 20px;
-    max-height: 70px;
-    overflow-y: scroll;
-  }
-
-  @media (max-width: 350px) {
-    max-height: 48px;
-    bottom: 12px;
-  }
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const HeaderImageWrapper = styled.div`
-  width: 100%;
-  margin: 0px;
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-`
-
-interface HeaderImageProps {
-  visible: Boolean
-}
-
-const HeaderImage = styled.img<HeaderImageProps>`
-  width: 100%;
-  margin: 0px;
-  border-radius: 12px;
-  display: ${props => (props.visible ? "block" : "none")};
-  filter: blur(4px);
-`
-
-const Wrapper = styled.a`
-  position: relative;
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-  cursor: pointer;
-  :hover {
-    transform: scale(1.05);
-  }
-
-  :active {
-    transform: scale(1.02);
-  }
-`
-
-const WrapperLink = styled.div`
-  position: relative;
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-  cursor: pointer;
-  :hover {
-    transform: scale(1.05);
-  }
-
-  :active {
-    transform: scale(1.02);
-  }
-`
-
-const CardWrapper = styled.div`
-  position: relative;
-  align-items: center;
-  color: ${themes.light.text1};
-  min-width: 200px;
-  max-width: 500px;
-  overflow: hidden;
-  border-radius: 12px;
-  height: auto;
-  animation: fadein 0.4s;
-  box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px;
-
-  @media (prefers-color-scheme: dark) {
-    color: ${themes.dark.text1};
-  }
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    border-radius: 12px;
-    width: 100%;
-    height: 100%;
-    background: rgb(206 206 206 / 60%);
-    box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
-
-    @media (prefers-color-scheme: dark) {
-      background: rgba(0, 0, 0, 0.6);
-    }
-  }
-`

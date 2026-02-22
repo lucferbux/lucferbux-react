@@ -1,15 +1,47 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "esnext",
-      "jsx": "preserve",
-      "lib": ["dom", "esnext"],
-      "strict": true,
-      "noEmit": true,
-      "isolatedModules": true,
-      "esModuleInterop": true,
-      "noUnusedLocals": false,
-      "allowJs": true
-    },
-    "exclude": ["node_modules", "public", ".cache"]
-  }
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+
+    /* Path aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src", "vite-env.d.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "public",
+    ".cache",
+    "src/**/__tests__/**",
+    "src/pages/index.tsx",
+    "src/pages/news.tsx",
+    "src/pages/posts.tsx",
+    "src/pages/projects.tsx",
+    "src/pages/privacy.tsx",
+    "src/pages/terms.tsx",
+    "src/pages/404.tsx",
+    "src/pages/blog/**"
+  ]
+}

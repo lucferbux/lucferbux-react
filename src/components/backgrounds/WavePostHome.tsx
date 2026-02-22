@@ -1,86 +1,34 @@
-import React from "react"
-import styled from "styled-components"
-
-const WavePostHome = () => {
+export default function WavePostHome() {
   return (
-    <Wrapper> 
-      <Wave
+    <div className="absolute top-0 z-[-1] w-full">
+      <img
         src="/images/waves/postproject-wave1.svg"
-        alt="Background Image"
+        alt="Post Wave 1"
+        className="absolute top-[-80px] w-full"
       />
-      <Wave2
+      <img
         src="/images/waves/postproject-wave2.svg"
-        alt="Background Image"
-        
+        alt="Post Wave 2"
+        className="absolute top-0 w-full"
       />
-      <Wave3
+      <img
         src="/images/waves/postproject-wave3.svg"
-        alt="Background Image"
-        
+        alt="Post Wave 3"
+        className="postproject-wave3 absolute top-[100px] w-full"
       />
-      <Wave4
+      <img
         src="/images/waves/postproject-wave4.svg"
-        alt="Background Image"
-       
+        alt="Post Wave 4"
+        className="postproject-wave4 absolute bottom-0 w-full"
       />
-      
-      <Lines
+      <img
         src="/images/waves/postproject-lines.svg"
-        alt="Background Image"
+        alt="Post Lines"
+        className="absolute top-[200px] w-full"
       />
-
-    </Wrapper>
-  )
+    </div>
+  );
 }
-
-export default WavePostHome;
-
-const Wrapper = styled.div`
-  position: relative;
-`
-
-const Lines = styled.img`
-  z-index: -1;
-  position: absolute;
-  top: 210px;
-  @media (min-width: 1440px) {
-    width: 100%;
-  }
-`
-
-
-const Wave = styled.img`
-  position: absolute;
-  z-index: -4;
-  @media (min-width: 1440px) {
-    width: 100%;
-  }
-`
-
-const Wave2 = styled(Wave)`
-  z-index: -3;
-  top: 69px;
-`
-
-const Wave3 = styled(Wave)`
-  z-index: -2;
-  top: 210px;
-
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/postproject-wave3-dark.svg");
-  }
-
-`
-
-const Wave4 = styled(Wave)`
-  z-index: -1;
-  top: 328px;
-
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/postproject-wave4-dark.svg");
-  }
-
-`
 
 
 

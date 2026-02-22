@@ -1,119 +1,68 @@
-import React, { useEffect } from "react"
-import styled from "styled-components"
-import { News } from "../../data/model/news"
-import { themes } from "../styles/ColorStyles"
-import { Caption, H2, H3, DescriptionCard } from "../styles/TextStyles"
-import NewsCard from "./NewsCard"
-import NewsCardCollapsed from "./NewsCardCollapsed"
+import { useState } from "react";
+import { News } from "../../data/model/news";
 
 interface NewsCardDetailProps {
-  news: News
-  inverted?: Boolean
+  news: News;
+  inverted: boolean;
 }
 
-const NewsCardDetail = (props: NewsCardDetailProps) => {
-  const { news, inverted } = props
+export default function NewsCardDetail({ news, inverted }: NewsCardDetailProps) {
+  const [loaded, setLoaded] = useState(false);
 
   return (
-    <Wrapper inverted={inverted ? inverted : false}>
-      <NewsCardWrapper>
-        <NewsCard news={news} />
-      </NewsCardWrapper>
-      <NewsCardCollapsedWrapper>
-        <NewsCardCollapsed news={news} />
-      </NewsCardCollapsedWrapper>
-
-      <TextWrapper>
-        <Text>{news.description_en}</Text>
-      </TextWrapper>
-    </Wrapper>
-  )
+    <a
+      href={news.url}
+      target="_blank"
+      rel="noopener"
+      className="group max-w-[500px] cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
+    >
+      <div
+        className="grid min-h-[360px] max-w-[500px] gap-2 rounded-[20px] p-2 max-md:grid-cols-1 max-md:min-h-[420px]"
+        style={{
+          gridTemplateColumns: inverted ? "1fr 180px" : "180px 1fr",
+          direction: inverted ? "rtl" : "ltr",
+          background: "rgba(255,255,255,0.6)",
+          boxShadow: "0px 50px 100px rgba(34,79,169,0.3), inset 0 0 0 0.5px rgba(255,255,255,0.6)",
+        }}
+      >
+        <div
+          className="w-full overflow-hidden rounded-xl transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] group-hover:scale-95"
+          style={{ direction: "ltr" }}
+        >
+          <img
+            src={news.image}
+            alt="News Header Image"
+            onLoad={() => setLoaded(true)}
+            className={`h-full w-full rounded-xl object-cover ${loaded ? "block" : "hidden"}`}
+          />
+          <img
+            src="/images/animations/loading.gif"
+            alt="News Header Loading"
+            className={`h-full w-full rounded-xl object-cover ${!loaded ? "block" : "hidden"}`}
+          />
+        </div>
+        <div className="grid gap-2.5 p-2.5" style={{ direction: "ltr" }}>
+          <p className="text-[24px] font-semibold leading-[26px] break-words text-black max-[470px]:text-[18px] max-[470px]:leading-[22px] dark:text-white">
+            {news.title_en}
+          </p>
+          <p className="text-[17px] font-normal leading-[130%] text-black/70 max-xs:text-[15px] dark:text-white/70">
+            {news.description_en}
+          </p>
+          <p className="mt-auto text-[15px] font-normal leading-[40px] text-black/70 dark:text-white/70">
+            {new Date(
+              news.timestamp instanceof Date
+                ? news.timestamp.getTime()
+                : (news.timestamp as any).seconds
+                  ? (news.timestamp as any).seconds * 1000
+                  : (news.timestamp as any)
+            ).toLocaleDateString([], {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
+      </div>
+    </a>
+  );
 }
-
-export default NewsCardDetail
-
-const Text = styled(DescriptionCard)`
-  line-height: 130%;
-  color: ${themes.light.text1};
-  mix-blend-mode: normal;
-  text-align: left;
-  direction: ltr;
-
-  @media (prefers-color-scheme: dark) {
-    opacity: 0.8;
-    color: ${themes.dark.text1};
-  }
-`
-interface WrapperProps {
-  inverted: Boolean
-}
-
-const Wrapper = styled.div<WrapperProps>`
-  max-width: 586px;
-  min-width: 426px;
-  height: 400px;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 20px;
-  padding: 20px;
-  background: rgba(66, 66, 66, 0.3);
-  border: 0.5px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 26.0498px 50.1px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(45px);
-  border-radius: 20px;
-  direction: ${props => (props.inverted ? "rtl" : "ltr")};
-  animation: fadein 0.4s;
-
-  @media (max-width: 650px) {
-    grid-template-columns: auto;
-    grid-template-rows: min-content auto;
-    justify-items: center;
-    gap: 20px;
-    max-width: 1000px;
-    min-width: 100px;
-    height: 520px;
-  }
-
-  @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-`
-
-const NewsCardWrapper = styled.div`
-
-  display: contents;
-  @media (max-width: 650px) {
-    display: none;
-  }
-
-`
-
-const NewsCardCollapsedWrapper = styled.div`
-  display: none;
-  position: relative;
-  @media (max-width: 650px) {
-    display: contents;
-  }
-`
-
-const TextWrapper = styled.div`
-  overflow-y: scroll;
-  max-width: 287px;
-  min-width: 180px;
-  height: 360px;
-  white-space: pre-line;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (max-width: 650px) {
-    width: auto;
-    height: auto;
-    max-height: 3000px;
-    max-width: 3000px;
-    min-width: 40px;
-  }
-`
-
-

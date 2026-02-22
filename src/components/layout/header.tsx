@@ -1,55 +1,27 @@
-import React from "react"
-import { Link } from "gatsby"
-import styled from "styled-components"
-import { menuData } from "../../data/menuData"
-import NavButton from "../buttons/NavButton"
+import { Link } from "react-router-dom";
+import { menuData } from "../../data/menuData";
+import NavButton from "../buttons/NavButton";
 
-const Header = () => {
+export default function Header() {
   return (
-    <Wrapper>
+    <div className="absolute left-0 right-0 z-3 mx-auto flex h-11 max-w-[1234px] items-center justify-between px-[30px] py-10 max-xs:top-[10px] max-xs:px-5 max-xs:py-5">
       <Link to="/">
-        <img src="/images/logos/logo.svg" alt={"Logo Icon"} />
+        <img src="/images/logos/logo.svg" alt="Logo Icon" />
       </Link>
-
-      <MenuWrapper count={menuData.length}>
+      <div
+        className="grid gap-[30px]"
+        style={{ gridTemplateColumns: `repeat(${menuData.length}, auto)` }}
+      >
         {menuData.map((item, index) => (
-          <NavButton icon={item.icon} text={item.title} link={item.link} key={index} collapse={true}/>
+          <NavButton
+            icon={item.icon}
+            text={item.title}
+            link={item.link}
+            key={index}
+            collapse
+          />
         ))}
-      </MenuWrapper>
-    </Wrapper>
-  )
+      </div>
+    </div>
+  );
 }
-
-export default Header
-
-const Wrapper = styled.div`
-  position: absolute;
-    display: flex;
-    justify-content: space-between;
-    max-width: 1234px;
-    height: 44px;
-    left: 0px;
-    right: 0px;
-    margin: 0px auto;
-    padding: 40px 30px;
-    z-index: 3;
-
-
-  @media (max-width: 550px) {
-    top: 10px;
-    padding: 20px;
-  }
-`
-
-interface MenuWrapperProps {
-  count: number;
-}
-
-const MenuWrapper = styled.div<MenuWrapperProps>`
-  display: grid;
-  grid-template-columns: repeat(${props => props.count}, auto);
-  gap: 30px;
-  
-`
-
-
