@@ -1,6 +1,6 @@
 # Feature Specification: Migrate Lucferbux Personal Website
 
-**Feature Branch**: `1-migrate-gatsby-to-vite`
+**Feature Branch**: `001-migrate-gatsby-to-vite`
 **Created**: 2026-02-22
 **Status**: Draft
 **Input**: Migrate personal website from Gatsby + styled-components to Vite + Tailwind CSS, update Firebase SDK, improve testing, add agentic configuration, and build admin section.
@@ -39,7 +39,7 @@ This story covers: installing and configuring Tailwind CSS v4, migrating the glo
 
 **Acceptance Scenarios**:
 
-1. **Given** the migrated app, **When** I view the home page, **Then** the HeroSection, NewsSectionHome, PostsProjectSection, and AboutMeSection render with identical visual appearance to the current site.
+1. **Given** the migrated app, **When** I view the home page, **Then** the HeroSection, NewsSectionHome, PostsProjectSection, and AboutMeSection render with visually consistent appearance to the current site (verified by manual side-by-side review).
 2. **Given** OS dark mode is enabled, **When** I view any page, **Then** backgrounds, text colors, card styles, and wave SVGs switch to dark variants matching the current behavior.
 3. **Given** a mobile viewport (< 450px), **When** I view the header, **Then** nav button text is hidden and only icons show (collapse behavior).
 4. **Given** the project, **When** I search for `styled-components` imports, **Then** zero results are found — all styling uses Tailwind.
@@ -93,7 +93,7 @@ This story covers: migrating from Jest to Vitest, migrating existing tests (News
 
 **Why this priority**: Testing is critical for safe migration. Can proceed in parallel with other US once the scaffold is ready.
 
-**Independent Test**: `npm run test` passes with >80% component coverage. CI pipeline runs successfully on PR. All 5 existing test suites pass in the new framework.
+**Independent Test**: `npm run test` passes with >30 test cases (primary metric). Stretch goal: >80% component coverage. CI pipeline runs successfully on PR. All 5 existing test suites pass in the new framework.
 
 **Acceptance Scenarios**:
 
@@ -197,7 +197,7 @@ This story covers: implementing Firebase Auth (email/password login), creating a
 - **Project** (`project` collection): title, title_en, description, description_en, link, tags, featured, date, version
 - **Work** (`team` collection): avatar, icon, name, name_en, description, description_en, job, job_en, importance
 - **BlogPost** (local markdown): slug, date, title, featuredImage, body content
-- **User** (Firebase Auth - new): uid, email, role (admin)
+- **User** (Firebase Auth - new): uid, email, displayName
 
 ## Success Criteria *(mandatory)*
 

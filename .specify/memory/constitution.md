@@ -18,13 +18,14 @@ Sync Impact Report
 The current user experience, visual design, navigation flow, and responsive
 behavior MUST remain identical after migration. No user-facing regression is
 acceptable. Dark mode via `prefers-color-scheme`, responsive breakpoints,
-page transitions, and component layouts MUST be preserved pixel-for-pixel.
+page transitions, and component layouts MUST be visually consistent
+(verified by manual side-by-side review at each breakpoint).
 Every page route (`/`, `/news`, `/posts`, `/projects`, `/privacy`, `/terms`,
 `/blog/{slug}`) MUST continue to function with the same content and behavior.
 
 ### II. Modern Stack First
 
-All new code MUST use the target stack: **Vite + React 18/19 + TypeScript +
+All new code MUST use the target stack: **Vite + React 18 + TypeScript +
 Tailwind CSS v4 + Firebase JS SDK v11+**. No new Gatsby or styled-components
 code is permitted. Existing patterns (CSS-in-JS via styled-components) MUST
 be migrated to Tailwind utility classes or Tailwind-compatible CSS modules.
@@ -62,19 +63,21 @@ MUST be minimal, well-commented, and self-documenting.
 
 ### VI. Incremental Delivery
 
-Migration MUST proceed in phases that keep the application functional at
-each checkpoint. Each phase MUST be independently deployable and testable.
-The order is: (1) scaffold Vite project, (2) migrate core layout and routing,
-(3) migrate styled-components to Tailwind, (4) update Firebase SDK,
-(5) improve testing, (6) add agentic configuration, (7) build admin section.
-No phase may begin until the previous phase passes all existing tests.
+Migration MUST proceed in priority tiers that keep the application functional
+at each checkpoint. Each tier MUST be independently deployable and testable.
+The tiers are: **P1** scaffold Vite project + core layout + Tailwind styling,
+**P2** Firebase SDK update + blog migration + testing, **P3** PWA/SEO +
+agentic configuration, **P4** admin section. User stories at the **same**
+priority level MAY execute in parallel (e.g., US1 and US2 are both P1 and
+can be worked on concurrently). A higher-numbered priority tier MUST NOT
+start until all stories in the preceding tier pass their independent tests.
 
 ## Technology Stack
 
 | Layer | Current | Target |
 |-------|---------|--------|
 | Build/Bundler | Gatsby 5 | Vite 6+ |
-| UI Framework | React 18 | React 18/19 |
+| UI Framework | React 18 | React 18 (React 19 optional post-migration) |
 | Styling | styled-components 5 | Tailwind CSS v4 |
 | Routing | Gatsby File System Routes | React Router v7 |
 | Firebase SDK | firebase 8.10 + reactfire 3 | Firebase JS SDK v11+ (modular) |
@@ -90,7 +93,7 @@ No phase may begin until the previous phase passes all existing tests.
 ## Development Workflow
 
 1. **Branch Strategy**: Feature branches off `main`. Branch naming:
-   `<number>-<short-description>` (e.g., `1-migrate-gatsby-to-vite`).
+   `<number>-<short-description>` (e.g., `001-migrate-gatsby-to-vite`).
 2. **PR Process**: Every PR MUST pass CI (lint, type-check, test, build).
    PRs MUST reference the relevant spec or task ID.
 3. **Code Review**: All PRs require at least one review. AI-generated code

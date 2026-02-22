@@ -1,7 +1,7 @@
 # Implementation Plan: Migrate Lucferbux Personal Website
 
-**Branch**: `1-migrate-gatsby-to-vite` | **Date**: 2026-02-22 | **Spec**: [spec.md](spec.md)
-**Input**: Feature specification from `specs/1-migrate-gatsby-to-vite/spec.md`
+**Branch**: `001-migrate-gatsby-to-vite` | **Date**: 2026-02-22 | **Spec**: [spec.md](spec.md)
+**Input**: Feature specification from `specs/001-migrate-gatsby-to-vite/spec.md`
 
 ## Summary
 
@@ -13,7 +13,7 @@ PWA/SEO → agentic config → admin.
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x (strict mode), React 18/19
+**Language/Version**: TypeScript 5.x (strict mode), React 18 (React 19 upgrade optional post-migration)
 **Primary Dependencies**: Vite 6+, React Router v7, Tailwind CSS v4, Firebase JS SDK v11+
 **Storage**: Cloud Firestore (existing `lucferbux-web-page` project), local markdown files for blog
 **Testing**: Vitest + React Testing Library + MSW (for Firebase mocking)
@@ -234,41 +234,47 @@ matching the current pattern, but organized into `unit/` and `integration/` subd
 | `firebase.firestore.FieldValue` | `import { serverTimestamp } from 'firebase/firestore'` |
 | N/A (no auth currently) | `import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'` |
 
-### Custom Tailwind Breakpoints
+### Custom Tailwind Breakpoints (v4 CSS-based Config)
 
-Map existing styled-components breakpoints to Tailwind config:
+Tailwind CSS v4 uses CSS-based configuration via `@theme` in `globals.css`
+instead of a `tailwind.config.ts` file. Map existing styled-components
+breakpoints to `@theme` directives:
 
-```typescript
-// tailwind.config.ts
-export default {
-  theme: {
-    screens: {
-      'xs': '450px',
-      'sm': '550px',
-      'md': '650px',
-      'lg': '750px',
-      'xl': '1000px',
-      '2xl': '1234px',
-      '3xl': '1440px',
-      '4xl': '2500px',
-    },
-  },
+```css
+/* src/styles/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 450px;
+  --breakpoint-sm: 550px;
+  --breakpoint-md: 650px;
+  --breakpoint-lg: 750px;
+  --breakpoint-xl: 1000px;
+  --breakpoint-2xl: 1234px;
+  --breakpoint-3xl: 1440px;
+  --breakpoint-4xl: 2500px;
 }
 ```
 
-### Custom Tailwind Theme Colors
+### Custom Tailwind Theme Colors (v4 CSS-based Config)
 
-Derived from `ColorStyles.ts`:
+Derived from `ColorStyles.ts`, defined via `@theme`:
 
-```typescript
-// tailwind.config.ts (colors extension)
-colors: {
-  primary: { DEFAULT: '#CA8F36', dark: '#CA8F36' },
-  background: { light: '#F2F6FF', dark: '#1A1A2E' },
-  card: { light: '#FFFFFF', dark: '#2D2D44' },
-  // ... mapped from themes.light and themes.dark
+```css
+/* src/styles/globals.css (@theme continued) */
+@theme {
+  --color-primary: #CA8F36;
+  --color-background-light: #F2F6FF;
+  --color-background-dark: #1A1A2E;
+  --color-card-light: #FFFFFF;
+  --color-card-dark: #2D2D44;
+  /* ... mapped from themes.light and themes.dark */
 }
 ```
+
+> **Note**: Tailwind v4 does NOT use `tailwind.config.ts` by default. All
+> theme customisation lives in CSS `@theme` blocks. A JS config file is only
+> needed if using the legacy `@config` directive for backward compatibility.
 
 ## Files to Delete Post-Migration
 
@@ -285,7 +291,7 @@ After all stories are complete and validated:
 - `__mocks__/gatsby.js`
 - `__mocks__/file-mock.js`
 - `src/components/styles/GlobalStyle.ts` (replaced by globals.css)
-- `src/components/styles/ColorStyles.ts` (replaced by tailwind.config.ts)
+- `src/components/styles/ColorStyles.ts` (replaced by `@theme` in globals.css)
 - `src/components/styles/TextStyles.ts` (replaced by Tailwind typography)
 - `src/components/test/FirebaseTest.tsx` (debug utility, no longer needed)
 - All `styled()` wrapper files once migrated
