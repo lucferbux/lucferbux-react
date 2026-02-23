@@ -19,7 +19,7 @@
     "gatsby-remark-codepen": "^0.1.1",
     "gatsby-remark-prismjs": "^7.13.2",
     "gatsby-source-filesystem": "^5.13.1",
-    "gatsby-transformer-remark": "^6.13.1",
+    "gatsby-transformer-remark": "^6.16.0",
     "gatsby-transformer-sharp": "^5.13.1",
     "lottie-web": "^5.11.0",
     "prismjs": "^1.30.0",
