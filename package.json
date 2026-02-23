@@ -20,7 +20,7 @@
     "gatsby-remark-prismjs": "^7.13.2",
     "gatsby-source-filesystem": "^5.13.1",
     "gatsby-transformer-remark": "^6.13.1",
-    "gatsby-transformer-sharp": "^5.13.1",
+    "gatsby-transformer-sharp": "^5.16.0",
     "lottie-web": "^5.11.0",
     "prismjs": "^1.30.0",
     "prop-types": "^15.8.1",
