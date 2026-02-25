@@ -21,13 +21,12 @@ export function useFirestoreDocument<T extends DocumentData>(
 ): FirestoreDocumentState<T> {
   const [state, setState] = useState<FirestoreDocumentState<T>>({
     data: null,
-    loading: true,
+    loading: !!docId,
     error: null,
   });
 
   useEffect(() => {
     if (!docId) {
-      setState({ data: null, loading: false, error: null });
       return;
     }
 

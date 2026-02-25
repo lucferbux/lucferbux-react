@@ -18,7 +18,7 @@ const newsMock: News = {
 const mockLoading = "/images/animations/loading.gif";
 
 test('Card Title', () => {
-  const {container, getByText } = render(<NewsCard news={newsMock} />)
+  const { getByText } = render(<NewsCard news={newsMock} />)
   expect(getByText(newsMock.title_en)).toBeInTheDocument();
 })
 

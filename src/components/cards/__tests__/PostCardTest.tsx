@@ -1,6 +1,6 @@
 import React from "react";
 
-import {render, fireEvent, screen, getByRole} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import { Post } from "../../../data/model/post";
 import PostCard from "../PostCard";
 
@@ -18,12 +18,12 @@ const postMock: Post = {
 const mockLoading = "/images/animations/loading.gif";
 
 test('Card Title', () => {
-  const {container, getByText } = render(<PostCard post={postMock} />)
+  const { getByText } = render(<PostCard post={postMock} />)
   expect(getByText(postMock.title_en)).toBeInTheDocument();
 })
 
 test('Card Description', () => {
-  const {container, getByText } = render(<PostCard post={postMock} />)
+  const { getByText } = render(<PostCard post={postMock} />)
   expect(getByText(postMock.description_en)).toBeInTheDocument();
 })
 

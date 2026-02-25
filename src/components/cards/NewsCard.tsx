@@ -42,9 +42,9 @@ export default function NewsCard({ news }: NewsCardProps) {
           {new Date(
             news.timestamp instanceof Date
               ? news.timestamp.getTime()
-              : (news.timestamp as any).seconds
-                ? (news.timestamp as any).seconds * 1000
-                : (news.timestamp as any)
+              : "seconds" in news.timestamp
+                ? news.timestamp.seconds * 1000
+                : Number(news.timestamp)
           ).toLocaleDateString([], {
             year: "numeric",
             month: "long",
