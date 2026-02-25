@@ -20,7 +20,7 @@ interface ResumeeCardProps {
 export default function ResumeeCard({ works }: ResumeeCardProps) {
   return (
     <div
-      className="mx-5 grid max-w-[786px] animate-fadein grid-cols-[240px_auto] gap-x-5 rounded-[20px] p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_auto] max-md:justify-items-center max-md:gap-0"
+      className="mx-5 grid h-[400px] max-w-[786px] animate-fadein grid-cols-[240px_auto] gap-x-5 overflow-hidden rounded-[20px] p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0"
       style={{
         background: "rgba(66,66,66,0.3)",
         border: "0.5px solid rgba(255,255,255,0.2)",
@@ -36,12 +36,12 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
           buttons={headerInfo.buttons}
         />
       </div>
-      <div className="h-[350px] px-2.5 py-5 max-md:h-[480px] max-md:w-auto">
-        <div className="text-[13px] font-semibold uppercase leading-[130%] text-black/70 dark:text-white/70">
+      <div className="flex h-[350px] flex-col px-2.5 py-5 max-md:h-auto max-md:min-h-0 max-md:w-full">
+        <div className="shrink-0 text-[13px] font-semibold uppercase leading-[130%] text-black/70 dark:text-white/70">
           Experience
         </div>
         <div
-          className="mt-3 grid h-full gap-2 overflow-y-scroll [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"
+          className="mt-3 grid min-h-0 flex-1 gap-2 overflow-y-scroll [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"
           style={{
             maskImage: "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
             WebkitMaskImage: "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",

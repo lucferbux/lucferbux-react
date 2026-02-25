@@ -55,7 +55,7 @@ export default function PostsProjectSection() {
     return <ErrorFallback message="Failed to load projects or posts" />;
 
   return (
-    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-xs:h-[1220px]">
+    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1700px]">
       <WavePostHome />
       <img
         src="/images/waves/postproject-wave5.svg"
@@ -76,7 +76,7 @@ export default function PostsProjectSection() {
             linkButton={infoProject.button.link}
           />
         </div>
-        <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-[auto_auto] max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-[640px]:justify-start">
+        <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-[auto_auto] max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-md:grid-cols-1 max-md:overflow-x-visible max-md:pb-10 max-[640px]:justify-start">
           {projects?.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
@@ -88,7 +88,7 @@ export default function PostsProjectSection() {
       </div>
 
       {/* Posts row */}
-      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] py-5 [direction:rtl] max-xl:relative max-xl:-top-[150px] max-xl:block max-xl:px-0 max-xl:py-5 max-xl:text-center xl:py-10">
+      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] py-5 [direction:rtl] max-xl:relative max-xl:-top-[150px] max-xl:block max-xl:px-0 max-xl:py-5 max-xl:text-center xl:py-10 max-md:top-0">
         <div className="px-5 [direction:ltr] max-xl:grid max-xl:justify-items-center">
           <InfoBox
             title={infoPosts.title}

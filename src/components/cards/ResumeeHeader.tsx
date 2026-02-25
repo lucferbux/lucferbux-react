@@ -11,7 +11,7 @@ interface ResumeeHeaderProps {
 export default function ResumeeHeader({ title, caption, description, buttons }: ResumeeHeaderProps) {
   return (
     <div
-      className="resumee-header-gradient relative h-[360px] w-[240px] cursor-pointer rounded-[10px] pt-[60px] max-md:h-[280px] max-md:w-full max-md:p-4"
+      className="resumee-header-gradient relative h-[360px] w-[240px] cursor-pointer rounded-[10px] pt-[60px] max-md:h-auto max-md:w-full max-md:p-4"
       style={{
         background: "linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%)",
       }}

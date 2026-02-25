@@ -2,6 +2,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypePrismPlus from "rehype-prism-plus";
 import CodePenEmbed from "./CodePenEmbed";
+import WaveBody from "../backgrounds/WaveBody";
 import type { Components } from "react-markdown";
 import type { ReactNode, ReactElement } from "react";
 import "../../styles/blog.css";
@@ -108,7 +109,8 @@ export default function BlogPost({
 }: BlogPostProps) {
   return (
     <div className="overflow-hidden">
-      <div className="mx-auto max-w-[800px] px-[30px] pt-[140px] pb-[30px]">
+      <WaveBody />
+      <div className="relative mx-auto max-w-[800px] px-[30px] pt-[140px] pb-[30px]">
         <h1 className="title-blog">{title}</h1>
         <p className="paragraph-blog mb-4 opacity-70">{date}</p>
         {featuredImage && (

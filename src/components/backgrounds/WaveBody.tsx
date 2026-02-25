@@ -16,7 +16,7 @@ export default function WaveBody() {
         <img
           src="/images/waves/hero-wave3.svg"
           alt="Body Wave"
-          className="hero-wave3 absolute top-[400px] -z-1 3xl:w-full"
+          className="hero-wave3 absolute top-[400px] max-w-none 3xl:w-full"
         />
       </div>
     </div>

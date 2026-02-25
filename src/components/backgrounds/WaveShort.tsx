@@ -14,7 +14,7 @@ export default function WaveShort() {
         <img
           src="/images/waves/hero-wave3.svg"
           alt="Short Wave"
-          className="hero-wave3 absolute top-[225px] -z-1 3xl:w-full"
+          className="hero-wave3 absolute top-[225px] max-w-none 3xl:w-full"
         />
       </div>
     </div>

@@ -14,7 +14,7 @@ export default function WaveHero() {
       <img
         src="/images/waves/hero-wave1.svg"
         alt="Hero Wave 1"
-        className="absolute top-[140px] -z-1 3xl:w-full"
+        className="absolute top-[140px] -z-1 max-w-none 3xl:w-full"
       />
       {/* Backdrop blur between gradient and upper waves — z:-1 */}
       <div className="absolute -z-1 h-[800px] w-full backdrop-blur-[60px]" />
@@ -22,13 +22,13 @@ export default function WaveHero() {
       <img
         src="/images/waves/hero-wave2.svg"
         alt="Hero Wave 2"
-        className="absolute top-[350px] z-0 opacity-20 3xl:w-full"
+        className="absolute top-[350px] z-0 max-w-none opacity-20 3xl:w-full"
       />
       {/* Wave 3 — z:0, dark mode swap via CSS, natural width below 1440px */}
       <img
         src="/images/waves/hero-wave3.svg"
         alt="Hero Wave 3"
-        className="hero-wave3 absolute top-[550px] z-0 3xl:w-full"
+        className="hero-wave3 absolute top-[550px] z-0 max-w-none 3xl:w-full"
       />
     </div>
   );

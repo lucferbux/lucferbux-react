@@ -30,7 +30,7 @@ export default function NewsSectionHome() {
     <div className="relative h-[1000px] overflow-hidden pt-[5px] max-xl:h-[1200px]">
       <WaveNewsHome />
 
-      <div className="mx-auto my-10 flex max-w-[1234px] flex-row items-start justify-between px-[30px] py-5 max-xl:flex-col max-xl:items-center max-xl:text-center max-md:h-[720px]">
+      <div className="mx-auto my-10 flex max-w-[1234px] flex-row items-start justify-between px-[30px] py-5 max-xl:flex-col max-xl:items-center max-xl:text-center max-md:h-auto">
         <InfoBox
           title={info.title}
           description={info.description}

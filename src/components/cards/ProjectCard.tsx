@@ -34,7 +34,7 @@ export default function ProjectCard({ project, captionText }: ProjectCardProps) 
         <h3 className="break-words text-[30px] font-bold max-xs:text-[26px] text-black dark:text-white">
           {project.title_en}
         </h3>
-        <p className="text-[17px] font-normal leading-[130%] text-black/70 max-xs:text-[14px] dark:text-white/70">
+        <p className="text-[17px] font-normal leading-[130%] text-black/70 max-xs:text-[14px] max-xs:leading-[100%] dark:text-white/70">
           {project.description_en}
         </p>
         <div className="grid grid-cols-[32px_auto] items-center gap-[10px]">
