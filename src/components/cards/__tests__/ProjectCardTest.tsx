@@ -1,6 +1,6 @@
 import React from "react";
 
-import {render, fireEvent, screen, getByRole} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import { Project } from "../../../data/model/project";
 import ProjectCard from "../ProjectCard";
 
@@ -19,22 +19,22 @@ const projectMock: Project = {
 const mockFeatured = "FEATURED";
 
 test('Card Title', () => {
-  const {container, getByText } = render(<ProjectCard project={projectMock} />)
+  const { getByText } = render(<ProjectCard project={projectMock} />)
   expect(getByText(projectMock.title_en)).toBeInTheDocument();
 })
 
 test('Card Description', () => {
-  const {container, getByText } = render(<ProjectCard project={projectMock} />)
+  const { getByText } = render(<ProjectCard project={projectMock} />)
   expect(getByText(projectMock.description_en)).toBeInTheDocument();
 })
 
 test('Card Version', () => {
-  const {container, getByText } = render(<ProjectCard project={projectMock} />)
+  const { getByText } = render(<ProjectCard project={projectMock} />)
   expect(getByText(projectMock.version)).toBeInTheDocument();
 })
 
 test('Featured filled', () => {
-  const {container, getByText } = render(<ProjectCard project={projectMock} captionText={mockFeatured} />)
+  const { getByText } = render(<ProjectCard project={projectMock} captionText={mockFeatured} />)
   expect(getByText(mockFeatured)).toBeInTheDocument();
 })
 

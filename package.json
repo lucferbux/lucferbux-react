@@ -1,5 +1,6 @@
 {
   "name": "lucferbux-react",
+  "type": "module",
   "private": true,
   "description": "Personal Webpage of Lucas Fernandez",
   "version": "2.0.0",
