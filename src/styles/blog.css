@@ -1,0 +1,349 @@
+/*
+ * Blog Typography & Layout Styles
+ * Adapted from the original Gatsby blog.css + prism.css
+ */
+
+/* ── Lists ── */
+.list-blog-ordered,
+.list-blog-unordered {
+  font-size: 18px;
+  line-height: 32px;
+  padding-left: 2em;
+  margin: 20px 0;
+}
+
+.list-item {
+  margin: 20px 0;
+}
+
+.list-item::marker {
+  content: "👉  ";
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+  text-indent: 0 !important;
+  text-align: start !important;
+  text-align-last: start !important;
+}
+
+/* ── Headings ── */
+.title-blog {
+  font-weight: bold;
+  font-size: 50px;
+  line-height: 56px;
+  margin-top: 0.6em;
+}
+
+.subtitle-blog {
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 56px;
+  margin-top: 0.6em;
+}
+
+.emphasis-title-blog {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 50px;
+  margin-top: 0.6em;
+}
+
+/* ── Body Text ── */
+.paragraph-blog {
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 140%;
+}
+
+.link-blog {
+  color: #3913b8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link-blog:hover {
+  text-decoration: underline;
+}
+
+/* ── Media ── */
+.image-container-blog {
+  position: relative;
+  width: 100%;
+  margin: 30px 0;
+  border-radius: 8px;
+}
+
+.strong-blog {
+  font-weight: bold;
+}
+
+/* ── Responsive ── */
+@media (max-width: 450px) {
+  .title-blog {
+    font-size: 46px;
+  }
+
+  .subtitle-blog {
+    font-size: 24px;
+  }
+
+  .emphasis-title-blog {
+    font-size: 22px;
+  }
+}
+
+/* ── Dark Mode ── */
+@media (prefers-color-scheme: dark) {
+  .title-blog,
+  .subtitle-blog,
+  .emphasis-title-blog,
+  .paragraph-blog,
+  .list-blog-ordered,
+  .list-blog-unordered {
+    color: white;
+  }
+
+  .link-blog {
+    color: #ad92fd;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   PrismJS Twilight Theme
+   Based on the Twilight theme of Textmate fame.
+   @author Remy Bach
+   ═══════════════════════════════════════════════ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: white;
+  background: none;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 1em;
+  text-align: left;
+  text-shadow: 0 -0.1em 0.2em black;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  padding: 0;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"],
+:not(pre) > code[class*="language-"] {
+  background: hsl(0, 0%, 8%);
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  border-radius: 0.5em;
+  border: 0.3em solid hsl(0, 0%, 33%);
+  box-shadow: 1px 1px 0.5em black inset;
+  margin: 0.5em 0;
+  overflow: auto;
+  padding: 1em;
+}
+
+/* Text Selection */
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  background: hsla(0, 0%, 93%, 0.15);
+}
+
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+  text-shadow: none;
+  background: hsla(0, 0%, 93%, 0.15);
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  border-radius: 0.3em;
+  padding: 0.15em 0.4em;
+  white-space: normal;
+  background: rgb(0 0 0 / 10%);
+  color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  :not(pre) > code[class*="language-"] {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+  }
+}
+
+/* Inline code without language class (backtick code in markdown) */
+:not(pre) > code {
+  border-radius: 0.3em;
+  padding: 0.15em 0.4em;
+  white-space: normal;
+  background: rgb(0 0 0 / 10%);
+  color: black;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 0.9em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :not(pre) > code {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+  }
+}
+
+/* Token styles */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: hsl(0, 0%, 47%);
+}
+
+.token.punctuation {
+  opacity: 0.7;
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.tag,
+.token.boolean,
+.token.number,
+.token.deleted {
+  color: hsl(14, 58%, 55%);
+}
+
+.token.keyword,
+.token.property,
+.token.selector,
+.token.constant,
+.token.symbol,
+.token.builtin {
+  color: hsl(53, 89%, 79%);
+}
+
+.token.attr-name,
+.token.attr-value,
+.token.string,
+.token.char,
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable,
+.token.inserted {
+  color: hsl(76, 21%, 52%);
+}
+
+.token.atrule {
+  color: hsl(218, 22%, 55%);
+}
+
+.token.regex,
+.token.important {
+  color: hsl(42, 75%, 65%);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* Line highlighting */
+pre[data-line] {
+  padding: 1em 0 1em 3em;
+  position: relative;
+}
+
+.language-markup .token.tag,
+.language-markup .token.attr-name,
+.language-markup .token.punctuation {
+  color: hsl(33, 33%, 52%);
+}
+
+.token {
+  position: relative;
+  z-index: 1;
+}
+
+.line-highlight {
+  background: hsla(0, 0%, 33%, 0.25);
+  background: linear-gradient(
+    to right,
+    hsla(0, 0%, 33%, 0.1) 70%,
+    hsla(0, 0%, 33%, 0)
+  );
+  border-bottom: 1px dashed hsl(0, 0%, 33%);
+  border-top: 1px dashed hsl(0, 0%, 33%);
+  left: 0;
+  line-height: inherit;
+  margin-top: 0.75em;
+  padding: inherit 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  white-space: pre;
+  z-index: 0;
+}
+
+/* rehype-prism-plus line numbers & highlights */
+.code-highlight {
+  float: left;
+  min-width: 100%;
+}
+
+.code-line {
+  display: block;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  border-left: 4px solid transparent;
+}
+
+.code-line.inserted {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.code-line.deleted {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.highlight-line {
+  margin-left: -16px;
+  margin-right: -16px;
+  background-color: rgba(55, 65, 81, 0.5);
+  border-left: 4px solid rgb(59, 130, 246);
+}
+
+.line-number::before {
+  display: inline-block;
+  width: 1rem;
+  text-align: right;
+  margin-right: 16px;
+  margin-left: -8px;
+  color: rgb(156, 163, 175);
+  content: attr(line);
+}

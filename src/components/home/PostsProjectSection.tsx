@@ -1,74 +1,71 @@
-import React, { useContext, useEffect } from "react"
-import {
-  ObservableStatus,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire"
-import "firebase/firestore"
-import styled from "styled-components"
-import InfoBox from "../text/infoBox"
-import { Post } from "../../data/model/post"
-import { Project } from "../../data/model/project"
-import ProjectCard from "../cards/ProjectCard"
-import WavePostHome from "../backgrounds/WavePostHome"
-import Tilt from "react-parallax-tilt"
-import PostCard from "../cards/PostCard"
-import { ExternalLink } from "../../data/model/externalLink"
+import { orderBy, where, limit } from "firebase/firestore";
+import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
+import InfoBox from "../text/infoBox";
+import { Post } from "../../data/model/post";
+import { Project } from "../../data/model/project";
+import ProjectCard from "../cards/ProjectCard";
+import WavePostHome from "../backgrounds/WavePostHome";
+import Tilt from "react-parallax-tilt";
+import PostCard from "../cards/PostCard";
+import LoadingSpinner from "../common/LoadingSpinner";
+import ErrorFallback from "../common/ErrorFallback";
+import { ExternalLink } from "../../data/model/externalLink";
 
 const buttonProject: ExternalLink = {
   text: "Browse projects",
   image: "code",
   link: "projects",
-}
+};
 
 const infoProject = {
   title: "Recent Projects",
   description:
     "These are a few of my latests projects I’ve been working on. Some of them are propietary, so there’s no source code.",
   button: buttonProject,
-}
+};
 
 const buttonPosts: ExternalLink = {
   text: "Browse posts",
   image: "vector",
   link: "posts",
-}
+};
 
 const infoPosts = {
   title: "Tech Posts",
   description:
     "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
   button: buttonPosts,
-}
+};
 
-const PostProjectSection = () => {
-  const firestore = useFirestore();
+export default function PostsProjectSection() {
+  const { data: projects, loading: projLoading, error: projError } =
+    useFirestoreCollection<Project>("project", [
+      where("featured", "==", true),
+      limit(2),
+    ]);
 
-  const projectCollection = firestore
-    .collection("project")
-    .where("featured", "==", true)
-    .limit(2);
+  const { data: posts, loading: postLoading, error: postError } =
+    useFirestoreCollection<Post>("patent", [
+      orderBy("date", "desc"),
+      limit(1),
+    ]);
 
-  const project = useFirestoreCollectionData(
-    projectCollection
-  ) as ObservableStatus<Array<Project>>;
-
-  const postCollection = firestore
-    .collection("patent")
-    .orderBy("date", "desc")
-    .limit(1);
-
-  const post = useFirestoreCollectionData(
-    postCollection
-  ) as ObservableStatus<Array<Post>>;
+  if (projLoading || postLoading) return <LoadingSpinner />;
+  if (projError || postError)
+    return <ErrorFallback message="Failed to load projects or posts" />;
 
   return (
-    <Wrapper>
+    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1700px]">
       <WavePostHome />
-      <Wave5 src="/images/waves/postproject-wave5.svg" alt="Background Image" />
+      <img
+        src="/images/waves/postproject-wave5.svg"
+        alt="Background Image"
+        className="postproject-wave5 absolute -bottom-[10px] z-[-1] hidden 3xl:block 3xl:w-full"
+      />
 
-      <ProjectCardDeatilWrapper>
-        <TextWrapper>
+      {/* Projects row */}
+      <div className="mx-auto mt-[100px] mb-5 grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] py-5 max-xl:mt-[120px] max-xl:block max-xl:px-0 max-xl:py-5 max-xl:text-center xl:py-10 min-[1950px]:py-[60px] min-[2600px]:py-[80px]">
+        <div className="max-xl:grid max-xl:justify-items-center">
           <InfoBox
             title={infoProject.title}
             description={infoProject.description}
@@ -78,173 +75,39 @@ const PostProjectSection = () => {
             textButton={infoProject.button.text}
             linkButton={infoProject.button.link}
           />
-        </TextWrapper>
-        <ProjectCardWrapper>
-          {project?.data?.map((projectEntry, index) => (
+        </div>
+        <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-[auto_auto] max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-md:grid-cols-1 max-md:overflow-x-visible max-md:pb-10 max-[640px]:justify-start">
+          {projects?.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
-              captionText={"FEATURED"}
+              captionText="FEATURED"
               key={index}
             />
           ))}
-        </ProjectCardWrapper>
-      </ProjectCardDeatilWrapper>
+        </div>
+      </div>
 
-      <PostCardDeatilWrapper>
-        <TextWrapperInverted>
-            <InfoBox
-              title={infoPosts.title}
-              description={infoPosts.description}
-              displayButton={true}
-              darkColor={true}
-              iconButton={infoPosts.button.image}
-              textButton={infoPosts.button.text}
-              linkButton={infoPosts.button.link}
-            />
-        </TextWrapperInverted>
-        <PostCardWrapper>
-          {post?.data?.map((postEntry, index) => (
-            <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5}><PostCard post={postEntry} key={index} /></Tilt>
+      {/* Posts row */}
+      <div className="mx-auto grid max-w-[1234px] grid-cols-[360px_auto] justify-between px-[30px] py-5 [direction:rtl] max-xl:relative max-xl:-top-[150px] max-xl:block max-xl:px-0 max-xl:py-5 max-xl:text-center xl:py-10 max-md:top-0">
+        <div className="px-5 [direction:ltr] max-xl:grid max-xl:justify-items-center">
+          <InfoBox
+            title={infoPosts.title}
+            description={infoPosts.description}
+            displayButton={true}
+            darkColor={true}
+            iconButton={infoPosts.button.image}
+            textButton={infoPosts.button.text}
+            linkButton={infoPosts.button.link}
+          />
+        </div>
+        <div className="relative grid grid-cols-1 justify-items-center px-5 [direction:ltr]">
+          {posts?.map((postEntry, index) => (
+            <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} key={index}>
+              <PostCard post={postEntry} />
+            </Tilt>
           ))}
-        </PostCardWrapper>
-      </PostCardDeatilWrapper>
-    </Wrapper>
-  )
+        </div>
+      </div>
+    </div>
+  );
 }
-
-export default PostProjectSection
-
-const Wave5 = styled.img`
-  position: absolute;
-  display: none;
-  z-index: -1;
-  bottom: -10px;
-
-  @media (min-width: 1440px) {
-    width: 100%;
-    display: block;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/postproject-wave5-dark.svg");
-    display: none;
-
-    @media (min-width: 3340px) {
-      width: 100%;
-      display: block;
-      bottom: -400px;
-    }
-  }
-`
-
-const Wrapper = styled.div`
-  position: relative;
-  padding-top: 5px;
-  height: 1150px;
-  overflow: hidden;
-
-  @media (max-width: 1000px) {
-    height: 1420px;
-  }
-
-  @media (max-width: 450px) {
-    height: 1220px;
-  }
-`
-
-const ProjectCardDeatilWrapper = styled.div`
-  max-width: 1234px;
-  margin: 100px auto 20px auto;
-  padding: 20px 30px;
-  display: grid;
-  grid-template-columns: 360px auto;
-  justify-content: space-between;
-
-  @media (max-width: 1000px) {
-    display: block;
-    padding: 20px 0px;
-    text-align: center;
-    margin: 120px auto 20px auto;
-  }
-
-  @media (min-width: 1000px) {
-    padding: 40px 30px;
-  }
-
-  @media (min-width: 1950px) {
-    padding: 60px 30px;
-  }
-
-  @media (min-width: 2600px) {
-    padding: 80px 30px;
-  }
-`
-
-const ProjectCardWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 280px);
-  justify-items: center;
-  gap: 30px;
-  max-width: 1234px;
-  padding: 40px 20px;
-  position: relative;
-  top: -40px;
-
-  @media (max-width: 1000px) {
-    grid-template-columns: auto auto;
-    overflow-x: scroll;
-    justify-items: center;
-    padding-bottom: 150px;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  @media (max-width: 640px) {
-    justify-content: flex-start;
-  }
-`
-
-const PostCardDeatilWrapper = styled.div`
-  max-width: 1234px;
-  padding: 20px 30px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 360px auto;
-  justify-content: space-between;
-  direction: rtl;
-
-  @media (max-width: 1000px) {
-    display: block;
-    padding: 20px 0px;
-    text-align: center;
-    top: -150px;
-    position: relative;
-  }
-
-  @media (min-width: 1000px) {
-    padding: 40px 30px;
-  }
-`
-
-const PostCardWrapper = styled.div`
-  display: grid;
-  grid-template-columns: auto;
-  justify-items: center;
-  position: relative;
-  direction: ltr;
-  padding: 0px 20px;
-`
-
-const TextWrapper = styled.div`
-  @media (max-width: 1000px) {
-    display: grid;
-    justify-items: center;
-  }
-`
-
-const TextWrapperInverted = styled(TextWrapper)`
-  direction: ltr;
-  padding: 0px 20px;
-`

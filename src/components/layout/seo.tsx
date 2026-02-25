@@ -1,108 +1,66 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
-
+import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
+  title: string;
   description?: string;
   lang?: string;
-  meta?: any[];
-  title: string;
   themeColor?: string;
   themeColorDark?: string;
+  image?: string;
+  url?: string;
 }
 
-const SEO: React.FC<SEOProps> = ({
-  lang = `en`,
-  meta = [],
-  description = ``,
-  ...props
-}) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-            url
-            image
-            twitterUsername
-          }
-        }
-      }
-    `
-  )
+const SITE_METADATA = {
+  title: "Lucferbux",
+  description: "Lucferbux Personal Webpage",
+  author: "@lucferbux",
+  url: "https://lucferbux.dev",
+  twitterUsername: "@lucferbux",
+  image: "/images/logos/logo-icon.svg",
+};
 
-  const metaDescription = description || site.siteMetadata.description;
-  const defaultTitle = site.siteMetadata?.title;
-  const twitter = site.siteMetadata.twitterUsername;
-  const image = site.siteMetadata.image;
+export default function SEO({
+  title,
+  description,
+  lang = "en",
+  themeColor = "#CA8F36",
+  themeColorDark = "#9D7E50",
+  image,
+  url,
+}: SEOProps) {
+  const metaDescription = description || SITE_METADATA.description;
+  const metaImage = image || SITE_METADATA.image;
+  const metaUrl = url || SITE_METADATA.url;
 
   return (
     <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      title={props.title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : undefined}
+      htmlAttributes={{ lang }}
+      title={title}
+      titleTemplate={`%s | ${SITE_METADATA.title}`}
       meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:title`,
-          content: props.title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: twitter || ``,
-        },
-        {
-          name: `twitter:title`,
-          content: props.title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-        {
-          name: 'apple-mobile-web-app-status-bar-style',
-          content: 'default'
-        },
-        {
-          name: "theme-color",
-          content: props.themeColor ?? "#CA8F36",
-          media: "(prefers-color-scheme: light)"
-        },
-        {
-          name: "theme-color",
-          content: props.themeColorDark ?? "#9D7E50",
-          media: "(prefers-color-scheme: dark)"
-        }
-        
-      ].concat(meta)}
-    />
-  )
+        { name: "description", content: metaDescription },
+        { property: "og:title", content: title },
+        { property: "og:description", content: metaDescription },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: metaImage },
+        { property: "og:url", content: metaUrl },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:creator", content: SITE_METADATA.twitterUsername },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: metaDescription },
+        { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      ]}
+    >
+      <meta
+        name="theme-color"
+        content={themeColor}
+        media="(prefers-color-scheme: light)"
+      />
+      <meta
+        name="theme-color"
+        content={themeColorDark}
+        media="(prefers-color-scheme: dark)"
+      />
+    </Helmet>
+  );
 }
-
-
-
-
-
-export default SEO

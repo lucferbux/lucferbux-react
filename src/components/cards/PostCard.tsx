@@ -1,186 +1,70 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { Post } from "../../data/model/post"
-import { themes } from "../styles/ColorStyles"
-import { H3, MediumText } from "../styles/TextStyles"
-import { Link } from "gatsby"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Post } from "../../data/model/post";
 
-interface PostCardCollapsedCollapsedProps {
-  post: Post
+interface PostCardProps {
+  post: Post;
 }
 
-const PostCard = (props: PostCardCollapsedCollapsedProps) => {
-  const { post } = props
+export default function PostCard({ post }: PostCardProps) {
+  const [loaded, setLoaded] = useState(false);
 
-  const [load, setLoaded] = useState(false)
-
-  const loadImage = () => {
-    setLoaded(true)
-  }
-
-  const Body = (
-    <CardWrapper>
-      <HeaderImageWrapper>
-        <HeaderImage
+  const cardContent = (
+    <div
+      className="group relative min-w-[200px] max-w-[500px] animate-[fadein_0.4s] overflow-hidden rounded-xl text-black dark:text-white"
+      style={{
+        boxShadow: "rgb(24 32 79 / 25%) 0px 40px 80px",
+      }}
+    >
+      {/* Background image — no resize on hover, blur(4px) matching old */}
+      <div className="w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)]">
+        <img
           src={post.image}
-          alt={"News Header Image"}
-          onLoad={loadImage}
-          visible={load}
+          alt="Post Image"
+          onLoad={() => setLoaded(true)}
+          className={`m-0 w-full rounded-xl blur-[4px] ${loaded ? "block" : "hidden"}`}
         />
+        <img
+          src="/images/animations/loading.gif"
+          alt="Post Loading"
+          className={`m-0 w-full rounded-xl ${!loaded ? "block" : "hidden"}`}
+        />
+      </div>
 
-        <HeaderImage
-          src={"/images/animations/loading.gif"}
-          alt={"News Header Loading"}
-          visible={!load}
-        />
-      </HeaderImageWrapper>
-      <CardTitle>{post.title_en}</CardTitle>
-      <CardDescription>{post.description_en}</CardDescription>
-    </CardWrapper>
-  )
+      {/* Overlay matching old ::after — light mode: rgba(206,206,206,0.6), dark: rgba(0,0,0,0.6) */}
+      <div className="absolute inset-0 rounded-xl bg-[rgb(206_206_206/60%)] shadow-[inset_0_0_0_1px_rgb(255_255_255/50%)] dark:bg-[rgba(0,0,0,0.6)]" />
+
+      {/* Title — positioned at top */}
+      <h3 className="absolute top-[30px] left-0 z-[3] mx-5 break-words text-[30px] font-bold max-[520px]:top-5 max-[520px]:text-[20px] max-[350px]:top-3 max-[350px]:text-[16px]">
+        {post.title_en}
+      </h3>
+
+      {/* Description — positioned at bottom */}
+      <p className="absolute bottom-[30px] left-0 z-[3] mx-5 break-words text-[17px] font-medium leading-[130%] max-[520px]:bottom-5 max-[520px]:max-h-[70px] max-[520px]:overflow-y-scroll max-[520px]:text-[12px] max-[350px]:bottom-3 max-[350px]:max-h-[48px] [&::-webkit-scrollbar]:hidden">
+        {post.description_en}
+      </p>
+    </div>
+  );
 
   if (post.internalLink) {
     return (
-      <WrapperLink>
-        <Link to={`/blog/${post.internalLink}`} >{Body}</Link>
-      </WrapperLink>
-    )
+      <Link
+        to={`/blog/${post.internalLink}`}
+        className="relative cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
+      >
+        {cardContent}
+      </Link>
+    );
   }
 
   return (
-    <Wrapper href={post.link} target="_blank" rel="noopener">
-      {Body}
-    </Wrapper>
-  )
+    <a
+      href={post.link}
+      target="_blank"
+      rel="noopener"
+      className="relative cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
+    >
+      {cardContent}
+    </a>
+  );
 }
-
-export default PostCard
-
-const CardTitle = styled(H3)`
-  position: absolute;
-  left: 0px;
-  top: 30px;
-  margin: 0px 20px;
-  word-break: break-word;
-  z-index: 3;
-
-  @media (max-width: 520px) {
-    top: 20px;
-    font-size: 20px;
-  }
-
-  @media (max-width: 350px) {
-    top: 12px;
-    font-size: 16px;
-  }
-`
-
-const CardDescription = styled(MediumText)`
-  position: absolute;
-  left: 0px;
-  bottom: 30px;
-  margin: 0px 20px;
-  word-break: break-word;
-  z-index: 3;
-  font-weight: 500;
-  @media (max-width: 520px) {
-    font-size: 12px;
-    bottom: 20px;
-    max-height: 70px;
-    overflow-y: scroll;
-  }
-
-  @media (max-width: 350px) {
-    max-height: 48px;
-    bottom: 12px;
-  }
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const HeaderImageWrapper = styled.div`
-  width: 100%;
-  margin: 0px;
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-`
-
-interface HeaderImageProps {
-  visible: Boolean
-}
-
-const HeaderImage = styled.img<HeaderImageProps>`
-  width: 100%;
-  margin: 0px;
-  border-radius: 12px;
-  display: ${props => (props.visible ? "block" : "none")};
-  filter: blur(4px);
-`
-
-const Wrapper = styled.a`
-  position: relative;
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-  cursor: pointer;
-  :hover {
-    transform: scale(1.05);
-  }
-
-  :active {
-    transform: scale(1.02);
-  }
-`
-
-const WrapperLink = styled.div`
-  position: relative;
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-  cursor: pointer;
-  :hover {
-    transform: scale(1.05);
-  }
-
-  :active {
-    transform: scale(1.02);
-  }
-`
-
-const CardWrapper = styled.div`
-  position: relative;
-  align-items: center;
-  color: ${themes.light.text1};
-  min-width: 200px;
-  max-width: 500px;
-  overflow: hidden;
-  border-radius: 12px;
-  height: auto;
-  animation: fadein 0.4s;
-  box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px;
-
-  @media (prefers-color-scheme: dark) {
-    color: ${themes.dark.text1};
-  }
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    border-radius: 12px;
-    width: 100%;
-    height: 100%;
-    background: rgb(206 206 206 / 60%);
-    box-shadow: rgb(255 255 255 / 50%) 0px 0px 0px 1px inset;
-
-    @media (prefers-color-scheme: dark) {
-      background: rgba(0, 0, 0, 0.6);
-    }
-  }
-`

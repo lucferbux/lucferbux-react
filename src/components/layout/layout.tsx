@@ -1,23 +1,15 @@
-import React from "react";
-import { GlobalStyle } from "../styles/GlobalStyle";
-import Footer from "./footer";
-import Header from "./header";
-import "./layout.css";
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-
-const Layout = (props: LayoutProps) => {
+export default function Layout() {
   return (
     <>
-      <GlobalStyle/>
-      <Header/>
-      <main>{props.children}</main>
-      <Footer/>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
-  )
+  );
 }
-
-export default Layout

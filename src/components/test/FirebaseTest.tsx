@@ -1,16 +1,12 @@
-import React from "react";
-import { useFirestore } from "reactfire";
+import { db } from "../../firebase";
 
-const FirebaseTest = () => {
+export default function FirebaseTest() {
   try {
-    const firestore = useFirestore();
-    console.log("Firestore initialized successfully:", firestore);
+    console.log("Firestore initialized successfully:", db);
     return <div>Firebase connection: OK</div>;
   } catch (error) {
     console.error("Firebase error:", error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     return <div>Firebase connection: ERROR - {errorMessage}</div>;
   }
-};
-
-export default FirebaseTest;
+}

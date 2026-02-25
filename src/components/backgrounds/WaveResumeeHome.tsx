@@ -1,96 +1,39 @@
-import React from "react"
-import styled from "styled-components"
-
-const WaveResumeeHome = () => {
+export default function WaveResumeeHome() {
   return (
-    <Wrapper> 
-      <Wave
+    <div className="relative">
+      <img
         src="/images/waves/resumee-wave1.svg"
-        alt="Background Image"
+        alt="Resumee Wave 1"
+        className="absolute top-0 -z-4 max-w-none 3xl:w-full"
       />
-      <Wave2
+      <img
         src="/images/waves/resumee-wave2.svg"
-        alt="Background Image"
-        
+        alt="Resumee Wave 2"
+        className="absolute top-[230px] -z-3 max-w-none 3xl:w-full"
       />
-      <Wave3
+      <img
         src="/images/waves/resumee-wave3.svg"
-        alt="Background Image"
-        
+        alt="Resumee Wave 3"
+        className="absolute top-[300px] -z-2 max-w-none 3xl:w-full"
       />
-      <Wave4
+      <img
         src="/images/waves/resumee-wave4.svg"
-        alt="Background Image"
-       
+        alt="Resumee Wave 4"
+        className="absolute top-[190px] -z-1 max-w-none 3xl:w-full"
       />
-
-      <Wave5
+      <img
         src="/images/waves/resumee-wave5.svg"
-        alt="Background Image"
-       
+        alt="Resumee Wave 5"
+        className="absolute top-[464px] -z-1 max-w-none 3xl:w-full"
       />
-
-      <Wave6
+      <img
         src="/images/waves/resumee-wave6.svg"
-        alt="Background Image"
-       
+        alt="Resumee Wave 6"
+        className="resumee-wave6 absolute top-[770px] -z-1 block max-w-none min-[1500px]:hidden 3xl:w-full"
       />
-      
-    </Wrapper>
-  )
+    </div>
+  );
 }
-
-export default WaveResumeeHome;
-
-const Wrapper = styled.div`
-  position: relative;
-`
-
-const Wave = styled.img`
-  position: absolute;
-  z-index: -4;
-  @media (min-width: 1440px) {
-    width: 100%;
-  }
-`
-
-const Wave2 = styled(Wave)`
-  z-index: -3;
-  top: 230px;
-`
-
-const Wave3 = styled(Wave)`
-  z-index: -2;
-  top: 300px;
-
-`
-
-const Wave4 = styled(Wave)`
-  z-index: -1;
-  top: 190px;
-
-`
-
-const Wave5 = styled(Wave)`
-  z-index: -1;
-  top: 464px;
-
-`
-
-const Wave6 = styled(Wave)`
-  z-index: -1;
-  top: 770px;
-  display: block;
-
-  @media (min-width: 1500px) {
-    display: none;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/resumee-wave6-dark.svg");
-  }
-
-`
 
 
 

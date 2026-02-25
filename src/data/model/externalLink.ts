@@ -1,5 +1,5 @@
 export interface ExternalLink {
-    text: string;
-    link: string;
-    image: string;
+  text: string;
+  link: string;
+  image: string;
 }

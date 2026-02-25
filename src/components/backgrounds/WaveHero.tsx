@@ -1,83 +1,35 @@
-import React from "react"
-import styled from "styled-components"
-
-const WaveHero = () => {
+export default function WaveHero() {
   return (
-    <Wrapper>
-      <Background />
-      <Wave
+    <div className="relative">
+      {/* Background gradient — z:-10 (furthest back) */}
+      <div
+        className="hero-gradient absolute -z-10 h-[800px] w-full"
+        style={{
+          background: "linear-gradient(180deg, #c98c31 0%, #eabe7d 100%)",
+        }}
+      />
+      {/* Stars overlay — dark mode only */}
+      <div className="absolute top-[10px] hidden h-[224px] w-full bg-[url('/images/backgrounds/stars.svg')] bg-[position:center_top] bg-repeat dark:block" />
+      {/* Wave 1 — z:-1, natural width below 1440px */}
+      <img
         src="/images/waves/hero-wave1.svg"
-        alt="Background Image"
-        style={{ top: "140px" }}
+        alt="Hero Wave 1"
+        className="absolute top-[140px] -z-1 max-w-none 3xl:w-full"
       />
-      <BackgroundBlur />
-      <Wave2
+      {/* Backdrop blur between gradient and upper waves — z:-1 */}
+      <div className="absolute -z-1 h-[800px] w-full backdrop-blur-[60px]" />
+      {/* Wave 2 — z:0, semi-transparent, natural width below 1440px */}
+      <img
         src="/images/waves/hero-wave2.svg"
-        alt="Background Image"
-        style={{ top: "350px" }}
+        alt="Hero Wave 2"
+        className="absolute top-[350px] z-0 max-w-none opacity-20 3xl:w-full"
       />
-      <BottomWave src="/images/waves/hero-wave3.svg" alt="Background Image" style={{ top: "550px" }} />
-      <WaveStars/>
-    </Wrapper>
-  )
+      {/* Wave 3 — z:0, dark mode swap via CSS, natural width below 1440px */}
+      <img
+        src="/images/waves/hero-wave3.svg"
+        alt="Hero Wave 3"
+        className="hero-wave3 absolute top-[550px] z-0 max-w-none 3xl:w-full"
+      />
+    </div>
+  );
 }
-
-export default WaveHero
-
-const Wrapper = styled.div`
-  position: relative;
-`
-
-const WaveStars = styled.div`
-  position: absolute;
-  width: 100%;
-  background-position: center top;
-  background-repeat: repeat;
-  background-image: url("/images/backgrounds/stars.svg");
-  height: 224px;
-  top: 10px;
-  display: none;
-
-  @media (prefers-color-scheme: dark) {
-    display: block;
-  }
-`
-
-const Wave = styled.img`
-  position: absolute;
-  z-index: -1;
-  @media (min-width: 1440px) {
-    width: 100%;
-  }
-`
-
-const BackgroundBlur = styled.div`
-  z-index: -1;
-  position: absolute;
-  width: 100%;
-  height: 800px;
-  backdrop-filter: blur(60px);
-`
-
-const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 800px;
-  background: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
-  @media (prefers-color-scheme: dark) {
-    //background: linear-gradient(200.44deg, #A08153 13.57%, #674716 98.38%);
-    background: linear-gradient(180deg, #A08153 0%, #674716 100%);
-  }
-  z-index: -10;
-`
-const Wave2 = styled(Wave)`
-  z-index: 0;
-  opacity: 0.2;
-`
-
-const BottomWave = styled(Wave)`
-  z-index: 0;
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/hero-wave3-dark.svg");
-  }
-`

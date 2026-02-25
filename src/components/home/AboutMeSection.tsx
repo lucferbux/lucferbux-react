@@ -1,128 +1,47 @@
-import React, { useContext, useEffect } from "react";
-import {
-  ObservableStatus,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire";
-import "firebase/firestore";
-import styled from "styled-components";
-import { News } from "../../data/model/news";
+import { orderBy } from "firebase/firestore";
+import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveResumeeHome from "../backgrounds/WaveResumeeHome";
-import NewsCard from "../cards/NewsCard";
-import NewsCardDetail from "../cards/NewsCardDetail";
 import InfoBox from "../text/infoBox";
-import FlatButton from "../buttons/FlatButton";
-import { H1, H3 } from "../styles/TextStyles";
-import { themes } from "../styles/ColorStyles";
 import { Work } from "../../data/model/work";
 import ResumeeCard from "../cards/ResumeeCard";
+import LoadingSpinner from "../common/LoadingSpinner";
+import ErrorFallback from "../common/ErrorFallback";
 
 const info = {
   title: "My Resumée",
-  description: "Here are the most important roles I've taken  so far",
-}
+  description: "Here are the most important roles I've taken so far",
+};
 
-const AboutMeSection = () => {
-
-  const workCollection = useFirestore()
-    .collection("team")
-    .orderBy("importance", "asc");
-
-  const work: ObservableStatus<Array<Work>> = useFirestoreCollectionData(
-    workCollection
+export default function AboutMeSection() {
+  const { data: works, loading, error } = useFirestoreCollection<Work>(
+    "team",
+    [orderBy("importance", "asc")]
   );
 
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorFallback message="Failed to load work experience" />;
+
   return (
-    <Wrapper>
+    <div className="relative h-[1000px] overflow-hidden pt-[5px] max-md:h-[1200px] max-xs:h-[1180px]">
       <WaveResumeeHome />
-      <WaveBottom src="/images/waves/resumee-wave6.svg" alt="Background Image" />
+      <img
+        src="/images/waves/resumee-wave6.svg"
+        alt="Background Image"
+        className="resumee-wave6 absolute -bottom-[10px] z-[-1] hidden 3xl:block 3xl:w-full 4xl:-bottom-[280px] 4xl:block 4xl:w-full"
+      />
 
-      <TextWrapper>
-        <InfoBox title={info.title} description={info.description} displayButton={false} darkColor={false}/>
-      </TextWrapper>
+      <div className="mx-auto my-10 grid max-w-[1234px] justify-items-center px-5 pt-[120px] pb-5 text-center min-[1700px]:pt-[170px] min-[2300px]:pt-[200px] min-[3000px]:pt-[250px] max-[800px]:pt-[60px]">
+        <InfoBox
+          title={info.title}
+          description={info.description}
+          displayButton={false}
+          darkColor={false}
+        />
+      </div>
 
-      <CardWrapper>
-        {work.data &&
-          <ResumeeCard works={work.data}/>
-        }
-          
-      </CardWrapper>
-    </Wrapper>
-  )
+      <div className="grid justify-items-center">
+        {works.length > 0 && <ResumeeCard works={works} />}
+      </div>
+    </div>
+  );
 }
-
-export default AboutMeSection;
-
-const WaveBottom = styled.img`
-  position: absolute;
-  display: none;
-  z-index: -1;
-  bottom: -10px;
-
-  @media (min-width: 1500px) {
-    width: 100%;
-    display: block;
-  }
-
-  @media (min-width: 2500px) {
-    width: 100%;
-    display: block;
-    bottom: -280px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/resumee-wave6-dark.svg");
-  }
-`
-
-
-const TextWrapper = styled.div`
-  display: grid;
-  justify-items: center;
-  max-width: 1234px;
-  margin: 40px auto;
-  padding: 120px 30px 20px 20px;
-  text-align: center !important;
-
-  @media (min-width: 1700px) {
-    padding: 170px 30px 20px 20px;
-  }
-
-  @media (min-width: 2300px) {
-    padding: 200px 30px 20px 20px;
-  }
-
-  @media (min-width: 3000px) {
-    padding: 250px 30px 20px 20px;
-  }
-
-  @media (max-width: 800px) {
-    padding: 60px 30px 20px 20px;
-  }
-`
-
-const CardWrapper = styled.div`
-  display: grid;  
-  justify-items: center;
-`
-
-const Wrapper = styled.div`
-  position: relative;
-  padding-top: 5px;
-  height: 1000px;
-  overflow: hidden;
-
-
-  @media (max-width: 650px) {
-    height: 1200px;
-  }
-
-  @media (max-width: 450px) {
-    height: 1180px;
-  }
-`
-
-
-const Title = styled(H3)`
-  color: ${themes.dark.text1};
-`

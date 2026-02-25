@@ -1,16 +1,12 @@
-import React, { useContext, useEffect } from "react";
-import {
-  ObservableStatus,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire";
-import "firebase/firestore";
-import styled from "styled-components";
+import { orderBy, limit } from "firebase/firestore";
 import { News } from "../../data/model/news";
+import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveNewsHome from "../backgrounds/WaveNewsHome";
 import NewsCard from "../cards/NewsCard";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import InfoBox from "../text/infoBox";
+import LoadingSpinner from "../common/LoadingSpinner";
+import ErrorFallback from "../common/ErrorFallback";
 import { ExternalLink } from "../../data/model/externalLink";
 
 const button: ExternalLink = { text: "Browse news", image: "courses", link: "news" };
@@ -18,102 +14,40 @@ const button: ExternalLink = { text: "Browse news", image: "courses", link: "new
 const info = {
   title: "Latest News",
   description: "Here are the latest news related to my professional work",
-  button: button
-}
+  button: button,
+};
 
-const NewsSection = () => {
-
-  const newsCollection = useFirestore()
-    .collection("intro")
-    .orderBy("timestamp", "desc")
-    .limit(6);
-    
-  const news: ObservableStatus<Array<News>> = useFirestoreCollectionData(
-    newsCollection
+export default function NewsSectionHome() {
+  const { data: news, loading, error } = useFirestoreCollection<News>(
+    "intro",
+    [orderBy("timestamp", "desc"), limit(6)]
   );
 
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorFallback message="Failed to load news" />;
+
   return (
-    <Wrapper>
+    <div className="relative h-[1000px] overflow-hidden pt-[5px] max-xl:h-[1200px]">
       <WaveNewsHome />
 
-      <CardDeatilWrapper>
-      <InfoBox title={info.title} description={info.description} displayButton={true}
-       iconButton={info.button.image} textButton={info.button.text} linkButton={info.button.link} darkColor={true}/>
-        {news?.data && (
-          <NewsCardDetail news={news?.data?.[0]} inverted={true} />
-        )}
-      </CardDeatilWrapper>
+      <div className="mx-auto my-10 flex max-w-[1234px] flex-row items-start justify-between px-[30px] py-5 max-xl:flex-col max-xl:items-center max-xl:text-center max-md:h-auto">
+        <InfoBox
+          title={info.title}
+          description={info.description}
+          displayButton={true}
+          iconButton={info.button.image}
+          textButton={info.button.text}
+          linkButton={info.button.link}
+          darkColor={true}
+        />
+        {news?.[0] && <NewsCardDetail news={news[0]} inverted={true} />}
+      </div>
 
-      <CardWrapper>
-        {news?.data?.slice(1, 6).map((newsEntry, index) => (
+      <div className="relative mx-auto my-10 -top-10 grid max-w-[1234px] grid-cols-[repeat(auto-fit,218px)] justify-items-center gap-5 px-[30px] py-10 max-md:-top-[60px] max-[500px]:px-5 max-2xl:grid-cols-[repeat(5,minmax(200px,1fr))] max-2xl:overflow-x-scroll max-2xl:pb-[120px] max-2xl:[&::-webkit-scrollbar]:hidden">
+        {news?.slice(1, 6).map((newsEntry, index) => (
           <NewsCard news={newsEntry} key={index} />
         ))}
-      </CardWrapper>
-    </Wrapper>
-  )
+      </div>
+    </div>
+  );
 }
-
-export default NewsSection;
-
-
-const CardDeatilWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  justify-content: space-between;
-  max-width: 1234px;
-  margin: 40px auto;
-  padding: 20px 30px;
-
-  @media (max-width: 1000px) {
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-  }
-
-  @media (max-width: 650px) {
-    height: 720px;
-  }
-`
-
-const CardWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 218px);
-  justify-items: center;
-  gap: 20px;
-  max-width: 1234px;
-  margin: 40px auto;
-  padding: 40px 30px;
-  position: relative;
-  top: -40px;
-
-  @media (max-width: 650px) {
-    top: -60px;
-  }
-
-  @media (max-width: 500px) {
-    padding: 40px 20px;
-  }
-
-  @media (max-width: 1234px) {
-    grid-template-columns: repeat(5, minmax(200px, 1fr));
-    padding-bottom: 120px;
-    overflow-x: scroll;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-`
-
-const Wrapper = styled.div`
-  position: relative;
-  padding-top: 5px;
-  height: 1000px;
-  overflow: hidden;
-
-  @media (max-width: 1000px) {
-    height: 1200px;
-  }
-`

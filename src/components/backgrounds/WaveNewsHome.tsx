@@ -1,57 +1,17 @@
-import React from "react"
-import styled from "styled-components"
-
-const WaveNewsHome = () => {
+export default function WaveNewsHome() {
   return (
-    <Wrapper> 
-      <Wave
+    <div className="relative">
+      <img
         src="/images/waves/course-wave1.svg"
-        alt="Background Image"
-        style={{ top: "0px" }}
+        alt="Course Wave 1"
+        className="absolute top-0 -z-1 max-w-none 3xl:w-full"
       />
-      <Wave2
+      <img
         src="/images/waves/course-wave2.svg"
-        alt="Background Image"
+        alt="Course Wave 2"
+        className="course-wave2 absolute top-[350px] max-w-none 3xl:w-full min-[1560px]:top-[420px] min-[1850px]:top-[490px] min-[2100px]:top-[420px]"
       />
-    </Wrapper>
-  )
+    </div>
+  );
 }
-
-export default WaveNewsHome
-
-const Wrapper = styled.div`
-  position: relative;
-`
-
-
-
-const Wave = styled.img`
-  position: absolute;
-  z-index: -1;
-  @media (min-width: 1440px) {
-    width: 100%;
-  }
-`
-
-const Wave2 = styled(Wave)`
-  z-index: 0;
-  top: 350px;
-
-  @media (min-width: 1560px) {
-    top: 420px;
-  }
-
-  @media (min-width: 1850px) {
-    top: 490px;
-  }
-
-  @media (min-width: 2100px) {
-    top: 420px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    content: url("/images/waves/course-wave2-dark.svg");
-  }
-
-`
 

@@ -1,96 +1,42 @@
-import React, { useEffect } from "react"
-import styled from "styled-components"
-import { H1 } from "../styles/TextStyles"
-import { themes } from "../styles/ColorStyles"
-import WaveBody from "../backgrounds/WaveBody"
-import "firebase/firestore"
-import {
-  ObservableStatus,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire"
-import InfoBox from "../text/infoBox"
-import { Post } from "../../data/model/post"
-import PostCard from "../cards/PostCard"
+import { orderBy } from "firebase/firestore";
+import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
+import WaveBody from "../backgrounds/WaveBody";
+import InfoBox from "../text/infoBox";
+import { Post } from "../../data/model/post";
+import PostCard from "../cards/PostCard";
+import LoadingSpinner from "../common/LoadingSpinner";
+import ErrorFallback from "../common/ErrorFallback";
 
 const info = {
   title: "Tech Posts",
-  description: "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
-}
+  description:
+    "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
+};
 
-const PostSection = () => {
-  useEffect(() => {})
+export default function PostSection() {
+  const { data: posts, loading, error } = useFirestoreCollection<Post>(
+    "patent",
+    [orderBy("date", "desc")]
+  );
 
-  const firestore = useFirestore();
-
-  const postCollection = firestore
-    .collection("patent")
-    .orderBy("date", "desc");
-
-  const posts = useFirestoreCollectionData(
-    postCollection
-  ) as ObservableStatus<Array<Post>>;
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorFallback message="Failed to load posts" />;
 
   return (
-    <Wrapper>
+    <div className="h-auto">
       <WaveBody />
-      <ContentWrapper>
+      <div className="relative mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] pt-[150px] pb-[30px] max-xl:grid-cols-1 max-xl:justify-items-center max-xl:text-center max-md:px-[30px] max-md:pt-[120px] max-md:pb-[10px]">
         <InfoBox
           title={info.title}
           description={info.description}
           displayButton={false}
         />
-      </ContentWrapper>
-      <PostWrapper>
-        {posts?.data?.map((postEntry, index) => (
-          <PostCard post={postEntry} key={index}/>
+      </div>
+      <div className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-[1020px]:justify-items-center max-md:gap-[26px]">
+        {posts?.map((postEntry, index) => (
+          <PostCard post={postEntry} key={index} />
         ))}
-      </PostWrapper>
-    </Wrapper>
-  )
+      </div>
+    </div>
+  );
 }
-
-export default PostSection
-
-const Wrapper = styled.div`
-  height: auto;
-`
-
-const ContentWrapper = styled.div`
-  max-width: 1234px;
-  margin: 0 auto;
-  padding: 150px 30px 30px 30px;
-  display: grid;
-  grid-template-columns: 360px auto;
-
-  @media(max-width: 1000px) {
-      grid-template-columns: auto;
-      justify-items: center;
-      text-align: center;
-  }
-
-  @media(max-width: 650px) {
-      grid-template-columns: auto;
-      justify-items: center;
-      padding: 120px 30px 10px 30px;
-  }
-`
-
-const PostWrapper = styled.div`
-  max-width: 1234px;
-  min-height: 1000px;
-  margin: 0 auto;
-  padding: 20px 30px 80px 30px;
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 40px;
-
-  @media(max-width: 1020px) {
-    grid-template-columns: auto;
-    justify-items: center;
-  }
-
-  @media(max-width: 650px) {
-    gap: 26px;
-  }
-`

@@ -1,159 +1,57 @@
-import React, { useEffect } from "react"
-import styled from "styled-components"
-import { ExternalLink } from "../../data/model/externalLink"
-import { News } from "../../data/model/news"
-import { Work } from "../../data/model/work"
-import { themes } from "../styles/ColorStyles"
-import { Caption, H2, H3, DescriptionCard } from "../styles/TextStyles"
-import NewsCard from "./NewsCard"
-import NewsCardCollapsed from "./NewsCardCollapsed"
-import ResumeeCardRow from "./ResumeeCardRow"
-import ResumeeHeader from "./ResumeeHeader"
-
-interface ResumeeCardProps {
-  works: Array<Work>
-}
-
-const buttons: Array<ExternalLink> = [
-  { text: "twitter", image: "twitter", link: "https://twitter.com/lucferbux" },
-  {
-    text: "instagram",
-    image: "instagram",
-    link: "https://instagram.com/lucferbux",
-  },
-]
+import { Work } from "../../data/model/work";
+import { ExternalLink } from "../../data/model/externalLink";
+import ResumeeHeader from "./ResumeeHeader";
+import ResumeeCardRow from "./ResumeeCardRow";
 
 const headerInfo = {
   title: "Lucas Fernández",
-  caption: "DEVELOPER",
-  description: "I love to learn & discover new technologies everyday.",
-  buttons: buttons,
+  caption: "Software Developer",
+  description: "Full-stack developer passionate about technology and innovation",
+  buttons: [
+    { text: "GitHub", image: "github", link: "https://github.com/lucferbux" },
+    { text: "LinkedIn", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
+  ] as ExternalLink[],
+};
+
+interface ResumeeCardProps {
+  works: Work[];
 }
 
-const ResumeeCard = (props: ResumeeCardProps) => {
-  const { works } = props
-
+export default function ResumeeCard({ works }: ResumeeCardProps) {
   return (
-    <Wrapper>
-      <ResumeeCardWrapper>
+    <div
+      className="mx-5 grid h-[400px] max-w-[786px] animate-fadein grid-cols-[240px_auto] gap-x-5 overflow-hidden rounded-[20px] p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0"
+      style={{
+        background: "rgba(66,66,66,0.3)",
+        border: "0.5px solid rgba(255,255,255,0.2)",
+        boxShadow: "0px 26.0498px 50.1px rgba(0,0,0,0.25)",
+        backdropFilter: "blur(45px)",
+      }}
+    >
+      <div className="contents">
         <ResumeeHeader
           title={headerInfo.title}
           caption={headerInfo.caption}
           description={headerInfo.description}
           buttons={headerInfo.buttons}
         />
-      </ResumeeCardWrapper>
-      <WorkWrapper>
-        <Title>Experience</Title>
-        <ListWrapper>
-          {
-          works.map((workInstance, index) => (
-            <ResumeeCardRow work={workInstance} key={index} />
-          ))
-          }
-        </ListWrapper>
-      </WorkWrapper>
-    </Wrapper>
-  )
-}
-
-export default ResumeeCard
-
-const Wrapper = styled.div`
-  max-width: 786px;
-  width: auto;
-  height: 400px;
-  display: grid;
-  grid-template-columns: 240px auto;
-  column-gap: 20px;
-  padding: 20px;
-  margin: auto 20px;
-
-  background: rgba(66, 66, 66, 0.3);
-  border: 0.5px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 26.0498px 50.1px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(45px);
-
-  border-radius: 20px;
-
-  animation: fadein 0.4s;
-
-  @media (max-width: 650px) {
-    grid-template-columns: auto;
-    grid-template-rows: min-content auto;
-    justify-items: center;
-    gap: 20px;
-    width: auto;
-    height: 520px;
-    gap: 0px;
-    height: 800px;
-  }
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`
-
-const ResumeeCardWrapper = styled.div`
-  display: contents;
-  /* @media (max-width: 650px) {
-    display: none;
-  } */
-`
-
-const ResumeeCardCollapsedWrapper = styled.div`
-  display: none;
-  position: relative;
-  @media (max-width: 650px) {
-    display: contents;
-  }
-`
-
-const WorkWrapper = styled.div`
-  height: 350px;
-  padding: 20px 10px;
-
-
-  @media (max-width: 650px) {
-    width: auto;
-    height: 480px;
-  }
-
-`
-
-const Title = styled.div`
-  font-style: normal;
-  font-size: 13px;
-  line-height: 130%;
-  color: ${themes.light.text2};
-  font-weight: 600;
-  text-transform: uppercase;
-  margin: 0px;
-
-  @media (prefers-color-scheme: dark) {
-    color: ${themes.dark.text2};
-  }
-`
-
-const ListWrapper = styled.div`
-  display: grid;
-  gap: 8px;
-  height: 100%;
-  margin-top: 12px;
-  height: 100%;
-  overflow-y: scroll;
-  mask-image: linear-gradient(
-    rgb(255, 255, 255) 80%,
-    rgba(255, 255, 255, 0) 100%
+      </div>
+      <div className="flex h-[350px] flex-col px-2.5 py-5 max-md:h-auto max-md:min-h-0 max-md:w-full">
+        <div className="shrink-0 text-[13px] font-semibold uppercase leading-[130%] text-black/70 dark:text-white/70">
+          Experience
+        </div>
+        <div
+          className="mt-3 grid min-h-0 flex-1 gap-2 overflow-y-scroll [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"
+          style={{
+            maskImage: "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
+            WebkitMaskImage: "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
+          }}
+        >
+          {works.map((work, index) => (
+            <ResumeeCardRow work={work} key={index} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
-
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`
+}

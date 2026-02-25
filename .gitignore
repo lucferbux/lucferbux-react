@@ -17,6 +17,8 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+tmp/
+
 # nyc test coverage
 .nyc_output
 
@@ -53,13 +55,21 @@ typings/
 
 # dotenv environment variable files
 .env*
+!.env.example
 
-# gatsby files
+# Vite build output
+dist/
+
+# Gatsby legacy cache (safe to keep for cleanup)
 .cache/
-public
 
 # Mac files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
 
 # Yarn
 yarn-error.log
@@ -67,3 +77,7 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+# Temp files
+*.tmp
+*.swp

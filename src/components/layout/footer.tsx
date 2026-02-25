@@ -1,18 +1,16 @@
-import React from "react"
-import styled from "styled-components"
-import WaveFooter from "../backgrounds/WaveFooter"
-import { footerData } from "../../data/footerData"
-import NavButton from "../buttons/NavButton"
-import NavButtonExternal from "../buttons/NavButtonExternal"
+import WaveFooter from "../backgrounds/WaveFooter";
+import { footerData } from "../../data/footerData";
+import NavButton from "../buttons/NavButton";
+import NavButtonExternal from "../buttons/NavButtonExternal";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <Wrapper>
+    <div className="relative h-[440px] w-full pt-[250px] max-sm:top-[10px]">
       <WaveFooter />
-      <ContentWrapper>
-        <LinkWrapper>
-          {footerData.map((item, index) => {
-            return item.external ? (
+      <div className="relative mx-auto grid max-w-[660px] grid-cols-[auto_auto] gap-x-10 px-5 max-[600px]:grid-cols-1 max-[600px]:justify-items-center">
+        <div className="grid max-w-[340px] grid-cols-[144px_144px] gap-x-2">
+          {footerData.map((item, index) =>
+            item.external ? (
               <NavButtonExternal
                 icon={item.icon}
                 text={item.title}
@@ -27,63 +25,12 @@ const Footer = () => {
                 key={index}
               />
             )
-          })}
-        </LinkWrapper>
-        <FooterText>
+          )}
+        </div>
+        <div className="h-[110px] max-w-[280px] py-16 text-[13px] text-white/70 max-[600px]:text-center">
           <p>This site does not track any information about usage</p>
-        </FooterText>
-      </ContentWrapper>
-    </Wrapper>
-  )
+        </div>
+      </div>
+    </div>
+  );
 }
-
-export default Footer
-
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 440px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  padding-top: 250px;
-
-  @media (max-width: 550px) {
-    top: 10px;
-  }
-`
-
-const LinkWrapper = styled.div`
-  display: grid;
-  max-width: 340px;
-  grid-template-columns: 144px 144px;
-  gap: 0px;
-  column-gap: 8px;
-`
-
-const FooterText = styled.div`
-  max-width: 280px;
-  height: 110px;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 64px 0px;
-  font-size: 13px;
-
-  @media (max-width: 600px) {
-    text-align: center;
-  }
-`
-
-const ContentWrapper = styled.div`
-  position: relative;
-  max-width: 660px;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 40px;
-  margin: 0px auto;
-  padding: 0px 20px;
-  box-sizing: border-box;
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-`

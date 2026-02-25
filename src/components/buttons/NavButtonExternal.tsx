@@ -1,74 +1,29 @@
-import { Link } from "gatsby"
-import React from "react"
-import styled from "styled-components"
-import { Caption } from "../styles/TextStyles"
+import clsx from "clsx";
 
 interface NavButtonExternalProps {
-  icon: string
-  text: string
-  link: string
-  collapse?: boolean
+  icon: string;
+  text: string;
+  link: string;
+  collapse?: boolean;
 }
 
-const NavButtonExternal = (props: NavButtonExternalProps) => {
-  const { icon, text, link, collapse } = props
-
+export default function NavButtonExternal({ icon, text, link, collapse }: NavButtonExternalProps) {
   return (
-    <Wrapper href={link} target="_blank" rel="noopener">
-      <MenuItem displayText={collapse ? collapse : false}>
-        <img className="icon-item" src={icon} alt={text} />
-        <TitleItem displayText={collapse ? collapse : false}>{text}</TitleItem>
-      </MenuItem>
-    </Wrapper>
-  )
+    <a href={link} target="_blank" rel="noopener" className="cursor-pointer">
+      <div
+        className={clsx(
+          "grid grid-cols-[24px_auto] items-center gap-[10px] rounded-[10px] p-[10px] text-white/70 transition-all duration-500",
+          "hover:bg-white/10 hover:shadow-[0px_10px_20px_rgba(0,0,0,0.1),inset_0px_0px_0px_0.5px_rgba(255,255,255,0.2)]",
+          collapse && "max-xs:block"
+        )}
+      >
+        <img
+          src={icon}
+          alt={text}
+          className={clsx(collapse && "max-xs:h-[30px] max-xs:w-[30px]")}
+        />
+        <span className={clsx(collapse && "max-xs:hidden")}>{text}</span>
+      </div>
+    </a>
+  );
 }
-
-export default NavButtonExternal
-
-interface MenuItemProps {
-  displayText: Boolean;
-}
-
-const Wrapper = styled.a`
-  cursor: pointer;
-`
-
-const MenuItem = styled.div<MenuItemProps>`
-  color: rgba(255, 255, 255, 0.7);
-  display: grid;
-  grid-template-columns: 24px auto;
-  gap: 10px;
-  align-items: center;
-  padding: 10px;
-
-  border-radius: 10px;
-  transition: 0.5s ease-out;
-
-  @media (max-width: 450px) {
-    display: ${props => props.displayText ? "block" : "grid"};
-  }
-
-  :hover {
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1),
-      inset 0px 0px 0px 0.5px rgba(255, 255, 255, 0.2);
-  }
-
-  .icon-item {
-    @media (max-width: 450px) {
-      width: ${props => props.displayText ? "30px" : "auto"};
-      height: ${props => props.displayText ? "30px" : "auto"};
-    }
-  }
-`
-
-interface TitleItemProps {
-  displayText: Boolean;
-}
-
-
-const TitleItem = styled.div<TitleItemProps>`
-  @media (max-width: 450px) {
-    display: ${props => props.displayText ? "none" : "block"};
-  }
-`
