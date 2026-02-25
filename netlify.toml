@@ -2,6 +2,10 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  # Firebase client-side config is public by design — not secrets
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API,VITE_FIREBASE_AUTH_DOMAIN,VITE_FIREBASE_PROJECT_ID,VITE_FIREBASE_STORAGE_BUCKET,VITE_FIREBASE_MESSAGING_SENDER_ID,VITE_FIREBASE_APP_ID"
+
 # SPA: redirect all routes to index.html (React Router handles routing)
 [[redirects]]
   from = "/*"
