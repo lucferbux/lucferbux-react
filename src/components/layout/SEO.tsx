@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
@@ -31,6 +32,11 @@ export default function SEO({
   const metaDescription = description || SITE_METADATA.description;
   const metaImage = image || SITE_METADATA.image;
   const metaUrl = url || SITE_METADATA.url;
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--page-top-color", themeColor);
+    document.documentElement.style.setProperty("--page-top-color-dark", themeColorDark);
+  }, [themeColor, themeColorDark]);
 
   return (
     <Helmet

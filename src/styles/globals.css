@@ -217,10 +217,23 @@
 }
 
 /* ===========================
+   Safari Toolbar Tinting
+   (html bg extends into safe-area for Liquid Glass toolbar)
+   =========================== */
+
+html {
+  background-color: var(--page-top-color, var(--color-primary));
+}
+
+/* ===========================
    Dark Mode
    =========================== */
 
 @media (prefers-color-scheme: dark) {
+  html {
+    background-color: var(--page-top-color-dark, #9D7E50);
+  }
+
   body {
     background: var(--color-background-dark);
   }
