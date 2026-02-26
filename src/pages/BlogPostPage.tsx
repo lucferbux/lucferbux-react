@@ -59,7 +59,7 @@ export default function BlogPostPage() {
 
   return (
     <>
-      <SEO title={frontmatter.title} />
+      <SEO title={frontmatter.title} themeColor="#007789" themeColorDark="#2b2830" />
       <BlogPost
         title={frontmatter.title}
         date={frontmatter.date}

@@ -15,7 +15,7 @@ export default function HeroSection() {
     <div className="overflow-hidden 4xl:pb-[100px]">
       <WaveHero />
       <div className="relative z-10 mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] py-[200px] max-lg:grid-cols-1 max-lg:justify-center max-lg:gap-[60px] max-lg:px-5 max-lg:pt-[150px] max-lg:pb-[290px] max-md:pb-[380px]">
-        <div className="grid max-w-[360px] gap-[30px]">
+        <div className="grid max-w-[360px] gap-[30px] max-lg:mx-auto max-lg:text-center">
           <h1
             className="text-[50px] font-bold max-xs:text-[48px]"
             style={{
@@ -55,7 +55,7 @@ export default function HeroSection() {
             conferences and projects that I take part in.
           </p>
           <div
-            className="grid gap-0 max-xs:justify-around"
+            className="grid gap-0 justify-center max-xs:justify-around"
             style={{
               gridTemplateColumns: `repeat(${socialLinks.length}, auto)`,
             }}

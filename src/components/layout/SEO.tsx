@@ -48,7 +48,7 @@ export default function SEO({
         { name: "twitter:creator", content: SITE_METADATA.twitterUsername },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: metaDescription },
-        { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+        { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       ]}
     >
       <meta
