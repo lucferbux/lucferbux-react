@@ -55,7 +55,7 @@ export default function HeroSection() {
             conferences and projects that I take part in.
           </p>
           <div
-            className="grid gap-0 justify-center max-xs:justify-around"
+            className="grid gap-[30px] justify-start max-lg:justify-center max-xs:justify-around"
             style={{
               gridTemplateColumns: `repeat(${socialLinks.length}, auto)`,
             }}
