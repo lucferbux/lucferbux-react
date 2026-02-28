@@ -5,21 +5,27 @@ test.describe("Navigation", () => {
     await page.goto("/");
     await page.locator('a[href="/news"]').first().click();
     await expect(page).toHaveURL(/\/news/);
-    await expect(page.locator("h2").first()).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Latest News" })
+    ).toBeVisible();
   });
 
   test("should navigate to the Projects page", async ({ page }) => {
     await page.goto("/");
     await page.locator('a[href="/projects"]').first().click();
     await expect(page).toHaveURL(/\/projects/);
-    await expect(page.locator("h2").first()).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Explore Projects" })
+    ).toBeVisible();
   });
 
   test("should navigate to the Posts page", async ({ page }) => {
     await page.goto("/");
     await page.locator('a[href="/posts"]').first().click();
     await expect(page).toHaveURL(/\/posts/);
-    await expect(page.locator("h2").first()).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Tech Posts" })
+    ).toBeVisible();
   });
 
   test("should navigate to the Admin login page", async ({ page }) => {
