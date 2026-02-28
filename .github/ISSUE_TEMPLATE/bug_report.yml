@@ -1,0 +1,120 @@
+name: "🐛 Bug Report"
+description: Report a bug or unexpected behavior in the application
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below so we can reproduce and fix it.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the bug.
+      placeholder: Describe what went wrong...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the issue.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+      placeholder: Describe the expected behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened. Include screenshots or screen recordings if possible.
+      placeholder: Describe what actually happened...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Area
+      description: Which part of the application is affected?
+      multiple: true
+      options:
+        - Home Page
+        - News Section
+        - Blog / Posts
+        - Projects
+        - Admin Panel
+        - PWA / Service Worker
+        - Routing / Navigation
+        - Styling / Dark Mode
+        - Firebase / Data Fetching
+        - SEO / Meta Tags
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: In which browser(s) does the issue occur?
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser Version
+      description: e.g. Chrome 120, Safari 17.2
+      placeholder: "Chrome 120"
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      description: On which device does the issue occur?
+      options:
+        - Desktop
+        - Tablet
+        - Mobile
+
+  - type: textarea
+    id: console-errors
+    attributes:
+      label: Console Errors
+      description: Paste any relevant errors from the browser console.
+      render: shell
+
+  - type: textarea
+    id: implementation-notes
+    attributes:
+      label: Implementation Notes
+      description: |
+        Optional notes for implementation. Reference relevant files, components, or hooks.
+        This project uses Vite + React 18 + TypeScript + Tailwind CSS v4 + Firebase.
+        See `AGENTS.md` and `.github/copilot-instructions.md` for conventions.
+      placeholder: |
+        - Affected component: `src/components/...`
+        - Related hook: `src/hooks/...`
+        - Firestore collection: intro | patent | project | team
