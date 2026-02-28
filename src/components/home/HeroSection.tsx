@@ -5,7 +5,7 @@ import WaveHero from "../backgrounds/WaveHero";
 import { ExternalLink } from "../../data/model/externalLink";
 
 const socialLinks: ExternalLink[] = [
-  { text: "twitter", image: "twitter", link: "https://twitter.com/lucferbux" },
+  { text: "instagram", image: "instagram", link: "https://www.instagram.com/lucferbux" },
   { text: "linkedin", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
   { text: "github", image: "github", link: "https://github.com/lucferbux" },
 ];
