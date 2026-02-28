@@ -1,0 +1,116 @@
+name: "✨ Feature Request"
+description: Suggest a new feature or enhancement for the application
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please describe your idea so it can be evaluated and planned.
+
+        This project uses [SpecKit](https://github.com/speckit) for feature specification and planning.
+        Approved features will go through the SpecKit workflow: **specify → plan → tasks → implement**.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: |
+        Describe the problem this feature would solve. What is the pain point or unmet need?
+        A clear problem statement helps prioritize and scope the feature correctly.
+      placeholder: "As a user, I want to ... so that ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution or how you envision this feature working.
+      placeholder: Describe your ideal solution...
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-scenarios
+    attributes:
+      label: User Scenarios
+      description: |
+        Describe one or more user scenarios showing how this feature would be used.
+        These will feed into the SpecKit specification as user stories.
+      placeholder: |
+        **Scenario 1**: Given [context], when [action], then [expected result]
+        **Scenario 2**: Given [context], when [action], then [expected result]
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or workarounds you've considered.
+      placeholder: Describe alternatives...
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Area
+      description: Which part of the application would this feature affect?
+      multiple: true
+      options:
+        - Home Page
+        - News Section
+        - Blog / Posts
+        - Projects
+        - Admin Panel
+        - PWA / Service Worker
+        - Routing / Navigation
+        - Styling / Dark Mode
+        - Firebase / Data Fetching
+        - SEO / Meta Tags
+        - New Section / Page
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Suggested Priority
+      description: How important is this feature to you?
+      options:
+        - "P1 — Critical: Blocks core functionality"
+        - "P2 — High: Significant improvement"
+        - "P3 — Medium: Nice to have"
+        - "P4 — Low: Minor improvement"
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: |
+        Define what "done" looks like for this feature. These criteria will be used
+        during the SpecKit planning phase to generate tasks.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+
+  - type: textarea
+    id: implementation-hints
+    attributes:
+      label: Implementation Hints
+      description: |
+        Optional technical context for implementation. Reference relevant files, components, or patterns.
+        This project uses Vite + React 18 + TypeScript + Tailwind CSS v4 + Firebase.
+        See `AGENTS.md` and `.github/copilot-instructions.md` for conventions.
+      placeholder: |
+        - Related component: `src/components/...`
+        - Related hook: `src/hooks/...`
+        - Firestore collection: intro | patent | project | team
+        - SpecKit spec branch: `specs/###-feature-name/`
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / References
+      description: Add any mockups, screenshots, or links to similar features for reference.
+      placeholder: Drag and drop images or paste links here...

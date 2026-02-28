@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/lucferbux/lucferbux-react/blob/main/AGENTS.md
+    about: Read the project documentation and coding conventions in AGENTS.md

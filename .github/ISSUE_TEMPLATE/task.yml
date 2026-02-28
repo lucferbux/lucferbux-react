@@ -1,0 +1,123 @@
+name: "📋 Task"
+description: Create a development task for implementation, refactoring, or maintenance
+title: "[Task]: "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for concrete development work such as implementation tasks,
+        refactoring, dependency updates, or infrastructure changes.
+
+        If this task is part of a SpecKit feature, reference the corresponding spec and plan.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of the task and its goal.
+      placeholder: Describe what needs to be done and why...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Task Type
+      description: What kind of task is this?
+      options:
+        - Implementation
+        - Refactoring
+        - Dependency Update
+        - Configuration / Infrastructure
+        - Documentation
+        - Testing
+        - Performance
+        - Accessibility
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Area
+      description: Which part of the application does this task affect?
+      multiple: true
+      options:
+        - Home Page
+        - News Section
+        - Blog / Posts
+        - Projects
+        - Admin Panel
+        - PWA / Service Worker
+        - Routing / Navigation
+        - Styling / Dark Mode
+        - Firebase / Data Fetching
+        - SEO / Meta Tags
+        - CI/CD / GitHub Actions
+        - Testing Infrastructure
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Define what "done" looks like for this task.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation-details
+    attributes:
+      label: Implementation Details
+      description: |
+        Technical details and instructions for implementing this task.
+        Reference specific files, components, hooks, or patterns.
+        See `AGENTS.md` and `.github/copilot-instructions.md` for project conventions.
+      placeholder: |
+        **Files to modify:**
+        - `src/components/...`
+        - `src/hooks/...`
+
+        **Approach:**
+        1. Step 1
+        2. Step 2
+
+        **Conventions:**
+        - Follow existing patterns in copilot-instructions.md
+        - Use Tailwind CSS v4 utility classes
+        - Use Firebase modular imports
+
+  - type: input
+    id: speckit-ref
+    attributes:
+      label: SpecKit Reference
+      description: If part of a SpecKit feature, provide the spec path or task ID.
+      placeholder: "specs/###-feature-name/ or T001"
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / Blockers
+      description: List any tasks, PRs, or issues that must be completed before this task.
+      placeholder: |
+        - Blocked by #123
+        - Depends on PR #456
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this task?
+      options:
+        - "P1 — Critical"
+        - "P2 — High"
+        - "P3 — Medium"
+        - "P4 — Low"
