@@ -31,7 +31,7 @@
 | **Database** | Cloud Firestore — collections: `intro`, `patent`, `project`, `team` |
 | **Auth** | Firebase Authentication (email / password) |
 | **Blog** | react-markdown + remark-gfm + rehype-prism-plus |
-| **Testing** | Vitest + React Testing Library + MSW |
+| **Testing** | Vitest + React Testing Library + MSW · Playwright (E2E) |
 | **PWA** | vite-plugin-pwa (Workbox generateSW) |
 | **CI/CD** | GitHub Actions → Firebase Hosting |
 
@@ -80,6 +80,9 @@ VITE_FIREBASE_APP_ID=<app-id>
 | `npm run preview` | Preview production build locally |
 | `npm run test` | Run all tests with Vitest |
 | `npm run test:coverage` | Tests with coverage report |
+| `npm run e2e` | Run E2E tests with Playwright |
+| `npm run e2e:headed` | Run E2E tests in headed browser mode |
+| `npm run e2e:report` | Open the last Playwright HTML report |
 | `npm run type-check` | TypeScript type checking (`tsc --noEmit`) |
 | `npm run lint` | Lint source with ESLint |
 | `npm run format` | Format code with Prettier |
@@ -123,6 +126,9 @@ tests/
 ├── mocks/                    # Firebase mocks, MSW handlers
 ├── unit/                     # Component & hook unit tests
 └── integration/              # Page & admin flow integration tests
+e2e/
+├── landing.spec.ts           # Landing page E2E tests
+└── navigation.spec.ts        # Navigation flow E2E tests
 ```
 
 ## Features
@@ -152,6 +158,8 @@ tests/
 
 ## Testing
 
+### Unit & Integration Tests
+
 ```bash
 npm run test              # 14 suites, 71 tests
 npm run test:coverage     # With coverage report
@@ -164,6 +172,27 @@ Tests are organized under `tests/`:
 - `unit/hooks/` — useFirestoreCollection, useAuth
 - `integration/` — HomePage, NewsPage, PostsPage, ProjectsPage, AdminFlow
 
+### E2E Tests (Playwright)
+
+```bash
+npm run e2e               # Run all E2E tests (headless)
+npm run e2e:headed        # Run with visible browser
+npm run e2e:report        # View the HTML report
+```
+
+E2E tests live in `e2e/` and cover:
+- **Landing page** — Hero section loads, header navigation visible, footer present
+- **Navigation** — Browse to News, Projects, Posts; admin login page; unknown route handling
+
+**Setup for local E2E:**
+1. Copy `.env.example` to `.env` and fill in Firebase credentials (or use dummy values for UI-only tests).
+2. Install Playwright browsers: `npx playwright install --with-deps chromium`
+3. Run `npm run e2e`
+
+The Playwright config (`playwright.config.ts`) automatically starts the Vite dev server. In CI, the E2E workflow (`.github/workflows/e2e.yml`) injects Firebase credentials from repository secrets.
+
+**Multi-browser:** Chromium, WebKit, and Firefox projects are configured. CI runs Chromium only; locally all browsers run by default.
+
 ## Deployment
 
 ```bash
@@ -173,6 +202,7 @@ firebase deploy --only hosting
 
 CI/CD is configured via GitHub Actions:
 - **ci.yml** — Runs on push/PR to `main`: lint → type-check → test → build
+- **e2e.yml** — Runs on push/PR to `main`: build → Playwright E2E tests (requires Firebase secrets)
 - **deploy.yml** — Deploys to Firebase Hosting on push to `main`
 
 ## Meta
