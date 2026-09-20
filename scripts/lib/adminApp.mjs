@@ -1,8 +1,13 @@
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { homedir } from "node:os";
+import { join, resolve } from "node:path";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 
 const LOCAL_KEY = resolve(process.cwd(), "scripts/serviceAccount.json");
+const ADC_PATH = join(
+  homedir(),
+  ".config/gcloud/application_default_credentials.json"
+);
 
 /**
  * Initialise the Admin SDK.
@@ -39,10 +44,21 @@ export function initAdmin({ projectId } = {}) {
     });
   }
 
+  // Application Default Credentials, as left by `gcloud auth application-default
+  // login`. This is usually already present on a machine that administers the
+  // project, so no service-account key needs to be downloaded or stored.
+  if (existsSync(ADC_PATH)) {
+    return initializeApp({
+      projectId: resolvedProjectId,
+      storageBucket: `${resolvedProjectId}.appspot.com`,
+    });
+  }
+
   throw new Error(
     [
       "No Firebase credentials found. Use one of:",
       "  • FIRESTORE_EMULATOR_HOST=localhost:8080  (no credentials needed)",
+      "  • gcloud auth application-default login",
       "  • GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json",
       "  • place a service account key at scripts/serviceAccount.json",
     ].join("\n")

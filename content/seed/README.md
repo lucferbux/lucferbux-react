@@ -69,6 +69,11 @@ Credentials are resolved in this order:
 1. `FIRESTORE_EMULATOR_HOST` — no credentials needed.
 2. `GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json`
 3. `scripts/serviceAccount.json` — gitignored.
+4. Application Default Credentials (`gcloud auth application-default login`).
+
+Note on ADC: it is a single global file per machine. If you also use `gcloud`
+for work, re-running that command replaces those credentials. A service account
+key at `scripts/serviceAccount.json` is isolated and does not disturb them.
 
 Get a key from the Firebase console for project **`lucferbux-web-page`**, under
 _Project settings → Service accounts → Generate new private key_:
