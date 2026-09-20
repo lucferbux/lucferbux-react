@@ -106,8 +106,12 @@
     },
     "period": "2023 – Present",
     "siteUrl": "https://testing-y-seguridad.netlify.app/",
-    "repoUrl": "https://github.com/lucferbux/Taller-Testing-Security",
+    "repoUrl": "https://github.com/lucferbux/Testing-Y-Seguridad",
     "links": [
+      {
+        "label": "Docs site",
+        "url": "https://github.com/lucferbux/Taller-Docusaurus"
+      },
       {
         "label": "Practice project",
         "url": "https://github.com/lucferbux/Proyecto-Testing-Y-Seguridad"
@@ -165,7 +169,7 @@
       "LangChain",
       "Gradio"
     ],
-    "icon": "book",
+    "icon": "https://storage.googleapis.com/lucferbux-web-page.appspot.com/images/logos/obs.png",
     "importance": 4
   },
   {
@@ -189,6 +193,12 @@
       "Security"
     ],
     "icon": "uem",
-    "importance": 5
+    "importance": 5,
+    "links": [
+      {
+        "label": "Slides (PDF)",
+        "url": "https://drive.google.com/file/d/16kRIHxUmtsx3wmpzpA8cUzcmbxCw3OhR/view?usp=sharing"
+      }
+    ]
   }
 ]

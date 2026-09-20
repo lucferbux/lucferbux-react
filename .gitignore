@@ -95,3 +95,6 @@ scripts/serviceAccount*.json
 # megabytes of PNGs, and regenerable on any machine — they do not belong in the
 # repository.
 tests/visual/__screenshots__/
+
+# Playwright MCP scratch output
+.playwright-mcp/

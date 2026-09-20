@@ -133,6 +133,9 @@ describe("seed corpus", () => {
 
       for (const row of rows) {
         if (typeof row.icon !== "string" || !row.icon) continue;
+        // An icon may also be a full URL, for organisations whose only logo is
+        // a raster image held in Firebase Storage. See utils/iconUrl.
+        if (/^https?:\/\//.test(row.icon)) continue;
         expect(available.has(row.icon), `unknown icon "${row.icon}"`).toBe(
           true
         );

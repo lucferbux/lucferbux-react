@@ -128,7 +128,7 @@
       "es": "Profesor en el Máster en IA, donde imparto Desarrollo Agéntico y anteriormente Python para IA. Curso basado en retos, apoyado en Colab, APIs de LLM, RAG y la publicación de una herramienta real para usuarios."
     },
     "avatar": "",
-    "icon": "book",
+    "icon": "https://storage.googleapis.com/lucferbux-web-page.appspot.com/images/logos/obs.png",
     "importance": 7,
     "loaded": true
   },

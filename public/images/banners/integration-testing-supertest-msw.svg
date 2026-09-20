@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Integration testing: where the real value is">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1410.7 308.5 Q 1410.7 308.5 1336.6 436.8 Q 1262.5 565.0 1129.5 571.6 Q 996.4 578.3 905.2 502.2 Q 814.0 426.0 830.5 316.5 Q 847.0 206.9 919.0 110.9 Q 991.0 14.9 1100.9 65.9 Q 1210.8 117.0 1310.7 212.8 Z" fill="#a08153" opacity="0.36" />
+    <path d="M 1349.0 514.1 Q 1349.0 514.1 1323.2 583.8 Q 1297.5 653.6 1228.3 643.4 Q 1159.1 633.2 1093.9 611.6 Q 1028.7 590.0 1026.2 512.9 Q 1023.7 435.8 1087.4 397.9 Q 1151.1 360.0 1212.9 381.5 Q 1274.8 403.1 1311.9 458.6 Z" fill="#eabe7d" opacity="0.41" />
+    <path d="M 707.3 313.1 Q 707.3 313.1 678.0 361.0 Q 648.7 408.9 595.2 428.3 Q 541.6 447.7 505.8 405.1 Q 469.9 362.4 476.2 316.1 Q 482.4 269.8 511.0 219.8 Q 539.7 169.9 588.6 200.6 Q 637.6 231.3 672.5 272.2 Z" fill="#2b2830" opacity="0.40" />
+    <path d="M 313.8 596.1 Q 313.8 596.1 282.4 664.7 Q 250.9 733.3 180.1 735.3 Q 109.3 737.3 38.4 708.6 Q -32.5 679.9 -20.8 601.8 Q -9.1 523.6 51.8 496.8 Q 112.7 470.0 170.3 478.9 Q 227.9 487.7 270.9 541.9 Z" fill="#a08153" opacity="0.52" />
+    <path d="M 1217.6 222.7 Q 1217.6 222.7 1187.2 296.3 Q 1156.7 369.8 1082.5 364.5 Q 1008.3 359.2 939.4 331.6 Q 870.4 304.1 885.6 230.0 Q 900.8 156.0 955.5 125.2 Q 1010.2 94.5 1085.2 82.8 Q 1160.3 71.2 1188.9 147.0 Z" fill="#eabe7d" opacity="0.33" />
+    <path d="M 834.8 94.3 Q 834.8 94.3 799.9 151.4 Q 765.0 208.5 699.4 239.3 Q 633.8 270.1 591.2 212.4 Q 548.7 154.6 514.7 77.9 Q 480.7 1.3 557.7 -38.1 Q 634.7 -77.6 703.7 -53.7 Q 772.8 -29.8 803.8 32.3 Z" fill="#2b2830" opacity="0.48" />
+    <path d="M 1157.4 321.4 Q 1157.4 321.4 1106.0 387.9 Q 1054.6 454.5 978.4 489.2 Q 902.2 524.0 852.3 457.8 Q 802.4 391.7 783.6 312.3 Q 764.8 232.9 834.9 182.0 Q 905.0 131.1 971.0 170.8 Q 1036.9 210.4 1097.2 265.9 Z" fill="#a08153" opacity="0.51" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">TESTING</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Integration testing: where</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">the real value is</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

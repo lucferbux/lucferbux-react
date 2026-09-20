@@ -8,7 +8,13 @@ import Tilt from "react-parallax-tilt";
 import PostCard from "../cards/PostCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
+import { toDate } from "../../i18n/formatDate";
 import { useTranslation } from "../../i18n/LanguageContext";
+
+/** Sortable timestamp from whatever shape the document holds. */
+function toMillis(value: Project["date"] | Post["date"]): number {
+  return toDate(value as never)?.getTime() ?? 0;
+}
 
 export default function PostsProjectSection() {
   const { m } = useTranslation();
@@ -19,10 +25,11 @@ export default function PostsProjectSection() {
     loading: projLoading,
     error: projError,
   } = useFirestoreCollection<Project>("project", {
+    // No orderBy here. Combining it with the `where` needs a composite index,
+    // and while that index is still building Firestore rejects the query
+    // outright, which blanked this whole section. There are only a handful of
+    // featured projects, so sort and slice below instead.
     where: [["featured", "==", true]],
-    // Without an orderBy Firestore returns arbitrary featured projects.
-    orderBy: [["date", "desc"]],
-    limit: 2,
   });
 
   const {
@@ -35,8 +42,12 @@ export default function PostsProjectSection() {
   });
 
   if (projLoading || postLoading) return <LoadingSpinner />;
-  if (projError || postError)
-    return <ErrorFallback message="Failed to load projects or posts" />;
+
+  // Newest first, then the two most recent. Done here rather than in the query
+  // so no composite index is required.
+  const featured = [...(projects ?? [])]
+    .sort((a, b) => toMillis(b.date) - toMillis(a.date))
+    .slice(0, 2);
 
   return (
     <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1700px]">
@@ -61,7 +72,10 @@ export default function PostsProjectSection() {
           />
         </div>
         <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-[auto_auto] max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-md:grid-cols-1 max-md:overflow-x-visible max-md:pb-10 max-[640px]:justify-start">
-          {projects?.map((projectEntry, index) => (
+          {projError ? (
+            <ErrorFallback message="Failed to load projects" />
+          ) : null}
+          {featured.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
               captionText="FEATURED"
@@ -85,6 +99,7 @@ export default function PostsProjectSection() {
           />
         </div>
         <div className="relative grid grid-cols-1 justify-items-center px-5 [direction:ltr]">
+          {postError ? <ErrorFallback message="Failed to load posts" /> : null}
           {posts?.map((postEntry, index) => (
             <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} key={index}>
               <PostCard post={postEntry} />

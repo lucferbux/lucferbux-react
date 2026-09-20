@@ -1,6 +1,7 @@
 import type { Teaching, TeachingLink } from "../../data/model/teaching";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { iconUrl } from "../../utils/iconUrl";
 
 interface TeachingCardProps {
   course: Teaching;
@@ -42,11 +43,7 @@ export default function TeachingCard({ course }: TeachingCardProps) {
       }}
     >
       <div className="flex items-start gap-4">
-        <img
-          src={`/images/icons/${course.icon}.svg`}
-          alt=""
-          className="h-10 w-10 shrink-0"
-        />
+        <img src={iconUrl(course.icon)} alt="" className="h-10 w-10 shrink-0" />
         <div className="min-w-0">
           <h3 className="text-[22px] leading-[1.2] font-bold break-words text-white max-xs:text-[18px]">
             {localizedField(course, "title", locale)}

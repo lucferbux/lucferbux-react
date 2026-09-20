@@ -36,8 +36,8 @@
   {
     "_id": "lucferbux-react",
     "title": {
-      "en": "This website",
-      "es": "Esta web"
+      "en": "Lucferbux.dev",
+      "es": "Lucferbux.dev"
     },
     "description": {
       "en": "The site you are reading. Vite, React and Tailwind v4 over Cloud Firestore, bilingual, installable as a PWA, with a schema-driven admin and a Playwright visual-regression baseline covering every route at seven widths in both colour schemes.",

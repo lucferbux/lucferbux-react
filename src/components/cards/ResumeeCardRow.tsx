@@ -1,6 +1,7 @@
 import { Work } from "../../data/model/work";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { iconUrl } from "../../utils/iconUrl";
 
 interface ResumeeCardRowProps {
   work: Work;
@@ -11,7 +12,7 @@ export default function ResumeeCardRow({ work }: ResumeeCardRowProps) {
   return (
     <div className="grid w-full grid-cols-[34px_auto] gap-x-4 p-2.5">
       <img
-        src={`/images/icons/${work.icon}.svg`}
+        src={iconUrl(work.icon)}
         alt=""
         className="h-8 w-8 rounded-full bg-black/20"
         style={{ boxShadow: "rgb(255 255 255 / 20%) 0px 0px 0px 0.5px" }}
