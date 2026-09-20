@@ -31,10 +31,22 @@ export default function TeachingCard({ course }: TeachingCardProps) {
     ...(course.links ?? []),
   ];
 
+  // The card's own destination: the course site if there is one, else the
+  // repository. Without it the card had no cursor and no primary action, which
+  // is what made it feel unlike the project and post cards.
+  const primary = course.siteUrl ?? course.repoUrl;
+
   return (
     // flex column rather than grid, so the link pills can be pushed to the
     // bottom with `mt-auto` and every card in a row lines its actions up.
-    <article className="glass-panel glass-lift group flex h-full flex-col gap-4 p-6 max-md:p-5">
+    //
+    // Same hover as ProjectCard and PostCard: a 1.02 scale on the whole card.
+    // It used to lift 4px instead, which read as a different kind of object.
+    <article
+      className={`glass-panel motion-glass group relative flex h-full flex-col gap-4 p-6 max-md:p-5 ${
+        primary ? "cursor-pointer hover:scale-[1.02] active:scale-[1.005]" : ""
+      }`}
+    >
       <div className="flex items-start gap-4">
         <EntityIcon
           icon={course.icon}
@@ -43,7 +55,20 @@ export default function TeachingCard({ course }: TeachingCardProps) {
         />
         <div className="min-w-0">
           <h3 className="text-[22px] leading-[1.2] font-bold break-words text-black max-xs:text-[18px] dark:text-white">
-            {localizedField(course, "title", locale)}
+            {primary ? (
+              <a
+                href={primary}
+                target="_blank"
+                rel="noopener noreferrer"
+                // Stretched link: the whole card is clickable without nesting
+                // anchors inside the pills below.
+                className="font-bold !text-black no-underline after:absolute after:inset-0 after:content-[''] dark:!text-white"
+              >
+                {localizedField(course, "title", locale)}
+              </a>
+            ) : (
+              localizedField(course, "title", locale)
+            )}
           </h3>
           <p className="mt-1 text-[13px] font-semibold text-black/60 uppercase dark:text-white/70">
             {localizedField(course, "institution", locale)} · {course.period}
@@ -69,7 +94,7 @@ export default function TeachingCard({ course }: TeachingCardProps) {
       )}
 
       {links.length > 0 && (
-        <div className="mt-auto flex flex-wrap gap-2 pt-1">
+        <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-1">
           {links.map((link) => (
             <LinkPill key={link.url} {...link} />
           ))}
