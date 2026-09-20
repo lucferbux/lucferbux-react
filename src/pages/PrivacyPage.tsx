@@ -1,4 +1,5 @@
 import SEO from "../components/layout/SEO";
+import PrivacySection from "../components/terms/privacySection";
 
 export default function PrivacyPage() {
   return (
@@ -10,8 +11,7 @@ export default function PrivacyPage() {
         themeColorDark="#2b2830"
         url="https://lucferbux.dev/privacy"
       />
-      {/* PrivacySection placeholder — implemented in T050 (US2) */}
-      <section className="min-h-screen" />
+      <PrivacySection />
     </>
   );
 }

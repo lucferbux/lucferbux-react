@@ -1,4 +1,5 @@
 import SEO from "../components/layout/SEO";
+import TermsSection from "../components/terms/termsSection";
 
 export default function TermsPage() {
   return (
@@ -10,8 +11,7 @@ export default function TermsPage() {
         themeColorDark="#2b2830"
         url="https://lucferbux.dev/terms"
       />
-      {/* TermsSection placeholder — implemented in T050 (US2) */}
-      <section className="min-h-screen" />
+      <TermsSection />
     </>
   );
 }
