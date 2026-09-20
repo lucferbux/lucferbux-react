@@ -1,8 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { render, waitFor } from "@testing-library/react";
-import { HelmetProvider } from "react-helmet-async";
-import { MemoryRouter } from "react-router-dom";
+import { waitFor } from "@testing-library/react";
 import SEO from "@/components/layout/SEO";
+import { renderWithProviders } from "../../helpers/render";
 
 /**
  * react-helmet-async commits to <head> asynchronously, which the previous
@@ -10,13 +9,7 @@ import SEO from "@/components/layout/SEO";
  * — so a missing meta tag passed silently. Everything here waits instead.
  */
 const renderSEO = (props: Parameters<typeof SEO>[0]) =>
-  render(
-    <HelmetProvider>
-      <MemoryRouter initialEntries={["/news"]}>
-        <SEO {...props} />
-      </MemoryRouter>
-    </HelmetProvider>
-  );
+  renderWithProviders(<SEO {...props} />, { route: "/en/news" });
 
 const meta = (selector: string) =>
   document.querySelector(`meta[${selector}]`)?.getAttribute("content");
@@ -59,7 +52,7 @@ describe("SEO", () => {
     expect(await waitForMeta('property="og:title"')).toBe("OG Test");
     expect(meta('property="og:description"')).toBe("OG description");
     expect(meta('property="og:type"')).toBe("website");
-    expect(meta('property="og:url"')).toBe("https://lucferbux.dev/news");
+    expect(meta('property="og:url"')).toBe("https://lucferbux.dev/en/news");
   });
 
   it("sets Twitter card tags", async () => {

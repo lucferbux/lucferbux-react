@@ -2,8 +2,13 @@ import WaveFooter from "../backgrounds/WaveFooter";
 import { footerData } from "../../data/footerData";
 import NavButton from "../buttons/NavButton";
 import NavButtonExternal from "../buttons/NavButtonExternal";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { useLocalePath } from "../../i18n/useLocalePath";
 
 export default function Footer() {
+  const { m } = useTranslation();
+  const localePath = useLocalePath();
+
   return (
     <div className="relative h-[440px] w-full pt-[250px] max-sm:top-[10px]">
       <WaveFooter />
@@ -13,22 +18,22 @@ export default function Footer() {
             item.external ? (
               <NavButtonExternal
                 icon={item.icon}
-                text={item.title}
+                text={m.nav[item.labelKey]}
                 link={item.link}
                 key={index}
               />
             ) : (
               <NavButton
                 icon={item.icon}
-                text={item.title}
-                link={item.link}
+                text={m.nav[item.labelKey]}
+                link={localePath(item.link)}
                 key={index}
               />
             )
           )}
         </div>
         <div className="h-[110px] max-w-[280px] py-16 text-[13px] text-white/70 max-[600px]:text-center">
-          <p>This site does not track any information about usage</p>
+          <p>{m.footer.privacyNotice}</p>
         </div>
       </div>
     </div>

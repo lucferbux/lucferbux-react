@@ -129,22 +129,57 @@ describe("routes", () => {
     });
   });
 
-  describe("known routing gaps", () => {
-    // Both of these should show a 404. NotFoundPage is <Navigate to="/" />,
-    // and BlogPostPage sends unknown slugs to "/404", which is not a
-    // registered route, so the catch-all bounces them to home as well.
-    // Pinned here so that fixing it is a deliberate, visible change.
-    it("sends an unknown path to the home page instead of a 404", async () => {
-      renderRoute("/no-such-page");
+  describe("404 handling", () => {
+    // Both of these used to bounce to the home page: NotFoundPage was
+    // <Navigate to="/" />, and BlogPostPage sent unknown slugs to "/404",
+    // which was not a registered route.
+    it("renders a 404 page for an unknown path", async () => {
+      renderRoute("/en/no-such-page");
       await waitFor(() => {
-        expect(screen.getAllByText(/My Resumée/i).length).toBeGreaterThan(0);
+        expect(screen.getByText("404")).toBeInTheDocument();
+      });
+      expect(screen.getAllByText(/Page not found/i).length).toBeGreaterThan(0);
+    });
+
+    it("renders a 404 page for an unknown blog slug", async () => {
+      renderRoute("/en/blog/does-not-exist");
+      await waitFor(() => {
+        expect(screen.getByText("404")).toBeInTheDocument();
       });
     });
 
-    it("sends an unknown blog slug to the home page instead of a 404", async () => {
-      renderRoute("/blog/does-not-exist");
+    it("renders the 404 page in Spanish", async () => {
+      renderRoute("/es/no-such-page");
       await waitFor(() => {
-        expect(screen.getAllByText(/My Resumée/i).length).toBeGreaterThan(0);
+        expect(
+          screen.getAllByText(/Página no encontrada/i).length
+        ).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  describe("locale routing", () => {
+    it("redirects an un-prefixed path into the localized tree", async () => {
+      // Previously shared links such as lucferbux.dev/news must keep working.
+      renderRoute("/news");
+      await waitFor(() => {
+        expect(screen.getAllByText(/Latest News/i).length).toBeGreaterThan(0);
+      });
+    });
+
+    it("renders Spanish chrome under /es", async () => {
+      renderRoute("/es/news");
+      await waitFor(() => {
+        expect(
+          screen.getAllByText(/Últimas novedades/i).length
+        ).toBeGreaterThan(0);
+      });
+    });
+
+    it("sets the document language from the URL", async () => {
+      renderRoute("/es");
+      await waitFor(() => {
+        expect(document.documentElement.lang).toBe("es");
       });
     });
   });

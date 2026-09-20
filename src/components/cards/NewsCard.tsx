@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { News } from "../../data/model/news";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { localizedField } from "../../i18n/localized";
+import { formatDate, type DateLike } from "../../i18n/formatDate";
 
 interface NewsCardProps {
   news: News;
 }
 
 export default function NewsCard({ news }: NewsCardProps) {
+  const { locale } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -38,20 +42,10 @@ export default function NewsCard({ news }: NewsCardProps) {
           />
         </div>
         <p className="text-[24px] font-semibold leading-[26px] break-words text-black max-[470px]:text-[18px] max-[470px]:leading-[22px] dark:text-white">
-          {news.title_en}
+          {localizedField(news, "title", locale)}
         </p>
         <p className="mt-2.5 text-center text-[15px] font-normal leading-[40px] text-black/70 ltr:direction-ltr dark:text-white/70">
-          {new Date(
-            news.timestamp instanceof Date
-              ? news.timestamp.getTime()
-              : "seconds" in news.timestamp
-                ? news.timestamp.seconds * 1000
-                : Number(news.timestamp)
-          ).toLocaleDateString([], {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatDate(news.timestamp as DateLike, locale)}
         </p>
       </div>
     </a>

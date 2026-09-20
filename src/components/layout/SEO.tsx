@@ -1,10 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { LOCALES, type Locale } from "../../i18n/locales";
 
 interface SEOProps {
   title: string;
   description?: string;
-  lang?: string;
+  /** Overrides the active locale. Only needed for content in a fixed language. */
+  lang?: Locale;
   themeColor?: string;
   themeColorDark?: string;
   image?: string;
@@ -40,13 +43,15 @@ function absolute(pathOrUrl: string): string {
 export default function SEO({
   title,
   description,
-  lang = "en",
+  lang,
   themeColor = "#CA8F36",
   themeColorDark = "#9D7E50",
   image,
   url,
 }: SEOProps) {
   const { pathname } = useLocation();
+  const { locale } = useTranslation();
+  const activeLocale = lang ?? locale;
 
   const metaDescription = description || SITE_METADATA.description;
   const metaImage = absolute(image || SITE_METADATA.image);
@@ -54,13 +59,38 @@ export default function SEO({
   // pointed at the site root, so every shared link looked like the home page.
   const metaUrl = absolute(url || pathname);
 
+  // Path without its locale segment, so the alternates can be rebuilt.
+  const pathWithoutLocale = pathname.replace(/^\/(en|es)(?=\/|$)/, "") || "/";
+
   return (
     <Helmet
-      htmlAttributes={{ lang }}
+      htmlAttributes={{ lang: activeLocale }}
       title={title}
       titleTemplate={`%s | ${SITE_METADATA.title}`}
     >
       <link rel="canonical" href={metaUrl} />
+      {LOCALES.map((alternate) => (
+        <link
+          key={alternate}
+          rel="alternate"
+          hrefLang={alternate}
+          href={absolute(
+            `/${alternate}${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`
+          )}
+        />
+      ))}
+      <link
+        rel="alternate"
+        hrefLang="x-default"
+        href={absolute(
+          `/en${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`
+        )}
+      />
+
+      <meta
+        property="og:locale"
+        content={activeLocale === "es" ? "es_ES" : "en_US"}
+      />
       <meta name="description" content={metaDescription} />
 
       <meta property="og:title" content={title} />

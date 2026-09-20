@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import NewsCard from "@/components/cards/NewsCard";
 import type { News } from "@/data/model/news";
+import { renderWithProviders } from "../../helpers/render";
 
 const mockNews: News = {
   title: "Noticia de prueba",
@@ -16,12 +17,12 @@ const mockNews: News = {
 
 describe("NewsCard", () => {
   it("renders news title", () => {
-    render(<NewsCard news={mockNews} />);
+    renderWithProviders(<NewsCard news={mockNews} />);
     expect(screen.getByText("Test News")).toBeInTheDocument();
   });
 
   it("renders as a link to the news URL", () => {
-    render(<NewsCard news={mockNews} />);
+    renderWithProviders(<NewsCard news={mockNews} />);
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute("href", "https://example.com/news");
     expect(link).toHaveAttribute("target", "_blank");
@@ -30,7 +31,7 @@ describe("NewsCard", () => {
   it("renders the news image with correct src", () => {
     // The card image is decorative (alt=""), because the headline next to it
     // already names the item, so query the DOM rather than the a11y tree.
-    const { container } = render(<NewsCard news={mockNews} />);
+    const { container } = renderWithProviders(<NewsCard news={mockNews} />);
     const sources = Array.from(container.querySelectorAll("img")).map((img) =>
       img.getAttribute("src")
     );
@@ -38,7 +39,7 @@ describe("NewsCard", () => {
   });
 
   it("renders formatted date", () => {
-    render(<NewsCard news={mockNews} />);
+    renderWithProviders(<NewsCard news={mockNews} />);
     // Date is rendered with toLocaleDateString
     // The exact format depends on locale, just check something renders in the date area
     const dateEl = screen.getByText(/2024|January|enero/i);
@@ -50,7 +51,7 @@ describe("NewsCard", () => {
       ...mockNews,
       timestamp: { seconds: 1705312800, nanoseconds: 0 } as unknown as Date,
     };
-    render(<NewsCard news={newsWithTimestamp} />);
+    renderWithProviders(<NewsCard news={newsWithTimestamp} />);
     expect(screen.getByText("Test News")).toBeInTheDocument();
   });
 });

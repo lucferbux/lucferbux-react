@@ -5,13 +5,11 @@ import InfoBox from "../text/infoBox";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "Latest News",
-  description: "Here are the latest news related to my professional work",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function NewsSection() {
+  const { m } = useTranslation();
+  const info = m.sections.news;
   const {
     data: news,
     loading,

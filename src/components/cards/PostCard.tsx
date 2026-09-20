@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Post } from "../../data/model/post";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { localizedField } from "../../i18n/localized";
+import { useLocalePath } from "../../i18n/useLocalePath";
 
 interface PostCardProps {
   post: Post;
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  const { locale } = useTranslation();
+  const localePath = useLocalePath();
   const [loaded, setLoaded] = useState(false);
 
   const cardContent = (
@@ -36,12 +41,12 @@ export default function PostCard({ post }: PostCardProps) {
 
       {/* Title — positioned at top */}
       <h3 className="absolute top-[30px] left-0 z-[3] mx-5 break-words text-[30px] font-bold max-[520px]:top-5 max-[520px]:text-[20px] max-[350px]:top-3 max-[350px]:text-[16px]">
-        {post.title_en}
+        {localizedField(post, "title", locale)}
       </h3>
 
       {/* Description — positioned at bottom */}
       <p className="absolute bottom-[30px] left-0 z-[3] mx-5 break-words text-[17px] font-medium leading-[130%] max-[520px]:bottom-5 max-[520px]:max-h-[70px] max-[520px]:overflow-y-scroll max-[520px]:text-[12px] max-[350px]:bottom-3 max-[350px]:max-h-[48px] [&::-webkit-scrollbar]:hidden">
-        {post.description_en}
+        {localizedField(post, "description", locale)}
       </p>
     </div>
   );
@@ -49,7 +54,7 @@ export default function PostCard({ post }: PostCardProps) {
   if (post.internalLink) {
     return (
       <Link
-        to={`/blog/${post.internalLink}`}
+        to={localePath(`/blog/${post.internalLink}`)}
         className="relative cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
       >
         {cardContent}

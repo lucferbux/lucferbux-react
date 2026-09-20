@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { screen } from "@testing-library/react";
 import InfoBox from "@/components/text/infoBox";
+import { renderWithProviders } from "../../helpers/render";
 
 const renderWithRouter = (ui: React.ReactElement) =>
-  render(<MemoryRouter>{ui}</MemoryRouter>);
+  renderWithProviders(ui, { route: "/en" });
 
 describe("InfoBox", () => {
   it("renders title", () => {

@@ -5,14 +5,11 @@ import { Post } from "../../data/model/post";
 import PostCard from "../cards/PostCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "Tech Posts",
-  description:
-    "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function PostSection() {
+  const { m } = useTranslation();
+  const info = m.sections.posts;
   const {
     data: posts,
     loading,

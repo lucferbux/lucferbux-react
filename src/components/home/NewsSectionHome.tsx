@@ -6,21 +6,11 @@ import NewsCardDetail from "../cards/NewsCardDetail";
 import InfoBox from "../text/infoBox";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-import { ExternalLink } from "../../data/model/externalLink";
-
-const button: ExternalLink = {
-  text: "Browse news",
-  image: "courses",
-  link: "news",
-};
-
-const info = {
-  title: "Latest News",
-  description: "Here are the latest news related to my professional work",
-  button: button,
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function NewsSectionHome() {
+  const { m } = useTranslation();
+  const info = m.sections.newsHome;
   const {
     data: news,
     loading,
@@ -42,9 +32,9 @@ export default function NewsSectionHome() {
           title={info.title}
           description={info.description}
           displayButton={true}
-          iconButton={info.button.image}
-          textButton={info.button.text}
-          linkButton={info.button.link}
+          iconButton="courses"
+          textButton={info.button}
+          linkButton="news"
           darkColor={true}
         />
         {news?.[0] && <NewsCardDetail news={news[0]} inverted={true} />}

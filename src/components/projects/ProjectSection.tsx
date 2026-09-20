@@ -5,14 +5,11 @@ import { Project } from "../../data/model/project";
 import ProjectCard from "../cards/ProjectCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "Explore Projects",
-  description:
-    "These are a few of my latests projects I've been working on. Some of them are propieatry, so there's no source code",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function ProjectSection() {
+  const { m } = useTranslation();
+  const info = m.sections.projects;
   const {
     data: projects,
     loading,

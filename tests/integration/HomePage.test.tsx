@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { screen, waitFor } from "@testing-library/react";
 
 // Mock firebase/firestore
 const { mockOnSnapshot } = vi.hoisted(() => ({
@@ -26,15 +24,10 @@ vi.mock("@/firebase", () => ({
 }));
 
 import HomePage from "@/pages/HomePage";
+import { renderWithProviders } from "../helpers/render";
 
 function renderPage() {
-  return render(
-    <HelmetProvider>
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>
-    </HelmetProvider>
-  );
+  return renderWithProviders(<HomePage />, { route: "/en" });
 }
 
 describe("HomePage", () => {

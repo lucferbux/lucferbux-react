@@ -1,15 +1,17 @@
 import SEO from "../components/layout/SEO";
+import { useTranslation } from "../i18n/LanguageContext";
 import TermsSection from "../components/terms/termsSection";
 
 export default function TermsPage() {
+  const { m } = useTranslation();
+
   return (
     <>
       <SEO
-        title="Terms & Conditions"
-        description="Terms and conditions for the Lucferbux personal website"
+        title={m.pages.terms.title}
+        description={m.pages.terms.description}
         themeColor="#007789"
         themeColorDark="#2b2830"
-        url="https://lucferbux.dev/terms"
       />
       <TermsSection />
     </>

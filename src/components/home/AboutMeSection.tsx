@@ -5,13 +5,11 @@ import { Work } from "../../data/model/work";
 import ResumeeCard from "../cards/ResumeeCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "My Resumée",
-  description: "Here are the most important roles I've taken so far",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function AboutMeSection() {
+  const { m } = useTranslation();
+  const info = m.sections.resumee;
   const {
     data: works,
     loading,

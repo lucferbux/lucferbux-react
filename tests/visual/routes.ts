@@ -15,26 +15,32 @@ export interface VisualRoute {
 }
 
 export const ROUTES: VisualRoute[] = [
-  { name: "home", path: "/", ready: "text=My Resumée", fullPage: true },
-  { name: "news", path: "/news", ready: "text=Latest News" },
-  { name: "posts", path: "/posts", ready: "text=Tech Posts" },
-  { name: "projects", path: "/projects", ready: "text=Explore Projects" },
-  { name: "blog-post", path: "/blog/react-solid", ready: "text=SOLID" },
+  { name: "home", path: "/en", ready: "text=My Resumée", fullPage: true },
+  { name: "news", path: "/en/news", ready: "text=Latest News" },
+  { name: "posts", path: "/en/posts", ready: "text=Tech Posts" },
+  { name: "projects", path: "/en/projects", ready: "text=Explore Projects" },
+  { name: "blog-post", path: "/en/blog/react-solid", ready: "text=SOLID" },
+  { name: "terms", path: "/en/terms", ready: "text=Terms & Conditions" },
+  { name: "privacy", path: "/en/privacy", ready: "text=Privacy Policy" },
+  { name: "not-found", path: "/en/no-such-page", ready: "text=404" },
   { name: "admin-login", path: "/admin/login", ready: "#email" },
 
-  // Currently empty stubs — the baseline records that, so wiring up the
-  // already-written termsSection/privacySection shows as an intentional diff.
-  { name: "terms", path: "/terms", ready: "body" },
-  { name: "privacy", path: "/privacy", ready: "body" },
-
-  // Both of these bounce to home today (BlogPostPage sends bad slugs to /404,
-  // which is not a route, so the catch-all redirects to /).
+  // Spanish. The landing page carries the most text, and Spanish copy runs
+  // 15-20% longer than English, so this is where a fixed-height section would
+  // clip first.
   {
-    name: "blog-missing",
-    path: "/blog/does-not-exist",
-    ready: "text=My Resumée",
+    name: "home-es",
+    path: "/es",
+    ready: "text=Mi currículum",
+    fullPage: true,
   },
-  { name: "not-found", path: "/no-such-page", ready: "text=My Resumée" },
+  { name: "news-es", path: "/es/news", ready: "text=Últimas novedades" },
+  { name: "posts-es", path: "/es/posts", ready: "text=Artículos técnicos" },
+  {
+    name: "projects-es",
+    path: "/es/projects",
+    ready: "text=Explora los proyectos",
+  },
 ];
 
 /** Widths chosen to straddle every declared breakpoint plus common devices. */

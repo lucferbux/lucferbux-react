@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { screen, waitFor } from "@testing-library/react";
 
 const { mockOnSnapshot } = vi.hoisted(() => ({
   mockOnSnapshot: vi.fn(),
@@ -22,15 +20,10 @@ vi.mock("@/firebase", () => ({
 }));
 
 import PostsPage from "@/pages/PostsPage";
+import { renderWithProviders } from "../helpers/render";
 
 function renderPage() {
-  return render(
-    <HelmetProvider>
-      <MemoryRouter>
-        <PostsPage />
-      </MemoryRouter>
-    </HelmetProvider>
-  );
+  return renderWithProviders(<PostsPage />, { route: "/en/posts" });
 }
 
 describe("PostsPage", () => {

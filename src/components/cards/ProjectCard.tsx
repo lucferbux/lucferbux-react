@@ -1,4 +1,6 @@
 import { Project } from "../../data/model/project";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { localizedField } from "../../i18n/localized";
 
 interface ProjectCardProps {
   project: Project;
@@ -9,6 +11,7 @@ export default function ProjectCard({
   project,
   captionText,
 }: ProjectCardProps) {
+  const { locale } = useTranslation();
   return (
     <a
       href={project.link}
@@ -35,10 +38,10 @@ export default function ProjectCard({
           {captionText ?? ""}
         </p>
         <h3 className="break-words text-[30px] font-bold max-xs:text-[26px] text-black dark:text-white">
-          {project.title_en}
+          {localizedField(project, "title", locale)}
         </h3>
         <p className="text-[17px] font-normal leading-[130%] text-black/70 max-xs:text-[14px] max-xs:leading-[100%] dark:text-white/70">
-          {project.description_en}
+          {localizedField(project, "description", locale)}
         </p>
         <div className="grid grid-cols-[32px_auto] items-center gap-[10px]">
           <div className="grid h-8 w-8 items-center justify-items-center rounded-full bg-black/20">
