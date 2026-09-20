@@ -34,9 +34,13 @@ export default function TeachingCard({ course }: TeachingCardProps) {
   return (
     // flex column rather than grid, so the link pills can be pushed to the
     // bottom with `mt-auto` and every card in a row lines its actions up.
-    <article className="glass-panel flex h-full flex-col gap-4 p-6 max-md:p-5">
+    <article className="glass-panel glass-lift group flex h-full flex-col gap-4 p-6 max-md:p-5">
       <div className="flex items-start gap-4">
-        <EntityIcon icon={course.icon} size={40} />
+        <EntityIcon
+          icon={course.icon}
+          size={40}
+          className="motion-glass group-hover:scale-105"
+        />
         <div className="min-w-0">
           <h3 className="text-[22px] leading-[1.2] font-bold break-words text-black max-xs:text-[18px] dark:text-white">
             {localizedField(course, "title", locale)}

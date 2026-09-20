@@ -6,9 +6,18 @@ import { formatDate, type DateLike } from "../../i18n/formatDate";
 
 interface NewsCardProps {
   news: News;
+  /**
+   * Whether this card responds to hover on its own.
+   *
+   * False when it sits inside `NewsCardDetail`, which already scales: the two
+   * used to compose to 1.155x and the card jumped. On the home page row these
+   * cards are the only thing there is to hover, so they keep their own lift —
+   * just a lot less of it than the 1.10 it used to be.
+   */
+  interactive?: boolean;
 }
 
-export default function NewsCard({ news }: NewsCardProps) {
+export default function NewsCard({ news, interactive = true }: NewsCardProps) {
   const { locale } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
@@ -17,9 +26,9 @@ export default function NewsCard({ news }: NewsCardProps) {
       href={news.url}
       target="_blank"
       rel="noopener"
-      // No hover scale here: this card sits inside NewsCardDetail, which
-      // already scales on hover, and the two composed to 1.155x.
-      className="group max-w-[260px] cursor-pointer"
+      className={`group max-w-[260px] cursor-pointer ${
+        interactive ? "motion-glass hover:scale-[1.04] active:scale-[1.01]" : ""
+      }`}
     >
       <div
         className="relative grid h-[360px] min-w-[200px] max-w-[260px] grid-cols-1 grid-rows-[auto_2fr_auto] items-center gap-[30px] rounded-[20px] p-2 text-center max-[414px]:h-[330px]"

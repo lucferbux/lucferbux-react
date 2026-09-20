@@ -34,15 +34,10 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
   };
 
   return (
-    <div
-      className="mx-5 grid h-[400px] max-w-[786px] animate-fadein grid-cols-[240px_auto] gap-x-5 overflow-hidden rounded-[20px] p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0"
-      style={{
-        background: "rgba(66,66,66,0.3)",
-        border: "0.5px solid rgba(255,255,255,0.2)",
-        boxShadow: "0px 26.0498px 50.1px rgba(0,0,0,0.25)",
-        backdropFilter: "blur(45px)",
-      }}
-    >
+    // The last surface still carrying the 2023 inline glass. It now uses the
+    // same token set as every other card, so the résumé stops being the one
+    // panel with a grey tint and a flat white hairline.
+    <div className="glass-panel glass-lift group animate-fadein mx-5 grid h-[400px] max-w-[786px] grid-cols-[240px_auto] gap-x-5 overflow-hidden p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0">
       <div className="contents">
         <ResumeeHeader
           title={headerInfo.title}
