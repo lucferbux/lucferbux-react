@@ -7,6 +7,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check formatting
+        run: npm run format:check
+
       - name: Lint
         run: npm run lint
 
@@ -34,7 +40,24 @@ jobs:
         run: npm run type-check
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:coverage
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
 
       - name: Build
         run: npm run build
+
+  # Visual regression is currently a LOCAL gate: run `npm run visual` before
+  # pushing any change that touches layout or styling.
+  #
+  # It is not wired into CI yet because the committed baselines live under
+  # tests/visual/__screenshots__/darwin/ and font rasterisation differs between
+  # platforms, so a Linux runner would diff on antialiasing alone. To enable it,
+  # generate the Linux set once in the pinned container:
+  #
+  #   docker run --rm -v "$PWD":/w -w /w mcr.microsoft.com/playwright:v1.63.0-noble \
+  #     sh -c "npm ci && npm run visual:baseline"
+  #
+  # commit tests/visual/__screenshots__/linux/, then add a job here that runs
+  # `npm run visual` inside that same image.

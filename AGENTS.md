@@ -99,18 +99,37 @@ Current target shape is nested per-locale objects: `{ title: { en, es } }`.
 `src/utils/localized.ts` reads **both**, so legacy documents keep working. Never read
 `item.title_en` directly in a component — go through the resolver.
 
-### 8. `useFirestoreCollection` does not re-subscribe on constraint changes
+### 8. Queries are descriptors, not `QueryConstraint[]`
 
-`src/hooks/useFirestoreCollection.ts` deliberately lists only `[collectionPath]` in its effect
-deps (with an `eslint-disable`), because `constraints` is a fresh array literal each render.
-Static constraints are fine; **runtime filtering or pagination will silently not update**.
-Memoize the constraints and widen the deps if you need that.
+`useFirestoreCollection(path, query)` takes a serializable `QueryDescriptor`
+(`{ where?, orderBy?, limit? }` — see `src/data/source/types.ts`), **not** Firebase
+constraint objects:
 
-### 9. Prettier config vs. reality
+```ts
+useFirestoreCollection<News>("intro", {
+  orderBy: [["timestamp", "desc"]],
+  limit: 6,
+});
+```
 
-`.prettierrc` must stay aligned with the code (semicolons, parenthesized arrow params).
-It previously said the opposite, which made `npm run format` rewrite every file in the repo.
-CI runs `format:check` to keep this honest.
+This is what lets the hook depend on the query honestly and re-subscribe when it changes. An
+earlier version took `QueryConstraint[]`, which is a fresh object identity every render, so
+it pinned its deps to `[collectionPath]` behind an `eslint-disable` and silently ignored
+runtime query changes. Do not reintroduce raw constraints at call sites.
+
+### 9. Prettier does not touch `src/content/`
+
+The blog articles are authored prose. Prettier reflows their paragraphs **and reformats the
+code samples inside fenced blocks**, which both edits the teaching material and changes the
+rendered page height. `src/content` is in `.prettierignore`; keep it there.
+
+### 10. Never set a `background-color` on `html`
+
+`body` is the canvas painter (`globals.css`). Giving `html` a background makes it paint the
+entire viewport, including overscroll and everything below a short page's content. This was
+tried in `70d92b1` and reverted in `88b2d24`. Safari also never reaches `html` while `body`
+has a background, so it does not even achieve what it was for — see the page-tint notes
+before touching `index.html`, `SEO.tsx` or the body background.
 
 ---
 

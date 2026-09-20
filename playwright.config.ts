@@ -22,7 +22,10 @@ const PORT = 4173;
  */
 export default defineConfig({
   testDir: "./tests/visual",
-  snapshotPathTemplate: "{testDir}/__screenshots__/{arg}{ext}",
+  // Baselines are platform-scoped: font rasterisation differs between macOS and
+  // Linux, so a darwin baseline would diff on antialiasing alone in a Linux CI
+  // container. Each platform keeps its own set.
+  snapshotPathTemplate: "{testDir}/__screenshots__/{platform}/{arg}{ext}",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
