@@ -486,6 +486,7 @@
   --glass-specular: rgba(255, 255, 255, 0.55);
   --glass-specular-bounce: rgba(255, 255, 255, 0.12);
   --glass-elevation: 0 24px 48px -16px rgba(9, 30, 42, 0.45);
+  --glass-elevation-lift: 0 36px 64px -18px rgba(9, 30, 42, 0.5);
   --glass-radius: 24px;
 }
 
@@ -496,6 +497,7 @@
     --glass-specular: rgba(255, 255, 255, 0.3);
     --glass-specular-bounce: rgba(255, 255, 255, 0.06);
     --glass-elevation: 0 24px 48px -16px rgba(0, 0, 0, 0.55);
+    --glass-elevation-lift: 0 36px 64px -18px rgba(0, 0, 0, 0.65);
   }
 }
 
@@ -527,6 +529,25 @@
         background-color: rgba(22, 22, 30, 0.94);
       }
     }
+  }
+
+  /* A panel that rises slightly under the pointer. Used on cards that are not
+     themselves links but hold links — the lift says "there is something here"
+     without promising that the whole surface is clickable. The shadow grows
+     with the distance, which is what stops it reading as a flat nudge. */
+  .glass-lift {
+    transition:
+      transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 280ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .glass-lift:hover {
+    transform: translate3d(0, -4px, 0);
+    box-shadow:
+      0 0 0 0.5px var(--glass-ring),
+      inset 0 1px 0 var(--glass-specular),
+      inset 0 -1px 0 var(--glass-specular-bounce),
+      var(--glass-elevation-lift);
   }
 
   /* Shared hover/press response. 280ms rather than the 800ms these cards used

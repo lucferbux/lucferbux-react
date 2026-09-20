@@ -15,18 +15,24 @@ export default function ResumeeHeader({
   buttons,
 }: ResumeeHeaderProps) {
   return (
+    // A flat gradient swatch before. It now reads as a tile raised out of the
+    // glass: a radius in the same family as the card's 24px, the same specular
+    // top edge the panels use, and a shadow to separate it from the surface it
+    // sits on.
     <div
-      className="resumee-header-gradient relative h-[360px] w-[240px] cursor-pointer rounded-[10px] pt-[60px] max-md:h-auto max-md:w-full max-md:p-4"
+      className="resumee-header-gradient relative h-[360px] w-[240px] overflow-hidden rounded-[16px] pt-[60px] max-md:h-auto max-md:w-full max-md:p-4"
       style={{
         background:
           "linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%)",
+        boxShadow:
+          "inset 0 1px 0 rgba(255,255,255,0.45), 0 12px 28px -12px rgba(9,30,42,0.5)",
       }}
     >
       <div className="mx-auto grid w-[200px] gap-2.5 text-center">
         <img
           src="/images/avatars/avatar-lucas.png"
           alt="Profile Avatar"
-          className="mx-auto h-[88px] w-[88px] rounded-full"
+          className="motion-glass mx-auto h-[88px] w-[88px] rounded-full ring-2 ring-white/40 group-hover:scale-[1.04] group-hover:ring-white/70"
         />
         <p className="m-0 text-[24px] font-bold leading-[29px] text-white">
           {title}
