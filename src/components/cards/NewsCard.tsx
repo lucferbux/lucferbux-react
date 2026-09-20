@@ -30,16 +30,14 @@ export default function NewsCard({ news, interactive = true }: NewsCardProps) {
         interactive ? "motion-glass hover:scale-[1.04] active:scale-[1.01]" : ""
       }`}
     >
-      <div
-        className="relative grid h-[360px] min-w-[200px] max-w-[260px] grid-cols-1 grid-rows-[auto_2fr_auto] items-center gap-[30px] rounded-[20px] p-2 text-center max-[414px]:h-[330px]"
-        style={{
-          background:
-            "linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%)",
-          boxShadow:
-            "rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px",
-        }}
-      >
-        <div className="news-card-gradient motion-glass m-0 w-full group-hover:scale-[0.97]">
+      {/* Was a 360px box with a `2fr` middle row, so the title floated in the
+          centre of a cavern of empty gradient — these cards carry a title and
+          a date and nothing else, and the fixed height had no relation to
+          that. No height of its own now: `h-full` makes every card in a row
+          match the tallest one's content, so they stay even without anybody
+          choosing a number. */}
+      <div className="news-card-surface relative flex h-full min-w-[200px] max-w-[260px] flex-col gap-3 rounded-[20px] p-2.5 text-center">
+        <div className="motion-glass m-0 w-full group-hover:scale-[0.97]">
           <img
             src={news.image}
             alt=""
@@ -52,7 +50,7 @@ export default function NewsCard({ news, interactive = true }: NewsCardProps) {
             className={`m-0 w-full rounded-xl ${!loaded ? "block" : "hidden"}`}
           />
         </div>
-        <p className="text-[24px] font-semibold leading-[26px] break-words text-black max-[470px]:text-[18px] max-[470px]:leading-[22px] dark:text-white">
+        <p className="px-1 text-[21px] leading-[1.2] font-semibold break-words text-black max-[470px]:text-[18px] dark:text-white">
           {localizedField(news, "title", locale)}
         </p>
         {/* `dir="ltr"` is belt and braces now that the parent no longer sets
@@ -60,7 +58,7 @@ export default function NewsCard({ news, interactive = true }: NewsCardProps) {
             bidi algorithm reorders if anyone reintroduces it. */}
         <p
           dir="ltr"
-          className="mt-2.5 text-center text-[15px] leading-[1.4] font-normal text-black/70 dark:text-white/70"
+          className="mt-auto pb-1 text-center text-[14px] leading-[1.4] font-normal text-black/70 dark:text-white/70"
         >
           {formatDate(news.timestamp as DateLike, locale)}
         </p>
