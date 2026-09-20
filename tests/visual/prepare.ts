@@ -35,16 +35,38 @@ export async function preparePage(page: Page): Promise<void> {
     route.fulfill({ path: PLACEHOLDER, contentType: "image/png" })
   );
 
-  await page.addInitScript(() => {
+  await page.addInitScript((css: string) => {
     // react-parallax-tilt reacts to pointer position; keep it at rest.
     window.matchMedia("(hover: hover)");
-  });
+
+    // Install the freeze before the first paint.
+    //
+    // This used to be an addStyleTag() after load, which left a window in
+    // which the hero's seven floating PNGs and the fade-in had already
+    // started. They then froze at whatever frame they happened to reach,
+    // varying by 100-260 pixels between runs — enough to make the home page
+    // flake once the colour threshold was tightened.
+    const install = () => {
+      const style = document.createElement("style");
+      style.id = "visual-freeze";
+      style.textContent = css;
+      document.head.appendChild(style);
+    };
+
+    if (document.head) install();
+    else document.addEventListener("DOMContentLoaded", install, { once: true });
+  }, FREEZE_CSS);
 }
 
 export async function settle(page: Page, ready: string): Promise<void> {
   await page.waitForSelector(ready, { state: "visible", timeout: 30_000 });
   await page.evaluate(() => document.fonts.ready);
-  await page.addStyleTag({ content: FREEZE_CSS });
+
+  // Belt and braces: the init script installs this before first paint, but a
+  // client-rendered route can replace <head> content on navigation.
+  if ((await page.locator("#visual-freeze").count()) === 0) {
+    await page.addStyleTag({ content: FREEZE_CSS });
+  }
 
   // Every <img> either finished or failed — no half-painted cards.
   await page.waitForFunction(

@@ -35,8 +35,22 @@ export default defineConfig({
 
   expect: {
     toHaveScreenshot: {
-      // Absorbs sub-pixel antialiasing without hiding real layout shifts.
-      maxDiffPixelRatio: 0.002,
+      // Two knobs, both deliberately tight.
+      //
+      // `threshold` is the per-pixel colour distance below which a pixel is
+      // considered unchanged. The default of 0.2 is very forgiving: swapping
+      // the 29x29 Twitter icon for an Instagram one changed 475 pixels, but
+      // only 2 of them cleared a 0.2 threshold, so the suite reported no
+      // difference at all. That is the failure mode this guards against.
+      //
+      // `maxDiffPixels` is an absolute budget rather than a ratio, because a
+      // ratio scales with viewport area and quietly gets looser on the widest,
+      // most content-rich screenshots.
+      //
+      // Both can be this tight because runs on one machine are deterministic:
+      // two consecutive runs produce byte-identical PNGs.
+      threshold: 0.05,
+      maxDiffPixels: 60,
       animations: "disabled",
       caret: "hide",
       scale: "css",
