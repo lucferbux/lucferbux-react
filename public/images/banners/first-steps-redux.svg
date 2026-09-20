@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Primeros pasos en redux">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c98c31" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#007789" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 894.4 197.6 Q 894.4 197.6 818.0 283.9 Q 741.6 370.2 652.5 372.9 Q 563.4 375.6 490.8 331.4 Q 418.1 287.1 407.6 192.5 Q 397.0 97.9 475.5 38.3 Q 554.1 -21.3 655.2 -7.3 Q 756.3 6.6 825.4 102.1 Z" fill="#c98c31" opacity="0.49" />
+    <path d="M 749.7 96.8 Q 749.7 96.8 717.1 146.3 Q 684.5 195.9 632.2 202.7 Q 579.8 209.5 518.0 189.1 Q 456.2 168.7 456.1 96.7 Q 455.9 24.8 517.8 4.2 Q 579.7 -16.4 644.2 -24.5 Q 708.8 -32.6 729.2 32.1 Z" fill="#eabe7d" opacity="0.46" />
+    <path d="M 545.4 485.1 Q 545.4 485.1 531.0 597.3 Q 516.6 709.5 404.4 696.6 Q 292.3 683.7 215.8 632.1 Q 139.4 580.5 129.3 480.2 Q 119.3 379.9 201.1 312.5 Q 282.8 245.1 378.1 280.0 Q 473.4 314.9 509.4 400.0 Z" fill="#007789" opacity="0.55" />
+    <path d="M 403.8 37.7 Q 403.8 37.7 403.6 154.1 Q 403.3 270.5 280.2 286.9 Q 157.0 303.4 77.9 223.3 Q -1.3 143.1 -22.8 27.3 Q -44.4 -88.5 64.4 -122.8 Q 173.2 -157.1 254.3 -133.5 Q 335.4 -109.9 369.6 -36.1 Z" fill="#c98c31" opacity="0.32" />
+    <path d="M 1380.9 268.2 Q 1380.9 268.2 1301.9 354.2 Q 1222.9 440.3 1124.0 487.1 Q 1025.0 533.8 931.4 460.7 Q 837.8 387.6 857.8 277.8 Q 877.9 168.1 958.8 117.5 Q 1039.8 66.9 1154.1 52.9 Q 1268.5 38.9 1324.7 153.5 Z" fill="#eabe7d" opacity="0.50" />
+    <path d="M 438.6 596.9 Q 438.6 596.9 406.8 664.9 Q 375.0 732.8 300.9 751.9 Q 226.8 770.9 183.3 714.4 Q 139.8 657.9 143.1 598.5 Q 146.4 539.1 185.5 476.2 Q 224.6 413.2 301.7 434.8 Q 378.7 456.3 408.7 526.6 Z" fill="#007789" opacity="0.57" />
+    <path d="M 1133.2 265.7 Q 1133.2 265.7 1098.3 314.2 Q 1063.3 362.6 1007.5 389.3 Q 951.8 415.9 914.6 366.9 Q 877.5 318.0 840.4 247.8 Q 803.2 177.7 875.8 139.2 Q 948.4 100.6 1028.4 106.4 Q 1108.5 112.2 1120.8 189.0 Z" fill="#c98c31" opacity="0.31" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="252.9" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">REACT</text>
+  <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="78" font-weight="700" fill="#ffffff">Primeros pasos en redux</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

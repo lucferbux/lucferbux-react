@@ -1,4 +1,3 @@
-import { orderBy } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
 import InfoBox from "../text/infoBox";
@@ -6,18 +5,18 @@ import { Project } from "../../data/model/project";
 import ProjectCard from "../cards/ProjectCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "Explore Projects",
-  description:
-    "These are a few of my latests projects I've been working on. Some of them are propieatry, so there's no source code",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function ProjectSection() {
-  const { data: projects, loading, error } = useFirestoreCollection<Project>(
-    "project",
-    [orderBy("date", "desc")]
-  );
+  const { m } = useTranslation();
+  const info = m.sections.projects;
+  const {
+    data: projects,
+    loading,
+    error,
+  } = useFirestoreCollection<Project>("project", {
+    orderBy: [["date", "desc"]],
+  });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load projects" />;

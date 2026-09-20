@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Airdrop Leak at CodeTalks4Devs">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007789" />
+      <stop offset="55%" stop-color="#b0c4c7" />
+      <stop offset="100%" stop-color="#c98c31" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1318.0 0.6 Q 1318.0 0.6 1309.6 124.1 Q 1301.3 247.6 1171.2 262.4 Q 1041.1 277.2 938.9 203.4 Q 836.6 129.5 845.1 4.7 Q 853.6 -120.2 951.0 -181.9 Q 1048.5 -243.7 1157.8 -223.6 Q 1267.0 -203.5 1292.5 -101.4 Z" fill="#007789" opacity="0.43" />
+    <path d="M 876.0 409.0 Q 876.0 409.0 787.4 529.2 Q 698.7 649.4 571.5 666.8 Q 444.2 684.2 355.5 604.4 Q 266.8 524.7 278.7 414.8 Q 290.6 304.8 369.3 227.5 Q 447.9 150.2 547.0 192.4 Q 646.1 234.6 761.1 321.8 Z" fill="#b0c4c7" opacity="0.30" />
+    <path d="M 299.3 510.6 Q 299.3 510.6 278.9 566.5 Q 258.5 622.4 194.2 652.9 Q 129.9 683.4 70.8 635.0 Q 11.6 586.5 13.2 511.4 Q 14.9 436.2 72.0 385.5 Q 129.2 334.9 205.7 352.0 Q 282.2 369.1 290.7 439.8 Z" fill="#c98c31" opacity="0.39" />
+    <path d="M 305.6 21.7 Q 305.6 21.7 257.5 74.9 Q 209.5 128.1 150.3 148.3 Q 91.1 168.6 47.6 124.2 Q 4.0 79.8 3.7 21.6 Q 3.4 -36.6 39.2 -116.2 Q 75.0 -195.8 142.8 -140.9 Q 210.6 -86.0 258.1 -32.1 Z" fill="#007789" opacity="0.57" />
+    <path d="M 830.4 5.0 Q 830.4 5.0 821.9 104.7 Q 813.4 204.3 703.5 237.7 Q 593.7 271.1 496.6 199.5 Q 399.4 127.8 444.0 26.5 Q 488.6 -74.9 550.1 -128.8 Q 611.6 -182.7 693.7 -164.9 Q 775.7 -147.1 803.1 -71.0 Z" fill="#b0c4c7" opacity="0.35" />
+    <path d="M 1014.6 328.4 Q 1014.6 328.4 999.5 402.7 Q 984.5 476.9 908.4 476.6 Q 832.3 476.2 773.8 438.6 Q 715.4 401.0 723.5 332.3 Q 731.7 263.7 785.1 235.9 Q 838.5 208.0 904.1 203.3 Q 969.6 198.6 992.1 263.5 Z" fill="#c98c31" opacity="0.31" />
+    <path d="M 876.1 169.6 Q 876.1 169.6 825.4 272.0 Q 774.7 374.3 675.3 349.7 Q 575.9 325.0 474.0 304.9 Q 372.2 284.8 407.4 186.5 Q 442.7 88.3 496.8 -3.3 Q 551.0 -95.0 643.0 -40.3 Q 735.1 14.5 805.6 92.0 Z" fill="#007789" opacity="0.46" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="206.88000000000002" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">NEWS</text>
+  <text x="80" y="281" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="78" font-weight="700" fill="#ffffff">Airdrop Leak at</text>
+    <text x="80" y="373" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="78" font-weight="700" fill="#ffffff">CodeTalks4Devs</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

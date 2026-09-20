@@ -13,6 +13,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "resolveJsonModule": true,
 
     /* Linting */
     "strict": true,
@@ -25,23 +26,13 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      /* Swapped for the fixture source at build time when VITE_FIXTURE_DATA=1.
+         Both modules export the same `dataSource` shape, so type-checking
+         against either is equivalent. */
+      "@datasource": ["src/data/source/firestore.ts"]
     }
   },
-  "include": ["src", "vite-env.d.ts"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "public",
-    ".cache",
-    "src/**/__tests__/**",
-    "src/pages/index.tsx",
-    "src/pages/news.tsx",
-    "src/pages/posts.tsx",
-    "src/pages/projects.tsx",
-    "src/pages/privacy.tsx",
-    "src/pages/terms.tsx",
-    "src/pages/404.tsx",
-    "src/pages/blog/**"
-  ]
+  "include": ["src", "content", "vite-env.d.ts"],
+  "exclude": ["node_modules", "dist", "public", ".cache"]
 }

@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  QueryConstraint,
-  DocumentData,
-} from "firebase/firestore";
-import { db } from "../firebase";
+import { useEffect, useMemo, useState } from "react";
+import type { DocumentData } from "firebase/firestore";
+import { dataSource } from "@datasource";
+import type { QueryDescriptor } from "../data/source/types";
 
 interface FirestoreCollectionState<T> {
   data: T[];
@@ -14,16 +9,23 @@ interface FirestoreCollectionState<T> {
   error: Error | null;
 }
 
+const EMPTY_QUERY: QueryDescriptor = {};
+
 /**
- * Generic hook for subscribing to a Firestore collection with real-time updates.
+ * Subscribe to a Firestore collection with real-time updates.
+ *
+ * The query is a serializable {@link QueryDescriptor} rather than a raw
+ * `QueryConstraint[]`, which is what lets this hook depend on the query
+ * honestly: a constraint array is a fresh object on every render, so the
+ * previous implementation pinned its deps to `[collectionPath]` and silently
+ * ignored query changes at runtime.
  *
  * @param collectionPath - Firestore collection path (e.g. "intro", "patent")
- * @param constraints - Optional array of QueryConstraints (orderBy, where, limit, etc.)
- * @returns { data, loading, error }
+ * @param query - where / orderBy / limit clauses
  */
 export function useFirestoreCollection<T extends DocumentData>(
   collectionPath: string,
-  constraints: QueryConstraint[] = []
+  query: QueryDescriptor = EMPTY_QUERY
 ): FirestoreCollectionState<T> {
   const [state, setState] = useState<FirestoreCollectionState<T>>({
     data: [],
@@ -31,31 +33,25 @@ export function useFirestoreCollection<T extends DocumentData>(
     error: null,
   });
 
+  // Callers almost always pass an object literal, so compare by value.
+  const queryKey = JSON.stringify(query);
+
+  const stableQuery = useMemo(
+    () => JSON.parse(queryKey) as QueryDescriptor,
+    [queryKey]
+  );
+
   useEffect(() => {
-    const colRef = collection(db, collectionPath);
-    const q = query(colRef, ...constraints);
-
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const docs = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as unknown as T[];
-        setState({ data: docs, loading: false, error: null });
-      },
-      (error) => {
-        console.error(
-          `Firestore error on collection "${collectionPath}":`,
-          error
-        );
-        setState((prev) => ({ ...prev, loading: false, error }));
-      }
+    // Deliberately no "reset to loading" here: when the query changes we keep
+    // showing the previous rows until the new ones arrive, which avoids a
+    // spinner flash in fixed-height sections (see the CLS landmine in AGENTS.md).
+    return dataSource.subscribe<T>(
+      collectionPath,
+      stableQuery,
+      (data) => setState({ data, loading: false, error: null }),
+      (error) => setState((prev) => ({ ...prev, loading: false, error }))
     );
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [collectionPath]);
+  }, [collectionPath, stableQuery]);
 
   return state;
 }

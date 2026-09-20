@@ -1,13 +1,19 @@
 import { News } from "../../data/model/news";
 import NewsCard from "./NewsCard";
 import NewsCardCollapsed from "./NewsCardCollapsed";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { localizedField } from "../../i18n/localized";
 
 interface NewsCardDetailProps {
   news: News;
   inverted: boolean;
 }
 
-export default function NewsCardDetail({ news, inverted }: NewsCardDetailProps) {
+export default function NewsCardDetail({
+  news,
+  inverted,
+}: NewsCardDetailProps) {
+  const { locale } = useTranslation();
   return (
     <a
       href={news.url}
@@ -38,7 +44,7 @@ export default function NewsCardDetail({ news, inverted }: NewsCardDetailProps) 
           style={{ direction: "ltr" }}
         >
           <p className="text-left text-[17px] font-normal leading-[130%] text-black mix-blend-normal max-xs:text-[14px] dark:text-white/80">
-            {news.description_en}
+            {localizedField(news, "description", locale)}
           </p>
         </div>
       </div>

@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { screen, waitFor } from "@testing-library/react";
 
 const { mockOnSnapshot } = vi.hoisted(() => ({
   mockOnSnapshot: vi.fn(),
@@ -22,15 +20,10 @@ vi.mock("@/firebase", () => ({
 }));
 
 import PostsPage from "@/pages/PostsPage";
+import { renderWithProviders } from "../helpers/render";
 
 function renderPage() {
-  return render(
-    <HelmetProvider>
-      <MemoryRouter>
-        <PostsPage />
-      </MemoryRouter>
-    </HelmetProvider>
-  );
+  return renderWithProviders(<PostsPage />, { route: "/en/posts" });
 }
 
 describe("PostsPage", () => {
@@ -47,7 +40,7 @@ describe("PostsPage", () => {
 
   it("renders section title after data loads", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({ docs: [] });
         return vi.fn();
       }
@@ -61,7 +54,7 @@ describe("PostsPage", () => {
 
   it("renders post cards with mocked data", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({
           docs: [
             {
@@ -91,7 +84,11 @@ describe("PostsPage", () => {
 
   it("renders error state", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: Function, onError: Function) => {
+      (
+        _query: unknown,
+        _onNext: (snapshot: unknown) => void,
+        onError: (error: Error) => void
+      ) => {
         onError(new Error("Test error"));
         return vi.fn();
       }

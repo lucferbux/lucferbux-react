@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { screen, waitFor } from "@testing-library/react";
 
 // Mock firebase/firestore
 const { mockOnSnapshot } = vi.hoisted(() => ({
@@ -26,15 +24,10 @@ vi.mock("@/firebase", () => ({
 }));
 
 import HomePage from "@/pages/HomePage";
+import { renderWithProviders } from "../helpers/render";
 
 function renderPage() {
-  return render(
-    <HelmetProvider>
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>
-    </HelmetProvider>
-  );
+  return renderWithProviders(<HomePage />, { route: "/en" });
 }
 
 describe("HomePage", () => {
@@ -42,7 +35,7 @@ describe("HomePage", () => {
     vi.clearAllMocks();
     // Default mock: immediately return empty data for all onSnapshot calls
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({ docs: [] });
         return vi.fn(); // unsubscribe
       }
@@ -71,7 +64,7 @@ describe("HomePage", () => {
 
   it("renders with mocked Firestore data", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({
           docs: [
             {

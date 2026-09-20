@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { screen } from "@testing-library/react";
 import Footer from "@/components/layout/Footer";
+import { renderWithProviders } from "../../helpers/render";
 
 const renderWithRouter = (ui: React.ReactElement) =>
-  render(<MemoryRouter>{ui}</MemoryRouter>);
+  renderWithProviders(ui, { route: "/en" });
 
 describe("Footer", () => {
   it("renders without crashing", () => {
@@ -37,9 +37,9 @@ describe("Footer", () => {
     renderWithRouter(<Footer />);
     const links = screen.getAllByRole("link");
     const hrefs = links.map((l) => l.getAttribute("href"));
-    expect(hrefs).toContain("/");
-    expect(hrefs).toContain("/news");
-    expect(hrefs).toContain("/projects");
-    expect(hrefs).toContain("/posts");
+    expect(hrefs).toContain("/en");
+    expect(hrefs).toContain("/en/news");
+    expect(hrefs).toContain("/en/projects");
+    expect(hrefs).toContain("/en/posts");
   });
 });

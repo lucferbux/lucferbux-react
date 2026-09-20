@@ -1,10 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#CA8F36" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#9D7E50" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <!-- Before the stylesheet parses, so form controls, scrollbars and the
+         default canvas render correctly and there is no white flash. -->
+    <meta name="color-scheme" content="light dark" />
+    <!-- Safari 26 ignores these, but Chrome and Samsung Internet on Android
+         still honour them. Values match the gradients the home page paints. -->
+    <meta
+      name="theme-color"
+      content="#c98c31"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#a08153"
+      media="(prefers-color-scheme: dark)"
+    />
     <link rel="icon" type="image/svg+xml" href="/images/logos/logo-icon.svg" />
     <title>Lucferbux</title>
   </head>

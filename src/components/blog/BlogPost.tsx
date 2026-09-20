@@ -6,12 +6,16 @@ import WaveBody from "../backgrounds/WaveBody";
 import type { Components } from "react-markdown";
 import type { ReactNode, ReactElement } from "react";
 import "../../styles/blog.css";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { formatDate } from "../../i18n/formatDate";
 
 interface BlogPostProps {
   title: string;
   date: string;
   featuredImage?: string;
   content: string;
+  /** Shown when the reader's language has no translation of this post. */
+  notice?: string;
 }
 
 /** Detects if a paragraph's only child is a CodePen link and renders an embed. */
@@ -35,10 +39,7 @@ function isCodePenUrl(children: ReactNode): string | null {
     ) {
       const el = child as ReactElement<{ href?: string; children?: ReactNode }>;
       const href = el.props?.href;
-      if (
-        href &&
-        href.match(/^https?:\/\/(www\.)?codepen\.io\/.+\/pen\/.+$/)
-      ) {
+      if (href && href.match(/^https?:\/\/(www\.)?codepen\.io\/.+\/pen\/.+$/)) {
         return href;
       }
     }
@@ -106,17 +107,30 @@ export default function BlogPost({
   date,
   featuredImage,
   content,
+  notice,
 }: BlogPostProps) {
+  const { locale } = useTranslation();
+
   return (
     <div className="overflow-hidden">
       <WaveBody />
       <div className="relative mx-auto max-w-[800px] px-[30px] pt-[140px] pb-[30px]">
         <h1 className="title-blog">{title}</h1>
-        <p className="paragraph-blog mb-4 opacity-70">{date}</p>
+        <p className="paragraph-blog mb-4 opacity-70">
+          {formatDate(date, locale)}
+        </p>
+        {notice && (
+          <p
+            role="note"
+            className="mb-6 rounded-lg border border-black/10 bg-black/5 px-4 py-3 text-[15px] text-black/70 dark:border-white/15 dark:bg-white/10 dark:text-white/70"
+          >
+            {notice}
+          </p>
+        )}
         {featuredImage && (
           <img
             src={featuredImage}
-            alt="Blog Header"
+            alt=""
             className="image-container-blog"
             loading="lazy"
           />

@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { screen, waitFor } from "@testing-library/react";
 
 const { mockOnSnapshot } = vi.hoisted(() => ({
   mockOnSnapshot: vi.fn(),
@@ -22,15 +20,10 @@ vi.mock("@/firebase", () => ({
 }));
 
 import NewsPage from "@/pages/NewsPage";
+import { renderWithProviders } from "../helpers/render";
 
 function renderPage() {
-  return render(
-    <HelmetProvider>
-      <MemoryRouter>
-        <NewsPage />
-      </MemoryRouter>
-    </HelmetProvider>
-  );
+  return renderWithProviders(<NewsPage />, { route: "/en/news" });
 }
 
 describe("NewsPage", () => {
@@ -48,7 +41,7 @@ describe("NewsPage", () => {
 
   it("renders section title after data loads", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({ docs: [] });
         return vi.fn();
       }
@@ -62,7 +55,7 @@ describe("NewsPage", () => {
 
   it("renders news cards with mocked data", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({
           docs: [
             {
@@ -101,14 +94,22 @@ describe("NewsPage", () => {
     await waitFor(() => {
       // NewsCardDetail renders both NewsCard and NewsCardCollapsed (one hidden via CSS),
       // so title text appears multiple times in the DOM — use getAllByText
-      expect(screen.getAllByText("News Item 1").length).toBeGreaterThanOrEqual(1);
-      expect(screen.getAllByText("News Item 2").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("News Item 1").length).toBeGreaterThanOrEqual(
+        1
+      );
+      expect(screen.getAllByText("News Item 2").length).toBeGreaterThanOrEqual(
+        1
+      );
     });
   });
 
   it("renders error state", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: Function, onError: Function) => {
+      (
+        _query: unknown,
+        _onNext: (snapshot: unknown) => void,
+        onError: (error: Error) => void
+      ) => {
         onError(new Error("Test error"));
         return vi.fn();
       }

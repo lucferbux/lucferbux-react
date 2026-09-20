@@ -1,38 +1,53 @@
-export const footerData = [
+import type { Messages } from "../i18n/LanguageContext";
+
+export interface FooterItem {
+  labelKey: keyof Messages["nav"];
+  icon: string;
+  link: string;
+  external: boolean;
+}
+
+export const footerData: FooterItem[] = [
   {
-    title: "Home",
+    labelKey: "home",
     icon: "/images/icons/home.svg",
     link: "/",
     external: false,
   },
   {
-    title: "Projects",
+    labelKey: "projects",
     icon: "/images/icons/code.svg",
     link: "/projects",
     external: false,
   },
   {
-    title: "News",
+    labelKey: "news",
     icon: "/images/icons/courses.svg",
     link: "/news",
     external: false,
   },
   {
-    title: "Posts",
+    labelKey: "posts",
     icon: "/images/icons/vector.svg",
     link: "/posts",
     external: false,
   },
   {
-    title: "Old Web",
+    labelKey: "teaching",
+    icon: "/images/icons/courses.svg",
+    link: "/teaching",
+    external: false,
+  },
+  {
+    labelKey: "oldWeb",
     icon: "/images/icons/calendar.svg",
     link: "https://lucferbux-web-page.web.app",
     external: true,
   },
   {
-    title: "Admin",
+    labelKey: "admin",
     icon: "/images/icons/account.svg",
     link: "/admin/login",
     external: false,
-  }
-]
+  },
+];

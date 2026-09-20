@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import FlatButtonLink from "../buttons/FlatButtonLink";
+import { useLocalePath } from "../../i18n/useLocalePath";
 
 interface InfoBoxProps {
   title: string;
@@ -20,6 +21,8 @@ export default function InfoBox({
   textButton,
   linkButton,
 }: InfoBoxProps) {
+  const localePath = useLocalePath();
+
   return (
     <div className="grid h-fit max-w-[360px] gap-5 text-white max-md:gap-2.5 max-md:text-center">
       <h2
@@ -43,7 +46,7 @@ export default function InfoBox({
           <FlatButtonLink
             icon={iconButton ?? "news"}
             text={textButton ?? "News"}
-            link={linkButton ?? "news"}
+            link={localePath(`/${linkButton ?? "news"}`)}
           />
         </div>
       )}

@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "kubecon-eu-2025",
+    "title": {
+      "en": "KubeCon + CloudNativeCon Europe 2025",
+      "es": "KubeCon + CloudNativeCon Europe 2025"
+    },
+    "description": {
+      "en": "Co-presented \"Orchestrating AI Models in Kubernetes: Deploying Ollama as a Native Container Runtime\" in London, on running model serving as a first-class Kubernetes workload rather than bolting it on.",
+      "es": "Copresenté «Orchestrating AI Models in Kubernetes: Deploying Ollama as a Native Container Runtime» en Londres, sobre ejecutar model serving como carga de trabajo de primera clase en Kubernetes en lugar de añadirlo por encima."
+    },
+    "url": "https://www.youtube.com/watch?v=zLpUJBU6sT4",
+    "image": "/images/banners/kubecon-eu-2025.svg",
+    "timestamp": "2025-04-03T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "kubeflow-top-contributor-2025",
+    "title": {
+      "en": "Top-20 Kubeflow contributor in 2025",
+      "es": "Top-20 de contribuidores de Kubeflow en 2025"
+    },
+    "description": {
+      "en": "Ranked in the top twenty Kubeflow contributors for 2025 by LFX Insights, and became an approver on the project's UI codebase.",
+      "es": "Entre los veinte principales contribuidores de Kubeflow en 2025 según LFX Insights, y approver del código de interfaz del proyecto."
+    },
+    "url": "https://github.com/kubeflow/hub",
+    "image": "/images/banners/kubeflow-top-contributor-2025.svg",
+    "timestamp": "2025-12-15T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "kubeflow-1-10-module",
+    "title": {
+      "en": "First Red Hat UI module upstream in Kubeflow 1.10",
+      "es": "Primer módulo de UI de Red Hat en Kubeflow 1.10"
+    },
+    "description": {
+      "en": "The Model Registry UI shipped in Kubeflow 1.10 — the first user interface module Red Hat contributed upstream, built on the modular architecture the dashboard platform now runs on.",
+      "es": "La UI del Model Registry se publicó en Kubeflow 1.10: el primer módulo de interfaz que Red Hat aportó upstream, construido sobre la arquitectura modular que hoy sostiene la plataforma del dashboard."
+    },
+    "url": "https://github.com/kubeflow/hub",
+    "image": "/images/banners/kubeflow-1-10-module.svg",
+    "timestamp": "2025-06-01T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "codetalks-airdrop-leak",
+    "title": {
+      "en": "Airdrop Leak at CodeTalks4Devs",
+      "es": "Airdrop Leak en CodeTalks4Devs"
+    },
+    "description": {
+      "en": "Talk on information disclosure from iPhones over Bluetooth LE: how AirDrop's advertising can reveal a nearby device's phone number, and the open-source tool built to demonstrate it.",
+      "es": "Charla sobre divulgación de información desde iPhones por Bluetooth LE: cómo el anuncio de AirDrop puede revelar el número de teléfono de un dispositivo cercano, y la herramienta de código abierto creada para demostrarlo."
+    },
+    "url": "https://github.com/Telefonica/Airdrop-Crazy",
+    "image": "/images/banners/codetalks-airdrop-leak.svg",
+    "timestamp": "2019-05-01T12:00:00Z",
+    "loaded": true
+  }
+]

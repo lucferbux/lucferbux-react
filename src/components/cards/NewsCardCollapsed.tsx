@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { News } from "../../data/model/news";
+import { useTranslation } from "../../i18n/LanguageContext";
+import { localizedField } from "../../i18n/localized";
 
 interface NewsCardCollapsedProps {
   news: News;
 }
 
 export default function NewsCardCollapsed({ news }: NewsCardCollapsedProps) {
+  const { locale } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -19,7 +22,7 @@ export default function NewsCardCollapsed({ news }: NewsCardCollapsedProps) {
         <div className="w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)]">
           <img
             src={news.image}
-            alt="News Image"
+            alt=""
             onLoad={() => setLoaded(true)}
             className={`m-0 w-full rounded-xl ${loaded ? "block" : "hidden"}`}
           />
@@ -31,7 +34,7 @@ export default function NewsCardCollapsed({ news }: NewsCardCollapsedProps) {
         </div>
         <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-transparent to-[rgba(208,208,208,1)] dark:to-[rgba(6,5,1,1)]" />
         <p className="absolute bottom-5 left-0 z-[3] mx-5 text-[20px] font-semibold leading-[16px] break-words text-black [direction:ltr] dark:text-white">
-          {news.title_en}
+          {localizedField(news, "title", locale)}
         </p>
       </div>
     </a>

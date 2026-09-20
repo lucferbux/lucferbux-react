@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The JavaScript engine, the call stack and the event loop">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c98c31" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#007789" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1004.1 480.7 Q 1004.1 480.7 989.8 536.3 Q 975.5 591.8 914.1 611.5 Q 852.6 631.1 810.4 584.5 Q 768.1 538.0 749.3 471.7 Q 730.5 405.4 797.4 393.3 Q 864.3 381.2 922.2 372.5 Q 980.2 363.8 992.1 422.3 Z" fill="#c98c31" opacity="0.40" />
+    <path d="M 778.7 248.7 Q 778.7 248.7 775.5 365.8 Q 772.2 482.9 654.3 473.3 Q 536.4 463.7 453.7 407.8 Q 371.1 351.9 389.8 257.7 Q 408.4 163.5 470.9 92.2 Q 533.4 20.9 650.9 20.1 Q 768.4 19.3 773.5 134.0 Z" fill="#eabe7d" opacity="0.51" />
+    <path d="M 1306.9 311.2 Q 1306.9 311.2 1290.9 423.6 Q 1274.9 536.0 1155.1 555.6 Q 1035.3 575.2 929.8 508.5 Q 824.2 441.8 872.3 334.3 Q 920.4 226.8 973.7 118.6 Q 1026.9 10.5 1121.1 85.8 Q 1215.2 161.2 1261.0 236.2 Z" fill="#007789" opacity="0.60" />
+    <path d="M 396.1 278.2 Q 396.1 278.2 331.8 354.7 Q 267.6 431.2 184.2 452.6 Q 100.8 474.0 37.7 417.3 Q -25.5 360.6 -19.1 281.3 Q -12.6 202.0 41.8 132.2 Q 96.3 62.4 179.0 97.5 Q 261.7 132.6 328.9 205.4 Z" fill="#c98c31" opacity="0.36" />
+    <path d="M 398.5 382.7 Q 398.5 382.7 335.2 449.5 Q 271.9 516.4 196.0 548.8 Q 120.1 581.3 37.7 532.6 Q -44.7 483.9 -23.8 392.8 Q -2.9 301.7 55.5 229.3 Q 113.8 156.9 209.9 181.6 Q 306.0 206.4 352.2 294.6 Z" fill="#eabe7d" opacity="0.34" />
+    <path d="M 612.6 576.9 Q 612.6 576.9 588.6 621.0 Q 564.5 665.1 513.2 691.9 Q 461.8 718.6 404.8 683.0 Q 347.8 647.4 338.9 572.6 Q 330.1 497.9 393.7 456.8 Q 457.4 415.6 511.5 451.5 Q 565.6 487.3 589.1 532.1 Z" fill="#007789" opacity="0.60" />
+    <path d="M 942.4 330.3 Q 942.4 330.3 888.8 383.8 Q 835.1 437.3 779.9 438.9 Q 724.6 440.6 659.1 423.1 Q 593.6 405.5 586.3 326.8 Q 579.1 248.1 647.7 216.0 Q 716.4 183.9 773.3 206.7 Q 830.2 229.5 886.3 279.9 Z" fill="#c98c31" opacity="0.45" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="237.67999999999998" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">JAVASCRIPT</text>
+  <text x="80" y="293" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">The JavaScript engine, the</text>
+    <text x="80" y="361" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">call stack and the event loop</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

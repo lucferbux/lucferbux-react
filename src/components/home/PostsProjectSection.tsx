@@ -1,4 +1,3 @@
-import { orderBy, where, limit } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import InfoBox from "../text/infoBox";
 import { Post } from "../../data/model/post";
@@ -9,46 +8,31 @@ import Tilt from "react-parallax-tilt";
 import PostCard from "../cards/PostCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-import { ExternalLink } from "../../data/model/externalLink";
-
-const buttonProject: ExternalLink = {
-  text: "Browse projects",
-  image: "code",
-  link: "projects",
-};
-
-const infoProject = {
-  title: "Recent Projects",
-  description:
-    "These are a few of my latests projects I’ve been working on. Some of them are propietary, so there’s no source code.",
-  button: buttonProject,
-};
-
-const buttonPosts: ExternalLink = {
-  text: "Browse posts",
-  image: "vector",
-  link: "posts",
-};
-
-const infoPosts = {
-  title: "Tech Posts",
-  description:
-    "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
-  button: buttonPosts,
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function PostsProjectSection() {
-  const { data: projects, loading: projLoading, error: projError } =
-    useFirestoreCollection<Project>("project", [
-      where("featured", "==", true),
-      limit(2),
-    ]);
+  const { m } = useTranslation();
+  const infoProject = m.sections.projectsHome;
+  const infoPosts = m.sections.postsHome;
+  const {
+    data: projects,
+    loading: projLoading,
+    error: projError,
+  } = useFirestoreCollection<Project>("project", {
+    where: [["featured", "==", true]],
+    // Without an orderBy Firestore returns arbitrary featured projects.
+    orderBy: [["date", "desc"]],
+    limit: 2,
+  });
 
-  const { data: posts, loading: postLoading, error: postError } =
-    useFirestoreCollection<Post>("patent", [
-      orderBy("date", "desc"),
-      limit(1),
-    ]);
+  const {
+    data: posts,
+    loading: postLoading,
+    error: postError,
+  } = useFirestoreCollection<Post>("patent", {
+    orderBy: [["date", "desc"]],
+    limit: 1,
+  });
 
   if (projLoading || postLoading) return <LoadingSpinner />;
   if (projError || postError)
@@ -59,7 +43,7 @@ export default function PostsProjectSection() {
       <WavePostHome />
       <img
         src="/images/waves/postproject-wave5.svg"
-        alt="Background Image"
+        alt=""
         className="postproject-wave5 absolute -bottom-[10px] z-[-1] hidden 3xl:block 3xl:w-full"
       />
 
@@ -71,9 +55,9 @@ export default function PostsProjectSection() {
             description={infoProject.description}
             displayButton={true}
             darkColor={true}
-            iconButton={infoProject.button.image}
-            textButton={infoProject.button.text}
-            linkButton={infoProject.button.link}
+            iconButton="code"
+            textButton={infoProject.button}
+            linkButton="projects"
           />
         </div>
         <div className="relative -top-10 grid grid-cols-[repeat(auto-fit,280px)] justify-items-center gap-[30px] max-w-[1234px] px-5 py-10 max-xl:grid-cols-[auto_auto] max-xl:overflow-x-scroll max-xl:justify-items-center max-xl:pb-[150px] max-xl:[&::-webkit-scrollbar]:hidden max-md:grid-cols-1 max-md:overflow-x-visible max-md:pb-10 max-[640px]:justify-start">
@@ -95,9 +79,9 @@ export default function PostsProjectSection() {
             description={infoPosts.description}
             displayButton={true}
             darkColor={true}
-            iconButton={infoPosts.button.image}
-            textButton={infoPosts.button.text}
-            linkButton={infoPosts.button.link}
+            iconButton="vector"
+            textButton={infoPosts.button}
+            linkButton="posts"
           />
         </div>
         <div className="relative grid grid-cols-1 justify-items-center px-5 [direction:ltr]">

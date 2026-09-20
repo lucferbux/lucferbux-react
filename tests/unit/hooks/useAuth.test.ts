@@ -33,22 +33,24 @@ describe("useAuth", () => {
 
     const { result } = renderHook(() => useAuth());
 
-    expect(result.current.loading).toBe(true);
+    expect(result.current.initializing).toBe(true);
     expect(result.current.user).toBeNull();
     expect(result.current.error).toBeNull();
   });
 
   it("sets user when auth state changes", async () => {
     const mockUser = { uid: "123", email: "test@test.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
 
     const { result } = renderHook(() => useAuth());
 
     await waitFor(() => {
-      expect(result.current.loading).toBe(false);
+      expect(result.current.initializing).toBe(false);
     });
 
     expect(result.current.user).toEqual(mockUser);
@@ -76,10 +78,12 @@ describe("useAuth", () => {
 
   it("calls firebaseSignOut on signOut", async () => {
     const mockUser = { uid: "123", email: "test@test.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
     mockSignOut.mockResolvedValue(undefined);
 
     const { result } = renderHook(() => useAuth());

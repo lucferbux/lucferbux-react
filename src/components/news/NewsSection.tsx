@@ -1,4 +1,3 @@
-import { orderBy } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
 import { News } from "../../data/model/news";
@@ -6,17 +5,18 @@ import InfoBox from "../text/infoBox";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "Latest News",
-  description: "Here are the latest news related to my professional work",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function NewsSection() {
-  const { data: news, loading, error } = useFirestoreCollection<News>(
-    "intro",
-    [orderBy("timestamp", "desc")]
-  );
+  const { m } = useTranslation();
+  const info = m.sections.news;
+  const {
+    data: news,
+    loading,
+    error,
+  } = useFirestoreCollection<News>("intro", {
+    orderBy: [["timestamp", "desc"]],
+  });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load news" />;
@@ -33,7 +33,11 @@ export default function NewsSection() {
       </div>
       <div className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-[1020px]:justify-items-center max-md:gap-[26px]">
         {news?.map((newsEntry, index) => (
-          <NewsCardDetail news={newsEntry} inverted={index % 2 === 0} key={index} />
+          <NewsCardDetail
+            news={newsEntry}
+            inverted={index % 2 === 0}
+            key={index}
+          />
         ))}
       </div>
     </div>

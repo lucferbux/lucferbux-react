@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -32,6 +32,8 @@ vi.mock("firebase/firestore", () => ({
   updateDoc: vi.fn(),
   deleteDoc: vi.fn(),
   doc: vi.fn(),
+  deleteField: () => ({ _methodName: "deleteField" }),
+  getCountFromServer: vi.fn(async () => ({ data: () => ({ count: 0 }) })),
   Timestamp: { now: () => ({ seconds: Date.now() / 1000, nanoseconds: 0 }) },
 }));
 
@@ -60,42 +62,54 @@ describe("Admin Flow", () => {
   });
 
   it("redirects unauthenticated users to login", async () => {
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByText("Admin Login")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Admin" })
+      ).toBeInTheDocument();
     });
   });
 
   it("renders login form with email and password inputs", () => {
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/login");
 
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /sign in/i })
+    ).toBeInTheDocument();
   });
 
   it("shows dashboard for authenticated users", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Dashboard" })
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText(/admin@example\.com/)).toBeInTheDocument();
@@ -103,30 +117,48 @@ describe("Admin Flow", () => {
 
   it("shows collection management links on dashboard", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Dashboard" })
+      ).toBeInTheDocument();
     });
 
-    // Use collection descriptions which are unique to the dashboard
-    expect(screen.getByText("Manage news items and announcements")).toBeInTheDocument();
-    expect(screen.getByText("Manage blog posts and articles")).toBeInTheDocument();
-    expect(screen.getByText("Manage portfolio projects")).toBeInTheDocument();
-    expect(screen.getByText("Manage work experience entries")).toBeInTheDocument();
+    // The dashboard now links to every collection defined by the schemas,
+    // with live document counts instead of static descriptions.
+    // The persistent admin bar links to the same collections, so scope the
+    // assertion to the dashboard cards in <main>.
+    const main = screen.getByRole("main");
+    for (const [key, label] of [
+      ["news", /news/i],
+      ["posts", /posts/i],
+      ["projects", /projects/i],
+      ["work", /r\u00e9sum\u00e9/i],
+      ["teaching", /teaching/i],
+    ] as const) {
+      expect(within(main).getByRole("link", { name: label })).toHaveAttribute(
+        "href",
+        `/admin/${key}`
+      );
+    }
   });
 
   it("handles login form submission", async () => {
     const user = userEvent.setup();
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
     mockSignInWithEmailAndPassword.mockResolvedValue({
       user: { uid: "123", email: "test@test.com" },
     });
@@ -150,10 +182,12 @@ describe("Admin Flow", () => {
 
   it("displays error message on login failure", async () => {
     const user = userEvent.setup();
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
     mockSignInWithEmailAndPassword.mockRejectedValue(
       new Error("auth/wrong-password")
     );
@@ -175,16 +209,20 @@ describe("Admin Flow", () => {
 
   it("renders sign out button on dashboard", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
     mockSignOut.mockResolvedValue(undefined);
 
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByText("Sign Out")).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /sign out/i })
+      ).toBeInTheDocument();
     });
   });
 });

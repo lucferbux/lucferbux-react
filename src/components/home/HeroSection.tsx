@@ -3,14 +3,33 @@ import Typewriter from "typewriter-effect";
 import MockupAnimation from "../animations/MockupAnimation";
 import WaveHero from "../backgrounds/WaveHero";
 import { ExternalLink } from "../../data/model/externalLink";
+import { useTranslation } from "../../i18n/LanguageContext";
+
+/**
+ * The typewriter animates forever, so in fixture mode (the Playwright visual
+ * baseline) we render the first phrase statically instead. Without this every
+ * screenshot of the hero would capture a different frame.
+ */
+const staticTypewriter = import.meta.env.VITE_FIXTURE_DATA === "1";
 
 const socialLinks: ExternalLink[] = [
-  { text: "instagram", image: "instagram", link: "https://www.instagram.com/lucferbux" },
-  { text: "linkedin", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
+  {
+    text: "instagram",
+    image: "instagram",
+    link: "https://www.instagram.com/lucferbux",
+  },
+  {
+    text: "linkedin",
+    image: "linkedin",
+    link: "https://www.linkedin.com/in/lucferbux/",
+  },
   { text: "github", image: "github", link: "https://github.com/lucferbux" },
 ];
 
 export default function HeroSection() {
+  const { m } = useTranslation();
+  const typewriterStrings = m.hero.roles;
+
   return (
     <div className="overflow-hidden 4xl:pb-[100px]">
       <WaveHero />
@@ -25,7 +44,7 @@ export default function HeroSection() {
               color: "transparent",
             }}
           >
-            Hi! I&apos;m Lucas,
+            {m.hero.greeting}
             <br />
             <span
               style={{
@@ -35,24 +54,27 @@ export default function HeroSection() {
                 color: "transparent",
               }}
             >
-              <Typewriter
-                onInit={() => {}}
-                options={{
-                  strings: [
-                    "a Full Stack",
-                    "an AI",
-                    "a Cloud",
-                  ],
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
+              {staticTypewriter ? (
+                <div className="Typewriter">
+                  <span className="Typewriter__wrapper">
+                    {typewriterStrings[0]}
+                  </span>
+                </div>
+              ) : (
+                <Typewriter
+                  onInit={() => {}}
+                  options={{
+                    strings: [...typewriterStrings],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              )}
             </span>
-            Developer
+            {m.hero.roleSuffix}
           </h1>
           <p className="text-[17px] font-normal leading-[130%] max-xs:text-[15px] max-xs:leading-[100%]">
-            Welcome to my web. In this site I gather all the news, posts,
-            conferences and projects that I take part in.
+            {m.hero.intro}
           </p>
           <div
             className="grid gap-[30px] justify-start max-lg:justify-center max-xs:justify-around"

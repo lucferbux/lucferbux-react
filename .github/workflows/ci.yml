@@ -7,6 +7,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check formatting
+        run: npm run format:check
+
       - name: Lint
         run: npm run lint
 
@@ -34,7 +40,25 @@ jobs:
         run: npm run type-check
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:coverage
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
 
       - name: Build
         run: npm run build
+
+  # Visual regression is a LOCAL gate, not a CI one.
+  #
+  # The baselines are gitignored: they are tens of megabytes of derived PNGs,
+  # and they are platform-specific anyway, since font rasterisation differs
+  # between macOS and Linux. Capture a baseline on the unmodified tree, make
+  # the change, then diff:
+  #
+  #   npm run visual:baseline   # on a clean tree
+  #   npm run visual            # after the change
+  #
+  # To make this a CI gate you would need a baseline the runner can trust —
+  # either generated in the same pinned container on every run (which only
+  # catches within-run nondeterminism, not regressions) or stored as a build
+  # artifact keyed to a known-good commit.

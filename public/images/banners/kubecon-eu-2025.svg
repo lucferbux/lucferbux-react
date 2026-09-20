@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="KubeCon + CloudNativeCon Europe 2025">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00565f" />
+      <stop offset="55%" stop-color="#007789" />
+      <stop offset="100%" stop-color="#eabe7d" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 529.3 596.2 Q 529.3 596.2 459.2 704.8 Q 389.0 813.4 271.0 842.3 Q 153.0 871.2 57.4 794.9 Q -38.3 718.5 -62.8 584.4 Q -87.3 450.3 28.7 367.7 Q 144.8 285.2 259.4 341.5 Q 374.0 397.8 451.6 497.0 Z" fill="#00565f" opacity="0.59" />
+    <path d="M 1459.1 120.4 Q 1459.1 120.4 1368.8 203.3 Q 1278.5 286.1 1180.7 342.0 Q 1083.0 398.0 980.7 323.7 Q 878.4 249.4 883.1 122.6 Q 887.8 -4.1 991.3 -54.5 Q 1094.9 -104.8 1179.8 -66.4 Q 1264.7 -28.0 1361.9 46.2 Z" fill="#007789" opacity="0.35" />
+    <path d="M 859.3 382.1 Q 859.3 382.1 835.7 468.3 Q 812.1 554.6 721.7 562.6 Q 631.4 570.6 532.7 534.2 Q 434.1 497.8 473.8 401.2 Q 513.5 304.5 575.9 264.0 Q 638.3 223.5 707.6 238.5 Q 777.0 253.4 818.2 317.7 Z" fill="#eabe7d" opacity="0.32" />
+    <path d="M 597.5 464.0 Q 597.5 464.0 553.5 585.9 Q 509.5 707.7 380.3 726.1 Q 251.2 744.4 170.5 658.5 Q 89.8 572.5 89.7 463.9 Q 89.6 355.4 173.9 285.0 Q 258.2 214.6 400.9 196.0 Q 543.6 177.5 570.6 320.7 Z" fill="#00565f" opacity="0.58" />
+    <path d="M 1385.7 511.7 Q 1385.7 511.7 1335.3 605.0 Q 1285.0 698.3 1181.2 733.6 Q 1077.5 769.0 979.2 701.8 Q 881.0 634.6 887.5 514.8 Q 893.9 395.0 996.7 372.7 Q 1099.4 350.4 1197.7 330.8 Q 1296.0 311.3 1340.9 411.5 Z" fill="#007789" opacity="0.32" />
+    <path d="M 383.8 340.0 Q 383.8 340.0 343.2 430.6 Q 302.7 521.2 212.4 509.5 Q 122.2 497.8 25.4 474.2 Q -71.5 450.6 -41.8 354.3 Q -12.1 258.0 54.2 216.4 Q 120.5 174.8 212.9 165.2 Q 305.3 155.6 344.5 247.8 Z" fill="#eabe7d" opacity="0.31" />
+    <path d="M 341.5 241.5 Q 341.5 241.5 303.1 317.0 Q 264.7 392.4 183.0 411.6 Q 101.2 430.8 39.8 376.1 Q -21.5 321.4 -38.1 233.5 Q -54.8 145.6 25.4 108.5 Q 105.6 71.4 167.4 103.3 Q 229.2 135.1 285.4 188.3 Z" fill="#00565f" opacity="0.52" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">NEWS</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">KubeCon + CloudNativeCon</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Europe 2025</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

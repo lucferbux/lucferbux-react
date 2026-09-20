@@ -44,9 +44,7 @@ export function createMockSnapshot(docs: ReturnType<typeof createMockDoc>[]) {
 }
 
 // Mock onSnapshot that immediately calls the callback with provided data
-export function createMockOnSnapshot(
-  docs: ReturnType<typeof createMockDoc>[]
-) {
+export function createMockOnSnapshot(docs: ReturnType<typeof createMockDoc>[]) {
   return vi.fn((_query: unknown, onNext: (snap: unknown) => void) => {
     onNext(createMockSnapshot(docs));
     return vi.fn(); // unsubscribe
@@ -79,6 +77,8 @@ export function setupFirebaseMocks(
       Promise.resolve(docs[0] ?? { exists: () => false, data: () => null })
     ),
     doc: vi.fn(),
+    deleteField: () => ({ _methodName: "deleteField" }),
+    getCountFromServer: vi.fn(async () => ({ data: () => ({ count: 0 }) })),
     orderBy: vi.fn(),
     where: vi.fn(),
     limit: vi.fn(),

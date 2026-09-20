@@ -11,13 +11,17 @@ export default function SocialButton({ icon, link }: SocialButtonProps) {
       rel="noopener"
       className="social-btn group flex h-[78px] w-[78px] items-center justify-center rounded-[20px] border-0 transition-all duration-600 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:-translate-y-[3px] active:-translate-y-[1px]"
       style={{
-        background: 'linear-gradient(180deg, #ffffff 0%, #FFFBD9 100%)',
-        boxShadow: '0px 1px 3px rgba(0,0,0,0.1), 0px 20px 40px rgba(102,61,0,0.2), inset 0px 0px 0px 0.5px rgba(255,255,255,0.5)',
+        background: "linear-gradient(180deg, #ffffff 0%, #FFFBD9 100%)",
+        boxShadow:
+          "0px 1px 3px rgba(0,0,0,0.1), 0px 20px 40px rgba(102,61,0,0.2), inset 0px 0px 0px 0.5px rgba(255,255,255,0.5)",
       }}
     >
       <div
         className="relative flex h-[45px] w-[45px] items-center justify-center rounded-full transition-[filter] duration-600 ease-[cubic-bezier(0.075,0.82,0.165,1)] group-hover:hue-rotate-[18deg] group-active:hue-rotate-[3deg]"
-        style={{ background: 'linear-gradient(200.44deg, #c98c31 13.57%, #eabe7d 98.38%)' }}
+        style={{
+          background:
+            "linear-gradient(200.44deg, #c98c31 13.57%, #eabe7d 98.38%)",
+        }}
       >
         <img
           src={`/images/icons/${icon}.svg`}

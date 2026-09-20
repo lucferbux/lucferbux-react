@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Go for TypeScript developers">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007789" />
+      <stop offset="55%" stop-color="#b0c4c7" />
+      <stop offset="100%" stop-color="#c98c31" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 245.0 346.3 Q 245.0 346.3 231.0 399.6 Q 217.0 453.0 161.8 455.1 Q 106.6 457.1 61.5 429.5 Q 16.5 401.8 7.7 342.0 Q -1.1 282.2 45.9 228.8 Q 92.9 175.4 160.4 200.6 Q 227.9 225.8 236.5 286.0 Z" fill="#007789" opacity="0.31" />
+    <path d="M 230.2 220.4 Q 230.2 220.4 172.2 285.1 Q 114.2 349.7 39.9 384.8 Q -34.4 419.8 -109.0 367.0 Q -183.6 314.2 -166.5 228.7 Q -149.4 143.1 -99.1 50.8 Q -48.7 -41.5 62.9 -12.9 Q 174.4 15.7 202.3 118.0 Z" fill="#b0c4c7" opacity="0.54" />
+    <path d="M 362.9 163.6 Q 362.9 163.6 341.6 223.5 Q 320.4 283.4 261.6 271.7 Q 202.9 259.9 146.9 244.0 Q 91.0 228.1 106.4 171.1 Q 121.8 114.0 162.8 92.5 Q 203.7 71.1 251.6 70.5 Q 299.6 69.9 331.3 116.8 Z" fill="#c98c31" opacity="0.55" />
+    <path d="M 650.0 226.5 Q 650.0 226.5 608.3 348.9 Q 566.7 471.4 443.2 462.3 Q 319.6 453.3 231.1 395.0 Q 142.5 336.7 148.7 229.5 Q 154.9 122.2 227.8 19.3 Q 300.6 -83.7 421.9 -36.3 Q 543.2 11.0 596.6 118.7 Z" fill="#007789" opacity="0.30" />
+    <path d="M 674.2 82.6 Q 674.2 82.6 641.0 155.8 Q 607.8 229.0 532.5 230.0 Q 457.2 231.0 382.9 200.7 Q 308.6 170.5 305.6 81.2 Q 302.7 -8.1 376.2 -53.3 Q 449.7 -98.6 535.2 -89.3 Q 620.7 -79.9 647.4 1.3 Z" fill="#b0c4c7" opacity="0.55" />
+    <path d="M 864.1 164.2 Q 864.1 164.2 821.5 241.6 Q 779.0 318.9 698.2 325.2 Q 617.3 331.5 542.2 293.2 Q 467.1 254.9 455.3 158.5 Q 443.5 62.1 529.9 27.0 Q 616.2 -8.1 686.6 14.5 Q 757.0 37.0 810.5 100.6 Z" fill="#c98c31" opacity="0.48" />
+    <path d="M 391.9 600.0 Q 391.9 600.0 334.4 699.8 Q 276.9 799.6 173.3 805.2 Q 69.7 810.7 -7.6 754.1 Q -84.8 697.6 -122.3 582.0 Q -159.8 466.4 -48.4 413.1 Q 62.9 359.8 191.8 352.6 Q 320.8 345.5 356.3 472.8 Z" fill="#007789" opacity="0.34" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="206.88000000000002" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">GO</text>
+  <text x="80" y="281" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="78" font-weight="700" fill="#ffffff">Go for TypeScript</text>
+    <text x="80" y="373" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="78" font-weight="700" fill="#ffffff">developers</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

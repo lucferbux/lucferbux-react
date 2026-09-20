@@ -1,0 +1,194 @@
+[
+  {
+    "_id": "javascript-course",
+    "title": {
+      "en": "Modern JavaScript & TypeScript",
+      "es": "JavaScript moderno y TypeScript"
+    },
+    "description": {
+      "en": "Forty-five modules taking you from the language basics to the engine itself, then into TypeScript and a full project. Covers the call stack and event loop, promises and async/await, generics and utility types, and ends with a weather app built on Webpack and Babel.",
+      "es": "Cuarenta y cinco módulos que van desde lo básico del lenguaje hasta el propio motor, y de ahí a TypeScript y un proyecto completo. Cubre call stack y event loop, promesas y async/await, genéricos y utility types, y termina con una aplicación del tiempo sobre Webpack y Babel."
+    },
+    "institution": {
+      "en": "Three Points (Inesdi)",
+      "es": "Three Points (Inesdi)"
+    },
+    "period": "2019 – Present",
+    "siteUrl": "https://javascript-course-threepoints.netlify.app/",
+    "repoUrl": "https://github.com/lucferbux/Javascript-Course",
+    "links": [
+      {
+        "label": "Final project",
+        "url": "https://github.com/lucferbux/TypescriptWeatherExample"
+      }
+    ],
+    "tags": [
+      "JavaScript",
+      "TypeScript",
+      "Webpack",
+      "Babel"
+    ],
+    "icon": "threepoints",
+    "importance": 1
+  },
+  {
+    "_id": "fullstack-workshop",
+    "title": {
+      "en": "Full-Stack Web Workshop",
+      "es": "Taller transversal full stack"
+    },
+    "description": {
+      "en": "A single project carried through the whole stack, one repository per stage: React front end, Express API, MongoDB, Firebase, testing and security, Docker and Kubernetes, and finally CI/CD. Every stage is public and can be followed independently.",
+      "es": "Un mismo proyecto recorrido de punta a punta, con un repositorio por etapa: front en React, API en Express, MongoDB, Firebase, testing y seguridad, Docker y Kubernetes, y por último CI/CD. Todas las etapas son públicas y pueden seguirse por separado."
+    },
+    "institution": {
+      "en": "Three Points (Inesdi)",
+      "es": "Three Points (Inesdi)"
+    },
+    "period": "2019 – Present",
+    "siteUrl": "https://taller-threepoints-docs.netlify.app/",
+    "repoUrl": "https://github.com/lucferbux/Taller-Docusaurus",
+    "links": [
+      {
+        "label": "1 · Front end",
+        "url": "https://github.com/lucferbux/Taller-FrontEnd"
+      },
+      {
+        "label": "3 · Database",
+        "url": "https://github.com/lucferbux/Taller-BBDD"
+      },
+      {
+        "label": "3.1 · Firebase",
+        "url": "https://github.com/lucferbux/Taller-Firebase"
+      },
+      {
+        "label": "4 · Testing & security",
+        "url": "https://github.com/lucferbux/Taller-Testing-Security"
+      },
+      {
+        "label": "5 · Containers",
+        "url": "https://github.com/lucferbux/Taller-Containerization"
+      },
+      {
+        "label": "6 · CI/CD",
+        "url": "https://github.com/lucferbux/Taller-CI-CD"
+      },
+      {
+        "label": "Demo",
+        "url": "https://taller-threepoints-1.netlify.app"
+      }
+    ],
+    "tags": [
+      "React",
+      "Express",
+      "MongoDB",
+      "Firebase",
+      "Docker",
+      "Kubernetes",
+      "CI/CD"
+    ],
+    "icon": "threepoints",
+    "importance": 2
+  },
+  {
+    "_id": "testing-security",
+    "title": {
+      "en": "Testing & Security",
+      "es": "Testing y Seguridad"
+    },
+    "description": {
+      "en": "Four sessions on building applications you can trust: unit testing with Jest and React Testing Library, integration testing with Supertest and MSW, end-to-end flows in Cypress, and a session on the OWASP Top 10 applied to a real Node and React codebase.",
+      "es": "Cuatro sesiones sobre construir aplicaciones fiables: testing unitario con Jest y React Testing Library, testing de integración con Supertest y MSW, flujos end-to-end con Cypress, y una sesión sobre el OWASP Top 10 aplicado a un proyecto real de Node y React."
+    },
+    "institution": {
+      "en": "Three Points (Inesdi)",
+      "es": "Three Points (Inesdi)"
+    },
+    "period": "2023 – Present",
+    "siteUrl": "https://testing-y-seguridad.netlify.app/",
+    "repoUrl": "https://github.com/lucferbux/Taller-Testing-Security",
+    "links": [
+      {
+        "label": "Practice project",
+        "url": "https://github.com/lucferbux/Proyecto-Testing-Y-Seguridad"
+      }
+    ],
+    "tags": [
+      "Jest",
+      "React Testing Library",
+      "Cypress",
+      "Supertest",
+      "OWASP"
+    ],
+    "icon": "threepoints",
+    "importance": 3
+  },
+  {
+    "_id": "python-for-ai",
+    "title": {
+      "en": "Python for AI",
+      "es": "Python para IA"
+    },
+    "description": {
+      "en": "Four Colab sessions covering Python fundamentals through to a deployed tool: NumPy and Pandas, Keras, Hugging Face pipelines, LLM APIs, retrieval-augmented generation with LangChain, and shipping with Gradio. Notebooks only — there is no repository. The module has since evolved into Agentic Development, so the framing is older, but the Python foundation holds up.",
+      "es": "Cuatro sesiones en Colab que van de los fundamentos de Python a una herramienta desplegada: NumPy y Pandas, Keras, pipelines de Hugging Face, APIs de LLM, generación aumentada por recuperación con LangChain y publicación con Gradio. Sólo notebooks, sin repositorio. El módulo ha evolucionado hacia Desarrollo Agéntico, así que el enfoque es anterior, pero la base de Python sigue siendo válida."
+    },
+    "institution": {
+      "en": "OBS Business School",
+      "es": "OBS Business School"
+    },
+    "period": "2023 – Present",
+    "links": [
+      {
+        "label": "Session 1",
+        "url": "https://colab.research.google.com/drive/1d1oGfhJ-RPcvPOOpClLtCGABbfPC1g_c?usp=sharing"
+      },
+      {
+        "label": "Session 2",
+        "url": "https://colab.research.google.com/drive/1XmPmgjkezvXbOwb4_zut2AmzYq0MH41z?usp=sharing"
+      },
+      {
+        "label": "Session 3",
+        "url": "https://colab.research.google.com/drive/1lDfD1ynolZHlk0oX35FkNp0_4TyKmG1A?usp=sharing"
+      },
+      {
+        "label": "Session 4",
+        "url": "https://colab.research.google.com/drive/1Bf6eP1HV1c22URBF6MUeKdY05w03Z-Dd?usp=sharing"
+      }
+    ],
+    "tags": [
+      "Python",
+      "NumPy",
+      "Pandas",
+      "Keras",
+      "Hugging Face",
+      "LangChain",
+      "Gradio"
+    ],
+    "icon": "book",
+    "importance": 4
+  },
+  {
+    "_id": "blockchain-security",
+    "title": {
+      "en": "Blockchain Security",
+      "es": "Seguridad en Blockchain"
+    },
+    "description": {
+      "en": "Module on the Blockchain master: the main threat classes against distributed ledgers, smart-contract hardening, and deploying across multiple systems.",
+      "es": "Módulo del máster de Blockchain: principales amenazas contra libros distribuidos, fortificación de smart contracts y despliegue en múltiples sistemas."
+    },
+    "institution": {
+      "en": "Universidad Europea",
+      "es": "Universidad Europea"
+    },
+    "period": "2019 – 2023",
+    "tags": [
+      "Blockchain",
+      "Smart contracts",
+      "Security"
+    ],
+    "icon": "uem",
+    "importance": 5
+  }
+]

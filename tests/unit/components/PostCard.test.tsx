@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { screen } from "@testing-library/react";
 import PostCard from "@/components/cards/PostCard";
 import type { Post } from "@/data/model/post";
+import { renderWithProviders } from "../../helpers/render";
 
 const mockPost: Post = {
   title: "Post de prueba",
@@ -16,7 +16,7 @@ const mockPost: Post = {
 };
 
 const renderWithRouter = (ui: React.ReactElement) =>
-  render(<MemoryRouter>{ui}</MemoryRouter>);
+  renderWithProviders(ui, { route: "/en" });
 
 describe("PostCard", () => {
   it("renders post title", () => {
@@ -45,15 +45,15 @@ describe("PostCard", () => {
     };
     renderWithRouter(<PostCard post={postWithInternal} />);
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("href", "/blog/first-steps-redux");
+    expect(link).toHaveAttribute("href", "/en/blog/first-steps-redux");
   });
 
   it("renders the post image", () => {
-    renderWithRouter(<PostCard post={mockPost} />);
-    const images = screen.getAllByRole("img");
-    const postImg = images.find(
-      (img) => img.getAttribute("alt") === "Post Image"
+    // Decorative image (alt=""), so it is not in the a11y tree.
+    const { container } = renderWithRouter(<PostCard post={mockPost} />);
+    const sources = Array.from(container.querySelectorAll("img")).map((img) =>
+      img.getAttribute("src")
     );
-    expect(postImg).toHaveAttribute("src", "https://example.com/post.png");
+    expect(sources).toContain("https://example.com/post.png");
   });
 });

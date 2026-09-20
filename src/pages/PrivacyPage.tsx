@@ -1,11 +1,19 @@
 import SEO from "../components/layout/SEO";
+import { useTranslation } from "../i18n/LanguageContext";
+import PrivacySection from "../components/terms/privacySection";
 
 export default function PrivacyPage() {
+  const { m } = useTranslation();
+
   return (
     <>
-      <SEO title="Privacy Policy" description="Privacy policy for the Lucferbux personal website" themeColor="#007789" themeColorDark="#2b2830" url="https://lucferbux.dev/privacy" />
-      {/* PrivacySection placeholder — implemented in T050 (US2) */}
-      <section className="min-h-screen" />
+      <SEO
+        title={m.pages.privacy.title}
+        description={m.pages.privacy.description}
+        themeColor="#007789"
+        themeColorDark="#2b2830"
+      />
+      <PrivacySection />
     </>
   );
 }

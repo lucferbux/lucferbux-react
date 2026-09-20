@@ -1,4 +1,3 @@
-import { orderBy } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
 import InfoBox from "../text/infoBox";
@@ -6,18 +5,16 @@ import { Post } from "../../data/model/post";
 import PostCard from "../cards/PostCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
-
-const info = {
-  title: "Tech Posts",
-  description:
-    "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
-};
+import { useTranslation } from "../../i18n/LanguageContext";
 
 export default function PostSection() {
-  const { data: posts, loading, error } = useFirestoreCollection<Post>(
-    "patent",
-    [orderBy("date", "desc")]
-  );
+  const { m } = useTranslation();
+  const info = m.sections.posts;
+  const {
+    data: posts,
+    loading,
+    error,
+  } = useFirestoreCollection<Post>("patent", { orderBy: [["date", "desc"]] });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load posts" />;

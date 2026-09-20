@@ -1,0 +1,186 @@
+[
+  {
+    "_id": "casa-diego-de-siloe",
+    "title": {
+      "en": "Casa Diego de Siloé",
+      "es": "Casa Diego de Siloé"
+    },
+    "description": {
+      "en": "Documentation site for building my own house: construction progress in photos, current renders, and the phased plan with its backlog. Built as a docs site so the whole project stays in one place.",
+      "es": "Web de documentación de la construcción de mi casa: el avance de la obra en fotos, los renders actuales y el plan por fases con su backlog. Montada como sitio de documentación para tener todo el proyecto en un único sitio."
+    },
+    "link": "https://plan-construccion.netlify.app/main#/",
+    "links": [
+      {
+        "label": "Progress",
+        "url": "https://plan-construccion.netlify.app/main#/progress/README"
+      },
+      {
+        "label": "Renders",
+        "url": "https://plan-construccion.netlify.app/main#/renders/galeria"
+      },
+      {
+        "label": "Plan",
+        "url": "https://plan-construccion.netlify.app/main#/planning/plan-obra"
+      }
+    ],
+    "tags": [
+      "Docs",
+      "Netlify",
+      "Self-build"
+    ],
+    "featured": false,
+    "version": "",
+    "date": "2026-09-20T12:00:00Z"
+  },
+  {
+    "_id": "lucferbux-react",
+    "title": {
+      "en": "This website",
+      "es": "Esta web"
+    },
+    "description": {
+      "en": "The site you are reading. Vite, React and Tailwind v4 over Cloud Firestore, bilingual, installable as a PWA, with a schema-driven admin and a Playwright visual-regression baseline covering every route at seven widths in both colour schemes.",
+      "es": "La web que estás leyendo. Vite, React y Tailwind v4 sobre Cloud Firestore, bilingüe, instalable como PWA, con un panel de administración dirigido por esquemas y una base de regresión visual en Playwright que cubre cada ruta en siete anchos y en ambos esquemas de color."
+    },
+    "link": "https://github.com/lucferbux/lucferbux-react",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Firebase",
+      "Playwright"
+    ],
+    "featured": false,
+    "version": "2.0.0",
+    "date": "2026-09-20T12:00:00Z"
+  },
+  {
+    "_id": "totp-authenticator",
+    "title": {
+      "en": "TOTP Authenticator",
+      "es": "TOTP Authenticator"
+    },
+    "description": {
+      "en": "A native TOTP authenticator for iOS and macOS, built entirely on Apple frameworks with no third-party dependencies. RFC 4226 and 6238, keys encrypted at rest with ChaChaPoly, CloudKit sync, widgets, Shortcuts, and an AutoFill credential provider that works on the Mac too.",
+      "es": "Un autenticador TOTP nativo para iOS y macOS, construido íntegramente sobre frameworks de Apple y sin dependencias de terceros. RFC 4226 y 6238, claves cifradas en reposo con ChaChaPoly, sincronización por CloudKit, widgets, Atajos y un proveedor de credenciales AutoFill que funciona también en Mac."
+    },
+    "link": "https://github.com/lucferbux/TOTP",
+    "tags": [
+      "Swift",
+      "SwiftUI",
+      "CryptoKit",
+      "CloudKit",
+      "Security"
+    ],
+    "featured": false,
+    "version": "",
+    "date": "2026-09-19T12:00:00Z"
+  },
+  {
+    "_id": "golang-tutorial",
+    "title": {
+      "en": "Go for BFFs and Operators",
+      "es": "Go para BFFs y operadores"
+    },
+    "description": {
+      "en": "A written course taking a senior JavaScript or Python developer to production Go: syntax and types, error handling and interfaces, concurrency, HTTP services and backend-for-frontend patterns, then Kubernetes controllers with controller-runtime.",
+      "es": "Un curso escrito que lleva a un desarrollador sénior de JavaScript o Python hasta Go en producción: sintaxis y tipos, manejo de errores e interfaces, concurrencia, servicios HTTP y patrones backend-for-frontend, y de ahí a controladores de Kubernetes con controller-runtime."
+    },
+    "link": "https://github.com/lucferbux/golang-tutorial",
+    "tags": [
+      "Go",
+      "Kubernetes",
+      "Operators",
+      "Teaching"
+    ],
+    "featured": false,
+    "version": "",
+    "date": "2026-09-04T12:00:00Z"
+  },
+  {
+    "_id": "odh-dashboard",
+    "title": {
+      "en": "OpenShift AI Dashboard",
+      "es": "Dashboard de OpenShift AI"
+    },
+    "description": {
+      "en": "The dashboard for Red Hat OpenShift AI and Open Data Hub. I architected and lead the modular platform it runs on: micro-frontends plus Go backend-for-frontend services, replacing a monolith. Ten AI product modules ship on it across five releases.",
+      "es": "El dashboard de Red Hat OpenShift AI y Open Data Hub. Diseñé y lidero la plataforma modular sobre la que funciona: micro-frontends y servicios backend-for-frontend en Go, en sustitución de un monolito. Diez módulos de producto de IA se publican sobre ella a lo largo de cinco releases."
+    },
+    "link": "https://github.com/opendatahub-io/odh-dashboard",
+    "tags": [
+      "TypeScript",
+      "React",
+      "Go",
+      "Kubernetes",
+      "OpenShift"
+    ],
+    "featured": true,
+    "version": "",
+    "date": "2026-09-01T12:00:00Z"
+  },
+  {
+    "_id": "kubeflow-model-registry-ui",
+    "title": {
+      "en": "Kubeflow Model Registry UI",
+      "es": "UI del Model Registry de Kubeflow"
+    },
+    "description": {
+      "en": "A single pane of glass for indexing and managing models, versions and ML artifact metadata. I am an approver on the UI, and this was the first Red Hat UI module to ship upstream, in Kubeflow 1.10. Top-20 Kubeflow contributor in 2025.",
+      "es": "Un punto único para indexar y gestionar modelos, versiones y metadatos de artefactos de ML. Soy approver de la UI, y fue el primer módulo de interfaz de Red Hat publicado upstream, en Kubeflow 1.10. Top-20 de contribuidores de Kubeflow en 2025."
+    },
+    "link": "https://github.com/kubeflow/hub",
+    "tags": [
+      "Kubeflow",
+      "TypeScript",
+      "React",
+      "Go",
+      "MLOps"
+    ],
+    "featured": true,
+    "version": "",
+    "date": "2026-08-01T12:00:00Z"
+  },
+  {
+    "_id": "mod-arch-library",
+    "title": {
+      "en": "Modular Architecture Library",
+      "es": "Modular Architecture Library"
+    },
+    "description": {
+      "en": "The shared UI library behind the modular dashboard: common components, routing and platform plumbing that every module builds on. Designing it is what let module teams ship independently without a platform engineer in the loop.",
+      "es": "La librería de UI compartida tras el dashboard modular: componentes comunes, enrutado y fontanería de plataforma sobre la que se apoya cada módulo. Diseñarla es lo que permitió a los equipos de módulo publicar de forma independiente, sin necesidad de un ingeniero de plataforma."
+    },
+    "link": "https://github.com/opendatahub-io/mod-arch-library",
+    "tags": [
+      "TypeScript",
+      "React",
+      "Micro-frontends"
+    ],
+    "featured": true,
+    "version": "",
+    "date": "2026-07-01T12:00:00Z"
+  },
+  {
+    "_id": "airdrop-crazy",
+    "title": {
+      "en": "Airdrop Crazy",
+      "es": "Airdrop Crazy"
+    },
+    "description": {
+      "en": "Security research tool from Telefónica's Ideas Locas team. It exposes nearby Apple devices' phone numbers and state over Bluetooth LE by exploiting how AirDrop advertises. Presented publicly at CodeTalks4Devs as \"Airdrop Leak\".",
+      "es": "Herramienta de investigación en seguridad del equipo Ideas Locas de Telefónica. Expone los números de teléfono y el estado de dispositivos Apple cercanos a través de Bluetooth LE, aprovechando cómo se anuncia AirDrop. Presentada públicamente en CodeTalks4Devs como «Airdrop Leak»."
+    },
+    "link": "https://github.com/Telefonica/Airdrop-Crazy",
+    "tags": [
+      "Python",
+      "Bluetooth LE",
+      "iOS",
+      "Security research"
+    ],
+    "featured": false,
+    "version": "",
+    "date": "2019-06-01T12:00:00Z"
+  }
+]

@@ -7,7 +7,12 @@ interface NavButtonExternalProps {
   collapse?: boolean;
 }
 
-export default function NavButtonExternal({ icon, text, link, collapse }: NavButtonExternalProps) {
+export default function NavButtonExternal({
+  icon,
+  text,
+  link,
+  collapse,
+}: NavButtonExternalProps) {
   return (
     <a href={link} target="_blank" rel="noopener" className="cursor-pointer">
       <div
