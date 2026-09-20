@@ -83,7 +83,7 @@ export default function ImageField({
         placeholder={t.orPasteUrl}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-black/15 bg-white/70 px-3 py-2 text-black transition focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white"
+        className="admin-input"
       />
 
       <div className="flex items-center gap-3">
@@ -91,7 +91,7 @@ export default function ImageField({
           type="button"
           onClick={() => fileInput.current?.click()}
           disabled={progress !== null}
-          className="rounded-lg border border-black/15 px-3 py-1.5 text-sm text-black transition hover:bg-black/5 disabled:opacity-50 dark:border-white/20 dark:text-white dark:hover:bg-white/10"
+          className="admin-btn admin-btn-ghost px-3 py-1.5 text-sm"
         >
           {progress === null ? t.upload : `${t.uploading} ${progress}%`}
         </button>
@@ -109,7 +109,7 @@ export default function ImageField({
             <button
               type="button"
               onClick={() => onChange("")}
-              className="text-sm text-red-500 hover:underline"
+              className="admin-btn admin-btn-danger px-3 py-1.5 text-sm"
             >
               {t.remove}
             </button>
@@ -135,17 +135,20 @@ export default function ImageField({
           aria-valuenow={progress}
           aria-valuemin={0}
           aria-valuemax={100}
-          className="h-1 w-full overflow-hidden rounded bg-black/10 dark:bg-white/20"
+          className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--color-admin-border)]"
         >
           <div
-            className="h-full bg-primary transition-all"
+            className="h-full bg-[var(--color-primary)] transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
       )}
 
       {uploadError && (
-        <p role="alert" className="text-xs text-red-500">
+        <p
+          role="alert"
+          className="text-xs font-medium text-[var(--color-danger)]"
+        >
           {uploadError}
         </p>
       )}

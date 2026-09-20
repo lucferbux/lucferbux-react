@@ -40,11 +40,14 @@ export default function LoginForm() {
       <div className="relative z-10 flex min-h-[60vh] items-center justify-center px-4">
         <form
           onSubmit={handleSubmit}
-          className="surface-card w-full max-w-md rounded-xl p-8"
+          className="admin-panel w-full max-w-md p-8 max-xs:p-6"
         >
-          <h2 className="mb-6 text-center text-2xl font-bold text-primary">
-            Admin Login
-          </h2>
+          <h1 className="mb-1 text-center text-[26px] font-bold text-[var(--color-admin-text)]">
+            Admin
+          </h1>
+          <p className="mb-6 text-center text-sm text-[var(--color-admin-muted)]">
+            Sign in to manage the site content
+          </p>
 
           {error && (
             <div
@@ -58,7 +61,7 @@ export default function LoginForm() {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="mb-1 block text-sm font-medium text-black/80 dark:text-white/80"
+              className="mb-1.5 block text-sm font-semibold text-[var(--color-admin-text)]"
             >
               Email
             </label>
@@ -68,7 +71,7 @@ export default function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-lg border border-black/15 bg-white/70 px-4 py-2 text-black transition placeholder:text-black/40 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
+              className="admin-input"
               placeholder="admin@example.com"
             />
           </div>
@@ -76,7 +79,7 @@ export default function LoginForm() {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="mb-1 block text-sm font-medium text-black/80 dark:text-white/80"
+              className="mb-1.5 block text-sm font-semibold text-[var(--color-admin-text)]"
             >
               Password
             </label>
@@ -86,7 +89,7 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full rounded-lg border border-black/15 bg-white/70 px-4 py-2 text-black transition placeholder:text-black/40 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
+              className="admin-input"
               placeholder="••••••••"
             />
           </div>
@@ -94,7 +97,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
+            className="admin-btn admin-btn-primary w-full"
           >
             {submitting ? "Signing in…" : "Sign In"}
           </button>

@@ -18,8 +18,7 @@ interface FieldProps {
   onChange: (value: unknown) => void;
 }
 
-const inputClass =
-  "w-full rounded-lg border border-black/15 bg-white/70 px-3 py-2 text-black placeholder-black/40 transition focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder-white/40";
+const inputClass = "admin-input";
 
 function resolveOptions(schema: FieldSchema) {
   if (!schema.options) return [];
@@ -80,7 +79,7 @@ export default function Field({
           <input
             {...common}
             type="checkbox"
-            className="h-4 w-4 rounded accent-primary"
+            className="h-5 w-5 rounded accent-[var(--color-primary)]"
             checked={Boolean(value)}
             onChange={(e) => onChange(e.target.checked)}
           />
@@ -189,13 +188,13 @@ export default function Field({
         htmlFor={id}
         className={
           isCheckbox
-            ? "order-2 text-sm font-medium text-black/80 dark:text-white/80"
-            : "mb-1 block text-sm font-medium text-black/80 dark:text-white/80"
+            ? "order-2 text-sm font-medium text-[var(--color-admin-text)]"
+            : "mb-1.5 block text-sm font-semibold text-[var(--color-admin-text)]"
         }
       >
         {label}
         {schema.required && (
-          <span aria-hidden="true" className="ml-1 text-red-500">
+          <span aria-hidden="true" className="ml-1 text-[var(--color-danger)]">
             *
           </span>
         )}
@@ -210,7 +209,10 @@ export default function Field({
         </p>
       )}
       {error && (
-        <p id={errorId} className="mt-1 text-xs text-red-500">
+        <p
+          id={errorId}
+          className="mt-1.5 text-xs font-medium text-[var(--color-danger)]"
+        >
           {error}
         </p>
       )}

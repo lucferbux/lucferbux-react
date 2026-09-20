@@ -29,6 +29,9 @@ export const ROUTES: VisualRoute[] = [
   { name: "privacy", path: "/en/privacy", ready: "text=Privacy Policy" },
   { name: "not-found", path: "/en/no-such-page", ready: "text=404" },
   { name: "admin-login", path: "/admin/login", ready: "#email" },
+  // Behind the auth guard; fixture builds bypass it (see AdminLayout).
+  { name: "admin-dashboard", path: "/admin", ready: "text=Dashboard" },
+  { name: "admin-list", path: "/admin/news", ready: "text=entries" },
 
   // Spanish. The landing page carries the most text, and Spanish copy runs
   // 15-20% longer than English, so this is where a fixed-height section would

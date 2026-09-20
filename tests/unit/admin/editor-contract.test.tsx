@@ -237,7 +237,7 @@ describe.each(CASES)(
       const user = userEvent.setup();
       renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await user.click(screen.getByRole("button", { name: /^add$/i }));
       await fillRequiredFields(user);
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
@@ -334,7 +334,7 @@ describe.each(CASES)(
       const user = userEvent.setup();
       renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await user.click(screen.getByRole("button", { name: /^add$/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       await waitFor(() => {
@@ -346,7 +346,7 @@ describe.each(CASES)(
       const user = userEvent.setup();
       renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await user.click(screen.getByRole("button", { name: /^add$/i }));
       // Raw Firestore keys like "title_en" are shown as labels today, and the
       // labels are not associated with their inputs at all.
       // Each localized field renders one control per language, labelled with
@@ -364,7 +364,7 @@ describe.each(CASES)(
       const user = userEvent.setup();
       renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await user.click(screen.getByRole("button", { name: /^add$/i }));
       await fillRequiredFields(user);
       // Enter in a text field submits the form, which the previous editors
       // could not do because they were not <form> elements.
@@ -378,7 +378,7 @@ describe.each(CASES)(
       const user = userEvent.setup();
       renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await user.click(screen.getByRole("button", { name: /^add$/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       expect(mockAddDoc).not.toHaveBeenCalled();
@@ -389,7 +389,7 @@ describe.each(CASES)(
       const user = userEvent.setup();
       renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await user.click(screen.getByRole("button", { name: /^add$/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       await waitFor(() =>

@@ -188,6 +188,15 @@ export const PROJECTS_SCHEMA: CollectionSchema = {
       },
     },
     {
+      name: "links",
+      type: "linklist",
+      label: { en: "Extra links", es: "Enlaces adicionales" },
+      help: {
+        en: 'One per line, as "Label | https://…". For projects whose site has sections worth linking directly.',
+        es: 'Uno por línea, como "Etiqueta | https://…". Para proyectos cuya web tiene secciones que merece la pena enlazar.',
+      },
+    },
+    {
       name: "version",
       type: "text",
       label: { en: "Version", es: "Versión" },

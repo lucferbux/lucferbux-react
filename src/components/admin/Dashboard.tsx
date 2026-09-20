@@ -11,21 +11,29 @@ import { KNOWN_POST_SLUGS } from "@/pages/BlogPostPage";
 const COPY = {
   en: {
     heading: "Dashboard",
+    signedInAs: "Signed in as",
     signOut: "Sign out",
     entries: "entries",
-    counting: "counting…",
-    countFailed: "count unavailable",
-    linkCheck: "Blog links",
-    linkCheckOk: (n: number) => `${n} markdown posts available`,
+    entry: "entry",
+    counting: "…",
+    countFailed: "—",
+    manage: "Manage",
+    blogTitle: "Blog posts",
+    blogBody: (n: number) =>
+      `${n} markdown ${n === 1 ? "post" : "posts"} in the repository. Link one from a post entry instead of an external URL.`,
   },
   es: {
     heading: "Panel",
+    signedInAs: "Sesión iniciada como",
     signOut: "Cerrar sesión",
     entries: "entradas",
-    counting: "contando…",
-    countFailed: "recuento no disponible",
-    linkCheck: "Enlaces del blog",
-    linkCheckOk: (n: number) => `${n} artículos markdown disponibles`,
+    entry: "entrada",
+    counting: "…",
+    countFailed: "—",
+    manage: "Gestionar",
+    blogTitle: "Artículos del blog",
+    blogBody: (n: number) =>
+      `${n} ${n === 1 ? "artículo" : "artículos"} markdown en el repositorio. Enlaza uno desde una entrada en vez de usar una URL externa.`,
   },
 } satisfies Record<Locale, Record<string, unknown>>;
 
@@ -63,19 +71,23 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      {/* Sits on the teal part of the wave, so it is white like the public
+          section headings rather than a dark block on a dark background. */}
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-black dark:text-white">
+          <h1 className="text-[40px] leading-[1.1] font-bold text-white drop-shadow-sm max-xs:text-[32px]">
             {t.heading}
           </h1>
           {user?.email && (
-            <p className="text-sm opacity-60 dark:text-white">{user.email}</p>
+            <p className="mt-1 text-[14px] text-white/75">
+              {t.signedInAs} {user.email}
+            </p>
           )}
         </div>
         <button
           type="button"
           onClick={() => void signOut()}
-          className="rounded-lg border border-black/15 px-4 py-2 text-sm transition hover:bg-black/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10"
+          className="admin-btn admin-btn-danger bg-white/90 hover:bg-[var(--color-danger)]"
         >
           {t.signOut}
         </button>
@@ -88,37 +100,56 @@ export default function Dashboard() {
             <li key={schema.key}>
               <Link
                 to={`/admin/${schema.key}`}
-                className="surface-card flex items-center gap-4 rounded-xl p-5 no-underline transition"
+                className="admin-panel admin-panel-interactive flex items-center gap-4 p-5 no-underline"
               >
-                <img
-                  src={`/images/icons/${schema.icon}.svg`}
-                  alt=""
-                  className="h-8 w-8"
-                />
-                <div>
-                  <p className="font-semibold text-black dark:text-white">
+                <span
+                  aria-hidden="true"
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                  style={{
+                    background:
+                      "linear-gradient(200.44deg, #c98c31 13.57%, #eabe7d 98.38%)",
+                  }}
+                >
+                  <img
+                    src={`/images/icons/${schema.icon}.svg`}
+                    alt=""
+                    className="h-6 w-6"
+                  />
+                </span>
+
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[17px] font-semibold text-[var(--color-admin-text)]">
                     {schema.label[locale]}
-                  </p>
-                  <p className="text-sm opacity-60 dark:text-white">
+                  </span>
+                  <span className="block text-[13px] text-[var(--color-admin-muted)]">
+                    {t.manage}
+                  </span>
+                </span>
+
+                <span className="text-right">
+                  <span className="block text-[26px] leading-none font-bold text-[var(--color-admin-text)]">
                     {count === undefined
                       ? t.counting
                       : count === "error"
                         ? t.countFailed
-                        : `${count} ${t.entries}`}
-                  </p>
-                </div>
+                        : count}
+                  </span>
+                  <span className="block text-[12px] text-[var(--color-admin-muted)]">
+                    {count === 1 ? t.entry : t.entries}
+                  </span>
+                </span>
               </Link>
             </li>
           );
         })}
       </ul>
 
-      <div className="surface-card mt-4 rounded-xl p-5">
-        <p className="font-semibold text-black dark:text-white">
-          {t.linkCheck}
+      <div className="admin-panel mt-4 p-5">
+        <p className="text-[17px] font-semibold text-[var(--color-admin-text)]">
+          {t.blogTitle}
         </p>
-        <p className="text-sm opacity-60 dark:text-white">
-          {t.linkCheckOk(KNOWN_POST_SLUGS.length)}
+        <p className="mt-1 text-[14px] text-[var(--color-admin-muted)]">
+          {t.blogBody(KNOWN_POST_SLUGS.length)}
         </p>
       </div>
     </div>

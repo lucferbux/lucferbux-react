@@ -52,19 +52,19 @@ export default function ConfirmDialog({
         role="alertdialog"
         aria-modal="true"
         aria-label={t.title}
-        className="surface-card w-full max-w-[420px] rounded-xl p-6"
+        className="admin-panel w-full max-w-[420px] p-6"
       >
-        <h2 className="mb-2 text-lg font-bold text-black dark:text-white">
+        <h2 className="mb-2 text-lg font-bold text-[var(--color-admin-text)]">
           {t.title}
         </h2>
-        <p className="mb-5 text-sm break-words opacity-70 dark:text-white">
+        <p className="mb-5 text-sm break-words text-[var(--color-admin-muted)]">
           {subject}
         </p>
         <div className="flex justify-end gap-3">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-lg border border-black/15 px-4 py-2 transition hover:bg-black/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10"
+            className="admin-btn admin-btn-ghost"
           >
             {t.cancel}
           </button>
@@ -72,7 +72,7 @@ export default function ConfirmDialog({
             ref={confirmRef}
             type="button"
             onClick={onConfirm}
-            className="rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition hover:bg-red-700"
+            className="admin-btn admin-btn-danger !bg-[var(--color-danger)] !text-white hover:!bg-[var(--color-danger-strong)]"
           >
             {t.confirm}
           </button>

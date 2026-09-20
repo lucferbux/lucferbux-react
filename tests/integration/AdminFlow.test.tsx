@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -72,7 +72,9 @@ describe("Admin Flow", () => {
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByText("Admin Login")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Admin" })
+      ).toBeInTheDocument();
     });
   });
 
@@ -132,13 +134,17 @@ describe("Admin Flow", () => {
 
     // The dashboard now links to every collection defined by the schemas,
     // with live document counts instead of static descriptions.
+    // The persistent admin bar links to the same collections, so scope the
+    // assertion to the dashboard cards in <main>.
+    const main = screen.getByRole("main");
     for (const [key, label] of [
       ["news", /news/i],
       ["posts", /posts/i],
       ["projects", /projects/i],
       ["work", /r\u00e9sum\u00e9/i],
+      ["teaching", /teaching/i],
     ] as const) {
-      expect(screen.getByRole("link", { name: label })).toHaveAttribute(
+      expect(within(main).getByRole("link", { name: label })).toHaveAttribute(
         "href",
         `/admin/${key}`
       );

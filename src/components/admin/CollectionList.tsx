@@ -82,6 +82,9 @@ export default function CollectionList({
     safePage * PAGE_SIZE + PAGE_SIZE
   );
 
+  const thumbnailField =
+    schema.fields.find((f) => f.type === "image")?.name ?? "image";
+
   function summarise(row: Record<string, unknown>): string {
     return schema.fields
       .filter((f) => f.listColumn && f.name !== schema.titleField)
@@ -99,13 +102,17 @@ export default function CollectionList({
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xl font-bold text-black dark:text-white">
-          {schema.label[locale]}{" "}
-          <span className="text-sm font-normal opacity-60">
+      {/* Header sits on the teal band, so it is white like the public
+          section headings. */}
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-[40px] leading-[1.1] font-bold text-white drop-shadow-sm max-xs:text-[32px]">
+            {schema.label[locale]}
+          </h1>
+          <p className="mt-1 text-[14px] text-white/75">
             {t.count(rows.length)}
-          </span>
-        </h2>
+          </p>
+        </div>
         <div className="flex items-center gap-3">
           <label className="sr-only" htmlFor={`search-${schema.key}`}>
             {t.search}
@@ -119,23 +126,27 @@ export default function CollectionList({
               setSearch(e.target.value);
               setPage(0);
             }}
-            className="rounded-lg border border-black/15 bg-white/70 px-3 py-2 text-sm text-black transition focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white"
+            className="admin-input w-[220px] max-xs:w-[150px]"
           />
           <button
             type="button"
             onClick={onCreate}
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
+            className="admin-btn admin-btn-primary"
           >
-            + {t.add}
+            <span aria-hidden="true">+</span> {t.add}
           </button>
         </div>
       </div>
 
       {rows.length === 0 && (
-        <p className="opacity-70 dark:text-white">{t.empty}</p>
+        <p className="admin-panel p-6 text-[var(--color-admin-muted)]">
+          {t.empty}
+        </p>
       )}
       {rows.length > 0 && filtered.length === 0 && (
-        <p className="opacity-70 dark:text-white">{t.noMatches}</p>
+        <p className="admin-panel p-6 text-[var(--color-admin-muted)]">
+          {t.noMatches}
+        </p>
       )}
 
       <ul className="grid list-none gap-3 p-0">
@@ -145,22 +156,38 @@ export default function CollectionList({
           return (
             <li
               key={row.id}
-              className="surface-card flex items-center justify-between gap-4 rounded-xl p-4"
+              className="admin-panel flex items-center gap-4 p-4 max-xs:flex-col max-xs:items-stretch"
             >
+              {/* A thumbnail where the record has one: scanning 37 posts by
+                  title alone is slow. */}
+              {typeof row[thumbnailField] === "string" &&
+                row[thumbnailField] !== "" && (
+                  <img
+                    src={row[thumbnailField] as string}
+                    alt=""
+                    loading="lazy"
+                    className="h-12 w-12 shrink-0 rounded-lg object-cover max-xs:hidden"
+                    onError={(e) => {
+                      e.currentTarget.style.visibility = "hidden";
+                    }}
+                  />
+                )}
+
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium text-black dark:text-white">
+                <p className="truncate text-[16px] font-semibold text-[var(--color-admin-text)]">
                   {title}
                 </p>
-                <p className="truncate text-sm opacity-60 dark:text-white">
+                <p className="truncate text-[13px] text-[var(--color-admin-muted)]">
                   {summarise(row)}
                 </p>
               </div>
+
               <div className="flex shrink-0 gap-2">
                 <button
                   type="button"
                   onClick={() => onEdit(row)}
                   aria-label={`${t.edit}: ${title}`}
-                  className="rounded px-3 py-1 text-sm text-primary transition hover:bg-primary/10"
+                  className="admin-btn admin-btn-ghost px-3 py-1.5 text-sm"
                 >
                   {t.edit}
                 </button>
@@ -168,7 +195,7 @@ export default function CollectionList({
                   type="button"
                   onClick={() => onDelete(row)}
                   aria-label={`${t.delete}: ${title}`}
-                  className="rounded px-3 py-1 text-sm text-red-500 transition hover:bg-red-500/10"
+                  className="admin-btn admin-btn-danger px-3 py-1.5 text-sm"
                 >
                   {t.delete}
                 </button>
@@ -179,21 +206,23 @@ export default function CollectionList({
       </ul>
 
       {pageCount > 1 && (
-        <div className="mt-4 flex items-center gap-3 text-sm dark:text-white">
+        <div className="mt-5 flex items-center justify-center gap-4 text-sm">
           <button
             type="button"
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={safePage === 0}
-            className="rounded border border-black/15 px-3 py-1 disabled:opacity-40 dark:border-white/20"
+            className="admin-btn admin-btn-ghost px-3 py-1.5"
           >
             {t.previous}
           </button>
-          <span>{t.page(safePage + 1, pageCount)}</span>
+          <span className="text-[var(--color-admin-muted)]">
+            {t.page(safePage + 1, pageCount)}
+          </span>
           <button
             type="button"
             onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
             disabled={safePage === pageCount - 1}
-            className="rounded border border-black/15 px-3 py-1 disabled:opacity-40 dark:border-white/20"
+            className="admin-btn admin-btn-ghost px-3 py-1.5"
           >
             {t.next}
           </button>

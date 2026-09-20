@@ -259,9 +259,9 @@ export default function CollectionForm({
       onSubmit={handleSubmit}
       noValidate
       aria-label={`${initial ? t.edit : t.create} ${schema.label[locale]}`}
-      className="surface-card rounded-xl p-6"
+      className="admin-panel p-6 max-md:p-4"
     >
-      <h2 className="mb-4 text-xl font-bold text-black dark:text-white">
+      <h2 className="mb-5 text-[24px] font-bold text-[var(--color-admin-text)]">
         {initial ? t.edit : t.create} · {schema.label[locale]}
       </h2>
 
@@ -285,8 +285,8 @@ export default function CollectionForm({
         {editableFields(schema).map((field, index) => (
           <div key={field.name} ref={index === 0 ? firstFieldRef : undefined}>
             {field.i18n ? (
-              <fieldset className="grid gap-3 rounded-lg border border-black/10 p-3 dark:border-white/15">
-                <legend className="px-1 text-sm font-medium text-black/80 dark:text-white/80">
+              <fieldset className="grid gap-3 rounded-xl border border-[var(--color-admin-border)] bg-[var(--color-admin-surface-subtle)] p-4">
+                <legend className="px-1 text-sm font-semibold text-[var(--color-admin-text)]">
                   {field.label[locale]}
                 </legend>
                 {LOCALES.map((valueLocale) => (
@@ -324,7 +324,7 @@ export default function CollectionForm({
       {saveError && (
         <p
           role="alert"
-          className="mt-4 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-400"
+          className="mt-4 rounded-xl border border-[color-mix(in_srgb,var(--color-danger)_35%,transparent)] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] px-3 py-2 text-sm font-medium text-[var(--color-danger)]"
         >
           {saveError}
         </p>
@@ -334,14 +334,14 @@ export default function CollectionForm({
         <button
           type="submit"
           disabled={saving}
-          className="rounded-lg bg-primary px-4 py-2 font-medium text-white transition hover:bg-primary-dark disabled:opacity-50"
+          className="admin-btn admin-btn-primary"
         >
           {saving ? t.saving : t.save}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-black/15 px-4 py-2 transition hover:bg-black/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10"
+          className="admin-btn admin-btn-ghost"
         >
           {t.cancel}
         </button>

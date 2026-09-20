@@ -436,36 +436,151 @@
 }
 
 /* ===========================
-   Admin surfaces
+   Admin surfaces and controls
    ===========================
-   The admin panel used to hardcode a dark glass colour with no `dark:`
-   variants, so in light mode it rendered as a dark slab over a light page. */
+   The admin sits over the same teal-to-white wave as the rest of the site.
+   Translucent glass over that gradient washed out badly — panels read as grey
+   smudges and the icons all but vanished. These are solid, so contrast is
+   constant wherever the wave happens to be behind them. */
 
-@layer components {
-  .surface-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-surface-border);
-    box-shadow: 0 10px 30px rgba(34, 79, 169, 0.08);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-  }
-
-  .surface-card:has(button:hover) {
-    background: var(--color-surface-hover);
-  }
+:root {
+  --color-admin-surface: #ffffff;
+  --color-admin-surface-subtle: #f7f9ff;
+  --color-admin-border: rgba(16, 24, 64, 0.08);
+  --color-admin-shadow: rgba(34, 79, 169, 0.14);
+  --color-admin-text: #10182f;
+  --color-admin-muted: rgba(16, 24, 47, 0.58);
+  --color-danger: #d1382c;
+  --color-danger-strong: #b12a20;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-surface: rgba(66, 66, 66, 0.35);
-    --color-surface-hover: rgba(66, 66, 66, 0.5);
-    --color-surface-border: rgba(255, 255, 255, 0.12);
+    --color-admin-surface: #221f2b;
+    --color-admin-surface-subtle: #1b1922;
+    --color-admin-border: rgba(255, 255, 255, 0.1);
+    --color-admin-shadow: rgba(0, 0, 0, 0.45);
+    --color-admin-text: #ffffff;
+    --color-admin-muted: rgba(255, 255, 255, 0.62);
+    --color-danger: #ff6a5c;
+    --color-danger-strong: #ff8578;
+  }
+}
+
+@layer components {
+  .admin-panel {
+    background: var(--color-admin-surface);
+    border: 1px solid var(--color-admin-border);
+    border-radius: 16px;
+    box-shadow:
+      0 18px 40px -18px var(--color-admin-shadow),
+      0 2px 6px -2px var(--color-admin-shadow);
+    color: var(--color-admin-text);
   }
 
-  @layer components {
-    .surface-card {
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    }
+  /* Lifts on hover, so a clickable panel reads as clickable. */
+  .admin-panel-interactive {
+    transition:
+      transform 0.18s cubic-bezier(0.075, 0.82, 0.165, 1),
+      box-shadow 0.18s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .admin-panel-interactive:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 28px 54px -20px var(--color-admin-shadow),
+      0 4px 10px -3px var(--color-admin-shadow);
+  }
+
+  .admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 12px;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.1;
+    white-space: nowrap;
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.16s ease,
+      background-color 0.16s ease,
+      color 0.16s ease;
+  }
+
+  .admin-btn:active {
+    transform: translateY(1px);
+  }
+
+  .admin-btn:disabled {
+    opacity: 0.55;
+    transform: none;
+    cursor: not-allowed;
+  }
+
+  .admin-btn-primary {
+    background: linear-gradient(
+      180deg,
+      var(--color-primary-light) 0%,
+      var(--color-primary) 100%
+    );
+    color: #fff;
+    box-shadow: 0 10px 22px -8px rgba(201, 140, 49, 0.9);
+  }
+
+  .admin-btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px -10px rgba(201, 140, 49, 0.95);
+  }
+
+  .admin-btn-ghost {
+    background: var(--color-admin-surface);
+    color: var(--color-admin-text);
+    border: 1px solid var(--color-admin-border);
+    box-shadow: 0 6px 16px -10px var(--color-admin-shadow);
+  }
+
+  .admin-btn-ghost:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: var(--color-admin-surface-subtle);
+  }
+
+  /* Destructive actions are red at rest, not only on hover. */
+  .admin-btn-danger {
+    background: transparent;
+    color: var(--color-danger);
+    border: 1px solid color-mix(in srgb, var(--color-danger) 45%, transparent);
+  }
+
+  .admin-btn-danger:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: var(--color-danger);
+    color: #fff;
+    box-shadow: 0 12px 24px -10px var(--color-danger);
+  }
+
+  .admin-input {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--color-admin-border);
+    background: var(--color-admin-surface-subtle);
+    padding: 0.6rem 0.85rem;
+    color: var(--color-admin-text);
+    transition:
+      border-color 0.16s ease,
+      box-shadow 0.16s ease;
+  }
+
+  .admin-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(201, 140, 49, 0.25);
+  }
+
+  .admin-input::placeholder {
+    color: var(--color-admin-muted);
   }
 }
 
@@ -490,45 +605,65 @@
 :root {
   color-scheme: light dark;
 
-  /* /news, /posts, /projects, /blog — WaveBody */
+  /* /news, /posts, /projects, /teaching, /blog — WaveBody */
   --nav-from: rgb(0, 119, 137);
-  --nav-to: rgb(176, 196, 199);
+  --nav-gradient: linear-gradient(
+    180deg,
+    rgb(0, 119, 137) 13.57%,
+    rgb(176, 196, 199) 98.38%
+  );
   --nav-span: 800px;
 }
 
 [data-page="home"] {
   /* WaveHero */
   --nav-from: #c98c31;
-  --nav-to: #eabe7d;
+  --nav-gradient: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
   --nav-span: 800px;
 }
 
 [data-page="short"] {
-  /* /terms, /privacy — WaveShort */
+  /* /terms, /privacy, 404 — WaveShort, 400px tall and angled */
+  --nav-gradient: linear-gradient(
+    189.16deg,
+    rgb(0, 119, 137) 13.57%,
+    rgb(176, 196, 199) 98.38%
+  );
   --nav-span: 400px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --nav-from: rgb(43, 40, 48);
-    --nav-to: rgb(40, 119, 137);
+    --nav-gradient: linear-gradient(
+      180deg,
+      rgb(43, 40, 48) 13.57%,
+      rgb(40, 119, 137) 98.38%
+    );
   }
 
   [data-page="home"] {
     --nav-from: #a08153;
-    --nav-to: #674716;
+    --nav-gradient: linear-gradient(180deg, #a08153 0%, #674716 100%);
+  }
+
+  [data-page="short"] {
+    --nav-gradient: linear-gradient(
+      189.16deg,
+      rgb(43, 40, 48) 13.57%,
+      rgb(40, 119, 137) 98.38%
+    );
   }
 }
 
 @layer components {
   .page-tint-bar {
-    /* The opaque colour is what Safari samples; the gradient is what people see. */
+    /* The opaque colour is what Safari samples; the gradient is what people see.
+       It must reproduce the page's gradient EXACTLY, stops included: the wave
+       gradients start at 13.57%, so a 0%-to-100% copy was already lightening
+       within the header's 56px while the page below was still flat teal. */
     background-color: var(--nav-from);
-    background-image: linear-gradient(
-      180deg,
-      var(--nav-from) 0%,
-      var(--nav-to) 100%
-    );
+    background-image: var(--nav-gradient);
     background-size: 100% var(--nav-span);
     background-repeat: no-repeat;
   }
