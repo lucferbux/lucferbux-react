@@ -41,8 +41,14 @@ export default function PostCard({ post }: PostCardProps) {
           alt=""
           className={`h-full w-full object-cover ${!loaded ? "block" : "hidden"}`}
         />
-        {/* Scrim: the banner is decorative texture, the text has to win. */}
-        <div className="absolute inset-0 bg-[rgb(226_232_240/72%)] dark:bg-black/65" />
+        {/* Scrim over the banner. This layer sits at `-z-10`, so the card's
+            own glass tint is painted on top of it as well — at 72% the two
+            together left the banner about 12% visible and it disappeared
+            entirely once the glass was frosted. Measured against the same card
+            with the banner hidden, dropping this to 40% roughly doubles how
+            much of it comes through, and the tint above still carries the text
+            contrast. */}
+        <div className="absolute inset-0 bg-[rgb(226_232_240/40%)] dark:bg-black/45" />
       </div>
 
       <h3 className="text-[30px] leading-[1.15] font-bold break-words max-[520px]:text-[22px] max-[350px]:text-[18px]">

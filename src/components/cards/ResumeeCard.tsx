@@ -28,10 +28,11 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
   };
 
   return (
-    // The last surface still carrying the 2023 inline glass. It now uses the
-    // same token set as every other card, so the résumé stops being the one
-    // panel with a grey tint and a flat white hairline.
-    <div className="glass-panel group animate-fadein mx-5 grid h-[400px] max-w-[786px] grid-cols-[240px_auto] gap-x-5 overflow-hidden p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0">
+    // No `overflow-hidden`. The orange tile inside zooms on hover, and this
+    // was clipping it at the card's edge as it grew — which is what made the
+    // zoom look like a snap rather than a movement. The tile sits inside 20px
+    // of padding and grows about 5px a side, so nothing reaches the corners.
+    <div className="glass-panel group animate-fadein mx-5 grid h-[400px] max-w-[786px] grid-cols-[240px_auto] gap-x-5 p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0">
       <div className="contents">
         <ResumeeHeader
           title={headerInfo.title}
