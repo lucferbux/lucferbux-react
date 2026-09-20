@@ -265,16 +265,32 @@ npm run format:check
 
 ## Deployment
 
-**Netlify**, configured in `netlify.toml` (build `npm run build`, publish `dist`, SPA
-redirect, immutable cache headers for `/assets/*`, no-cache for `index.html` and `sw.js`).
-`.github/workflows/ci.yml` runs format → lint → type-check → test → build → visual on
-push/PR to `main`. There is **no** `deploy.yml`; the Firebase Hosting workflow was removed.
+Two providers, split by concern:
 
-Firestore and Storage rules deploy separately:
+| What                     | Where                                                               |
+| ------------------------ | ------------------------------------------------------------------- |
+| Site hosting             | **Netlify** — project `lucferbux-webpage`, config in `netlify.toml` |
+| Domain                   | `https://lucferbux.dev` (pointed at Netlify)                        |
+| Firestore, Storage, Auth | **Firebase** — project `lucferbux-web-page`                         |
+
+**Pushing to `main` deploys the site.** Netlify builds `npm run build` and
+publishes `dist/`. There is no deploy workflow in `.github/workflows/`, and the
+Firebase Hosting site on the same project is unused — do not add a `hosting`
+block back to `firebase.json` or the site ends up served from two places.
+
+`.github/workflows/ci.yml` runs format → lint → type-check → coverage → audit →
+build on push and PR.
+
+Firestore and Storage rules deploy separately, and **the order matters**:
 
 ```bash
-firebase deploy --only firestore:rules,storage:rules
+npm run set-admin -- <your-email>   # grant the admin custom claim FIRST
+npm run deploy:rules                # firestore rules + indexes + storage rules
 ```
+
+The rules require `request.auth.token.admin == true`. Deploying them before the
+claim exists denies every write, including from the admin UI. The claim only
+reaches the browser after a fresh sign-in.
 
 Environment variables (`.env`, see `.env.example`):
 `VITE_FIREBASE_API` (note: not `_API_KEY`), `VITE_FIREBASE_AUTH_DOMAIN`,

@@ -70,8 +70,10 @@ Credentials are resolved in this order:
 2. `GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json`
 3. `scripts/serviceAccount.json` — gitignored.
 
-Get a key from the Firebase console under _Project settings → Service
-accounts → Generate new private key_.
+Get a key from the Firebase console for project **`lucferbux-web-page`**, under
+_Project settings → Service accounts → Generate new private key_:
+
+<https://console.firebase.google.com/u/0/project/lucferbux-web-page/settings/serviceaccounts/adminsdk>
 
 ## Order of operations
 

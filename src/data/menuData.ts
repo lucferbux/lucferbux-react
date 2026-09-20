@@ -8,11 +8,6 @@ export interface MenuItem {
   labelKey: keyof Messages["nav"];
   icon: string;
   link: string;
-  /**
-   * Hidden below 450px, where the header row is already full with three items
-   * plus the language toggle. The footer carries these at every width.
-   */
-  hideOnNarrow?: boolean;
 }
 
 export const menuData: MenuItem[] = [
@@ -23,6 +18,5 @@ export const menuData: MenuItem[] = [
     labelKey: "teaching",
     icon: "/images/icons/courses.svg",
     link: "/teaching",
-    hideOnNarrow: true,
   },
 ];

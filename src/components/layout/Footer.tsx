@@ -4,6 +4,7 @@ import NavButton from "../buttons/NavButton";
 import NavButtonExternal from "../buttons/NavButtonExternal";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { useLocalePath } from "../../i18n/useLocalePath";
+import LanguageToggle from "../buttons/LanguageToggle";
 
 export default function Footer() {
   const { m } = useTranslation();
@@ -32,7 +33,10 @@ export default function Footer() {
             )
           )}
         </div>
-        <div className="h-[110px] max-w-[280px] py-16 text-[13px] text-white/70 max-[600px]:text-center">
+        {/* `py-16` with the old fixed `h-[110px]` left negative content
+            height, which collapsed anything placed above the notice. */}
+        <div className="grid max-w-[280px] content-start gap-4 pt-14 pb-4 text-[13px] text-white/70 max-[600px]:justify-items-center max-[600px]:pt-8 max-[600px]:text-center">
+          <LanguageToggle className="w-fit" />
           <p>{m.footer.privacyNotice}</p>
         </div>
       </div>

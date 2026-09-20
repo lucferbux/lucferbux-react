@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -176,6 +177,24 @@ describe("routes", () => {
           screen.getAllByText(/Últimas novedades/i).length
         ).toBeGreaterThan(0);
       });
+    });
+
+    it("switches language from the footer toggle", async () => {
+      // The toggle lives in the footer, not the header: language is a
+      // preference that auto-detects, not a primary navigation action.
+      const user = userEvent.setup();
+      renderRoute("/en/news");
+      await waitFor(() =>
+        expect(screen.getAllByText(/Latest News/i).length).toBeGreaterThan(0)
+      );
+
+      await user.click(screen.getByRole("button", { name: /cambiar a espa/i }));
+
+      await waitFor(() =>
+        expect(
+          screen.getAllByText(/Últimas novedades/i).length
+        ).toBeGreaterThan(0)
+      );
     });
 
     it("sets the document language from the URL", async () => {

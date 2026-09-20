@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { menuData } from "../../data/menuData";
 import NavButton from "../buttons/NavButton";
-import LanguageToggle from "../buttons/LanguageToggle";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { useLocalePath } from "../../i18n/useLocalePath";
 
@@ -31,19 +30,14 @@ export default function Header() {
         </Link>
         <div className="flex items-center gap-[30px] max-md:gap-3 max-xs:gap-1.5">
           {menuData.map((item) => (
-            <div
+            <NavButton
+              icon={item.icon}
+              text={m.nav[item.labelKey]}
+              link={localePath(item.link)}
               key={item.labelKey}
-              className={item.hideOnNarrow ? "max-xs:hidden" : undefined}
-            >
-              <NavButton
-                icon={item.icon}
-                text={m.nav[item.labelKey]}
-                link={localePath(item.link)}
-                collapse
-              />
-            </div>
+              collapse
+            />
           ))}
-          <LanguageToggle className="shrink-0" />
         </div>
       </nav>
     </header>
