@@ -38,6 +38,21 @@ Timestamps are ISO-8601 strings here and are converted by the uploader.
 `internalLink` values must match the post slugs, which `npm run seed` does not
 verify. Regenerate it after adding a post.
 
+## Superseded documents
+
+`superseded.json` lists, per collection, the document ids the curated seed
+replaces. The uploader deletes exactly those and nothing else.
+
+This exists instead of a blanket `--prune` because the live collections hold a
+real archive the seed does **not** reproduce: 34 published articles linking to
+elladodelmal and seguridadapple, 14 news items, and 15 projects (HomePWN,
+Evilgram, Safepost, the Latch work). A prune would have deleted all of it.
+
+Only genuine duplicates belong here — currently the nine old résumé entries
+(the same career, rewritten), three post entries pointing at
+`lucferbux.dev/blog/*` that are now internal links, and four projects that the
+new seed re-describes.
+
 ## Applying it
 
 **Dry run is the default.** Nothing is written without `--apply`.

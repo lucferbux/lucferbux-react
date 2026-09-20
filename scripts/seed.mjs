@@ -21,6 +21,23 @@ import { initAdmin } from "./lib/adminApp.mjs";
 
 const SEED_DIR = resolve(process.cwd(), "content/seed");
 
+/**
+ * Documents the new content replaces, by collection.
+ *
+ * Kept as a versioned list rather than a `--prune` sweep because the live
+ * collections hold a real archive the curated seed does NOT reproduce: 34
+ * published articles, 14 news items and 15 projects. A blanket prune would
+ * have deleted all of it. Only genuine duplicates belong here.
+ */
+function loadSuperseded() {
+  try {
+    return JSON.parse(readFileSync(join(SEED_DIR, "superseded.json"), "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") return {};
+    throw new Error(`superseded.json is not valid JSON: ${error.message}`);
+  }
+}
+
 /** Seed file name -> Firestore collection. They are the same; the legacy
  *  collection names (intro, patent, team) are used as the file names too so
  *  there is no second mapping to keep in sync. */
@@ -107,6 +124,8 @@ console.log(
     : "Dry run — nothing will be written. Pass --apply to commit.\n"
 );
 
+const superseded = loadSuperseded();
+
 let created = 0;
 let updated = 0;
 let unchanged = 0;
@@ -151,10 +170,20 @@ for (const collection of targets) {
     if (apply) batch.set(db.collection(collection).doc(id), data);
   }
 
+  // Documents explicitly recorded as replaced by the new content.
+  for (const id of superseded[collection] ?? []) {
+    if (!existing.has(id)) continue;
+    console.log(`  - ${collection}/${id}  (superseded)`);
+    removed += 1;
+    if (apply) batch.delete(db.collection(collection).doc(id));
+  }
+
   if (prune) {
     for (const id of existing.keys()) {
-      if (seenIds.has(id)) continue;
-      console.log(`  - ${collection}/${id}`);
+      if (seenIds.has(id) || (superseded[collection] ?? []).includes(id)) {
+        continue;
+      }
+      console.log(`  - ${collection}/${id}  (not in seed)`);
       removed += 1;
       if (apply) batch.delete(db.collection(collection).doc(id));
     }
@@ -164,8 +193,8 @@ for (const collection of targets) {
 }
 
 console.log(
-  `\n${created} to create, ${updated} to update, ${unchanged} unchanged` +
-    (prune ? `, ${removed} to delete` : "")
+  `\n${created} to create, ${updated} to update, ${unchanged} unchanged, ` +
+    `${removed} to delete`
 );
 
 if (!apply && created + updated + removed > 0) {
@@ -173,6 +202,7 @@ if (!apply && created + updated + removed > 0) {
 }
 if (!prune) {
   console.log(
-    "Documents not present in the seed were left alone. Use --prune to delete them."
+    "Documents not in the seed and not listed in superseded.json were left\n" +
+      "alone — that is where the existing archive lives. --prune deletes them."
   );
 }
