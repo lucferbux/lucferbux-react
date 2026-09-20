@@ -1,4 +1,3 @@
-import { orderBy, limit } from "firebase/firestore";
 import { News } from "../../data/model/news";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveNewsHome from "../backgrounds/WaveNewsHome";
@@ -20,7 +19,7 @@ const info = {
 export default function NewsSectionHome() {
   const { data: news, loading, error } = useFirestoreCollection<News>(
     "intro",
-    [orderBy("timestamp", "desc"), limit(6)]
+    { orderBy: [["timestamp", "desc"]], limit: 6 }
   );
 
   if (loading) return <LoadingSpinner />;

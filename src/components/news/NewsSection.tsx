@@ -1,4 +1,3 @@
-import { orderBy } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
 import { News } from "../../data/model/news";
@@ -15,7 +14,7 @@ const info = {
 export default function NewsSection() {
   const { data: news, loading, error } = useFirestoreCollection<News>(
     "intro",
-    [orderBy("timestamp", "desc")]
+    { orderBy: [["timestamp", "desc"]] }
   );
 
   if (loading) return <LoadingSpinner />;

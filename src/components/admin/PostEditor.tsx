@@ -5,7 +5,6 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  orderBy,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/firebase";
@@ -30,7 +29,7 @@ const emptyPost: Post = {
 export default function PostEditor() {
   const { data, loading, error } = useFirestoreCollection<PostId>(
     COLLECTION,
-    [orderBy("date", "desc")]
+    { orderBy: [["date", "desc"]] }
   );
   const [editing, setEditing] = useState<PostId | null>(null);
   const [creating, setCreating] = useState(false);

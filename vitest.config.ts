@@ -8,6 +8,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Tests mock "firebase/firestore" directly, so they exercise the real
+      // Firestore data source rather than the fixture one.
+      "@datasource": path.resolve(__dirname, "./src/data/source/firestore.ts"),
     },
   },
   test: {

@@ -405,3 +405,22 @@
     content: url("/images/waves/resumee-wave6-dark.svg");
   }
 }
+
+/* ===========================
+   Reduced Motion
+   ===========================
+   Honours the OS "reduce motion" setting: the floating mockup icons, the
+   fade-in and the hover scale/tilt effects are decorative. This also makes the
+   Playwright visual baseline deterministic, since it runs with
+   prefers-reduced-motion emulated. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

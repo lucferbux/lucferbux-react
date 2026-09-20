@@ -4,6 +4,15 @@ import MockupAnimation from "../animations/MockupAnimation";
 import WaveHero from "../backgrounds/WaveHero";
 import { ExternalLink } from "../../data/model/externalLink";
 
+const typewriterStrings = ["a Full Stack", "an AI", "a Cloud"];
+
+/**
+ * The typewriter animates forever, so in fixture mode (the Playwright visual
+ * baseline) we render the first phrase statically instead. Without this every
+ * screenshot of the hero would capture a different frame.
+ */
+const staticTypewriter = import.meta.env.VITE_FIXTURE_DATA === "1";
+
 const socialLinks: ExternalLink[] = [
   { text: "instagram", image: "instagram", link: "https://www.instagram.com/lucferbux" },
   { text: "linkedin", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
@@ -35,18 +44,22 @@ export default function HeroSection() {
                 color: "transparent",
               }}
             >
-              <Typewriter
-                onInit={() => {}}
-                options={{
-                  strings: [
-                    "a Full Stack",
-                    "an AI",
-                    "a Cloud",
-                  ],
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
+              {staticTypewriter ? (
+                <div className="Typewriter">
+                  <span className="Typewriter__wrapper">
+                    {typewriterStrings[0]}
+                  </span>
+                </div>
+              ) : (
+                <Typewriter
+                  onInit={() => {}}
+                  options={{
+                    strings: typewriterStrings,
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              )}
             </span>
             Developer
           </h1>

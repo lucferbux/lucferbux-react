@@ -1,4 +1,3 @@
-import { orderBy } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveResumeeHome from "../backgrounds/WaveResumeeHome";
 import InfoBox from "../text/infoBox";
@@ -15,7 +14,7 @@ const info = {
 export default function AboutMeSection() {
   const { data: works, loading, error } = useFirestoreCollection<Work>(
     "team",
-    [orderBy("importance", "asc")]
+    { orderBy: [["importance", "asc"]] }
   );
 
   if (loading) return <LoadingSpinner />;

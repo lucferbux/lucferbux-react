@@ -1,4 +1,3 @@
-import { orderBy, where, limit } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import InfoBox from "../text/infoBox";
 import { Post } from "../../data/model/post";
@@ -39,16 +38,18 @@ const infoPosts = {
 
 export default function PostsProjectSection() {
   const { data: projects, loading: projLoading, error: projError } =
-    useFirestoreCollection<Project>("project", [
-      where("featured", "==", true),
-      limit(2),
-    ]);
+    useFirestoreCollection<Project>("project", {
+      where: [["featured", "==", true]],
+      // Without an orderBy Firestore returns arbitrary featured projects.
+      orderBy: [["date", "desc"]],
+      limit: 2,
+    });
 
   const { data: posts, loading: postLoading, error: postError } =
-    useFirestoreCollection<Post>("patent", [
-      orderBy("date", "desc"),
-      limit(1),
-    ]);
+    useFirestoreCollection<Post>("patent", {
+      orderBy: [["date", "desc"]],
+      limit: 1,
+    });
 
   if (projLoading || postLoading) return <LoadingSpinner />;
   if (projError || postError)

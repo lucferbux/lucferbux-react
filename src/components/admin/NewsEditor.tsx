@@ -5,7 +5,6 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  orderBy,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/firebase";
@@ -29,7 +28,7 @@ const emptyNews: News = {
 export default function NewsEditor() {
   const { data, loading, error } = useFirestoreCollection<NewsId>(
     COLLECTION,
-    [orderBy("timestamp", "desc")]
+    { orderBy: [["timestamp", "desc"]] }
   );
   const [editing, setEditing] = useState<NewsId | null>(null);
   const [creating, setCreating] = useState(false);

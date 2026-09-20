@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.3",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.2.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -58,15 +59,20 @@
   ],
   "license": "0BSD",
   "scripts": {
-    "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "type-check": "tsc --noEmit",
-    "lint": "eslint src/",
+    "deploy": "firebase deploy --only hosting",
+    "dev": "vite",
+    "dev:fixtures": "VITE_FIXTURE_DATA=1 vite",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check .",
+    "lint": "eslint src/",
+    "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "deploy": "firebase deploy --only hosting"
+    "type-check": "tsc --noEmit",
+    "visual": "playwright test",
+    "visual:baseline": "playwright test --update-snapshots",
+    "visual:report": "playwright show-report"
   },
   "repository": {
     "type": "git",

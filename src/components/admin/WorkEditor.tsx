@@ -5,7 +5,6 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  orderBy,
 } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
@@ -30,7 +29,7 @@ const emptyWork: Work = {
 export default function WorkEditor() {
   const { data, loading, error } = useFirestoreCollection<WorkId>(
     COLLECTION,
-    [orderBy("importance", "desc")]
+    { orderBy: [["importance", "desc"]] }
   );
   const [editing, setEditing] = useState<WorkId | null>(null);
   const [creating, setCreating] = useState(false);

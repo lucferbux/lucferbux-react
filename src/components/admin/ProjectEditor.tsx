@@ -5,7 +5,6 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  orderBy,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/firebase";
@@ -30,7 +29,7 @@ const emptyProject: Project = {
 export default function ProjectEditor() {
   const { data, loading, error } = useFirestoreCollection<ProjectId>(
     COLLECTION,
-    [orderBy("date", "desc")]
+    { orderBy: [["date", "desc"]] }
   );
   const [editing, setEditing] = useState<ProjectId | null>(null);
   const [creating, setCreating] = useState(false);

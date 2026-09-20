@@ -1,4 +1,3 @@
-import { orderBy } from "firebase/firestore";
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
 import InfoBox from "../text/infoBox";
@@ -16,7 +15,7 @@ const info = {
 export default function PostSection() {
   const { data: posts, loading, error } = useFirestoreCollection<Post>(
     "patent",
-    [orderBy("date", "desc")]
+    { orderBy: [["date", "desc"]] }
   );
 
   if (loading) return <LoadingSpinner />;

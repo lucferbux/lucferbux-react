@@ -4,6 +4,16 @@ import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
 
+/**
+ * `VITE_FIXTURE_DATA=1` swaps the Firestore data source for the in-memory seed
+ * corpus. Aliasing (rather than branching at runtime) guarantees the fixture
+ * module and its JSON never reach a production bundle.
+ */
+const dataSourceImpl =
+  process.env.VITE_FIXTURE_DATA === "1"
+    ? "./src/data/source/fixture.ts"
+    : "./src/data/source/firestore.ts";
+
 export default defineConfig({
   plugins: [
     react(),
@@ -25,7 +35,9 @@ export default defineConfig({
         background_color: "#F2F6FF",
         display: "standalone",
         start_url: "/",
-        prefer_related_applications: true,
+        // Keep the Play Store listing discoverable, but do not steer browsers
+        // away from installing the PWA itself.
+        prefer_related_applications: false,
         related_applications: [
           { platform: "play", id: "com.lucferbux.lucferbux" },
         ],
@@ -118,14 +130,16 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@datasource": path.resolve(__dirname, dataSourceImpl),
     },
   },
   build: {
     outDir: "dist",
-    sourcemap: true,
+    // "hidden" emits maps for error reporting without advertising them to
+    // visitors via a sourceMappingURL comment.
+    sourcemap: "hidden",
   },
   server: {
     port: 5173,
-    open: true,
   },
 });
