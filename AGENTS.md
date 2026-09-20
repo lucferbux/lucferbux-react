@@ -139,6 +139,16 @@ old code. Either clear it first:
 
 or use the visual suite, whose Playwright config sets `serviceWorkers: "block"`.
 
+**In production this used to be permanent, not just a local annoyance.** The
+registration the PWA plugin injects is a bare `register('/sw.js')`, and
+`index.html` is precached — so a returning visitor got the previous build's HTML
+pointing at the previous build's assets, with nothing to tell the page to
+refresh. `src/registerServiceWorker.ts` replaces it: `updateViaCache: "none"`,
+an `update()` on load, on an interval and on tab focus, and a reload when a
+_new_ worker takes control. `injectRegister: null` in `vite.config.ts` stops
+the plugin adding a second registration. If you are debugging a report of
+"the site is showing an old version", start there.
+
 ### 11. Deploying the rules before granting the admin claim locks you out
 
 `firestore.rules` and `storage.rules` require an `admin` custom claim. Run

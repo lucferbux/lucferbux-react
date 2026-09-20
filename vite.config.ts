@@ -20,6 +20,10 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
+      // `src/registerServiceWorker.ts` does the registering. The script this
+      // plugin injects otherwise is a bare `register('/sw.js')` with no update
+      // handling at all, and having both would register twice.
+      injectRegister: null,
       includeAssets: [
         "favicon.svg",
         "favicon-32x32.png",
