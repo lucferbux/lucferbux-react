@@ -176,3 +176,29 @@ describe("seed corpus", () => {
     }
   });
 });
+
+describe("security rules", () => {
+  const rules = import.meta.glob("../../../firestore.rules", {
+    eager: true,
+    query: "?raw",
+    import: "default",
+  }) as Record<string, string>;
+
+  const source = Object.values(rules)[0] ?? "";
+
+  it("has a match block for every collection the app reads", () => {
+    // The catch-all denies everything, so a collection without its own block
+    // is unreadable in production even though it works against fixtures.
+    expect(source).not.toBe("");
+    for (const schema of Object.values(SCHEMAS)) {
+      expect(
+        source.includes(`match /${schema.path}/{doc}`),
+        `firestore.rules has no block for "${schema.path}"`
+      ).toBe(true);
+    }
+  });
+
+  it("still denies everything not explicitly matched", () => {
+    expect(source).toContain("match /{document=**}");
+  });
+});

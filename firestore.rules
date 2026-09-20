@@ -53,6 +53,15 @@ service cloud.firestore {
                    && request.resource.data.importance is number;
     }
 
+    // Teaching
+    match /teaching/{doc} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && hasLocalizedText('title')
+                   && hasLocalizedText('institution')
+                   && request.resource.data.importance is number;
+    }
+
     // Nothing else is readable, so a future private collection cannot be
     // exposed by omission.
     match /{document=**} {
