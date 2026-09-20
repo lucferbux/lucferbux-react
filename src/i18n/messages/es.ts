@@ -44,6 +44,11 @@ const es = {
       description:
         "Proyectos de código abierto y profesionales en los que he trabajado.",
     },
+    teaching: {
+      title: "Docencia",
+      description:
+        "Cursos que imparto, con el material y el c\u00f3digo libres para consultar.",
+    },
     terms: {
       title: "Términos y condiciones",
       description: "Términos y condiciones de la web personal de Lucferbux.",
@@ -85,6 +90,11 @@ const es = {
       description:
         "Artículos propios y colaboraciones sobre distintos campos de la tecnología: desarrollo, seguridad, IA...",
     },
+    teaching: {
+      title: "Cursos y docencia",
+      description:
+        "Material de los cursos que imparto. Todo es p\u00fablico: diapositivas, notebooks y c\u00f3digo fuente.",
+    },
     resumee: {
       title: "Mi currículum",
       description: "Estos son los puestos más relevantes de mi trayectoria",
@@ -96,6 +106,9 @@ const es = {
     caption: "Desarrollador de software",
     description:
       "Desarrollador full-stack apasionado por la tecnología y la innovación",
+  },
+  teaching: {
+    courseSite: "Web del curso",
   },
   footer: {
     privacyNotice: "Este sitio no registra ninguna información de uso",

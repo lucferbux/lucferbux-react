@@ -33,6 +33,12 @@ export const footerData: FooterItem[] = [
     external: false,
   },
   {
+    labelKey: "teaching",
+    icon: "/images/icons/courses.svg",
+    link: "/teaching",
+    external: false,
+  },
+  {
     labelKey: "oldWeb",
     icon: "/images/icons/calendar.svg",
     link: "https://lucferbux-web-page.web.app",

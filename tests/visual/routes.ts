@@ -20,6 +20,11 @@ export const ROUTES: VisualRoute[] = [
   { name: "posts", path: "/en/posts", ready: "text=Tech Posts" },
   { name: "projects", path: "/en/projects", ready: "text=Explore Projects" },
   { name: "blog-post", path: "/en/blog/react-solid", ready: "text=SOLID" },
+  {
+    name: "teaching",
+    path: "/en/teaching",
+    ready: "text=Courses & Teaching",
+  },
   { name: "terms", path: "/en/terms", ready: "text=Terms & Conditions" },
   { name: "privacy", path: "/en/privacy", ready: "text=Privacy Policy" },
   { name: "not-found", path: "/en/no-such-page", ready: "text=404" },
@@ -40,6 +45,11 @@ export const ROUTES: VisualRoute[] = [
     name: "projects-es",
     path: "/es/projects",
     ready: "text=Explora los proyectos",
+  },
+  {
+    name: "teaching-es",
+    path: "/es/teaching",
+    ready: "text=Cursos y docencia",
   },
 ];
 

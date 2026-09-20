@@ -285,11 +285,89 @@ export const WORK_SCHEMA: CollectionSchema = {
   ],
 };
 
+export const TEACHING_SCHEMA: CollectionSchema = {
+  key: "teaching",
+  path: "teaching",
+  label: { en: "Teaching", es: "Docencia" },
+  icon: "courses",
+  titleField: "title",
+  defaultSort: { field: "importance", dir: "asc" },
+  searchFields: ["title", "description", "institution"],
+  fields: [
+    ...titleAndDescription(),
+    {
+      name: "institution",
+      type: "text",
+      i18n: true,
+      required: true,
+      listColumn: true,
+      label: { en: "Institution", es: "Institución" },
+    },
+    {
+      name: "period",
+      type: "text",
+      required: true,
+      listColumn: true,
+      label: { en: "Period", es: "Periodo" },
+      help: {
+        en: "For example 2019 – Present",
+        es: "Por ejemplo 2019 – Actualidad",
+      },
+    },
+    {
+      name: "siteUrl",
+      type: "url",
+      validate: url,
+      label: { en: "Course site", es: "Web del curso" },
+    },
+    {
+      name: "repoUrl",
+      type: "url",
+      validate: url,
+      label: { en: "Repository", es: "Repositorio" },
+    },
+    {
+      name: "links",
+      type: "linklist",
+      label: { en: "Other links", es: "Otros enlaces" },
+      help: {
+        en: 'One per line, as "Label | https://…". Used for courses with no repository, such as Colab notebooks.',
+        es: 'Uno por línea, como "Etiqueta | https://…". Para cursos sin repositorio, como los notebooks de Colab.',
+      },
+    },
+    {
+      name: "tags",
+      type: "tags",
+      label: { en: "Topics", es: "Temas" },
+      help: { en: "Comma separated.", es: "Separados por comas." },
+    },
+    {
+      name: "icon",
+      type: "select",
+      required: true,
+      options: ICON_OPTIONS,
+      label: { en: "Icon", es: "Icono" },
+    },
+    {
+      name: "importance",
+      type: "number",
+      required: true,
+      listColumn: true,
+      label: { en: "Sort order", es: "Orden" },
+      validate: (value) =>
+        typeof value === "number" && Number.isFinite(value)
+          ? null
+          : { en: "Must be a number", es: "Debe ser un número" },
+    },
+  ],
+};
+
 export const SCHEMAS = {
   news: NEWS_SCHEMA,
   posts: POSTS_SCHEMA,
   projects: PROJECTS_SCHEMA,
   work: WORK_SCHEMA,
+  teaching: TEACHING_SCHEMA,
 } as const;
 
 export const REQUIRED_MESSAGE = required;

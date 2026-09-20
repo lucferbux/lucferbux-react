@@ -1,0 +1,210 @@
+[
+  {
+    "_id": "python-for-ai-colab",
+    "title": {
+      "en": "Python for AI: from a notebook to a tool someone uses",
+      "es": "Python para IA: de un notebook a una herramienta que alguien usa"
+    },
+    "description": {
+      "en": "The jump almost nobody teaches: what changes when the notebook stops being yours and starts having users.",
+      "es": "El salto que casi nadie enseña: qué cambia cuando el notebook deja de ser tuyo y pasa a tener usuarios."
+    },
+    "internalLink": "python-for-ai-colab",
+    "link": "",
+    "image": "/images/banners/python-for-ai-colab.svg",
+    "date": "2026-09-08T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "ai-coding-rules",
+    "title": {
+      "en": "Effective rules for AI assistants in a repository",
+      "es": "Reglas efectivas para asistentes de IA en un repositorio"
+    },
+    "description": {
+      "en": "What to put in AGENTS.md or CLAUDE.md so it earns its place: not conventions, but the traps a model cannot infer.",
+      "es": "Qué poner en AGENTS.md o CLAUDE.md para que sirva de algo: no convenciones, sino las trampas que el modelo no puede deducir."
+    },
+    "internalLink": "ai-coding-rules",
+    "link": "",
+    "image": "/images/banners/ai-coding-rules.svg",
+    "date": "2026-08-18T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "modular-frontend-architecture",
+    "title": {
+      "en": "Modular front-end architecture: what pays off and what doesn't",
+      "es": "Arquitectura modular en el frontend: qué compensa y qué no"
+    },
+    "description": {
+      "en": "Micro-frontends solve an organisational problem, not a technical one. Worth being clear which before adopting them.",
+      "es": "Los micro-frontends resuelven un problema organizativo, no técnico. Merece la pena tener claro cuál es antes de adoptarlos."
+    },
+    "internalLink": "modular-frontend-architecture",
+    "link": "",
+    "image": "/images/banners/modular-frontend-architecture.svg",
+    "date": "2026-07-07T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "go-for-typescript-developers",
+    "title": {
+      "en": "Go for TypeScript developers",
+      "es": "Go para desarrolladores de TypeScript"
+    },
+    "description": {
+      "en": "The four ideas in Go that clash with what you already know, and why they end up feeling comfortable.",
+      "es": "Las cuatro ideas de Go que chocan con lo que ya sabes, y por qué acaban resultando cómodas."
+    },
+    "internalLink": "go-for-typescript-developers",
+    "link": "",
+    "image": "/images/banners/go-for-typescript-developers.svg",
+    "date": "2026-06-09T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "rag-langchain-ollama",
+    "title": {
+      "en": "RAG with LangChain and Ollama, end to end",
+      "es": "RAG con LangChain y Ollama, de principio a fin"
+    },
+    "description": {
+      "en": "What a RAG system actually does, where it breaks, and how to build a complete one locally without paying for tokens.",
+      "es": "Qué hace realmente un sistema RAG, dónde se rompe, y cómo montar uno entero en local sin pagar por tokens."
+    },
+    "internalLink": "rag-langchain-ollama",
+    "link": "",
+    "image": "/images/banners/rag-langchain-ollama.svg",
+    "date": "2026-05-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "owasp-top-10-node-react",
+    "title": {
+      "en": "The OWASP Top 10 in a Node and React application",
+      "es": "OWASP Top 10 en una aplicación Node y React"
+    },
+    "description": {
+      "en": "The most common vulnerabilities, with the concrete code that introduces them and the code that fixes them.",
+      "es": "Las vulnerabilidades más comunes, con el código concreto que las introduce y el que las arregla."
+    },
+    "internalLink": "owasp-top-10-node-react",
+    "link": "",
+    "image": "/images/banners/owasp-top-10-node-react.svg",
+    "date": "2026-04-14T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "unit-testing-jest-rtl",
+    "title": {
+      "en": "Unit tests that survive a refactor",
+      "es": "Testing unitario que no se rompe al refactorizar"
+    },
+    "description": {
+      "en": "The difference between a test that protects you and one that gets in the way is what you choose to observe.",
+      "es": "La diferencia entre un test que protege y uno que estorba está en qué decides observar."
+    },
+    "internalLink": "unit-testing-jest-rtl",
+    "link": "",
+    "image": "/images/banners/unit-testing-jest-rtl.svg",
+    "date": "2026-03-24T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "typescript-generics-utility-types",
+    "title": {
+      "en": "Generics and utility types in TypeScript",
+      "es": "Genéricos y utility types en TypeScript"
+    },
+    "description": {
+      "en": "How to stop writing `any` and start describing relationships between types rather than isolated types.",
+      "es": "Cómo dejar de escribir `any` y empezar a describir relaciones entre tipos en lugar de tipos sueltos."
+    },
+    "internalLink": "typescript-generics-utility-types",
+    "link": "",
+    "image": "/images/banners/typescript-generics-utility-types.svg",
+    "date": "2026-03-10T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "promises-async-await",
+    "title": {
+      "en": "Promises and async/await: the mental model",
+      "es": "Promesas y async/await: el modelo mental"
+    },
+    "description": {
+      "en": "A promise isn't a function that waits — it's an object with state. Getting that right fixes most async bugs.",
+      "es": "Una promesa no es una función que espera: es un objeto con estado. Entender eso arregla la mayoría de los bugs asíncronos."
+    },
+    "internalLink": "promises-async-await",
+    "link": "",
+    "image": "/images/banners/promises-async-await.svg",
+    "date": "2026-02-24T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "javascript-event-loop",
+    "title": {
+      "en": "The JavaScript engine, the call stack and the event loop",
+      "es": "El motor de JavaScript, la call stack y el event loop"
+    },
+    "description": {
+      "en": "Why JavaScript is single-threaded and still doesn't block: engine, call stack, task queue and microtasks.",
+      "es": "Por qué JavaScript es de un solo hilo y aun así no se bloquea: motor, pila de llamadas, cola de tareas y microtareas."
+    },
+    "internalLink": "javascript-event-loop",
+    "link": "",
+    "image": "/images/banners/javascript-event-loop.svg",
+    "date": "2026-02-10T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "react-solid",
+    "title": {
+      "en": "Aplicando principios SOLID en React",
+      "es": "Aplicando principios SOLID en React"
+    },
+    "description": {
+      "en": "Los cinco principios de Robert C. Martin aplicados a componentes funcionales tipados.",
+      "es": "Los cinco principios de Robert C. Martin aplicados a componentes funcionales tipados."
+    },
+    "internalLink": "react-solid",
+    "link": "",
+    "image": "/images/banners/react-solid.svg",
+    "date": "2023-06-20T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "markdown-blog-gatsby",
+    "title": {
+      "en": "Crear un blog en Gatsby con Markdown",
+      "es": "Crear un blog en Gatsby con Markdown"
+    },
+    "description": {
+      "en": "Cómo monté el sistema de artículos en markdown que originalmente daba vida a este blog.",
+      "es": "Cómo monté el sistema de artículos en markdown que originalmente daba vida a este blog."
+    },
+    "internalLink": "markdown-blog-gatsby",
+    "link": "",
+    "image": "/images/banners/markdown-blog-gatsby.svg",
+    "date": "2023-04-23T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "first-steps-redux",
+    "title": {
+      "en": "Primeros pasos en redux",
+      "es": "Primeros pasos en redux"
+    },
+    "description": {
+      "en": "Los conceptos básicos de Redux y React Redux, primero en TypeScript puro y luego en React.",
+      "es": "Los conceptos básicos de Redux y React Redux, primero en TypeScript puro y luego en React."
+    },
+    "internalLink": "first-steps-redux",
+    "link": "",
+    "image": "/images/banners/first-steps-redux.svg",
+    "date": "2022-11-24T12:00:00Z",
+    "loaded": true
+  }
+]

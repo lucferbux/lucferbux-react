@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import NewsPage from "./pages/NewsPage";
 import PostsPage from "./pages/PostsPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import TeachingPage from "./pages/TeachingPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import BlogPostPage from "./pages/BlogPostPage";
@@ -54,6 +55,7 @@ export default function AppRoutes() {
           <Route path="news" element={<NewsPage />} />
           <Route path="posts" element={<PostsPage />} />
           <Route path="projects" element={<ProjectsPage />} />
+          <Route path="teaching" element={<TeachingPage />} />
           <Route path="privacy" element={<PrivacyPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="blog/:slug" element={<BlogPostPage />} />

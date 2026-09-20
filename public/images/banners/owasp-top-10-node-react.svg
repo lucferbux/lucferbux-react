@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The OWASP Top 10 in a Node and React application">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c98c31" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#007789" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1002.4 435.0 Q 1002.4 435.0 881.3 537.4 Q 760.2 639.8 640.6 703.7 Q 521.0 767.6 399.1 678.3 Q 277.2 589.0 258.9 426.2 Q 240.6 263.5 377.2 167.2 Q 513.7 70.8 635.3 152.6 Q 756.9 234.4 879.6 334.7 Z" fill="#c98c31" opacity="0.57" />
+    <path d="M 735.3 573.7 Q 735.3 573.7 718.6 658.0 Q 701.9 742.2 616.4 738.5 Q 530.8 734.8 469.0 692.8 Q 407.3 650.9 427.4 583.4 Q 447.5 515.9 493.7 484.3 Q 540.0 452.7 616.6 434.5 Q 693.1 416.3 714.2 495.0 Z" fill="#eabe7d" opacity="0.48" />
+    <path d="M 515.5 580.2 Q 515.5 580.2 513.3 655.6 Q 511.1 730.9 430.7 744.5 Q 350.3 758.1 278.3 713.6 Q 206.3 669.1 238.3 595.6 Q 270.3 522.2 315.0 483.0 Q 359.8 443.9 415.2 462.0 Q 470.7 480.2 493.1 530.2 Z" fill="#007789" opacity="0.55" />
+    <path d="M 748.4 561.4 Q 748.4 561.4 713.8 633.6 Q 679.2 705.9 599.8 728.9 Q 520.5 751.9 470.7 691.0 Q 421.0 630.2 428.5 565.0 Q 436.0 499.8 482.4 453.6 Q 528.8 407.5 602.6 413.9 Q 676.3 420.4 712.4 490.9 Z" fill="#c98c31" opacity="0.54" />
+    <path d="M 509.8 492.1 Q 509.8 492.1 428.5 584.3 Q 347.1 676.4 250.0 687.8 Q 152.8 699.2 55.7 653.8 Q -41.5 608.4 -46.9 489.5 Q -52.3 370.5 46.3 310.6 Q 145.0 250.6 242.5 283.6 Q 340.0 316.7 424.9 404.4 Z" fill="#eabe7d" opacity="0.39" />
+    <path d="M 1356.1 158.9 Q 1356.1 158.9 1335.2 270.2 Q 1314.3 381.6 1199.7 383.4 Q 1085.1 385.1 954.6 347.3 Q 824.1 309.4 865.2 178.7 Q 906.3 47.9 997.2 -3.2 Q 1088.1 -54.3 1207.6 -67.1 Q 1327.1 -79.9 1341.6 39.5 Z" fill="#007789" opacity="0.42" />
+    <path d="M 1087.6 541.9 Q 1087.6 541.9 1024.2 607.5 Q 960.9 673.1 889.1 693.0 Q 817.2 712.9 743.6 672.3 Q 669.9 631.7 680.7 547.2 Q 691.6 462.6 753.4 412.2 Q 815.1 361.8 879.4 397.1 Q 943.7 432.3 1015.6 487.1 Z" fill="#c98c31" opacity="0.32" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="237.67999999999998" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">SECURITY</text>
+  <text x="80" y="293" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">The OWASP Top 10 in a Node and</text>
+    <text x="80" y="361" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">React application</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

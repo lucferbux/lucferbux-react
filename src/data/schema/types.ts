@@ -10,7 +10,8 @@ export type FieldType =
   | "number"
   | "boolean"
   | "tags"
-  | "select";
+  | "select"
+  | "linklist";
 
 /** Human-readable label or help text, per locale. */
 export type LocalizedLabel = Record<Locale, string>;

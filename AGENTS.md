@@ -139,7 +139,13 @@ old code. Either clear it first:
 
 or use the visual suite, whose Playwright config sets `serviceWorkers: "block"`.
 
-### 11. Never set a `background-color` on `html`
+### 11. Deploying the rules before granting the admin claim locks you out
+
+`firestore.rules` and `storage.rules` require an `admin` custom claim. Run
+`npm run set-admin -- <email>` **before** `npm run deploy:rules`, and sign out and
+in again afterwards — the claim only reaches the browser with a fresh token.
+
+### 12. Never set a `background-color` on `html`
 
 `body` is the canvas painter (`globals.css`). Giving `html` a background makes it paint the
 entire viewport, including overscroll and everything below a short page's content. This was
@@ -175,7 +181,7 @@ before touching `index.html`, `SEO.tsx` or the body background.
 │   ├── content/{en,es}/      # Markdown blog posts (YAML frontmatter)
 │   ├── data/
 │   │   ├── menuData.ts footerData.ts
-│   │   ├── fixtures/         # Deterministic data for tests + VITE_FIXTURES mode
+│   │   ├── source/           # QueryDescriptor + Firestore/fixture data sources
 │   │   ├── model/            # TypeScript interfaces
 │   │   └── schema/           # CollectionSchema descriptors driving the admin
 │   ├── hooks/                # useFirestoreCollection, useAuth, usePageTheme, useMediaQuery
@@ -184,8 +190,10 @@ before touching `index.html`, `SEO.tsx` or the body background.
 ├── tests/
 │   ├── setup.ts  unit/  integration/
 │   └── visual/               # Playwright specs + committed __screenshots__ baselines
-├── content/seed/             # Bilingual Firestore seed JSON (source of truth for content)
-├── scripts/                  # seed-firestore, generate-banners, upload-banners
+├── content/seed/             # Bilingual Firestore seed JSON — the content source of
+│                             # truth, and the fixture data for tests and the
+│                             # visual baseline. One corpus, three consumers.
+├── scripts/                  # seed, set-admin, generate-banners, upload-banners
 └── public/                   # favicons, PWA icons, images, wave SVGs
 ```
 

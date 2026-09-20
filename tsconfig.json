@@ -33,6 +33,6 @@
       "@datasource": ["src/data/source/firestore.ts"]
     }
   },
-  "include": ["src", "seed", "vite-env.d.ts"],
+  "include": ["src", "content", "vite-env.d.ts"],
   "exclude": ["node_modules", "dist", "public", ".cache"]
 }

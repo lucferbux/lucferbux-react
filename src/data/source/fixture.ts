@@ -1,17 +1,19 @@
 import type { DocumentData } from "firebase/firestore";
-import intro from "../../../seed/v1/intro.json";
-import patent from "../../../seed/v1/patent.json";
-import project from "../../../seed/v1/project.json";
-import team from "../../../seed/v1/team.json";
+import intro from "../../../content/seed/intro.json";
+import patent from "../../../content/seed/patent.json";
+import project from "../../../content/seed/project.json";
+import team from "../../../content/seed/team.json";
+import teaching from "../../../content/seed/teaching.json";
 import type { DataSource, QueryDescriptor } from "./types";
 
 /**
- * In-memory data source backed by the versioned seed corpus in `seed/v1/`.
+ * In-memory data source backed by the versioned seed corpus in `content/seed/`.
  *
  * Enabled by building with `VITE_FIXTURE_DATA=1`. Used by the Playwright visual
  * baseline (so screenshots never depend on live Firestore) and by `npm run
  * dev:fixtures` (so the app runs without credentials). The same corpus is the
- * input to `scripts/seed.ts`, so there is exactly one copy of the content.
+ * input to `scripts/seed.mjs`, so there is exactly one copy of the content and
+ * the visual baseline shows exactly what production will show.
  */
 
 /** Fields stored as Firestore timestamps, by collection. */
@@ -20,6 +22,7 @@ const TIMESTAMP_FIELDS: Record<string, readonly string[]> = {
   patent: ["date"],
   project: ["date"],
   team: [],
+  teaching: [],
 };
 
 /** Shape of `Timestamp` that the card components actually branch on. */
@@ -62,6 +65,7 @@ const COLLECTIONS: Record<string, Record<string, unknown>[]> = {
   patent: hydrate("patent", patent as Record<string, unknown>[]),
   project: hydrate("project", project as Record<string, unknown>[]),
   team: hydrate("team", team as Record<string, unknown>[]),
+  teaching: hydrate("teaching", teaching as Record<string, unknown>[]),
 };
 
 /** Ordering key that matches Firestore's semantics closely enough for layout. */

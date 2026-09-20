@@ -10,7 +10,7 @@ import { useTranslation } from "../../i18n/LanguageContext";
  * Safari 26 decides what colour to make its toolbar.
  */
 /** Routes rendering WaveBody, an 800px gradient. */
-const BODY_ROUTES = new Set(["news", "posts", "projects", "blog"]);
+const BODY_ROUTES = new Set(["news", "posts", "projects", "blog", "teaching"]);
 
 function pageKind(pathname: string): "home" | "body" | "short" {
   const withoutLocale = pathname.replace(/^\/(en|es)(?=\/|$)/, "");

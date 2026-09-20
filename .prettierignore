@@ -8,7 +8,7 @@ public
 test-results
 
 # Generated content and captured baselines
-seed
+content/seed
 tests/visual/__screenshots__
 
 # Authored prose. Prettier reflows paragraphs and reformats the code samples

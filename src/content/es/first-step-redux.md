@@ -2,7 +2,10 @@
 slug: "/first-steps-redux"
 date: "2022-11-24"
 title: "Primeros pasos en redux"
-featuredImage: "https://res.cloudinary.com/practicaldev/image/fetch/s--G8CJCizG--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/v0pacwvwfrvsamakfihr.png"
+kicker: "React"
+excerpt: "Los conceptos básicos de Redux y React Redux, primero en TypeScript puro y luego en React."
+tags: [react, redux, typescript]
+featuredImage: "/images/banners/first-steps-redux.svg"
 ---
 Hoy vamos a explicar los conceptos más básicos de Redux y React Redux de la forma más concisa posible, primero explicando los conceptos más importantes y luego viendo su implementación tanto en TypeScript "vanilla" como en React.
 

@@ -90,16 +90,46 @@ describe("parseFrontmatter", () => {
     }
   });
 
-  describe("known limitations", () => {
-    it("does not parse arrays — they come back as literal strings", () => {
-      // Documented so that adding `tags:` to a post is a deliberate decision
-      // to upgrade the parser rather than a silent bug.
+  describe("arrays", () => {
+    it("parses an inline array", () => {
       const { data } = parseFrontmatter(
         ["---", "tags: [react, testing]", "---", ""].join("\n")
       );
-      expect(data.tags).toBe("[react, testing]");
+      expect(data.tags).toEqual(["react", "testing"]);
     });
 
+    it("strips quotes from inline array items", () => {
+      const { data } = parseFrontmatter(
+        ["---", "tags: [\"react hooks\", 'event loop']", "---", ""].join("\n")
+      );
+      expect(data.tags).toEqual(["react hooks", "event loop"]);
+    });
+
+    it("parses a dash list", () => {
+      const { data } = parseFrontmatter(
+        [
+          "---",
+          "tags:",
+          "  - react",
+          "  - testing",
+          "title: T",
+          "---",
+          "",
+        ].join("\n")
+      );
+      expect(data.tags).toEqual(["react", "testing"]);
+      expect(data.title).toBe("T");
+    });
+
+    it("treats an empty inline array as empty", () => {
+      const { data } = parseFrontmatter(
+        ["---", "tags: []", "---", ""].join("\n")
+      );
+      expect(data.tags).toEqual([]);
+    });
+  });
+
+  describe("known limitations", () => {
     it("does not coerce numbers or booleans", () => {
       const { data } = parseFrontmatter(
         ["---", "draft: true", "order: 3", "---", ""].join("\n")

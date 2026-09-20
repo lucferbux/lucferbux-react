@@ -87,6 +87,16 @@ export function toFormValues(
       continue;
     }
 
+    if (field.type === "linklist") {
+      const raw = doc?.[field.name];
+      values[field.name] = Array.isArray(raw)
+        ? (raw as { label: string; url: string }[])
+            .map((link) => `${link.label} | ${link.url}`)
+            .join("\n")
+        : (raw ?? "");
+      continue;
+    }
+
     values[field.name] = doc?.[field.name] ?? field.defaultValue ?? "";
   }
 
@@ -130,6 +140,19 @@ export function toPayload(
         .split(",")
         .map((tag) => tag.trim())
         .filter(Boolean);
+      continue;
+    }
+
+    if (field.type === "linklist") {
+      payload[field.name] = String(value ?? "")
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+          const [label, ...rest] = line.split("|");
+          return { label: label.trim(), url: rest.join("|").trim() };
+        })
+        .filter((link) => link.url !== "");
       continue;
     }
 

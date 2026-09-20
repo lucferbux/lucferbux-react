@@ -1,0 +1,173 @@
+[
+  {
+    "_id": "redhat-tech-lead",
+    "name": {
+      "en": "Senior Software Engineer · Tech Lead — Red Hat",
+      "es": "Senior Software Engineer · Tech Lead — Red Hat"
+    },
+    "job": {
+      "en": "2024 – Present",
+      "es": "2024 – Actualidad"
+    },
+    "description": {
+      "en": "Tech lead of the Kubernetes-native platform OpenShift AI's dashboard ships on: micro-frontends plus Go backend-for-frontend services, now carrying 10 AI product modules across five releases and upstream Kubeflow. Designed the move from a monolithic deployment to independent per-module pods managed by a Go operator, and led the platform's security work — kube-rbac-proxy and bring-your-own-OIDC migrations, least-privilege NetworkPolicies, FIPS-compliant builds.",
+      "es": "Tech lead de la plataforma Kubernetes-native sobre la que se construye el dashboard de OpenShift AI: micro-frontends y servicios backend-for-frontend en Go, con 10 módulos de producto de IA a lo largo de cinco releases y en Kubeflow upstream. Diseñé el paso de un despliegue monolítico a pods independientes por módulo gestionados por un operador en Go, y lideré la seguridad de la plataforma: migraciones a kube-rbac-proxy y BYO-OIDC, NetworkPolicies de mínimo privilegio y builds conformes con FIPS."
+    },
+    "avatar": "",
+    "icon": "redhat",
+    "importance": 1,
+    "loaded": true
+  },
+  {
+    "_id": "redhat-senior",
+    "name": {
+      "en": "Senior Software Engineer — Red Hat",
+      "es": "Senior Software Engineer — Red Hat"
+    },
+    "job": {
+      "en": "2023 – 2024",
+      "es": "2023 – 2024"
+    },
+    "description": {
+      "en": "Feature lead for core OpenShift AI dashboard capabilities: KServe model serving with Authorino-based auth, data science projects, pipelines, explainability, and the Model Registry UI — the first Red Hat UI module to ship upstream in Kubeflow.",
+      "es": "Feature lead de capacidades centrales del dashboard de OpenShift AI: model serving con KServe y autenticación vía Authorino, proyectos de data science, pipelines, explicabilidad y la UI del Model Registry, el primer módulo de UI de Red Hat publicado en Kubeflow upstream."
+    },
+    "avatar": "",
+    "icon": "redhat",
+    "importance": 2,
+    "loaded": true
+  },
+  {
+    "_id": "redhat-swe",
+    "name": {
+      "en": "Software Engineer — Red Hat",
+      "es": "Software Engineer — Red Hat"
+    },
+    "job": {
+      "en": "2021 – 2023",
+      "es": "2021 – 2023"
+    },
+    "description": {
+      "en": "Joined the eight-person team that took OpenShift Data Science — now OpenShift AI — from prototype to production. Owned deployment and SRE work, rebuilt multi-cluster monitoring on Thanos, Grafana and Loki, and ran the release and CI/CD pipeline.",
+      "es": "Me incorporé al equipo de ocho personas que llevó OpenShift Data Science —hoy OpenShift AI— de prototipo a producción. Responsable de despliegue y tareas de SRE, reconstruí la monitorización multi-cluster sobre Thanos, Grafana y Loki, y gestioné el pipeline de releases y CI/CD."
+    },
+    "avatar": "",
+    "icon": "redhat",
+    "importance": 3,
+    "loaded": true
+  },
+  {
+    "_id": "telefonica-lead",
+    "name": {
+      "en": "Lead Developer — Telefónica, Chief Digital Office",
+      "es": "Lead Developer — Telefónica, Chief Digital Office"
+    },
+    "job": {
+      "en": "2018 – 2021",
+      "es": "2018 – 2021"
+    },
+    "description": {
+      "en": "Co-led Living Apps, Telefónica's application platform running on customers' TV set-top boxes: designed the core architecture, built the framework and shipped the first apps, some reaching thousands of users. In Ideas Locas, built open-source security research tools including Airdrop-Crazy, which exposes nearby Apple devices over Bluetooth LE, and presented the findings publicly.",
+      "es": "Co-lideré Living Apps, la plataforma de aplicaciones de Telefónica desplegada en los descodificadores de TV de los clientes: diseñé la arquitectura base, construí el framework y publiqué las primeras aplicaciones, algunas con miles de usuarios. En Ideas Locas desarrollé herramientas de investigación en seguridad de código abierto, entre ellas Airdrop-Crazy, que expone dispositivos Apple cercanos por Bluetooth LE, y presenté los resultados públicamente."
+    },
+    "avatar": "",
+    "icon": "telefonica",
+    "importance": 4,
+    "loaded": true
+  },
+  {
+    "_id": "deloitte-security",
+    "name": {
+      "en": "Security Analyst — Deloitte",
+      "es": "Analista de seguridad — Deloitte"
+    },
+    "job": {
+      "en": "2017 – 2018",
+      "es": "2017 – 2018"
+    },
+    "description": {
+      "en": "Fraud and insurance practice, on site with MAPFRE. Cut a fraud-analytics service's average response time from 40 seconds to 1 by rewriting the Splunk queries that swept several data sources at once, adding result caching, and streaming multi-gigabyte result sets with Python generators instead of loading them into memory.",
+      "es": "Práctica de fraude y seguros, en cliente con MAPFRE. Reduje el tiempo medio de respuesta de un servicio de analítica de fraude de 40 segundos a 1, reescribiendo las consultas de Splunk que recorrían varias fuentes a la vez, añadiendo caché de resultados y transmitiendo conjuntos de varios gigabytes con generadores de Python en lugar de cargarlos en memoria."
+    },
+    "avatar": "",
+    "icon": "deloitte",
+    "importance": 5,
+    "loaded": true
+  },
+  {
+    "_id": "visiotech-dev",
+    "name": {
+      "en": "Software Developer — Visiotech",
+      "es": "Desarrollador de software — Visiotech"
+    },
+    "job": {
+      "en": "2016 – 2017",
+      "es": "2016 – 2017"
+    },
+    "description": {
+      "en": "First role after graduating: iOS and then Android developer. Built the video-surveillance streaming app on vendor C/C++ SDKs, plus Fastlane CI/CD for the iOS apps.",
+      "es": "Primer puesto tras graduarme: desarrollador iOS y después Android. Construí la aplicación de streaming de videovigilancia sobre SDKs en C/C++ del fabricante, además del CI/CD con Fastlane para las apps de iOS."
+    },
+    "avatar": "",
+    "icon": "visiotech",
+    "importance": 6,
+    "loaded": true
+  },
+  {
+    "_id": "obs-lecturer",
+    "name": {
+      "en": "Lecturer, Agentic Development — OBS Business School",
+      "es": "Profesor de Desarrollo Agéntico — OBS Business School"
+    },
+    "job": {
+      "en": "2023 – Present",
+      "es": "2023 – Actualidad"
+    },
+    "description": {
+      "en": "Lecturer on the Master in AI, teaching Agentic Development; previously Python for AI. Challenge-based course built around Colab, LLM APIs, RAG and shipping a working tool to real users.",
+      "es": "Profesor en el Máster en IA, donde imparto Desarrollo Agéntico y anteriormente Python para IA. Curso basado en retos, apoyado en Colab, APIs de LLM, RAG y la publicación de una herramienta real para usuarios."
+    },
+    "avatar": "",
+    "icon": "book",
+    "importance": 7,
+    "loaded": true
+  },
+  {
+    "_id": "threepoints-director",
+    "name": {
+      "en": "Program Director, Full-Stack Master — Three Points (Inesdi)",
+      "es": "Director de programa, Máster Full Stack — Three Points (Inesdi)"
+    },
+    "job": {
+      "en": "2019 – Present",
+      "es": "2019 – Actualidad"
+    },
+    "description": {
+      "en": "Program director of the Full-Stack Development Master since 2020, and lecturer on the JavaScript module and the transversal web project workshop since 2019. All course material is public.",
+      "es": "Director del Máster en Desarrollo Full Stack desde 2020 y profesor del módulo de JavaScript y del taller transversal de proyecto web desde 2019. Todo el material del curso es público."
+    },
+    "avatar": "",
+    "icon": "threepoints",
+    "importance": 8,
+    "loaded": true
+  },
+  {
+    "_id": "uem-blockchain",
+    "name": {
+      "en": "Lecturer, Blockchain Security — Universidad Europea",
+      "es": "Profesor de Seguridad en Blockchain — Universidad Europea"
+    },
+    "job": {
+      "en": "2019 – 2023",
+      "es": "2019 – 2023"
+    },
+    "description": {
+      "en": "Taught the Blockchain Security module on the Blockchain master: the main threat classes, smart-contract hardening and deployment across multiple systems.",
+      "es": "Impartí el módulo de Seguridad en Blockchain del máster de Blockchain: principales amenazas, fortificación de smart contracts y despliegue en múltiples sistemas."
+    },
+    "avatar": "",
+    "icon": "uem",
+    "importance": 9,
+    "loaded": true
+  }
+]

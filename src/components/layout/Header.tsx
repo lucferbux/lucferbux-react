@@ -31,13 +31,17 @@ export default function Header() {
         </Link>
         <div className="flex items-center gap-[30px] max-md:gap-3 max-xs:gap-1.5">
           {menuData.map((item) => (
-            <NavButton
-              icon={item.icon}
-              text={m.nav[item.labelKey]}
-              link={localePath(item.link)}
+            <div
               key={item.labelKey}
-              collapse
-            />
+              className={item.hideOnNarrow ? "max-xs:hidden" : undefined}
+            >
+              <NavButton
+                icon={item.icon}
+                text={m.nav[item.labelKey]}
+                link={localePath(item.link)}
+                collapse
+              />
+            </div>
           ))}
           <LanguageToggle className="shrink-0" />
         </div>

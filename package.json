@@ -60,6 +60,8 @@
   ],
   "license": "0BSD",
   "scripts": {
+    "banners": "node scripts/generate-banners.mjs",
+    "banners:upload": "node scripts/upload-banners.mjs",
     "build": "tsc --noEmit && vite build",
     "deploy:rules": "firebase deploy --only firestore:rules,firestore:indexes,storage:rules",
     "dev": "vite",
@@ -69,6 +71,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "preview": "vite preview",
+    "seed": "node scripts/seed.mjs",
     "set-admin": "node scripts/set-admin.mjs",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Aplicando principios SOLID en React">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 304.9 344.0 Q 304.9 344.0 266.4 404.6 Q 227.9 465.1 161.3 484.7 Q 94.7 504.2 29.9 464.2 Q -35.0 424.1 -52.2 335.8 Q -69.3 247.4 7.9 194.6 Q 85.2 141.8 158.2 180.3 Q 231.2 218.8 268.0 281.4 Z" fill="#a08153" opacity="0.50" />
+    <path d="M 905.0 586.5 Q 905.0 586.5 855.5 698.5 Q 806.0 810.6 683.7 842.9 Q 561.5 875.2 472.4 789.6 Q 383.3 704.0 401.5 595.3 Q 419.6 486.5 502.1 443.0 Q 584.7 399.5 676.1 405.0 Q 767.6 410.6 836.3 498.5 Z" fill="#eabe7d" opacity="0.38" />
+    <path d="M 751.2 381.8 Q 751.2 381.8 635.7 472.5 Q 520.1 563.2 406.8 652.1 Q 293.5 740.9 181.9 634.9 Q 70.2 528.8 94.9 393.7 Q 119.7 258.6 207.2 143.4 Q 294.8 28.2 407.1 114.7 Q 519.4 201.3 635.3 291.5 Z" fill="#2b2830" opacity="0.35" />
+    <path d="M 803.9 144.9 Q 803.9 144.9 794.2 224.9 Q 784.5 304.9 704.4 296.5 Q 624.2 288.0 536.2 266.7 Q 448.2 245.4 455.4 148.3 Q 462.6 51.3 543.7 28.1 Q 624.9 4.9 702.3 -2.1 Q 779.6 -9.0 791.7 67.9 Z" fill="#a08153" opacity="0.32" />
+    <path d="M 422.1 320.3 Q 422.1 320.3 384.9 372.9 Q 347.8 425.6 292.4 431.7 Q 237.0 437.8 204.7 401.1 Q 172.4 364.3 159.3 314.0 Q 146.2 263.6 190.5 228.3 Q 234.7 192.9 289.2 206.6 Q 343.6 220.3 382.9 270.3 Z" fill="#eabe7d" opacity="0.44" />
+    <path d="M 933.5 511.6 Q 933.5 511.6 887.8 636.5 Q 842.1 761.4 709.9 779.0 Q 577.8 796.5 511.3 701.7 Q 444.8 607.0 413.7 496.6 Q 382.6 386.2 479.3 302.6 Q 576.0 218.9 710.7 238.2 Q 845.4 257.6 889.5 384.6 Z" fill="#2b2830" opacity="0.48" />
+    <path d="M 175.1 539.2 Q 175.1 539.2 168.1 602.4 Q 161.1 665.6 94.1 675.1 Q 27.1 684.6 -19.4 642.3 Q -65.9 600.0 -88.5 528.4 Q -111.0 456.7 -40.7 430.7 Q 29.6 404.7 105.4 396.1 Q 181.2 387.5 178.2 463.4 Z" fill="#a08153" opacity="0.48" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">REACT</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Aplicando principios SOLID</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">en React</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

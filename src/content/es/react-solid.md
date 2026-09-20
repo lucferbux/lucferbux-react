@@ -2,7 +2,10 @@
 slug: "/react-solid"
 date: "2023-06-20"
 title: "Aplicando principios SOLID en React"
-featuredImage: "https://user-images.githubusercontent.com/16117276/247105761-2230962c-4a03-458f-820d-a8721c21551a.png"
+kicker: "React"
+excerpt: "Los cinco principios de Robert C. Martin aplicados a componentes funcionales tipados."
+tags: [react, arquitectura, solid]
+featuredImage: "/images/banners/react-solid.svg"
 ---
 En el mundo del desarrollo de software, siempre buscamos seguir buenas prácticas y principios para crear aplicaciones escalables, mantenibles y robustas. Uno de los conjuntos de principios más conocidos y ampliamente adoptados es SOLID, propuesto por Robert C. Martin. Estos principios ayudan a los desarrolladores a diseñar código de alta calidad y fácil de mantener. En este artículo, exploraremos cómo aplicar los principios SOLID en el contexto de React y proporcionaremos ejemplos de cómo aplicarlos en componentes funcionales tipados.
 

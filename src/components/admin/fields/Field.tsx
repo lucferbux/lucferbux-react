@@ -132,6 +132,21 @@ export default function Field({
             onChange={onChange}
           />
         );
+      case "linklist":
+        return (
+          <textarea
+            {...common}
+            rows={4}
+            value={
+              Array.isArray(value)
+                ? (value as { label: string; url: string }[])
+                    .map((link) => `${link.label} | ${link.url}`)
+                    .join("\n")
+                : String(value ?? "")
+            }
+            onChange={(e) => onChange(e.target.value)}
+          />
+        );
       case "tags":
         return (
           <input

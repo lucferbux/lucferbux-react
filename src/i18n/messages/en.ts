@@ -41,6 +41,11 @@ const en = {
       title: "Projects",
       description: "Open-source and professional projects I have worked on.",
     },
+    teaching: {
+      title: "Teaching",
+      description:
+        "Courses I teach, with the material and source code free to browse.",
+    },
     terms: {
       title: "Terms & Conditions",
       description: "Terms and conditions for the Lucferbux personal website.",
@@ -82,6 +87,11 @@ const en = {
       description:
         "Personal posts and collaborations talking about multiple fields of Technology such as Development, Security, AI...",
     },
+    teaching: {
+      title: "Courses & Teaching",
+      description:
+        "Material from the courses I teach. Everything here is public \u2014 slides, notebooks and source code.",
+    },
     resumee: {
       title: "My Resumée",
       description: "Here are the most important roles I've taken so far",
@@ -93,6 +103,9 @@ const en = {
     caption: "Software Developer",
     description:
       "Full-stack developer passionate about technology and innovation",
+  },
+  teaching: {
+    courseSite: "Course site",
   },
   footer: {
     privacyNotice: "This site does not track any information about usage",
