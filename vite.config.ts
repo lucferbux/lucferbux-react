@@ -31,7 +31,7 @@ export default defineConfig({
         name: "Lucferbux Web",
         short_name: "Lucferbux",
         description: "Personal PWA",
-        theme_color: "#CA8F36",
+        theme_color: "#c98c31",
         background_color: "#F2F6FF",
         display: "standalone",
         start_url: "/",

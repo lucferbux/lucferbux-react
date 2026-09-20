@@ -119,6 +119,7 @@ const es = {
     browsePosts: "Ver artículos",
   },
   a11y: {
+    mainNav: "Navegación principal",
     languageGroup: "Idioma",
     switchToEnglish: "Switch to English",
     switchToSpanish: "Cambiar a español",

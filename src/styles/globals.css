@@ -468,3 +468,68 @@
     }
   }
 }
+
+/* ===========================
+   Page tint (header + Safari toolbar)
+   ===========================
+   Safari 26 parses but ignores `theme-color`. It derives the toolbar tint from
+   the background-color of a fixed element within 4px of the viewport top that
+   is at least 80% of the viewport wide, at least 3px tall, and opaque —
+   otherwise it falls back to `body`, which is why the orange home page used to
+   render a near-white toolbar.
+
+   The fixed header is that element. `--nav-from` is its opaque background-color
+   (what Safari samples) and the gradient on top of it continues the page's own
+   wave gradient at the same geometry, so the bar is visually seamless.
+
+   Setting this from CSS on a `data-page` attribute, rather than from an effect
+   writing to documentElement, is deliberate: the previous attempt at this
+   (70d92b1, reverted in 88b2d24) used an effect with no cleanup, so whichever
+   page mounted last won. */
+
+:root {
+  color-scheme: light dark;
+
+  /* /news, /posts, /projects, /blog — WaveBody */
+  --nav-from: rgb(0, 119, 137);
+  --nav-to: rgb(176, 196, 199);
+  --nav-span: 800px;
+}
+
+[data-page="home"] {
+  /* WaveHero */
+  --nav-from: #c98c31;
+  --nav-to: #eabe7d;
+  --nav-span: 800px;
+}
+
+[data-page="short"] {
+  /* /terms, /privacy — WaveShort */
+  --nav-span: 400px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nav-from: rgb(43, 40, 48);
+    --nav-to: rgb(40, 119, 137);
+  }
+
+  [data-page="home"] {
+    --nav-from: #a08153;
+    --nav-to: #674716;
+  }
+}
+
+@layer components {
+  .page-tint-bar {
+    /* The opaque colour is what Safari samples; the gradient is what people see. */
+    background-color: var(--nav-from);
+    background-image: linear-gradient(
+      180deg,
+      var(--nav-from) 0%,
+      var(--nav-to) 100%
+    );
+    background-size: 100% var(--nav-span);
+    background-repeat: no-repeat;
+  }
+}

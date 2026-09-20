@@ -44,8 +44,8 @@ export default function SEO({
   title,
   description,
   lang,
-  themeColor = "#CA8F36",
-  themeColorDark = "#9D7E50",
+  themeColor = "#c98c31",
+  themeColorDark = "#a08153",
   image,
   url,
 }: SEOProps) {

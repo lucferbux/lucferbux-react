@@ -117,6 +117,7 @@ const en = {
     browsePosts: "Browse posts",
   },
   a11y: {
+    mainNav: "Main navigation",
     languageGroup: "Language",
     switchToEnglish: "Switch to English",
     switchToSpanish: "Cambiar a español",
