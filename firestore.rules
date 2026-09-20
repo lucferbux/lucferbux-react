@@ -1,0 +1,62 @@
+rules_version = '2';
+
+// The public site reads these four collections anonymously; only an
+// administrator may write. Admin is a custom claim rather than an email
+// allowlist: an email string in rules is effectively public, and it would grant
+// access to any future account that happens to use that address, verified or
+// not. Set the claim with `npm run set-admin -- <uid>`.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+          && request.auth.token.get('admin', false) == true;
+    }
+
+    function hasLocalizedText(field) {
+      return request.resource.data[field] is map
+          && request.resource.data[field].keys().hasAny(['en', 'es']);
+    }
+
+    // News
+    match /intro/{doc} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && hasLocalizedText('title')
+                   && hasLocalizedText('description')
+                   && request.resource.data.timestamp is timestamp;
+    }
+
+    // Posts
+    match /patent/{doc} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && hasLocalizedText('title')
+                   && request.resource.data.date is timestamp;
+    }
+
+    // Projects
+    match /project/{doc} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && hasLocalizedText('title')
+                   && request.resource.data.date is timestamp
+                   && request.resource.data.featured is bool;
+    }
+
+    // Work / résumé. `importance` is the sort key on the home page, and live
+    // data currently mixes numbers and strings, which sorts lexicographically.
+    match /team/{doc} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && hasLocalizedText('name')
+                   && request.resource.data.importance is number;
+    }
+
+    // Nothing else is readable, so a future private collection cannot be
+    // exposed by omission.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -40,6 +40,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.0",
+    "firebase-admin": "^14.4.0",
     "globals": "^17.12.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.3.3",
@@ -60,13 +61,15 @@
   "license": "0BSD",
   "scripts": {
     "build": "tsc --noEmit && vite build",
-    "deploy": "firebase deploy --only hosting",
+    "deploy:rules": "firebase deploy --only firestore:rules,firestore:indexes,storage:rules",
     "dev": "vite",
     "dev:fixtures": "VITE_FIXTURE_DATA=1 vite",
+    "emulators": "firebase emulators:start --only firestore,auth,storage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "preview": "vite preview",
+    "set-admin": "node scripts/set-admin.mjs",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "type-check": "tsc --noEmit",
@@ -77,5 +80,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Lucferbux/LucferbuxReact"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
   }
 }

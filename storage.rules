@@ -1,0 +1,32 @@
+rules_version = '2';
+
+// Images are served publicly by the site, but only an administrator may upload,
+// and only images within the size the admin UI also enforces client-side.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAdmin() {
+      return request.auth != null
+          && request.auth.token.get('admin', false) == true;
+    }
+
+    match /images/{collection}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Generated post banners, uploaded by scripts/upload-banners.
+    match /banners/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

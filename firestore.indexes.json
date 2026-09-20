@@ -1,0 +1,14 @@
+{
+  "indexes": [
+    {
+      "comment": "Home page: featured projects, most recent first. The query previously had no orderBy, so Firestore returned an arbitrary two.",
+      "collectionGroup": "project",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "featured", "order": "ASCENDING" },
+        { "fieldPath": "date", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

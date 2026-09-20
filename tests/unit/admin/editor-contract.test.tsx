@@ -36,6 +36,8 @@ vi.mock("firebase/firestore", () => ({
   updateDoc: mockUpdateDoc,
   deleteDoc: mockDeleteDoc,
   doc: mockDoc,
+  deleteField: () => ({ _methodName: "deleteField" }),
+  getCountFromServer: vi.fn(async () => ({ data: () => ({ count: 0 }) })),
   Timestamp: {
     now: () => ({ seconds: 1_800_000_000, nanoseconds: 0 }),
     fromDate: (d: Date) => ({
@@ -47,22 +49,19 @@ vi.mock("firebase/firestore", () => ({
 
 vi.mock("@/firebase", () => ({ auth: {}, db: {}, app: {} }));
 
-import NewsEditor from "@/components/admin/NewsEditor";
-import PostEditor from "@/components/admin/PostEditor";
-import ProjectEditor from "@/components/admin/ProjectEditor";
-import WorkEditor from "@/components/admin/WorkEditor";
+import CollectionEditor from "@/components/admin/CollectionEditor";
+import { SCHEMAS } from "@/data/schema";
+import { renderWithProviders } from "../../helpers/render";
 
 /** An old timestamp, so an accidental re-stamp on edit is unmistakable. */
 const ORIGINAL_DATE = { seconds: 1_300_000_000, nanoseconds: 0 };
 
 interface Case {
   name: string;
-  Component: () => React.JSX.Element;
+  schema: (typeof SCHEMAS)[keyof typeof SCHEMAS];
   path: string;
   /** Existing document the list renders and the edit form loads. */
   row: Record<string, unknown>;
-  /** Label of the button that opens the create form. */
-  addLabel: RegExp;
   /** Field whose value identifies the row in the list. */
   titleText: string;
   /** Date-like field the editor must not clobber on update, if any. */
@@ -72,9 +71,8 @@ interface Case {
 const CASES: Case[] = [
   {
     name: "NewsEditor",
-    Component: NewsEditor,
+    schema: SCHEMAS.news,
     path: "intro",
-    addLabel: /add news/i,
     titleText: "Existing News",
     dateField: "timestamp",
     row: {
@@ -91,9 +89,8 @@ const CASES: Case[] = [
   },
   {
     name: "PostEditor",
-    Component: PostEditor,
+    schema: SCHEMAS.posts,
     path: "patent",
-    addLabel: /add post/i,
     titleText: "Existing Post",
     dateField: "date",
     row: {
@@ -110,9 +107,8 @@ const CASES: Case[] = [
   },
   {
     name: "ProjectEditor",
-    Component: ProjectEditor,
+    schema: SCHEMAS.projects,
     path: "project",
-    addLabel: /add project/i,
     titleText: "Existing Project",
     dateField: "date",
     row: {
@@ -130,9 +126,8 @@ const CASES: Case[] = [
   },
   {
     name: "WorkEditor",
-    Component: WorkEditor,
+    schema: SCHEMAS.work,
     path: "team",
-    addLabel: /add entry/i,
     titleText: "Existing Role",
     row: {
       id: "work-1",
@@ -150,9 +145,55 @@ const CASES: Case[] = [
   },
 ];
 
+/**
+ * Fill every control in the open form with a plausible value, so a create can
+ * get past validation regardless of which schema is under test.
+ */
+async function fillRequiredFields(user: ReturnType<typeof userEvent.setup>) {
+  const form = document.querySelector("form");
+  if (!form) throw new Error("No form is open");
+  const controls = Array.from(
+    form.querySelectorAll<HTMLElement>("input, textarea, select")
+  );
+
+  for (const control of controls) {
+    if (control instanceof HTMLInputElement) {
+      if (control.type === "checkbox" || control.type === "file") continue;
+      if (control.type === "date") {
+        await user.clear(control);
+        await user.type(control, "2024-01-15");
+        continue;
+      }
+      if (control.type === "number") {
+        await user.clear(control);
+        await user.type(control, "5");
+        continue;
+      }
+      if (control.type === "url") {
+        await user.clear(control);
+        await user.type(control, "https://example.com/x");
+        continue;
+      }
+      await user.clear(control);
+      await user.type(control, "Brand new");
+    } else if (control instanceof HTMLTextAreaElement) {
+      await user.clear(control);
+      await user.type(control, "Brand new description");
+    } else if (control instanceof HTMLSelectElement) {
+      const option = Array.from(control.options).find((o) => o.value !== "");
+      if (option) await user.selectOptions(control, option.value);
+    }
+  }
+}
+
 describe.each(CASES)(
   "$name CRUD contract",
-  ({ Component, path, row, addLabel, titleText, dateField }) => {
+  ({ schema, path, row, titleText, dateField }) => {
+    const renderEditor = () =>
+      renderWithProviders(<CollectionEditor schema={schema} />, {
+        route: "/admin/" + schema.key,
+      });
+
     let confirmSpy: ReturnType<typeof vi.spyOn>;
 
     beforeEach(() => {
@@ -180,12 +221,12 @@ describe.each(CASES)(
     afterEach(() => confirmSpy.mockRestore());
 
     it("renders existing rows from the snapshot", () => {
-      render(<Component />);
+      renderEditor();
       expect(screen.getByText(titleText)).toBeInTheDocument();
     });
 
     it("subscribes to the correct legacy collection path", () => {
-      render(<Component />);
+      renderEditor();
       // The UI names and the Firestore names diverge (News -> intro etc.),
       // so this pins the mapping.
       expect(mockOnSnapshot).toHaveBeenCalled();
@@ -194,11 +235,10 @@ describe.each(CASES)(
 
     it("creates a new document with addDoc, not updateDoc", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: addLabel }));
-      const inputs = screen.getAllByRole("textbox");
-      await user.type(inputs[0], "Brand new");
+      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await fillRequiredFields(user);
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       await waitFor(() => expect(mockAddDoc).toHaveBeenCalledTimes(1));
@@ -208,9 +248,9 @@ describe.each(CASES)(
 
     it("updates the existing document with updateDoc, not addDoc", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^edit$/i }));
+      await user.click(screen.getByRole("button", { name: /^edit:/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       await waitFor(() => expect(mockUpdateDoc).toHaveBeenCalledTimes(1));
@@ -223,9 +263,9 @@ describe.each(CASES)(
 
     it("prefills the edit form with the existing values", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^edit$/i }));
+      await user.click(screen.getByRole("button", { name: /^edit:/i }));
       const values = screen
         .getAllByRole("textbox")
         .map((el) => (el as HTMLInputElement).value);
@@ -234,9 +274,13 @@ describe.each(CASES)(
 
     it("deletes the document when the confirmation is accepted", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^delete$/i }));
+      await user.click(screen.getByRole("button", { name: /^delete:/i }));
+      const dialog = await screen.findByRole("alertdialog");
+      await user.click(
+        within(dialog).getByRole("button", { name: /^delete$/i })
+      );
 
       await waitFor(() => expect(mockDeleteDoc).toHaveBeenCalledTimes(1));
       expect(mockDeleteDoc.mock.calls[0][0]).toMatchObject({
@@ -246,40 +290,51 @@ describe.each(CASES)(
     });
 
     it("does not delete when the confirmation is declined", async () => {
-      confirmSpy.mockImplementation(() => false);
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: /^delete$/i }));
+      await user.click(screen.getByRole("button", { name: /^delete:/i }));
+      const dialog = await screen.findByRole("alertdialog");
+      await user.click(
+        within(dialog).getByRole("button", { name: /^cancel$/i })
+      );
+
       expect(mockDeleteDoc).not.toHaveBeenCalled();
     });
 
-    // ---- Behaviour the rewrite must add. Expected to fail today. ----
+    // ---- Behaviour added by the schema-driven rewrite. ----
 
     if (dateField) {
-      it.fails(
-        "preserves the original date when editing (currently re-stamps to now)",
-        async () => {
-          const user = userEvent.setup();
-          render(<Component />);
+      it("preserves the original date when editing", async () => {
+        const user = userEvent.setup();
+        renderEditor();
 
-          await user.click(screen.getByRole("button", { name: /^edit$/i }));
-          await user.click(screen.getByRole("button", { name: /^save$/i }));
+        await user.click(screen.getByRole("button", { name: /^edit:/i }));
+        await user.click(screen.getByRole("button", { name: /^save$/i }));
 
-          await waitFor(() => expect(mockUpdateDoc).toHaveBeenCalled());
-          expect(mockUpdateDoc.mock.calls[0][1]).toMatchObject({
-            [dateField]: ORIGINAL_DATE,
-          });
-        }
-      );
+        await waitFor(() => expect(mockUpdateDoc).toHaveBeenCalled());
+        // Only the calendar day is editable, so that is what must survive a
+        // round trip. Previously the whole value was replaced with now().
+        const written = mockUpdateDoc.mock.calls[0][1] as Record<
+          string,
+          { seconds: number }
+        >;
+        const writtenDay = new Date(written[dateField].seconds * 1000)
+          .toISOString()
+          .slice(0, 10);
+        const originalDay = new Date(ORIGINAL_DATE.seconds * 1000)
+          .toISOString()
+          .slice(0, 10);
+        expect(writtenDay).toBe(originalDay);
+      });
     }
 
-    it.fails("surfaces a visible error when a save is rejected", async () => {
+    it("surfaces a visible error when a save is rejected", async () => {
       mockAddDoc.mockRejectedValueOnce(new Error("permission-denied"));
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: addLabel }));
+      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       await waitFor(() => {
@@ -287,32 +342,43 @@ describe.each(CASES)(
       });
     });
 
-    it.fails("labels every field with a human-readable name", async () => {
+    it("labels every field with a human-readable name", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: addLabel }));
+      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
       // Raw Firestore keys like "title_en" are shown as labels today, and the
       // labels are not associated with their inputs at all.
-      expect(screen.getByLabelText(/title \(english\)/i)).toBeInTheDocument();
+      // Each localized field renders one control per language, labelled with
+      // the language spelled out. Previously the label was the raw Firestore
+      // key ("title_en") and was not associated with its input at all.
+      const englishFields = screen.getAllByLabelText(/\(English\)/i);
+      expect(englishFields.length).toBeGreaterThan(0);
+      expect(screen.getAllByLabelText(/\(Spanish\)/i).length).toBe(
+        englishFields.length
+      );
+      expect(screen.queryByLabelText(/_en/)).toBeNull();
     });
 
-    it.fails("submits the form when Enter is pressed in a field", async () => {
+    it("submits the form when Enter is pressed in a field", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: addLabel }));
-      const inputs = screen.getAllByRole("textbox");
-      await user.type(inputs[0], "Typed{Enter}");
+      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
+      await fillRequiredFields(user);
+      // Enter in a text field submits the form, which the previous editors
+      // could not do because they were not <form> elements.
+      const [firstTextbox] = screen.getAllByRole("textbox");
+      await user.type(firstTextbox, "{Enter}");
 
       await waitFor(() => expect(mockAddDoc).toHaveBeenCalled());
     });
 
-    it.fails("rejects a completely empty save", async () => {
+    it("rejects a completely empty save", async () => {
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: addLabel }));
+      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       expect(mockAddDoc).not.toHaveBeenCalled();
@@ -321,9 +387,9 @@ describe.each(CASES)(
     it("keeps the form open when a save fails", async () => {
       mockAddDoc.mockRejectedValueOnce(new Error("offline"));
       const user = userEvent.setup();
-      render(<Component />);
+      renderEditor();
 
-      await user.click(screen.getByRole("button", { name: addLabel }));
+      await user.click(screen.getByRole("button", { name: /^\+ add$/i }));
       await user.click(screen.getByRole("button", { name: /^save$/i }));
 
       await waitFor(() =>
@@ -332,11 +398,11 @@ describe.each(CASES)(
     });
 
     it("scopes row actions so only one row's buttons are present", () => {
-      render(<Component />);
+      renderEditor();
       const list = screen.getByText(titleText).closest("div")?.parentElement
         ?.parentElement as HTMLElement;
       expect(
-        within(list).getAllByRole("button", { name: /^edit$/i })
+        within(list).getAllByRole("button", { name: /^edit:/i })
       ).toHaveLength(1);
     });
   }

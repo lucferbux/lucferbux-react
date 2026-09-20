@@ -32,6 +32,8 @@ vi.mock("firebase/firestore", () => ({
   updateDoc: vi.fn(),
   deleteDoc: vi.fn(),
   doc: vi.fn(),
+  deleteField: () => ({ _methodName: "deleteField" }),
+  getCountFromServer: vi.fn(async () => ({ data: () => ({ count: 0 }) })),
   Timestamp: { now: () => ({ seconds: Date.now() / 1000, nanoseconds: 0 }) },
 }));
 
@@ -128,17 +130,19 @@ describe("Admin Flow", () => {
       ).toBeInTheDocument();
     });
 
-    // Use collection descriptions which are unique to the dashboard
-    expect(
-      screen.getByText("Manage news items and announcements")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("Manage blog posts and articles")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Manage portfolio projects")).toBeInTheDocument();
-    expect(
-      screen.getByText("Manage work experience entries")
-    ).toBeInTheDocument();
+    // The dashboard now links to every collection defined by the schemas,
+    // with live document counts instead of static descriptions.
+    for (const [key, label] of [
+      ["news", /news/i],
+      ["posts", /posts/i],
+      ["projects", /projects/i],
+      ["work", /r\u00e9sum\u00e9/i],
+    ] as const) {
+      expect(screen.getByRole("link", { name: label })).toHaveAttribute(
+        "href",
+        `/admin/${key}`
+      );
+    }
   });
 
   it("handles login form submission", async () => {
@@ -210,7 +214,9 @@ describe("Admin Flow", () => {
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByText("Sign Out")).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /sign out/i })
+      ).toBeInTheDocument();
     });
   });
 });

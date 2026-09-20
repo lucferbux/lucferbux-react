@@ -19,6 +19,8 @@ vi.mock("firebase/firestore", () => ({
   updateDoc: vi.fn(),
   deleteDoc: vi.fn(),
   doc: vi.fn(),
+  deleteField: () => ({ _methodName: "deleteField" }),
+  getCountFromServer: vi.fn(async () => ({ data: () => ({ count: 0 }) })),
   Timestamp: { now: () => ({ seconds: 0, nanoseconds: 0 }) },
 }));
 

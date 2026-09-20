@@ -9,7 +9,16 @@ import { auth } from "@/firebase";
 
 interface AuthState {
   user: User | null;
-  loading: boolean;
+  /**
+   * True only while the initial auth-state subscription is settling.
+   *
+   * This used to be a single `loading` flag that `signIn` also set, which made
+   * the guard in LoginForm replace the entire form mid-submit — and rendered
+   * its own `disabled={loading}` / "Signing in…" branch unreachable. The two
+   * states are now separate.
+   */
+  initializing: boolean;
+  submitting: boolean;
   error: Error | null;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -17,7 +26,8 @@ interface AuthState {
 
 export function useAuth(): AuthState {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [initializing, setInitializing] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -25,12 +35,12 @@ export function useAuth(): AuthState {
       auth,
       (firebaseUser) => {
         setUser(firebaseUser);
-        setLoading(false);
+        setInitializing(false);
         setError(null);
       },
       (err) => {
         setError(err);
-        setLoading(false);
+        setInitializing(false);
       }
     );
 
@@ -39,13 +49,14 @@ export function useAuth(): AuthState {
 
   const signIn = useCallback(async (email: string, password: string) => {
     setError(null);
-    setLoading(true);
+    setSubmitting(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
-      setLoading(false);
       throw err;
+    } finally {
+      setSubmitting(false);
     }
   }, []);
 
@@ -59,5 +70,5 @@ export function useAuth(): AuthState {
     }
   }, []);
 
-  return { user, loading, error, signIn, signOut };
+  return { user, initializing, submitting, error, signIn, signOut };
 }

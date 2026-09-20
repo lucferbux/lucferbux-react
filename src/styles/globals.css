@@ -42,6 +42,11 @@
   --color-card-hover-light-bg: rgba(68, 66, 178, 0.1);
   --color-card-hover-dark-bg: rgba(255, 255, 255, 0.1);
 
+  /* Admin surfaces */
+  --color-surface: rgba(255, 255, 255, 0.72);
+  --color-surface-hover: rgba(255, 255, 255, 0.92);
+  --color-surface-border: rgba(0, 0, 0, 0.08);
+
   /* Shadows */
   --shadow-card-light:
     0px 50px 100px rgba(34, 79, 169, 0.3),
@@ -427,5 +432,39 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================
+   Admin surfaces
+   ===========================
+   The admin panel used to hardcode a dark glass colour with no `dark:`
+   variants, so in light mode it rendered as a dark slab over a light page. */
+
+@layer components {
+  .surface-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-surface-border);
+    box-shadow: 0 10px 30px rgba(34, 79, 169, 0.08);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+  }
+
+  .surface-card:has(button:hover) {
+    background: var(--color-surface-hover);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-surface: rgba(66, 66, 66, 0.35);
+    --color-surface-hover: rgba(66, 66, 66, 0.5);
+    --color-surface-border: rgba(255, 255, 255, 0.12);
+  }
+
+  @layer components {
+    .surface-card {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
   }
 }

@@ -5,13 +5,15 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import WaveShort from "@/components/backgrounds/WaveShort";
 
 export default function LoginForm() {
-  const { user, signIn, loading, error } = useAuth();
+  const { user, signIn, initializing, submitting, error } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // If already authenticated, redirect to dashboard
-  if (loading) {
+  // Gate on `initializing` only. Gating on the submit state would unmount the
+  // whole form mid-login, which is what made the button's own pending state
+  // unreachable.
+  if (initializing) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <LoadingSpinner />
@@ -38,14 +40,17 @@ export default function LoginForm() {
       <div className="relative z-10 flex min-h-[60vh] items-center justify-center px-4">
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-md rounded-xl border border-white/10 bg-[rgba(66,66,66,0.3)] p-8 shadow-lg backdrop-blur-[40px]"
+          className="surface-card w-full max-w-md rounded-xl p-8"
         >
           <h2 className="mb-6 text-center text-2xl font-bold text-primary">
             Admin Login
           </h2>
 
           {error && (
-            <div className="mb-4 rounded-lg bg-red-900/30 p-3 text-sm text-red-400">
+            <div
+              role="alert"
+              className="mb-4 rounded-lg bg-red-500/10 p-3 text-sm text-red-600 dark:text-red-400"
+            >
               {error.message}
             </div>
           )}
@@ -53,7 +58,7 @@ export default function LoginForm() {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="mb-1 block text-sm font-medium text-white/80"
+              className="mb-1 block text-sm font-medium text-black/80 dark:text-white/80"
             >
               Email
             </label>
@@ -63,7 +68,7 @@ export default function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full rounded-lg border border-black/15 bg-white/70 px-4 py-2 text-black transition placeholder:text-black/40 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
               placeholder="admin@example.com"
             />
           </div>
@@ -71,7 +76,7 @@ export default function LoginForm() {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="mb-1 block text-sm font-medium text-white/80"
+              className="mb-1 block text-sm font-medium text-black/80 dark:text-white/80"
             >
               Password
             </label>
@@ -81,17 +86,17 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full rounded-lg border border-black/15 bg-white/70 px-4 py-2 text-black transition placeholder:text-black/40 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:outline-none dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
               placeholder="••••••••"
             />
           </div>
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-white transition hover:bg-primaryDark disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={submitting}
+            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {submitting ? "Signing in…" : "Sign In"}
           </button>
         </form>
       </div>

@@ -33,7 +33,7 @@ describe("useAuth", () => {
 
     const { result } = renderHook(() => useAuth());
 
-    expect(result.current.loading).toBe(true);
+    expect(result.current.initializing).toBe(true);
     expect(result.current.user).toBeNull();
     expect(result.current.error).toBeNull();
   });
@@ -50,7 +50,7 @@ describe("useAuth", () => {
     const { result } = renderHook(() => useAuth());
 
     await waitFor(() => {
-      expect(result.current.loading).toBe(false);
+      expect(result.current.initializing).toBe(false);
     });
 
     expect(result.current.user).toEqual(mockUser);

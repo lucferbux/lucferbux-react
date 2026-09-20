@@ -123,7 +123,23 @@ The blog articles are authored prose. Prettier reflows their paragraphs **and re
 code samples inside fenced blocks**, which both edits the teaching material and changes the
 rendered page height. `src/content` is in `.prettierignore`; keep it there.
 
-### 10. Never set a `background-color` on `html`
+### 10. `npm run preview` is served by a stale service worker
+
+The PWA registers a service worker with `CacheFirst` asset caching, so after a
+rebuild the browser keeps serving the **previous** bundle until the worker
+updates. Verifying a change against `npm run preview` will silently show you the
+old code. Either clear it first:
+
+```js
+(await navigator.serviceWorker.getRegistrations()).forEach((r) =>
+  r.unregister()
+);
+(await caches.keys()).forEach((k) => caches.delete(k));
+```
+
+or use the visual suite, whose Playwright config sets `serviceWorkers: "block"`.
+
+### 11. Never set a `background-color` on `html`
 
 `body` is the canvas painter (`globals.css`). Giving `html` a background makes it paint the
 entire viewport, including overscroll and everything below a short page's content. This was

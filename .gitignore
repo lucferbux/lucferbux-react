@@ -87,3 +87,6 @@ yarn-error.log
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Firebase Admin SDK keys
+scripts/serviceAccount*.json

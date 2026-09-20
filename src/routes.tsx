@@ -11,10 +11,8 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AdminLayout from "./components/admin/AdminLayout";
 import LoginForm from "./components/admin/LoginForm";
 import Dashboard from "./components/admin/Dashboard";
-import NewsEditor from "./components/admin/NewsEditor";
-import PostEditor from "./components/admin/PostEditor";
-import ProjectEditor from "./components/admin/ProjectEditor";
-import WorkEditor from "./components/admin/WorkEditor";
+import CollectionEditor from "./components/admin/CollectionEditor";
+import { SCHEMAS } from "./data/schema";
 import LocaleRoute, { RedirectToLocale } from "./i18n/LocaleRoute";
 import { LanguageProvider } from "./i18n/LanguageContext";
 
@@ -39,10 +37,13 @@ export default function AppRoutes() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="news" element={<NewsEditor />} />
-          <Route path="posts" element={<PostEditor />} />
-          <Route path="projects" element={<ProjectEditor />} />
-          <Route path="work" element={<WorkEditor />} />
+          {Object.values(SCHEMAS).map((schema) => (
+            <Route
+              key={schema.key}
+              path={schema.key}
+              element={<CollectionEditor schema={schema} />}
+            />
+          ))}
         </Route>
       </Route>
 
