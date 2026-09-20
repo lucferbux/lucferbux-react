@@ -15,12 +15,12 @@ export default function ResumeeHeader({
   buttons,
 }: ResumeeHeaderProps) {
   return (
-    // A flat gradient swatch before. It now reads as a tile raised out of the
-    // glass: a radius in the same family as the card's 24px, the same specular
-    // top edge the panels use, and a shadow to separate it from the surface it
-    // sits on.
+    // A tile raised out of the glass: radius in the same family as the card's
+    // 24px, the same specular top edge the panels use, and a shadow to
+    // separate it. `group` is its own, not the card's — the zoom belongs to
+    // this orange tile, which is the part that invites a pointer.
     <div
-      className="resumee-header-gradient relative h-[360px] w-[240px] overflow-hidden rounded-[16px] pt-[60px] max-md:h-auto max-md:w-full max-md:p-4"
+      className="resumee-header-gradient motion-glass group relative h-[360px] w-[240px] overflow-hidden rounded-[16px] pt-[60px] hover:scale-[1.03] active:scale-[1.01] max-md:h-auto max-md:w-full max-md:p-4"
       style={{
         background:
           "linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%)",

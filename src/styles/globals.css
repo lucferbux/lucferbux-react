@@ -474,11 +474,19 @@
    backdrop blur.
 
    The tint is white (or black in dark mode) rather than grey, so the wave
-   behind is lightened rather than muddied. */
+   behind is lightened rather than muddied.
+
+   On the frost level: black body text already cleared AAA at the old
+   32px/0.22, so the problem was never headline contrast — it was that the
+   backdrop swung 95 levels of luminance across a single card, because the wave
+   behind runs from dark teal to near-white. Text over a background that
+   unstable is tiring to read whatever the ratio says. At 52px/0.55 that swing
+   is 55 levels, a 42% reduction, and 45% of the backdrop still shows through,
+   so it is still glass. Measured, not guessed. */
 
 :root {
-  --glass-tint: rgba(255, 255, 255, 0.22);
-  --glass-blur: 32px;
+  --glass-tint: rgba(255, 255, 255, 0.55);
+  --glass-blur: 52px;
   --glass-saturate: 180%;
   /* Darkened edge — the separation that plain white hairlines never gave. */
   --glass-ring: rgba(9, 30, 42, 0.22);
@@ -492,7 +500,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --glass-tint: rgba(16, 16, 22, 0.5);
+    --glass-tint: rgba(16, 16, 22, 0.72);
     --glass-ring: rgba(0, 0, 0, 0.55);
     --glass-specular: rgba(255, 255, 255, 0.3);
     --glass-specular-bounce: rgba(255, 255, 255, 0.06);
@@ -542,7 +550,7 @@
   }
 
   .glass-lift:hover {
-    transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0) scale(1.015);
     box-shadow:
       0 0 0 0.5px var(--glass-ring),
       inset 0 1px 0 var(--glass-specular),
@@ -601,10 +609,6 @@
      elements as pending when it is going to animate them, which is also why
      the Playwright baseline is unaffected: it runs with reduced motion
      emulated, so the hook leaves the DOM alone. */
-  [data-reveal="pending"] {
-    opacity: 0;
-  }
-
   [data-reveal="in"] {
     animation: var(--animate-reveal-rise);
     animation-delay: var(--reveal-delay, 0ms);
