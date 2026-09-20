@@ -14,21 +14,21 @@ Firestore collections.
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Build | Vite 7 |
-| UI | React 18, TypeScript 5 (strict) |
-| Styling | Tailwind CSS v4 (CSS-based `@theme` config — there is **no** `tailwind.config.js`) |
-| Routing | React Router v7 |
-| Backend | Firebase JS SDK v12 (modular imports only) |
-| Database | Cloud Firestore |
-| Auth | Firebase Authentication (email/password) |
-| Blog | react-markdown + remark-gfm + rehype-prism-plus |
-| Unit/integration tests | Vitest 4 + React Testing Library |
-| Visual regression | Playwright (`tests/visual/`) |
-| PWA | vite-plugin-pwa (Workbox `generateSW`) |
-| CI | GitHub Actions (`ci.yml`) |
-| **Deploy** | **Netlify** (`netlify.toml`) — *not* Firebase Hosting |
+| Layer                  | Technology                                                                         |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| Build                  | Vite 7                                                                             |
+| UI                     | React 18, TypeScript 5 (strict)                                                    |
+| Styling                | Tailwind CSS v4 (CSS-based `@theme` config — there is **no** `tailwind.config.js`) |
+| Routing                | React Router v7                                                                    |
+| Backend                | Firebase JS SDK v12 (modular imports only)                                         |
+| Database               | Cloud Firestore                                                                    |
+| Auth                   | Firebase Authentication (email/password)                                           |
+| Blog                   | react-markdown + remark-gfm + rehype-prism-plus                                    |
+| Unit/integration tests | Vitest 4 + React Testing Library                                                   |
+| Visual regression      | Playwright (`tests/visual/`)                                                       |
+| PWA                    | vite-plugin-pwa (Workbox `generateSW`)                                             |
+| CI                     | GitHub Actions (`ci.yml`)                                                          |
+| **Deploy**             | **Netlify** (`netlify.toml`) — _not_ Firebase Hosting                              |
 
 ---
 
@@ -84,13 +84,13 @@ rewriting all three — treat it as its own project.
 
 ### 6. Firestore collection names are legacy and misleading
 
-| UI concept | Firestore collection |
-|---|---|
-| News | `intro` |
-| Posts | `patent` |
-| Projects | `project` |
-| Work / Résumé | `team` |
-| Teaching | `teaching` |
+| UI concept    | Firestore collection |
+| ------------- | -------------------- |
+| News          | `intro`              |
+| Posts         | `patent`             |
+| Projects      | `project`            |
+| Work / Résumé | `team`               |
+| Teaching      | `teaching`           |
 
 ### 7. Bilingual field convention
 
@@ -159,14 +159,17 @@ CI runs `format:check` to keep this honest.
 ## Coding Conventions
 
 ### TypeScript
+
 - Strict mode. No `any` — use `unknown` or proper generics.
 - `export default function ComponentName()` for components; props `interface` above it.
 
 ### Components
+
 - Functional only. `clsx` for conditional classes (there is **no** `tailwind-merge`, so
   conflicting utilities resolve by CSS source order, not intent).
 
 ### Tailwind v4
+
 - All theme config lives in `src/styles/globals.css` `@theme` blocks.
 - Prefer utilities over `@apply`.
 - Prefer the `@theme` tokens over hardcoded `style={{ background: "rgba(66,66,66,0.3)" }}`.
@@ -174,6 +177,7 @@ CI runs `format:check` to keep this honest.
   should use the card tokens.
 
 ### Firebase (modular SDK)
+
 - Always `import { getFirestore } from "firebase/firestore"`. Never compat or namespace imports.
 - `useFirestoreCollection(collectionName, constraints)` — real-time subscription.
 - `useAuth()` → `{ user, loading, error, signIn, signOut }`.
@@ -181,12 +185,14 @@ CI runs `format:check` to keep this honest.
   the admin and `scripts/seed-firestore.mjs` agree on document identity.
 
 ### i18n
+
 - All user-facing strings go through `useT()` against the typed dictionaries in `src/i18n/`.
   A missing key is a compile error.
 - Firestore text goes through `pick()` in `src/utils/localized.ts`.
 - Dates format with `Intl.DateTimeFormat(locale)` — never raw frontmatter strings.
 
 ### Testing
+
 - Vitest specs live in `tests/` (not co-located).
 - Use `vi.hoisted()` for mock variables referenced in `vi.mock()` factories, and mock Firebase
   modules at the top of the file **before** importing the component under test.

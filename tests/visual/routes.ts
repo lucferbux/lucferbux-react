@@ -29,7 +29,11 @@ export const ROUTES: VisualRoute[] = [
 
   // Both of these bounce to home today (BlogPostPage sends bad slugs to /404,
   // which is not a route, so the catch-all redirects to /).
-  { name: "blog-missing", path: "/blog/does-not-exist", ready: "text=My Resumée" },
+  {
+    name: "blog-missing",
+    path: "/blog/does-not-exist",
+    ready: "text=My Resumée",
+  },
   { name: "not-found", path: "/no-such-page", ready: "text=My Resumée" },
 ];
 

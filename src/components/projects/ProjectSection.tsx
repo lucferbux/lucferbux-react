@@ -13,10 +13,13 @@ const info = {
 };
 
 export default function ProjectSection() {
-  const { data: projects, loading, error } = useFirestoreCollection<Project>(
-    "project",
-    { orderBy: [["date", "desc"]] }
-  );
+  const {
+    data: projects,
+    loading,
+    error,
+  } = useFirestoreCollection<Project>("project", {
+    orderBy: [["date", "desc"]],
+  });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load projects" />;

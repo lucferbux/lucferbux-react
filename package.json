@@ -63,7 +63,7 @@
     "deploy": "firebase deploy --only hosting",
     "dev": "vite",
     "dev:fixtures": "VITE_FIXTURE_DATA=1 vite",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "preview": "vite preview",

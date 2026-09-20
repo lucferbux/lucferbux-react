@@ -11,6 +11,11 @@ test-results
 seed
 tests/visual/__screenshots__
 
+# Authored prose. Prettier reflows paragraphs and reformats the code samples
+# inside fenced blocks, which changes both the article text and its rendered
+# height.
+src/content
+
 # Spec Kit scaffolding, not authored here
 .specify
 specs

@@ -35,10 +35,7 @@ function isCodePenUrl(children: ReactNode): string | null {
     ) {
       const el = child as ReactElement<{ href?: string; children?: ReactNode }>;
       const href = el.props?.href;
-      if (
-        href &&
-        href.match(/^https?:\/\/(www\.)?codepen\.io\/.+\/pen\/.+$/)
-      ) {
+      if (href && href.match(/^https?:\/\/(www\.)?codepen\.io\/.+\/pen\/.+$/)) {
         return href;
       }
     }

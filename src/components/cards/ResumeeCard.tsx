@@ -6,10 +6,15 @@ import ResumeeCardRow from "./ResumeeCardRow";
 const headerInfo = {
   title: "Lucas Fernández",
   caption: "Software Developer",
-  description: "Full-stack developer passionate about technology and innovation",
+  description:
+    "Full-stack developer passionate about technology and innovation",
   buttons: [
     { text: "GitHub", image: "github", link: "https://github.com/lucferbux" },
-    { text: "LinkedIn", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
+    {
+      text: "LinkedIn",
+      image: "linkedin",
+      link: "https://www.linkedin.com/in/lucferbux/",
+    },
   ] as ExternalLink[],
 };
 
@@ -43,8 +48,10 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
         <div
           className="mt-3 grid min-h-0 flex-1 gap-2 overflow-y-scroll [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"
           style={{
-            maskImage: "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
-            WebkitMaskImage: "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
+            maskImage:
+              "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
+            WebkitMaskImage:
+              "linear-gradient(rgb(255,255,255) 80%, rgba(255,255,255,0) 100%)",
           }}
         >
           {works.map((work, index) => (

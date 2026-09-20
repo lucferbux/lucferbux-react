@@ -5,7 +5,8 @@ import { FULL_PAGE_VIEWPORTS, ROUTES, VIEWPORTS } from "./routes";
 for (const route of ROUTES) {
   test.describe(route.name, () => {
     for (const width of VIEWPORTS) {
-      const fullPage = route.fullPage === true && FULL_PAGE_VIEWPORTS.has(width);
+      const fullPage =
+        route.fullPage === true && FULL_PAGE_VIEWPORTS.has(width);
 
       test(`${route.name} @ ${width}px${fullPage ? " (full)" : ""}`, async ({
         page,

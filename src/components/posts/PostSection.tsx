@@ -13,10 +13,11 @@ const info = {
 };
 
 export default function PostSection() {
-  const { data: posts, loading, error } = useFirestoreCollection<Post>(
-    "patent",
-    { orderBy: [["date", "desc"]] }
-  );
+  const {
+    data: posts,
+    loading,
+    error,
+  } = useFirestoreCollection<Post>("patent", { orderBy: [["date", "desc"]] });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load posts" />;

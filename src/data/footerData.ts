@@ -34,5 +34,5 @@ export const footerData = [
     icon: "/images/icons/account.svg",
     link: "/admin/login",
     external: false,
-  }
-]
+  },
+];

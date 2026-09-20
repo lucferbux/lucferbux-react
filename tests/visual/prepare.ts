@@ -48,8 +48,7 @@ export async function settle(page: Page, ready: string): Promise<void> {
 
   // Every <img> either finished or failed — no half-painted cards.
   await page.waitForFunction(
-    () =>
-      Array.from(document.images).every((img) => img.complete),
+    () => Array.from(document.images).every((img) => img.complete),
     undefined,
     { timeout: 30_000 }
   );

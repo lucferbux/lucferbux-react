@@ -21,19 +21,19 @@
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Build** | [Vite](https://vite.dev) 7+ |
-| **UI** | React 18, TypeScript 5 (strict mode) |
-| **Styling** | Tailwind CSS v4 (`@theme` config in CSS — no JS config file) |
-| **Routing** | React Router v7 |
-| **Backend** | Firebase JS SDK v12+ (modular, tree-shakeable imports) |
+| Layer        | Technology                                                          |
+| ------------ | ------------------------------------------------------------------- |
+| **Build**    | [Vite](https://vite.dev) 7+                                         |
+| **UI**       | React 18, TypeScript 5 (strict mode)                                |
+| **Styling**  | Tailwind CSS v4 (`@theme` config in CSS — no JS config file)        |
+| **Routing**  | React Router v7                                                     |
+| **Backend**  | Firebase JS SDK v12+ (modular, tree-shakeable imports)              |
 | **Database** | Cloud Firestore — collections: `intro`, `patent`, `project`, `team` |
-| **Auth** | Firebase Authentication (email / password) |
-| **Blog** | react-markdown + remark-gfm + rehype-prism-plus |
-| **Testing** | Vitest + React Testing Library + MSW |
-| **PWA** | vite-plugin-pwa (Workbox generateSW) |
-| **CI/CD** | GitHub Actions → Firebase Hosting |
+| **Auth**     | Firebase Authentication (email / password)                          |
+| **Blog**     | react-markdown + remark-gfm + rehype-prism-plus                     |
+| **Testing**  | Vitest + React Testing Library + MSW                                |
+| **PWA**      | vite-plugin-pwa (Workbox generateSW)                                |
+| **CI/CD**    | GitHub Actions → Firebase Hosting                                   |
 
 ## Requirements
 
@@ -73,17 +73,17 @@ VITE_FIREBASE_APP_ID=<app-id>
 
 ## Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start Vite dev server (port 5173) |
-| `npm run build` | Type-check + production build → `dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run test` | Run all tests with Vitest |
-| `npm run test:coverage` | Tests with coverage report |
-| `npm run type-check` | TypeScript type checking (`tsc --noEmit`) |
-| `npm run lint` | Lint source with ESLint |
-| `npm run format` | Format code with Prettier |
-| `npm run deploy` | Deploy `dist/` to Firebase Hosting |
+| Command                 | Description                               |
+| ----------------------- | ----------------------------------------- |
+| `npm run dev`           | Start Vite dev server (port 5173)         |
+| `npm run build`         | Type-check + production build → `dist/`   |
+| `npm run preview`       | Preview production build locally          |
+| `npm run test`          | Run all tests with Vitest                 |
+| `npm run test:coverage` | Tests with coverage report                |
+| `npm run type-check`    | TypeScript type checking (`tsc --noEmit`) |
+| `npm run lint`          | Lint source with ESLint                   |
+| `npm run format`        | Format code with Prettier                 |
+| `npm run deploy`        | Deploy `dist/` to Firebase Hosting        |
 
 ## Project Structure
 
@@ -128,6 +128,7 @@ tests/
 ## Features
 
 ### Pages
+
 - **Home** — Hero with Lottie animation & typewriter, news grid, featured posts/projects, résumé timeline
 - **News** — All news items from Firestore (`intro` collection)
 - **Posts** — Post cards from Firestore (`patent` collection)
@@ -136,17 +137,20 @@ tests/
 - **Privacy / Terms** — Legal content pages
 
 ### Admin (`/admin`)
+
 - Firebase Auth login (email/password)
 - Dashboard with collection overview
 - CRUD editors for News, Posts, Projects, and Work collections
 - Auth guard with token expiry handling
 
 ### PWA
+
 - Installable on mobile and desktop
 - Offline-capable with Workbox service worker
 - Runtime caching: NetworkFirst for Firestore API, CacheFirst for images/fonts
 
 ### Dark Mode
+
 - Automatic via `prefers-color-scheme` (Tailwind `dark:` variant)
 - All components, waves, cards, and backgrounds respond to OS preference
 
@@ -160,6 +164,7 @@ npm run test:coverage     # With coverage report
 Test stack: **Vitest** + **React Testing Library** + **MSW** (Mock Service Worker).
 
 Tests are organized under `tests/`:
+
 - `unit/components/` — NewsCard, PostCard, ProjectCard, Header, Footer, SEO, InfoBox
 - `unit/hooks/` — useFirestoreCollection, useAuth
 - `integration/` — HomePage, NewsPage, PostsPage, ProjectsPage, AdminFlow
@@ -172,6 +177,7 @@ firebase deploy --only hosting
 ```
 
 CI/CD is configured via GitHub Actions:
+
 - **ci.yml** — Runs on push/PR to `main`: lint → type-check → test → build
 - **deploy.yml** — Deploys to Firebase Hosting on push to `main`
 
@@ -179,10 +185,8 @@ CI/CD is configured via GitHub Actions:
 
 Lucas Fernandez — [@lucferbux](https://twitter.com/lucferbux) — lucasfernandezaragon@gmail.com
 
-Based on the [Design+Code](https://designcode.io) project. 
+Based on the [Design+Code](https://designcode.io) project.
 Distributed under the MIT license. See `LICENSE` for more information.
 
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]: LICENSE
-
-

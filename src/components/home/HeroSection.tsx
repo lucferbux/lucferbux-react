@@ -14,8 +14,16 @@ const typewriterStrings = ["a Full Stack", "an AI", "a Cloud"];
 const staticTypewriter = import.meta.env.VITE_FIXTURE_DATA === "1";
 
 const socialLinks: ExternalLink[] = [
-  { text: "instagram", image: "instagram", link: "https://www.instagram.com/lucferbux" },
-  { text: "linkedin", image: "linkedin", link: "https://www.linkedin.com/in/lucferbux/" },
+  {
+    text: "instagram",
+    image: "instagram",
+    link: "https://www.instagram.com/lucferbux",
+  },
+  {
+    text: "linkedin",
+    image: "linkedin",
+    link: "https://www.linkedin.com/in/lucferbux/",
+  },
   { text: "github", image: "github", link: "https://github.com/lucferbux" },
 ];
 

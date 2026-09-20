@@ -34,6 +34,3 @@ export default function WaveResumeeHome() {
     </div>
   );
 }
-
-
-

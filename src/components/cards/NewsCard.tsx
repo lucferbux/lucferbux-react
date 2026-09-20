@@ -18,8 +18,10 @@ export default function NewsCard({ news }: NewsCardProps) {
       <div
         className="relative grid h-[360px] min-w-[200px] max-w-[260px] grid-cols-1 grid-rows-[auto_2fr_auto] items-center gap-[30px] rounded-[20px] p-2 text-center max-[414px]:h-[330px]"
         style={{
-          background: 'linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%)',
-          boxShadow: 'rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px',
+          background:
+            "linear-gradient(200.42deg, #EABE7D 13.57%, #C98C31 98.35%)",
+          boxShadow:
+            "rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px",
         }}
       >
         <div className="news-card-gradient m-0 w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] group-hover:scale-95">
@@ -27,12 +29,12 @@ export default function NewsCard({ news }: NewsCardProps) {
             src={news.image}
             alt=""
             onLoad={() => setLoaded(true)}
-            className={`m-0 w-full rounded-xl ${loaded ? 'block' : 'hidden'}`}
+            className={`m-0 w-full rounded-xl ${loaded ? "block" : "hidden"}`}
           />
           <img
             src="/images/animations/loading.gif"
             alt="News Header Loading"
-            className={`m-0 w-full rounded-xl ${!loaded ? 'block' : 'hidden'}`}
+            className={`m-0 w-full rounded-xl ${!loaded ? "block" : "hidden"}`}
           />
         </div>
         <p className="text-[24px] font-semibold leading-[26px] break-words text-black max-[470px]:text-[18px] max-[470px]:leading-[22px] dark:text-white">

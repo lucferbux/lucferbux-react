@@ -44,9 +44,7 @@ export function createMockSnapshot(docs: ReturnType<typeof createMockDoc>[]) {
 }
 
 // Mock onSnapshot that immediately calls the callback with provided data
-export function createMockOnSnapshot(
-  docs: ReturnType<typeof createMockDoc>[]
-) {
+export function createMockOnSnapshot(docs: ReturnType<typeof createMockDoc>[]) {
   return vi.fn((_query: unknown, onNext: (snap: unknown) => void) => {
     onNext(createMockSnapshot(docs));
     return vi.fn(); // unsubscribe

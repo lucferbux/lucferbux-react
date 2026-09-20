@@ -34,10 +34,10 @@ export default function TermsSection() {
             therefore recommend that you do not jailbreak or root your phone,
             which is the process of removing software restrictions and
             limitations imposed by the official operating system of your device.
-            It could make your phone vulnerable to
-            malware/viruses/malicious programs, compromise your phone&apos;s
-            security features and it could mean that the Lucferbux App app
-            won&apos;t work properly or at all.
+            It could make your phone vulnerable to malware/viruses/malicious
+            programs, compromise your phone&apos;s security features and it
+            could mean that the Lucferbux App app won&apos;t work properly or at
+            all.
           </p>
           <p className="text-[17px] font-normal leading-[130%] text-black max-xs:text-[15px] max-xs:leading-[100%] dark:text-white">
             You should be aware that there are certain things that will not take

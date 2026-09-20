@@ -101,14 +101,22 @@ describe("NewsPage", () => {
     await waitFor(() => {
       // NewsCardDetail renders both NewsCard and NewsCardCollapsed (one hidden via CSS),
       // so title text appears multiple times in the DOM — use getAllByText
-      expect(screen.getAllByText("News Item 1").length).toBeGreaterThanOrEqual(1);
-      expect(screen.getAllByText("News Item 2").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("News Item 1").length).toBeGreaterThanOrEqual(
+        1
+      );
+      expect(screen.getAllByText("News Item 2").length).toBeGreaterThanOrEqual(
+        1
+      );
     });
   });
 
   it("renders error state", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: (snapshot: unknown) => void, onError: (error: Error) => void) => {
+      (
+        _query: unknown,
+        _onNext: (snapshot: unknown) => void,
+        onError: (error: Error) => void
+      ) => {
         onError(new Error("Test error"));
         return vi.fn();
       }

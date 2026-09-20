@@ -27,10 +27,9 @@ const emptyPost: Post = {
 };
 
 export default function PostEditor() {
-  const { data, loading, error } = useFirestoreCollection<PostId>(
-    COLLECTION,
-    { orderBy: [["date", "desc"]] }
-  );
+  const { data, loading, error } = useFirestoreCollection<PostId>(COLLECTION, {
+    orderBy: [["date", "desc"]],
+  });
   const [editing, setEditing] = useState<PostId | null>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState<Post>(emptyPost);
@@ -104,21 +103,32 @@ export default function PostEditor() {
           {creating ? "Create Post" : "Edit Post"}
         </h2>
         <div className="space-y-4">
-          {(["title", "title_en", "description", "description_en", "link", "image", "internalLink"] as const).map(
-            (field) => (
-              <div key={field}>
-                <label className="mb-1 block text-sm font-medium text-white/80">
-                  {field}{field === "internalLink" ? " (optional, e.g. /blog/my-slug)" : ""}
-                </label>
-                <input
-                  type="text"
-                  value={String(form[field] ?? "")}
-                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
-              </div>
-            )
-          )}
+          {(
+            [
+              "title",
+              "title_en",
+              "description",
+              "description_en",
+              "link",
+              "image",
+              "internalLink",
+            ] as const
+          ).map((field) => (
+            <div key={field}>
+              <label className="mb-1 block text-sm font-medium text-white/80">
+                {field}
+                {field === "internalLink"
+                  ? " (optional, e.g. /blog/my-slug)"
+                  : ""}
+              </label>
+              <input
+                type="text"
+                value={String(form[field] ?? "")}
+                onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          ))}
           <div className="flex gap-3">
             <button
               onClick={handleSave}
@@ -162,9 +172,7 @@ export default function PostEditor() {
               <p className="font-medium text-white">
                 {item.title_en || item.title}
               </p>
-              <p className="truncate text-sm text-white/60">
-                {item.link}
-              </p>
+              <p className="truncate text-sm text-white/60">{item.link}</p>
             </div>
             <div className="ml-4 flex gap-2">
               <button

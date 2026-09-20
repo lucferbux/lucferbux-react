@@ -42,9 +42,7 @@ export default function Dashboard() {
           <h2 className="text-2xl font-bold text-white drop-shadow-sm">
             Dashboard
           </h2>
-          <p className="text-sm text-white/70">
-            Signed in as {user?.email}
-          </p>
+          <p className="text-sm text-white/70">Signed in as {user?.email}</p>
         </div>
         <button
           onClick={() => signOut()}
@@ -62,12 +60,8 @@ export default function Dashboard() {
             className="group rounded-xl border border-white/10 bg-[rgba(66,66,66,0.3)] p-6 backdrop-blur-[40px] transition hover:bg-[rgba(66,66,66,0.45)] hover:shadow-lg"
           >
             <div className="mb-2 text-3xl">{c.icon}</div>
-            <h3 className="mb-1 text-lg font-semibold text-white">
-              {c.name}
-            </h3>
-            <p className="mb-2 text-sm text-white/70">
-              {c.description}
-            </p>
+            <h3 className="mb-1 text-lg font-semibold text-white">{c.name}</h3>
+            <p className="mb-2 text-sm text-white/70">{c.description}</p>
             <span className="font-mono text-xs text-white/40">
               Collection: {c.collection}
             </span>

@@ -27,7 +27,10 @@ export default function AdminLayout() {
       {/* Glass nav bar */}
       <nav className="relative z-20 border-b border-white/10 bg-[rgba(66,66,66,0.3)] px-6 py-3 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <Link to="/admin/dashboard" className="text-lg font-bold text-white drop-shadow-sm">
+          <Link
+            to="/admin/dashboard"
+            className="text-lg font-bold text-white drop-shadow-sm"
+          >
             Admin Panel
           </Link>
           <div className="flex items-center gap-4">

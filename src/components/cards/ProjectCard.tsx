@@ -5,7 +5,10 @@ interface ProjectCardProps {
   captionText?: string;
 }
 
-export default function ProjectCard({ project, captionText }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  captionText,
+}: ProjectCardProps) {
   return (
     <a
       href={project.link}

@@ -26,10 +26,9 @@ const emptyNews: News = {
 };
 
 export default function NewsEditor() {
-  const { data, loading, error } = useFirestoreCollection<NewsId>(
-    COLLECTION,
-    { orderBy: [["timestamp", "desc"]] }
-  );
+  const { data, loading, error } = useFirestoreCollection<NewsId>(COLLECTION, {
+    orderBy: [["timestamp", "desc"]],
+  });
   const [editing, setEditing] = useState<NewsId | null>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState<News>(emptyNews);
@@ -98,21 +97,28 @@ export default function NewsEditor() {
           {creating ? "Create News" : "Edit News"}
         </h2>
         <div className="space-y-4">
-          {(["title", "title_en", "description", "description_en", "url", "image"] as const).map(
-            (field) => (
-              <div key={field}>
-                <label className="mb-1 block text-sm font-medium text-white/80">
-                  {field}
-                </label>
-                <input
-                  type="text"
-                  value={String(form[field])}
-                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
-              </div>
-            )
-          )}
+          {(
+            [
+              "title",
+              "title_en",
+              "description",
+              "description_en",
+              "url",
+              "image",
+            ] as const
+          ).map((field) => (
+            <div key={field}>
+              <label className="mb-1 block text-sm font-medium text-white/80">
+                {field}
+              </label>
+              <input
+                type="text"
+                value={String(form[field])}
+                onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          ))}
           <div className="flex gap-3">
             <button
               onClick={handleSave}
@@ -156,9 +162,7 @@ export default function NewsEditor() {
               <p className="font-medium text-white">
                 {item.title_en || item.title}
               </p>
-              <p className="truncate text-sm text-white/60">
-                {item.url}
-              </p>
+              <p className="truncate text-sm text-white/60">{item.url}</p>
             </div>
             <div className="ml-4 flex gap-2">
               <button

@@ -12,10 +12,13 @@ const info = {
 };
 
 export default function AboutMeSection() {
-  const { data: works, loading, error } = useFirestoreCollection<Work>(
-    "team",
-    { orderBy: [["importance", "asc"]] }
-  );
+  const {
+    data: works,
+    loading,
+    error,
+  } = useFirestoreCollection<Work>("team", {
+    orderBy: [["importance", "asc"]],
+  });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load work experience" />;

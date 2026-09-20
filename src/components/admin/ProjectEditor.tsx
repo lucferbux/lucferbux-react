@@ -100,27 +100,38 @@ export default function ProjectEditor() {
           {creating ? "Create Project" : "Edit Project"}
         </h2>
         <div className="space-y-4">
-          {(["title", "title_en", "description", "description_en", "link", "tags", "version"] as const).map(
-            (field) => (
-              <div key={field}>
-                <label className="mb-1 block text-sm font-medium text-white/80">
-                  {field}{field === "tags" ? " (comma separated)" : ""}
-                </label>
-                <input
-                  type="text"
-                  value={String(form[field])}
-                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
-              </div>
-            )
-          )}
+          {(
+            [
+              "title",
+              "title_en",
+              "description",
+              "description_en",
+              "link",
+              "tags",
+              "version",
+            ] as const
+          ).map((field) => (
+            <div key={field}>
+              <label className="mb-1 block text-sm font-medium text-white/80">
+                {field}
+                {field === "tags" ? " (comma separated)" : ""}
+              </label>
+              <input
+                type="text"
+                value={String(form[field])}
+                onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          ))}
           <div>
             <label className="flex items-center gap-2 text-sm font-medium text-white/80">
               <input
                 type="checkbox"
                 checked={form.featured}
-                onChange={(e) => setForm({ ...form, featured: e.target.checked })}
+                onChange={(e) =>
+                  setForm({ ...form, featured: e.target.checked })
+                }
                 className="h-4 w-4 rounded border-white/20 accent-primary"
               />
               Featured
@@ -181,9 +192,7 @@ export default function ProjectEditor() {
                   </span>
                 )}
               </div>
-              <p className="truncate text-sm text-white/60">
-                {item.tags}
-              </p>
+              <p className="truncate text-sm text-white/60">{item.tags}</p>
             </div>
             <div className="ml-4 flex gap-2">
               <button

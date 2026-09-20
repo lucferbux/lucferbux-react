@@ -7,7 +7,10 @@ interface NewsCardDetailProps {
   inverted: boolean;
 }
 
-export default function NewsCardDetail({ news, inverted }: NewsCardDetailProps) {
+export default function NewsCardDetail({
+  news,
+  inverted,
+}: NewsCardDetailProps) {
   return (
     <a
       href={news.url}

@@ -8,7 +8,11 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
 import { ExternalLink } from "../../data/model/externalLink";
 
-const button: ExternalLink = { text: "Browse news", image: "courses", link: "news" };
+const button: ExternalLink = {
+  text: "Browse news",
+  image: "courses",
+  link: "news",
+};
 
 const info = {
   title: "Latest News",
@@ -17,10 +21,14 @@ const info = {
 };
 
 export default function NewsSectionHome() {
-  const { data: news, loading, error } = useFirestoreCollection<News>(
-    "intro",
-    { orderBy: [["timestamp", "desc"]], limit: 6 }
-  );
+  const {
+    data: news,
+    loading,
+    error,
+  } = useFirestoreCollection<News>("intro", {
+    orderBy: [["timestamp", "desc"]],
+    limit: 6,
+  });
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load news" />;

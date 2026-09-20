@@ -60,10 +60,12 @@ describe("Admin Flow", () => {
   });
 
   it("redirects unauthenticated users to login", async () => {
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/dashboard");
 
@@ -73,29 +75,37 @@ describe("Admin Flow", () => {
   });
 
   it("renders login form with email and password inputs", () => {
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/login");
 
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /sign in/i })
+    ).toBeInTheDocument();
   });
 
   it("shows dashboard for authenticated users", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Dashboard" })
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText(/admin@example\.com/)).toBeInTheDocument();
@@ -103,30 +113,42 @@ describe("Admin Flow", () => {
 
   it("shows collection management links on dashboard", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
 
     renderApp("/admin/dashboard");
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Dashboard" })
+      ).toBeInTheDocument();
     });
 
     // Use collection descriptions which are unique to the dashboard
-    expect(screen.getByText("Manage news items and announcements")).toBeInTheDocument();
-    expect(screen.getByText("Manage blog posts and articles")).toBeInTheDocument();
+    expect(
+      screen.getByText("Manage news items and announcements")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Manage blog posts and articles")
+    ).toBeInTheDocument();
     expect(screen.getByText("Manage portfolio projects")).toBeInTheDocument();
-    expect(screen.getByText("Manage work experience entries")).toBeInTheDocument();
+    expect(
+      screen.getByText("Manage work experience entries")
+    ).toBeInTheDocument();
   });
 
   it("handles login form submission", async () => {
     const user = userEvent.setup();
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
     mockSignInWithEmailAndPassword.mockResolvedValue({
       user: { uid: "123", email: "test@test.com" },
     });
@@ -150,10 +172,12 @@ describe("Admin Flow", () => {
 
   it("displays error message on login failure", async () => {
     const user = userEvent.setup();
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(null);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(null);
+        return vi.fn();
+      }
+    );
     mockSignInWithEmailAndPassword.mockRejectedValue(
       new Error("auth/wrong-password")
     );
@@ -175,10 +199,12 @@ describe("Admin Flow", () => {
 
   it("renders sign out button on dashboard", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
-      callback(mockUser);
-      return vi.fn();
-    });
+    mockOnAuthStateChanged.mockImplementation(
+      (_, callback: (user: unknown) => void) => {
+        callback(mockUser);
+        return vi.fn();
+      }
+    );
     mockSignOut.mockResolvedValue(undefined);
 
     renderApp("/admin/dashboard");

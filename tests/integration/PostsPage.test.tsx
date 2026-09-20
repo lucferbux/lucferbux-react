@@ -91,7 +91,11 @@ describe("PostsPage", () => {
 
   it("renders error state", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: (snapshot: unknown) => void, onError: (error: Error) => void) => {
+      (
+        _query: unknown,
+        _onNext: (snapshot: unknown) => void,
+        onError: (error: Error) => void
+      ) => {
         onError(new Error("Test error"));
         return vi.fn();
       }

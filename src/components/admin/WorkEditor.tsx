@@ -27,10 +27,9 @@ const emptyWork: Work = {
 };
 
 export default function WorkEditor() {
-  const { data, loading, error } = useFirestoreCollection<WorkId>(
-    COLLECTION,
-    { orderBy: [["importance", "desc"]] }
-  );
+  const { data, loading, error } = useFirestoreCollection<WorkId>(COLLECTION, {
+    orderBy: [["importance", "desc"]],
+  });
   const [editing, setEditing] = useState<WorkId | null>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState<Work>(emptyWork);
@@ -101,21 +100,30 @@ export default function WorkEditor() {
           {creating ? "Create Work Entry" : "Edit Work Entry"}
         </h2>
         <div className="space-y-4">
-          {(["name", "name_en", "job", "job_en", "description", "description_en", "avatar", "icon"] as const).map(
-            (field) => (
-              <div key={field}>
-                <label className="mb-1 block text-sm font-medium text-white/80">
-                  {field}
-                </label>
-                <input
-                  type="text"
-                  value={String(form[field])}
-                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
-              </div>
-            )
-          )}
+          {(
+            [
+              "name",
+              "name_en",
+              "job",
+              "job_en",
+              "description",
+              "description_en",
+              "avatar",
+              "icon",
+            ] as const
+          ).map((field) => (
+            <div key={field}>
+              <label className="mb-1 block text-sm font-medium text-white/80">
+                {field}
+              </label>
+              <input
+                type="text"
+                value={String(form[field])}
+                onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          ))}
           <div>
             <label
               htmlFor="work-importance"
@@ -127,7 +135,9 @@ export default function WorkEditor() {
               id="work-importance"
               type="number"
               value={form.importance}
-              onChange={(e) => setForm({ ...form, importance: Number(e.target.value) })}
+              onChange={(e) =>
+                setForm({ ...form, importance: Number(e.target.value) })
+              }
               className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
@@ -174,9 +184,7 @@ export default function WorkEditor() {
               <p className="font-medium text-white">
                 {item.name_en || item.name}
               </p>
-              <p className="text-sm text-white/60">
-                {item.job_en || item.job}
-              </p>
+              <p className="text-sm text-white/60">{item.job_en || item.job}</p>
             </div>
             <div className="ml-4 flex gap-2">
               <button

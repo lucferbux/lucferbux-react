@@ -8,7 +8,12 @@ interface NavButtonProps {
   collapse?: boolean;
 }
 
-export default function NavButton({ icon, text, link, collapse }: NavButtonProps) {
+export default function NavButton({
+  icon,
+  text,
+  link,
+  collapse,
+}: NavButtonProps) {
   return (
     <Link to={link}>
       <div

@@ -66,11 +66,11 @@ export default function PrivacySection() {
           <p className="text-[17px] font-normal leading-[130%] text-black max-xs:text-[15px] max-xs:leading-[100%] dark:text-white">
             This Service does not use these &quot;cookies&quot; explicitly.
             However, the app may use third-party code and libraries that use
-            &quot;cookies&quot; to collect information and improve their services.
-            You have the option to either accept or refuse these cookies and know
-            when a cookie is being sent to your device. If you choose to refuse
-            our cookies, you may not be able to use some portions of this
-            Service.
+            &quot;cookies&quot; to collect information and improve their
+            services. You have the option to either accept or refuse these
+            cookies and know when a cookie is being sent to your device. If you
+            choose to refuse our cookies, you may not be able to use some
+            portions of this Service.
           </p>
 
           <h2 className="mt-5 mb-[10px] text-[32px] font-bold text-black max-xs:text-[24px] dark:text-white">
@@ -123,16 +123,16 @@ export default function PrivacySection() {
             I do not knowingly collect personally identifiable information from
             children. I encourage all children to never submit any personally
             identifiable information through the Application and/or Services. I
-            encourage parents and legal guardians to monitor their children&apos;s
-            Internet usage and to help enforce this Policy by instructing their
-            children never to provide personally identifiable information
-            through the Application and/or Services without their permission. If
-            you have reason to believe that a child has provided personally
-            identifiable information to us through the Application and/or
-            Services, please contact us. You must also be at least 16 years of
-            age to consent to the processing of your personally identifiable
-            information in your country (in some countries we may allow your
-            parent or guardian to do so on your behalf).
+            encourage parents and legal guardians to monitor their
+            children&apos;s Internet usage and to help enforce this Policy by
+            instructing their children never to provide personally identifiable
+            information through the Application and/or Services without their
+            permission. If you have reason to believe that a child has provided
+            personally identifiable information to us through the Application
+            and/or Services, please contact us. You must also be at least 16
+            years of age to consent to the processing of your personally
+            identifiable information in your country (in some countries we may
+            allow your parent or guardian to do so on your behalf).
           </p>
 
           <h2 className="mt-5 mb-[10px] text-[32px] font-bold text-black max-xs:text-[24px] dark:text-white">

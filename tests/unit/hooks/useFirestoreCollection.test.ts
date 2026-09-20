@@ -41,15 +41,17 @@ describe("useFirestoreCollection", () => {
   });
 
   it("returns data after snapshot resolves", async () => {
-    mockOnSnapshot.mockImplementation((_query: unknown, onNext: (snapshot: unknown) => void) => {
-      onNext({
-        docs: [
-          { id: "1", data: () => ({ name: "Item 1" }) },
-          { id: "2", data: () => ({ name: "Item 2" }) },
-        ],
-      });
-      return mockUnsubscribe;
-    });
+    mockOnSnapshot.mockImplementation(
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
+        onNext({
+          docs: [
+            { id: "1", data: () => ({ name: "Item 1" }) },
+            { id: "2", data: () => ({ name: "Item 2" }) },
+          ],
+        });
+        return mockUnsubscribe;
+      }
+    );
 
     const { result } = renderHook(() =>
       useFirestoreCollection("test-collection")
@@ -66,7 +68,11 @@ describe("useFirestoreCollection", () => {
   it("handles errors", async () => {
     const testError = new Error("Firestore error");
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: (snapshot: unknown) => void, onError: (error: Error) => void) => {
+      (
+        _query: unknown,
+        _onNext: (snapshot: unknown) => void,
+        onError: (error: Error) => void
+      ) => {
         onError(testError);
         return mockUnsubscribe;
       }
