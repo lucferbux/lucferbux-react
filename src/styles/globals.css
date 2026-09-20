@@ -537,6 +537,38 @@
     }
   }
 
+  /* The small news cards on the home page.
+     The orange gradient was an inline style with no dark variant, so in dark
+     mode these stayed bright amber while every other card on the page went
+     dark — they read as a different site. Light mode keeps the accent; dark
+     mode gets a surface in the same family as the glass panels, with the same
+     darkened ring and specular top edge so it belongs to the same set. */
+  .news-card-surface {
+    background-image: linear-gradient(
+      200.42deg,
+      #eabe7d 13.57%,
+      #c98c31 98.35%
+    );
+    box-shadow:
+      0 0 0 0.5px var(--glass-ring),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 20px 40px -12px rgba(9, 30, 42, 0.35);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .news-card-surface {
+      background-image: linear-gradient(
+        200.42deg,
+        #3a3542 13.57%,
+        #26222d 98.35%
+      );
+      box-shadow:
+        0 0 0 0.5px var(--glass-ring),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 20px 40px -12px rgba(0, 0, 0, 0.55);
+    }
+  }
+
   /* Shared hover/press response. 280ms rather than the 800ms these cards used
      to run at, which felt like dragging them through treacle.
      

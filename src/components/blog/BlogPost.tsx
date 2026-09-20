@@ -8,6 +8,8 @@ import type { ReactNode, ReactElement } from "react";
 import "../../styles/blog.css";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { formatDate } from "../../i18n/formatDate";
+import { Link } from "react-router-dom";
+import { useLocalePath } from "../../i18n/useLocalePath";
 
 interface BlogPostProps {
   title: string;
@@ -109,12 +111,24 @@ export default function BlogPost({
   content,
   notice,
 }: BlogPostProps) {
-  const { locale } = useTranslation();
+  const { locale, m } = useTranslation();
+  const localePath = useLocalePath();
 
   return (
     <div className="overflow-hidden">
       <WaveBody />
       <div className="relative mx-auto max-w-[800px] px-[30px] pt-[140px] pb-[30px]">
+        {/* A post is usually arrived at from a card somewhere else on the
+            site, and the only way back was the browser's own button — which an
+            installed PWA does not show. `blog.backToPosts` was already in both
+            dictionaries, just never rendered. */}
+        <Link
+          to={localePath("/posts")}
+          className="motion-glass mb-6 inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.06] px-4 py-2 text-[14px] font-semibold !text-black no-underline hover:bg-black/12 dark:border-white/15 dark:bg-white/10 dark:!text-white dark:hover:bg-white/20"
+        >
+          <span aria-hidden="true">&larr;</span>
+          {m.blog.backToPosts}
+        </Link>
         <h1 className="title-blog">{title}</h1>
         <p className="paragraph-blog mb-4 opacity-70">
           {formatDate(date, locale)}
