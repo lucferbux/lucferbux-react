@@ -10,15 +10,16 @@ const PORT = 4173;
  * almost any change can shift it silently. This suite is the safety net.
  *
  * Determinism comes from four places:
- *  - `VITE_FIXTURE_DATA=1` builds against the `seed/v1/` corpus instead of live
+ *  - `VITE_FIXTURE_DATA=1` builds against the `content/seed/` corpus instead of live
  *    Firestore, and renders a static typewriter;
  *  - animations are frozen and `prefers-reduced-motion` is emulated;
  *  - remote images are fulfilled from a local placeholder;
  *  - locale and timezone are pinned, so `toLocaleDateString` is stable.
  *
- * Baselines are captured on macOS. Font rasterisation differs between
- * platforms, so a Linux CI run needs the pinned Playwright container
- * (mcr.microsoft.com/playwright) or it will diff on antialiasing alone.
+ * The baseline is gitignored and local: PNGs are derived artifacts, they are
+ * tens of megabytes, and font rasterisation differs between platforms so they
+ * would not transfer anyway. Generate one with `npm run visual:baseline` on an
+ * unmodified tree before relying on `npm run visual`.
  */
 export default defineConfig({
   testDir: "./tests/visual",

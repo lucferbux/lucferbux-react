@@ -189,7 +189,7 @@ before touching `index.html`, `SEO.tsx` or the body background.
 │   └── utils/                # parseFrontmatter, localized
 ├── tests/
 │   ├── setup.ts  unit/  integration/
-│   └── visual/               # Playwright specs + committed __screenshots__ baselines
+│   └── visual/               # Playwright specs; __screenshots__ is gitignored
 ├── content/seed/             # Bilingual Firestore seed JSON — the content source of
 │                             # truth, and the fixture data for tests and the
 │                             # visual baseline. One corpus, three consumers.
@@ -255,7 +255,8 @@ npm run build            # tsc --noEmit && vite build → dist/
 npm run preview
 npm test                 # Vitest
 npm run test:coverage
-npm run test:visual      # Playwright visual regression against committed baselines
+npm run visual           # Visual regression against your local baseline
+npm run visual:baseline  # (Re)generate the baseline — required on a fresh clone
 npm run test:visual:update
 npm run lint
 npm run type-check

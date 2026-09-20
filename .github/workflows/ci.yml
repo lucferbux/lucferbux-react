@@ -48,16 +48,17 @@ jobs:
       - name: Build
         run: npm run build
 
-  # Visual regression is currently a LOCAL gate: run `npm run visual` before
-  # pushing any change that touches layout or styling.
+  # Visual regression is a LOCAL gate, not a CI one.
   #
-  # It is not wired into CI yet because the committed baselines live under
-  # tests/visual/__screenshots__/darwin/ and font rasterisation differs between
-  # platforms, so a Linux runner would diff on antialiasing alone. To enable it,
-  # generate the Linux set once in the pinned container:
+  # The baselines are gitignored: they are tens of megabytes of derived PNGs,
+  # and they are platform-specific anyway, since font rasterisation differs
+  # between macOS and Linux. Capture a baseline on the unmodified tree, make
+  # the change, then diff:
   #
-  #   docker run --rm -v "$PWD":/w -w /w mcr.microsoft.com/playwright:v1.63.0-noble \
-  #     sh -c "npm ci && npm run visual:baseline"
+  #   npm run visual:baseline   # on a clean tree
+  #   npm run visual            # after the change
   #
-  # commit tests/visual/__screenshots__/linux/, then add a job here that runs
-  # `npm run visual` inside that same image.
+  # To make this a CI gate you would need a baseline the runner can trust —
+  # either generated in the same pinned container on every run (which only
+  # catches within-run nondeterminism, not regressions) or stored as a build
+  # artifact keyed to a known-good commit.

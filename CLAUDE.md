@@ -11,5 +11,13 @@ All project guidance lives in one place so the two files can't drift:
 The Tailwind breakpoints are redefined, the landing sections are fixed-height with
 `overflow-hidden`, and dark mode is implemented three different ways at once.
 
-Run `npm run test:visual` after any visual change — it diffs every route at seven widths in
-both colour schemes against committed baselines.
+Run `npm run visual` after any visual change — it diffs every route at seven widths in both
+colour schemes.
+
+The baseline is **gitignored and local**. On a fresh clone, or after pulling someone else's
+work, capture one on the unmodified tree first:
+
+```bash
+npm run visual:baseline   # on a clean tree
+npm run visual            # after your change
+```
