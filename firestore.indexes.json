@@ -1,14 +1,5 @@
 {
-  "indexes": [
-    {
-      "comment": "Home page: featured projects, most recent first. The query previously had no orderBy, so Firestore returned an arbitrary two.",
-      "collectionGroup": "project",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "featured", "order": "ASCENDING" },
-        { "fieldPath": "date", "order": "DESCENDING" }
-      ]
-    }
-  ],
-  "fieldOverrides": []
+  "indexes": [],
+  "fieldOverrides": [],
+  "_comment": "No composite indexes required. The featured-projects query deliberately avoids one: see PostsProjectSection."
 }

@@ -69,8 +69,16 @@ export async function settle(page: Page, ready: string): Promise<void> {
   }
 
   // Every <img> either finished or failed — no half-painted cards.
+  //
+  // An image with no layout box is excluded, because it never resolves: the
+  // admin list thumbnail is both `loading="lazy"` and `max-xs:hidden`, so
+  // below 450px the browser is right not to fetch it and `complete` stays
+  // false for the life of the page. It cannot affect the screenshot either.
   await page.waitForFunction(
-    () => Array.from(document.images).every((img) => img.complete),
+    () =>
+      Array.from(document.images).every(
+        (img) => img.complete || img.getClientRects().length === 0
+      ),
     undefined,
     { timeout: 30_000 }
   );

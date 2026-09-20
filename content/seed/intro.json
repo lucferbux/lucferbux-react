@@ -1,17 +1,17 @@
 [
   {
-    "_id": "kubecon-eu-2025",
+    "_id": "rhoai-3-modular-platform",
     "title": {
-      "en": "KubeCon + CloudNativeCon Europe 2025",
-      "es": "KubeCon + CloudNativeCon Europe 2025"
+      "en": "OpenShift AI 3.x and the modular dashboard platform",
+      "es": "OpenShift AI 3.x y la plataforma modular del dashboard"
     },
     "description": {
-      "en": "Co-presented \"Orchestrating AI Models in Kubernetes: Deploying Ollama as a Native Container Runtime\" in London, on running model serving as a first-class Kubernetes workload rather than bolting it on.",
-      "es": "Copresenté «Orchestrating AI Models in Kubernetes: Deploying Ollama as a Native Container Runtime» en Londres, sobre ejecutar model serving como carga de trabajo de primera clase en Kubernetes en lugar de añadirlo por encima."
+      "en": "Red Hat OpenShift AI reached its 3.x line, and with it the dashboard finished a migration I had been working towards for two years: from a single monolithic application to a micro-frontend platform where every module ships on its own.\n\nThe shape of it is Webpack Module Federation on the front end and a Go backend-for-frontend per module, each running in its own pod with its own scaling and its own failure isolation. That last part matters more than it sounds: in the monolith, one module's bad deploy was everyone's outage. Now a module can fail without taking the rest of the console with it.\n\nFourteen federated modules ship on it today — Model Registry, the AI catalog, Models-as-a-Service, GenAI Studio, AutoRAG, evaluation and agent tooling among them — built by more than ten feature teams that no longer need a platform engineer in the room to release. Deployment went from a one-to-two-week manifest cycle to same-day, and onboarding a new module went from about five working days to roughly four hours, mostly because the scaffolding, CI wiring and schema validation are now automated.\n\nThe 3.5 release added a dedicated Kubernetes operator that decides which modules exist in a given installation, so enabling one is a configuration change rather than a rebuild of the console.",
+      "es": "Red Hat OpenShift AI llegó a su línea 3.x y, con ella, el dashboard terminó una migración en la que llevaba trabajando dos años: de una aplicación monolítica a una plataforma de micro-frontends donde cada módulo se publica por su cuenta.\n\nLa forma es Webpack Module Federation en el front y un backend-for-frontend en Go por módulo, cada uno en su propio pod, con su escalado y su aislamiento de fallos. Esto último importa más de lo que parece: en el monolito, un despliegue malo de un módulo era una caída para todos. Ahora un módulo puede fallar sin arrastrar al resto de la consola.\n\nHoy se publican catorce módulos federados sobre ella —Model Registry, el catálogo de IA, Models-as-a-Service, GenAI Studio, AutoRAG, herramientas de evaluación y de agentes, entre otros— construidos por más de diez equipos que ya no necesitan a alguien de plataforma en la sala para publicar. El despliegue pasó de un ciclo de manifiestos de una o dos semanas a el mismo día, y dar de alta un módulo nuevo pasó de unos cinco días laborables a unas cuatro horas, sobre todo porque el andamiaje, el cableado de CI y la validación de esquemas están automatizados.\n\nLa versión 3.5 añadió un operador de Kubernetes propio que decide qué módulos existen en cada instalación, de modo que activar uno es un cambio de configuración y no una reconstrucción de la consola."
     },
-    "url": "https://www.youtube.com/watch?v=zLpUJBU6sT4",
-    "image": "/images/banners/kubecon-eu-2025.svg",
-    "timestamp": "2025-04-03T12:00:00Z",
+    "url": "https://docs.redhat.com/en/documentation/red_hat_ai/3",
+    "image": "/images/banners/rhoai-3-modular-platform.svg",
+    "timestamp": "2026-08-15T12:00:00Z",
     "loaded": true
   },
   {
@@ -21,8 +21,8 @@
       "es": "Top-20 de contribuidores de Kubeflow en 2025"
     },
     "description": {
-      "en": "Ranked in the top twenty Kubeflow contributors for 2025 by LFX Insights, and became an approver on the project's UI codebase.",
-      "es": "Entre los veinte principales contribuidores de Kubeflow en 2025 según LFX Insights, y approver del código de interfaz del proyecto."
+      "en": "I ended 2025 among the top twenty Kubeflow contributors by LFX Insights, and became an approver on the project's UI codebase.\n\nMost of that work was the Model Registry and model catalog interfaces, plus the shared component library that upstream modules build on. Being an approver is the part that actually changed how I work: reviewing other people's contributions to a project you do not control teaches you quickly which of your own conventions were genuinely good ideas and which were just habits from your own codebase.\n\nIt also closed a loop. The modular architecture we needed downstream only pays off if the pieces exist upstream, where everyone can use them.",
+      "es": "Terminé 2025 entre los veinte principales contribuidores de Kubeflow según LFX Insights, y pasé a ser approver del código de interfaz del proyecto.\n\nLa mayor parte de ese trabajo fueron las interfaces del Model Registry y del catálogo de modelos, además de la librería de componentes compartida sobre la que construyen los módulos upstream. Ser approver es lo que de verdad cambió mi forma de trabajar: revisar contribuciones de otros en un proyecto que no controlas enseña rápido cuáles de tus convenciones eran buenas ideas y cuáles eran costumbres de tu propio repositorio.\n\nTambién cerró un círculo. La arquitectura modular que necesitábamos downstream sólo compensa si las piezas existen upstream, donde puede usarlas todo el mundo."
     },
     "url": "https://github.com/kubeflow/hub",
     "image": "/images/banners/kubeflow-top-contributor-2025.svg",
@@ -36,12 +36,57 @@
       "es": "Primer módulo de UI de Red Hat en Kubeflow 1.10"
     },
     "description": {
-      "en": "The Model Registry UI shipped in Kubeflow 1.10 — the first user interface module Red Hat contributed upstream, built on the modular architecture the dashboard platform now runs on.",
-      "es": "La UI del Model Registry se publicó en Kubeflow 1.10: el primer módulo de interfaz que Red Hat aportó upstream, construido sobre la arquitectura modular que hoy sostiene la plataforma del dashboard."
+      "en": "The Model Registry UI shipped in Kubeflow 1.10 — the first user interface module Red Hat contributed upstream.\n\nA model registry sits in the gap between experimentation and production: somewhere to index models, versions and artifact metadata so that everyone in the MLOps lifecycle is looking at the same thing. The interface had to work both inside our dashboard and standalone in a plain Kubeflow installation, which is exactly the constraint that forced the modular architecture to be real rather than aspirational.\n\nGetting it upstream meant the module could not assume our platform, our authentication or our styling. That discipline is why the same code now runs in both places.",
+      "es": "La UI del Model Registry se publicó en Kubeflow 1.10: el primer módulo de interfaz que Red Hat aportó upstream.\n\nUn registro de modelos ocupa el hueco entre la experimentación y la producción: un sitio donde indexar modelos, versiones y metadatos de artefactos para que todos los implicados en el ciclo de MLOps miren lo mismo. La interfaz tenía que funcionar tanto dentro de nuestro dashboard como de forma independiente en una instalación normal de Kubeflow, que es justo la restricción que obligó a que la arquitectura modular fuese real y no una aspiración.\n\nPublicarlo upstream implicaba que el módulo no podía dar por supuesta nuestra plataforma, nuestra autenticación ni nuestros estilos. Esa disciplina es la razón de que hoy el mismo código funcione en los dos sitios."
     },
     "url": "https://github.com/kubeflow/hub",
     "image": "/images/banners/kubeflow-1-10-module.svg",
     "timestamp": "2025-06-01T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "kubecon-eu-2025",
+    "title": {
+      "en": "KubeCon + CloudNativeCon Europe 2025",
+      "es": "KubeCon + CloudNativeCon Europe 2025"
+    },
+    "description": {
+      "en": "I co-presented \"Orchestrating AI Models in Kubernetes: Deploying Ollama as a Native Container Runtime\" at KubeCon + CloudNativeCon Europe in London.\n\nThe argument was that model serving usually gets bolted onto Kubernetes rather than expressed in it. You end up with a process supervisor inside a container, pretending to be a workload, while the scheduler has no idea what it is actually running or what it needs. Treating a model runtime as a first-class container runtime instead lets the platform do the things it is good at: scheduling by real resource requirements, scaling on real signals, and failing over without bespoke glue.\n\nThe talk walked through what that looks like with Ollama, where the abstraction leaks, and which parts are worth the complexity. The recording is public.",
+      "es": "Copresenté «Orchestrating AI Models in Kubernetes: Deploying Ollama as a Native Container Runtime» en KubeCon + CloudNativeCon Europe, en Londres.\n\nEl argumento era que el model serving suele añadirse por encima de Kubernetes en vez de expresarse en Kubernetes. Acabas con un supervisor de procesos dentro de un contenedor, haciéndose pasar por una carga de trabajo, mientras el planificador no tiene ni idea de qué está ejecutando ni de qué necesita. Tratar el runtime del modelo como un runtime de contenedores de primera clase permite que la plataforma haga lo que sabe hacer: planificar por requisitos reales, escalar con señales reales y recuperarse de fallos sin pegamento a medida.\n\nLa charla recorría cómo se ve eso con Ollama, dónde se rompe la abstracción y qué partes compensan la complejidad. La grabación es pública."
+    },
+    "url": "https://www.youtube.com/watch?v=zLpUJBU6sT4",
+    "image": "/images/banners/kubecon-eu-2025.svg",
+    "timestamp": "2025-04-03T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "rhoai-ga-and-growth",
+    "title": {
+      "en": "From prototype to product: OpenShift AI ships",
+      "es": "De prototipo a producto: OpenShift AI se publica"
+    },
+    "description": {
+      "en": "I joined the eight-person team that took OpenShift Data Science from a prototype to a supported Red Hat product. It became OpenShift AI, and the difference between those two states is most of what I have learned in the last five years.\n\nThe early work was unglamorous and formative: owning deployment, rebuilding multi-cluster monitoring on Thanos, Grafana and Loki, and running the release pipeline. You learn quickly which architectural decisions were load-bearing once a thing has customers, an support lifecycle and an air-gapped installation story.\n\nBy 2024 my work had moved from features to the platform underneath them, and from writing most of the code to designing the system other teams build on. The contributor count on the dashboard grew from around 50 to 147 over that period. That number is the one I am most pleased with, because it is not a measure of what I shipped — it is a measure of how many other people could ship without waiting for me.",
+      "es": "Me incorporé al equipo de ocho personas que llevó OpenShift Data Science de prototipo a producto soportado de Red Hat. Pasó a llamarse OpenShift AI, y la diferencia entre esos dos estados es casi todo lo que he aprendido en los últimos cinco años.\n\nEl trabajo inicial fue poco lucido y muy formativo: responsabilizarme del despliegue, reconstruir la monitorización multi-cluster sobre Thanos, Grafana y Loki, y gestionar el pipeline de releases. Se aprende rápido qué decisiones de arquitectura eran realmente estructurales cuando algo tiene clientes, un ciclo de soporte y una historia de instalación en entornos aislados.\n\nPara 2024 mi trabajo se había movido de las funcionalidades a la plataforma que hay debajo, y de escribir la mayor parte del código a diseñar el sistema sobre el que construyen otros equipos. El número de contribuidores del dashboard pasó de unos 50 a 147 en ese periodo. Ese es el dato que más me gusta, porque no mide lo que publiqué yo: mide cuánta gente pudo publicar sin esperarme."
+    },
+    "url": "https://docs.redhat.com/en/documentation/red_hat_ai/3",
+    "image": "/images/banners/rhoai-ga-and-growth.svg",
+    "timestamp": "2024-11-20T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "teaching-section-open-sourced",
+    "title": {
+      "en": "Opening up seven years of course material",
+      "es": "Abriendo siete años de material docente"
+    },
+    "description": {
+      "en": "I have been teaching alongside my engineering work since 2019, and this site now has a section for it with the material public.\n\nThe oldest is Blockchain Security at Universidad Europea, where I taught the main threat classes against distributed ledgers and smart-contract hardening. Since 2019 I have taught the JavaScript module at Three Points, and since 2020 I have been program director of its Full-Stack Development Master. Since 2023 I have taught at OBS Business School — Python for AI then, Agentic Development now.\n\nWhat goes up is everything I can publish: 45 JavaScript and TypeScript modules from the language basics through to the engine itself; a full-stack workshop that carries one project across seven repositories, from a React front end through Express, MongoDB and Firebase to Docker, Kubernetes and CI/CD; four sessions on testing and security covering Jest, Cypress and the OWASP Top 10 against a real codebase; and four Colab notebooks on Python for AI.\n\nThe reason is simple. Course material that only exists behind a login stops being useful the moment the course ends, and most of what is in there is not proprietary — it is the explanation. Slides, notebooks and source are all linked, and every repository is public.",
+      "es": "Llevo dando clase en paralelo a mi trabajo de ingeniería desde 2019, y esta web ya tiene una sección para ello con el material público.\n\nLo más antiguo es Seguridad en Blockchain en la Universidad Europea, donde impartía las principales amenazas contra libros distribuidos y la fortificación de smart contracts. Desde 2019 doy el módulo de JavaScript en Three Points, y desde 2020 dirijo su Máster de Desarrollo Full Stack. Desde 2023 doy clase en OBS Business School: Python para IA entonces, Desarrollo Agéntico ahora.\n\nSe publica todo lo que puedo publicar: 45 módulos de JavaScript y TypeScript, desde lo básico del lenguaje hasta el propio motor; un taller full stack que lleva un mismo proyecto por siete repositorios, del front en React a Express, MongoDB y Firebase, y de ahí a Docker, Kubernetes y CI/CD; cuatro sesiones de testing y seguridad con Jest, Cypress y el OWASP Top 10 sobre un proyecto real; y cuatro notebooks de Colab de Python para IA.\n\nEl motivo es sencillo. El material de clase que sólo existe detrás de un login deja de ser útil en cuanto acaba el curso, y la mayor parte de lo que hay ahí no es propietario: es la explicación. Diapositivas, notebooks y código están enlazados, y todos los repositorios son públicos."
+    },
+    "url": "https://lucferbux.dev/en/teaching",
+    "image": "/images/banners/teaching-section-open-sourced.svg",
+    "timestamp": "2024-06-10T12:00:00Z",
     "loaded": true
   },
   {
@@ -51,8 +96,8 @@
       "es": "Airdrop Leak en CodeTalks4Devs"
     },
     "description": {
-      "en": "Talk on information disclosure from iPhones over Bluetooth LE: how AirDrop's advertising can reveal a nearby device's phone number, and the open-source tool built to demonstrate it.",
-      "es": "Charla sobre divulgación de información desde iPhones por Bluetooth LE: cómo el anuncio de AirDrop puede revelar el número de teléfono de un dispositivo cercano, y la herramienta de código abierto creada para demostrarlo."
+      "en": "A talk at Telefónica's CodeTalks4Devs on information disclosure from iPhones over Bluetooth Low Energy.\n\nAirDrop advertises over BLE before any transfer happens, and those advertisements carry hashed identifiers derived from the device owner's phone number and email. Hashed is not the same as private when the input space is small: phone numbers in a given country are enumerable, so a hash can be reversed with a precomputed table on ordinary hardware.\n\nWe built Airdrop-Crazy in Ideas Locas to demonstrate it — a tool that listens passively and resolves nearby devices — along with an iOS companion app. The point was not the trick itself but the pattern: an identifier that is hashed rather than salted, in a protocol that broadcasts continuously, is a privacy problem waiting to be noticed.",
+      "es": "Una charla en CodeTalks4Devs de Telefónica sobre divulgación de información desde iPhones por Bluetooth Low Energy.\n\nAirDrop se anuncia por BLE antes de que exista ninguna transferencia, y esos anuncios llevan identificadores hasheados derivados del número de teléfono y del correo del propietario. Hasheado no es lo mismo que privado cuando el espacio de entrada es pequeño: los números de teléfono de un país son enumerables, así que el hash se puede revertir con una tabla precomputada en hardware normal.\n\nConstruimos Airdrop-Crazy en Ideas Locas para demostrarlo —una herramienta que escucha de forma pasiva y resuelve los dispositivos cercanos— junto con una app companion para iOS. Lo relevante no era el truco sino el patrón: un identificador hasheado en vez de salteado, dentro de un protocolo que emite continuamente, es un problema de privacidad esperando a que alguien se fije."
     },
     "url": "https://github.com/Telefonica/Airdrop-Crazy",
     "image": "/images/banners/codetalks-airdrop-leak.svg",

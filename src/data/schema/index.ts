@@ -40,6 +40,16 @@ const ICON_OPTIONS: SelectOption[] = [
   "award",
 ].map((value) => ({ value, label: value }));
 
+/**
+ * Logos that only exist as raster images live in Firebase Storage, so the
+ * stored value is a URL rather than a file name. `utils/iconUrl` handles both.
+ */
+ICON_OPTIONS.push({
+  value:
+    "https://storage.googleapis.com/lucferbux-web-page.appspot.com/images/logos/obs.png",
+  label: "OBS Business School",
+});
+
 /** Localized title/description pair, which every collection has. */
 function titleAndDescription(): FieldSchema[] {
   return [

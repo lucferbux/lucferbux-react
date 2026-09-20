@@ -1,5 +1,21 @@
 [
   {
+    "_id": "spec-driven-ai-sdlc",
+    "title": {
+      "en": "Spec-driven development with AI",
+      "es": "Desarrollo dirigido por especificación con IA"
+    },
+    "description": {
+      "en": "If the prompt is the specification, the specification disappears when you close the tab. Writing it down changes the whole cycle.",
+      "es": "Si el prompt es la especificación, la especificación se pierde al cerrar la pestaña. Escribirla cambia el ciclo entero."
+    },
+    "internalLink": "spec-driven-ai-sdlc",
+    "link": "",
+    "image": "/images/banners/spec-driven-ai-sdlc.svg",
+    "date": "2026-09-15T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "python-for-ai-colab",
     "title": {
       "en": "Python for AI: from a notebook to a tool someone uses",
@@ -13,6 +29,22 @@
     "link": "",
     "image": "/images/banners/python-for-ai-colab.svg",
     "date": "2026-09-08T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "agentic-development-sessions",
+    "title": {
+      "en": "Working with agents: one session per job",
+      "es": "Trabajar con agentes: una sesión por trabajo"
+    },
+    "description": {
+      "en": "The problem isn't the model: it's putting planning, implementation and review in the same conversation.",
+      "es": "El error no es el modelo: es meter planificar, implementar y revisar en la misma conversación."
+    },
+    "internalLink": "agentic-development-sessions",
+    "link": "",
+    "image": "/images/banners/agentic-development-sessions.svg",
+    "date": "2026-09-01T12:00:00Z",
     "loaded": true
   },
   {
@@ -48,6 +80,22 @@
     "loaded": true
   },
   {
+    "_id": "docker-kubernetes-fullstack",
+    "title": {
+      "en": "From docker-compose to Kubernetes without losing the thread",
+      "es": "De docker-compose a Kubernetes sin perder el hilo"
+    },
+    "description": {
+      "en": "The jump isn't syntax: it's going from describing processes to describing the state you want.",
+      "es": "El salto no es de sintaxis: es pasar de describir procesos a describir el estado que quieres."
+    },
+    "internalLink": "docker-kubernetes-fullstack",
+    "link": "",
+    "image": "/images/banners/docker-kubernetes-fullstack.svg",
+    "date": "2026-06-23T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "go-for-typescript-developers",
     "title": {
       "en": "Go for TypeScript developers",
@@ -61,6 +109,22 @@
     "link": "",
     "image": "/images/banners/go-for-typescript-developers.svg",
     "date": "2026-06-09T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "jwt-auth-cookies",
+    "title": {
+      "en": "JWT authentication: where to keep the token",
+      "es": "Autenticación con JWT: dónde guardar el token"
+    },
+    "description": {
+      "en": "localStorage or cookie isn't a matter of taste. Each option leaves you exposed to a different attack.",
+      "es": "localStorage o cookie no es una cuestión de gusto. Cada opción te deja expuesto a un ataque distinto."
+    },
+    "internalLink": "jwt-auth-cookies",
+    "link": "",
+    "image": "/images/banners/jwt-auth-cookies.svg",
+    "date": "2026-05-26T12:00:00Z",
     "loaded": true
   },
   {
@@ -80,6 +144,22 @@
     "loaded": true
   },
   {
+    "_id": "e2e-testing-cypress",
+    "title": {
+      "en": "End-to-end with Cypress without learning to hate tests",
+      "es": "E2E con Cypress sin acabar odiando los tests"
+    },
+    "description": {
+      "en": "A brittle E2E suite is worse than none. The brittleness nearly always comes from the same four decisions.",
+      "es": "Una suite E2E frágil es peor que no tener ninguna. La fragilidad casi siempre viene de las mismas cuatro decisiones."
+    },
+    "internalLink": "e2e-testing-cypress",
+    "link": "",
+    "image": "/images/banners/e2e-testing-cypress.svg",
+    "date": "2026-04-21T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "owasp-top-10-node-react",
     "title": {
       "en": "The OWASP Top 10 in a Node and React application",
@@ -93,6 +173,22 @@
     "link": "",
     "image": "/images/banners/owasp-top-10-node-react.svg",
     "date": "2026-04-14T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "integration-testing-supertest-msw",
+    "title": {
+      "en": "Integration testing: where the real value is",
+      "es": "Testing de integración: dónde está el valor real"
+    },
+    "description": {
+      "en": "Unit tests miss the most common failure: two correct pieces that don't fit together. That's what integration covers.",
+      "es": "Los tests unitarios no detectan el fallo más común: que dos piezas correctas no encajan. Eso es lo que cubre la integración."
+    },
+    "internalLink": "integration-testing-supertest-msw",
+    "link": "",
+    "image": "/images/banners/integration-testing-supertest-msw.svg",
+    "date": "2026-04-07T12:00:00Z",
     "loaded": true
   },
   {
