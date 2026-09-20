@@ -4,6 +4,7 @@ import { Post } from "../../data/model/post";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
 import { useLocalePath } from "../../i18n/useLocalePath";
+import { formatDate, type DateLike } from "../../i18n/formatDate";
 
 interface PostCardProps {
   post: Post;
@@ -14,40 +15,52 @@ export default function PostCard({ post }: PostCardProps) {
   const localePath = useLocalePath();
   const [loaded, setLoaded] = useState(false);
 
+  const date = formatDate(post.date as DateLike, locale);
+
   const cardContent = (
-    <div
-      className="group relative min-w-[200px] max-w-[500px] animate-[fadein_0.4s] overflow-hidden rounded-xl text-black dark:text-white"
-      style={{
-        boxShadow: "rgb(24 32 79 / 25%) 0px 40px 80px",
-      }}
-    >
-      {/* Background image — no resize on hover, blur(4px) matching old */}
-      <div className="w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)]">
+    // The card used to be sized by the banner's own 1200x630 aspect, with the
+    // title and description absolutely positioned against its top and bottom
+    // edges. That left a large dead band through the middle of every card. Now
+    // the banner is a background layer and the text is in normal flow, so the
+    // card is exactly as tall as its content.
+    <div className="group glass-panel relative flex h-full min-h-[200px] min-w-[200px] max-w-[500px] animate-[fadein_0.4s] flex-col gap-4 overflow-hidden p-6 text-black max-[520px]:p-5 dark:text-white">
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
         <img
           src={post.image}
           alt=""
           onLoad={() => setLoaded(true)}
-          className={`m-0 w-full rounded-xl blur-[4px] ${loaded ? "block" : "hidden"}`}
+          // The banner has its title rasterised into the SVG, in English. At
+          // blur(4px) it stayed legible under the card's own localised title,
+          // so every post read as two overlapping headlines. Blurred harder it
+          // becomes texture, which is all it was ever meant to be. `scale-110`
+          // hides the soft edge the blur leaves at the boundary.
+          className={`h-full w-full scale-110 object-cover blur-[14px] ${loaded ? "block" : "hidden"}`}
         />
         <img
           src="/images/animations/loading.gif"
-          alt="Post Loading"
-          className={`m-0 w-full rounded-xl ${!loaded ? "block" : "hidden"}`}
+          alt=""
+          className={`h-full w-full object-cover ${!loaded ? "block" : "hidden"}`}
         />
+        {/* Scrim: the banner is decorative texture, the text has to win. */}
+        <div className="absolute inset-0 bg-[rgb(226_232_240/72%)] dark:bg-black/65" />
       </div>
 
-      {/* Overlay matching old ::after — light mode: rgba(206,206,206,0.6), dark: rgba(0,0,0,0.6) */}
-      <div className="absolute inset-0 rounded-xl bg-[rgb(206_206_206/60%)] shadow-[inset_0_0_0_1px_rgb(255_255_255/50%)] dark:bg-[rgba(0,0,0,0.6)]" />
-
-      {/* Title — positioned at top */}
-      <h3 className="absolute top-[30px] left-0 z-[3] mx-5 break-words text-[30px] font-bold max-[520px]:top-5 max-[520px]:text-[20px] max-[350px]:top-3 max-[350px]:text-[16px]">
+      <h3 className="text-[30px] leading-[1.15] font-bold break-words max-[520px]:text-[22px] max-[350px]:text-[18px]">
         {localizedField(post, "title", locale)}
       </h3>
 
-      {/* Description — positioned at bottom */}
-      <p className="absolute bottom-[30px] left-0 z-[3] mx-5 break-words text-[17px] font-medium leading-[130%] max-[520px]:bottom-5 max-[520px]:max-h-[70px] max-[520px]:overflow-y-scroll max-[520px]:text-[12px] max-[350px]:bottom-3 max-[350px]:max-h-[48px] [&::-webkit-scrollbar]:hidden">
+      <p className="text-[17px] leading-[140%] font-medium break-words text-black/75 max-[520px]:text-[14px] dark:text-white/80">
         {localizedField(post, "description", locale)}
       </p>
+
+      {date && (
+        <p
+          dir="ltr"
+          className="mt-auto text-[13px] font-semibold text-black/55 uppercase dark:text-white/60"
+        >
+          {date}
+        </p>
+      )}
     </div>
   );
 
@@ -55,7 +68,7 @@ export default function PostCard({ post }: PostCardProps) {
     return (
       <Link
         to={localePath(`/blog/${post.internalLink}`)}
-        className="relative cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
+        className="motion-glass relative block h-full cursor-pointer hover:scale-[1.02] active:scale-[1.005]"
       >
         {cardContent}
       </Link>
@@ -67,7 +80,7 @@ export default function PostCard({ post }: PostCardProps) {
       href={post.link}
       target="_blank"
       rel="noopener"
-      className="relative cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-105 active:scale-[1.02]"
+      className="motion-glass relative block h-full cursor-pointer hover:scale-[1.02] active:scale-[1.005]"
     >
       {cardContent}
     </a>

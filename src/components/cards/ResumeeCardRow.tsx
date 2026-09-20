@@ -1,7 +1,7 @@
 import { Work } from "../../data/model/work";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
-import { iconUrl } from "../../utils/iconUrl";
+import EntityIcon from "../common/EntityIcon";
 
 interface ResumeeCardRowProps {
   work: Work;
@@ -11,12 +11,7 @@ export default function ResumeeCardRow({ work }: ResumeeCardRowProps) {
   const { locale } = useTranslation();
   return (
     <div className="grid w-full grid-cols-[34px_auto] gap-x-4 p-2.5">
-      <img
-        src={iconUrl(work.icon)}
-        alt=""
-        className="h-8 w-8 rounded-full bg-black/20"
-        style={{ boxShadow: "rgb(255 255 255 / 20%) 0px 0px 0px 0.5px" }}
-      />
+      <EntityIcon icon={work.icon} size={32} className="bg-black/20" />
       <div className="grid gap-2">
         <p className="m-0 text-[15px] font-semibold leading-[18px] text-black dark:text-white">
           {localizedField(work, "name", locale)}

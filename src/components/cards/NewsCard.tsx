@@ -17,7 +17,9 @@ export default function NewsCard({ news }: NewsCardProps) {
       href={news.url}
       target="_blank"
       rel="noopener"
-      className="group max-w-[260px] cursor-pointer transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:scale-110 active:scale-105"
+      // No hover scale here: this card sits inside NewsCardDetail, which
+      // already scales on hover, and the two composed to 1.155x.
+      className="group max-w-[260px] cursor-pointer"
     >
       <div
         className="relative grid h-[360px] min-w-[200px] max-w-[260px] grid-cols-1 grid-rows-[auto_2fr_auto] items-center gap-[30px] rounded-[20px] p-2 text-center max-[414px]:h-[330px]"
@@ -28,7 +30,7 @@ export default function NewsCard({ news }: NewsCardProps) {
             "rgb(78 153 227 / 30%) 0px 20px 40px, rgb(0 0 0 / 5%) 0px 1px 3px",
         }}
       >
-        <div className="news-card-gradient m-0 w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] group-hover:scale-95">
+        <div className="news-card-gradient motion-glass m-0 w-full group-hover:scale-[0.97]">
           <img
             src={news.image}
             alt=""
@@ -44,7 +46,13 @@ export default function NewsCard({ news }: NewsCardProps) {
         <p className="text-[24px] font-semibold leading-[26px] break-words text-black max-[470px]:text-[18px] max-[470px]:leading-[22px] dark:text-white">
           {localizedField(news, "title", locale)}
         </p>
-        <p className="mt-2.5 text-center text-[15px] font-normal leading-[40px] text-black/70 ltr:direction-ltr dark:text-white/70">
+        {/* `dir="ltr"` is belt and braces now that the parent no longer sets
+            RTL: a date mixes digits and letters, so it is the first thing the
+            bidi algorithm reorders if anyone reintroduces it. */}
+        <p
+          dir="ltr"
+          className="mt-2.5 text-center text-[15px] leading-[1.4] font-normal text-black/70 dark:text-white/70"
+        >
           {formatDate(news.timestamp as DateLike, locale)}
         </p>
       </div>
