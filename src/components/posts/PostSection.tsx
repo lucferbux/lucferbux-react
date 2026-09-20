@@ -3,6 +3,7 @@ import WaveBody from "../backgrounds/WaveBody";
 import InfoBox from "../text/infoBox";
 import { Post } from "../../data/model/post";
 import PostCard from "../cards/PostCard";
+import { useStaggeredReveal } from "../../hooks/useStaggeredReveal";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorFallback from "../common/ErrorFallback";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -15,6 +16,10 @@ export default function PostSection() {
     loading,
     error,
   } = useFirestoreCollection<Post>("patent", { orderBy: [["date", "desc"]] });
+
+  // Declared before the early returns below, as hooks must be. Until the
+  // data arrives the ref is empty and the effect is a no-op.
+  const gridRef = useStaggeredReveal<HTMLDivElement>(posts?.length ?? 0);
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load posts" />;
@@ -29,7 +34,10 @@ export default function PostSection() {
           displayButton={false}
         />
       </div>
-      <div className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-[1020px]:justify-items-center max-md:gap-[26px]">
+      <div
+        ref={gridRef}
+        className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-[1020px]:justify-items-center max-md:gap-[26px]"
+      >
         {posts?.map((postEntry, index) => (
           <PostCard post={postEntry} key={index} />
         ))}

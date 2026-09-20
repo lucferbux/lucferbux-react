@@ -3,7 +3,6 @@ import { ExternalLink } from "../../data/model/externalLink";
 import ResumeeHeader from "./ResumeeHeader";
 import ResumeeCardRow from "./ResumeeCardRow";
 import { useTranslation } from "../../i18n/LanguageContext";
-import { useStaggeredReveal } from "../../hooks/useStaggeredReveal";
 
 interface ResumeeCardProps {
   works: Work[];
@@ -11,14 +10,9 @@ interface ResumeeCardProps {
 
 export default function ResumeeCard({ works }: ResumeeCardProps) {
   const { m } = useTranslation();
-  // The experience rows cascade rather than arriving as one block. A short
-  // step, because they are small and close together: at 90ms the last row of a
-  // long career lands well after the visitor has started reading the first.
-  const rowsRef = useStaggeredReveal<HTMLDivElement>(works.length, {
-    step: 55,
-    threshold: 0,
-    rootMargin: "0px",
-  });
+  // No reveal on the experience rows. They live inside their own scroll box,
+  // so a staggered fade there read as the list still loading rather than as an
+  // entrance — the card looked broken for the first half second.
   const headerInfo = {
     title: m.resumee.name,
     caption: m.resumee.caption,
@@ -37,7 +31,7 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
     // The last surface still carrying the 2023 inline glass. It now uses the
     // same token set as every other card, so the résumé stops being the one
     // panel with a grey tint and a flat white hairline.
-    <div className="glass-panel glass-lift group animate-fadein mx-5 grid h-[400px] max-w-[786px] grid-cols-[240px_auto] gap-x-5 overflow-hidden p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0">
+    <div className="glass-panel group animate-fadein mx-5 grid h-[400px] max-w-[786px] grid-cols-[240px_auto] gap-x-5 overflow-hidden p-5 max-md:h-[800px] max-md:grid-cols-1 max-md:grid-rows-[min-content_1fr] max-md:justify-items-center max-md:gap-0">
       <div className="contents">
         <ResumeeHeader
           title={headerInfo.title}
@@ -51,7 +45,6 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
           {m.sections.resumee.experience}
         </div>
         <div
-          ref={rowsRef}
           className="mt-3 grid min-h-0 flex-1 gap-2 overflow-y-scroll [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"
           style={{
             maskImage:
