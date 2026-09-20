@@ -56,13 +56,26 @@
 
   /* Animations */
   --animate-fadein: fadein 0.4s ease-out;
-  --animate-float-profile: float-profile 4s linear infinite;
-  --animate-float-bulb: float-bulb 4s ease-out infinite;
-  --animate-float-headphones: float-headphones 4s ease-out infinite;
-  --animate-float-folder: float-folder 4s ease-out infinite;
-  --animate-float-turntable: float-turntable 4s ease-out infinite;
-  --animate-float-gamepad: float-gamepad 4s ease-out infinite;
-  --animate-float-computer: float-computer 4s ease-out infinite;
+  /* The seven hero props.
+     Three things were wrong before. They all ran at exactly 4s, so they were
+     phase-locked: every icon hit its extreme on the same frame and the cluster
+     pulsed as one object instead of drifting. They used `ease-out`, but a
+     timing function applies between each *pair* of keyframes, so velocity went
+     from zero at the midpoint straight back to maximum — a visible snap at the
+     top of every bob; `ease-in-out` brings velocity to zero at both ends of
+     each segment, which is what makes a turnaround look like drift. And the
+     profile used `linear`, a triangle wave with a hard reversal, on the one
+     element large enough for it to read.
+     Durations are now mutually non-harmonic and the negative delays start each
+     one part-way through its own cycle, so they never resynchronise. */
+  --animate-float-profile: float-profile 7.2s ease-in-out infinite;
+  --animate-float-bulb: float-bulb 5.5s ease-in-out -1.7s infinite;
+  --animate-float-headphones: float-headphones 6.3s ease-in-out -3.1s infinite;
+  --animate-float-folder: float-folder 6.9s ease-in-out -0.9s infinite;
+  --animate-float-turntable: float-turntable 5.9s ease-in-out -2.4s infinite;
+  --animate-float-gamepad: float-gamepad 6.6s ease-in-out -4.2s infinite;
+  --animate-float-computer: float-computer 7.4s ease-in-out -1.2s infinite;
+  --animate-reveal-rise: reveal-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
 
   /* Font families */
   /* Open Sans used to be imported from Google Fonts and sat eighth in this
@@ -264,91 +277,93 @@
 
 @keyframes float-profile {
   0% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0, 0, 0);
   }
   25% {
-    transform: translate(0px, 10px);
+    transform: translate3d(0, 14px, 0);
   }
   50% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0, 0, 0);
   }
   75% {
-    transform: translate(0px, -10px);
+    transform: translate3d(0, -14px, 0);
   }
   100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes float-bulb {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(10px, 10px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(12px, 12px, 0) rotate(2deg);
   }
 }
 
 @keyframes float-headphones {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(10px, 0px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(12px, 0, 0) rotate(-2deg);
   }
 }
 
 @keyframes float-folder {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(10px, -10px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(12px, -12px, 0) rotate(1.5deg);
   }
 }
 
 @keyframes float-turntable {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-10px, 10px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(-12px, 12px, 0) rotate(-2deg);
   }
 }
 
 @keyframes float-gamepad {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-10px, 0px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(-12px, 0, 0) rotate(2deg);
   }
 }
 
 @keyframes float-computer {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-10px, -10px);
+    transform: translate3d(-12px, -12px, 0) rotate(-1.5deg);
   }
-  100% {
-    transform: translate(0px, 0px);
+}
+
+/* A single element arriving: lifts a little, settles, and comes up to full
+   opacity. The curve is a strong decelerate, so it reads as something coming
+   to rest rather than sliding into place. */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -433,7 +448,12 @@
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    /* The staggered reveals carry a delay. Without zeroing it here, a reduced
+       motion visitor would watch elements sit invisible for their stagger and
+       then pop in — the delay, not the movement, would become the effect. */
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -549,6 +569,24 @@
       #000 calc(100% - 2.5rem),
       transparent 100%
     );
+  }
+}
+
+@layer utilities {
+  /* Scroll reveal.
+     The resting state is the *visible* one, so anything that never gets the
+     attribute — no JavaScript, an older browser, or a visitor who asked for
+     reduced motion — simply sees the content. `useStaggeredReveal` only marks
+     elements as pending when it is going to animate them, which is also why
+     the Playwright baseline is unaffected: it runs with reduced motion
+     emulated, so the hook leaves the DOM alone. */
+  [data-reveal="pending"] {
+    opacity: 0;
+  }
+
+  [data-reveal="in"] {
+    animation: var(--animate-reveal-rise);
+    animation-delay: var(--reveal-delay, 0ms);
   }
 }
 

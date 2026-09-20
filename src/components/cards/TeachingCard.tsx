@@ -34,7 +34,7 @@ export default function TeachingCard({ course }: TeachingCardProps) {
   return (
     // flex column rather than grid, so the link pills can be pushed to the
     // bottom with `mt-auto` and every card in a row lines its actions up.
-    <article className="glass-panel animate-fadein flex h-full flex-col gap-4 p-6 max-md:p-5">
+    <article className="glass-panel flex h-full flex-col gap-4 p-6 max-md:p-5">
       <div className="flex items-start gap-4">
         <EntityIcon icon={course.icon} size={40} />
         <div className="min-w-0">
