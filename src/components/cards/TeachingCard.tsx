@@ -1,7 +1,7 @@
 import type { Teaching, TeachingLink } from "../../data/model/teaching";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
-import { iconUrl } from "../../utils/iconUrl";
+import EntityIcon from "../common/EntityIcon";
 
 interface TeachingCardProps {
   course: Teaching;
@@ -13,7 +13,7 @@ function LinkPill({ label, url }: TeachingLink) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[13px] font-medium text-white no-underline transition hover:bg-white/20"
+      className="motion-glass rounded-full border border-black/15 bg-black/[0.07] px-3 py-1.5 text-[13px] font-medium !text-black no-underline hover:bg-black/15 dark:border-white/25 dark:bg-white/10 dark:!text-white dark:hover:bg-white/20"
     >
       {label}
     </a>
@@ -32,29 +32,22 @@ export default function TeachingCard({ course }: TeachingCardProps) {
   ];
 
   return (
-    <article
-      className="grid h-full animate-fadein content-start gap-4 rounded-[20px] p-6 max-md:p-5"
-      style={{
-        background: "rgba(66,66,66,0.3)",
-        border: "0.5px solid rgba(255,255,255,0.2)",
-        boxShadow: "0px 26px 50px rgba(0,0,0,0.25)",
-        backdropFilter: "blur(45px)",
-        WebkitBackdropFilter: "blur(45px)",
-      }}
-    >
+    // flex column rather than grid, so the link pills can be pushed to the
+    // bottom with `mt-auto` and every card in a row lines its actions up.
+    <article className="glass-panel animate-fadein flex h-full flex-col gap-4 p-6 max-md:p-5">
       <div className="flex items-start gap-4">
-        <img src={iconUrl(course.icon)} alt="" className="h-10 w-10 shrink-0" />
+        <EntityIcon icon={course.icon} size={40} />
         <div className="min-w-0">
-          <h3 className="text-[22px] leading-[1.2] font-bold break-words text-white max-xs:text-[18px]">
+          <h3 className="text-[22px] leading-[1.2] font-bold break-words text-black max-xs:text-[18px] dark:text-white">
             {localizedField(course, "title", locale)}
           </h3>
-          <p className="mt-1 text-[13px] font-semibold text-white/70 uppercase">
+          <p className="mt-1 text-[13px] font-semibold text-black/60 uppercase dark:text-white/70">
             {localizedField(course, "institution", locale)} · {course.period}
           </p>
         </div>
       </div>
 
-      <p className="text-[16px] leading-[140%] whitespace-pre-line text-white/85 max-xs:text-[14px]">
+      <p className="text-[16px] leading-[140%] whitespace-pre-line text-black/80 max-xs:text-[14px] dark:text-white/85">
         {localizedField(course, "description", locale)}
       </p>
 
@@ -63,7 +56,7 @@ export default function TeachingCard({ course }: TeachingCardProps) {
           {course.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded bg-white/10 px-2 py-0.5 text-[12px] text-white/70"
+              className="rounded bg-black/[0.07] px-2 py-0.5 text-[12px] text-black/60 dark:bg-white/10 dark:text-white/70"
             >
               {tag}
             </li>
@@ -72,7 +65,7 @@ export default function TeachingCard({ course }: TeachingCardProps) {
       )}
 
       {links.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-auto flex flex-wrap gap-2 pt-1">
           {links.map((link) => (
             <LinkPill key={link.url} {...link} />
           ))}
