@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 @import "tailwindcss";
 
 /* ===========================
@@ -57,18 +56,35 @@
 
   /* Animations */
   --animate-fadein: fadein 0.4s ease-out;
-  --animate-float-profile: float-profile 4s linear infinite;
-  --animate-float-bulb: float-bulb 4s ease-out infinite;
-  --animate-float-headphones: float-headphones 4s ease-out infinite;
-  --animate-float-folder: float-folder 4s ease-out infinite;
-  --animate-float-turntable: float-turntable 4s ease-out infinite;
-  --animate-float-gamepad: float-gamepad 4s ease-out infinite;
-  --animate-float-computer: float-computer 4s ease-out infinite;
+  /* The seven hero props.
+     Three things were wrong before. They all ran at exactly 4s, so they were
+     phase-locked: every icon hit its extreme on the same frame and the cluster
+     pulsed as one object instead of drifting. They used `ease-out`, but a
+     timing function applies between each *pair* of keyframes, so velocity went
+     from zero at the midpoint straight back to maximum — a visible snap at the
+     top of every bob; `ease-in-out` brings velocity to zero at both ends of
+     each segment, which is what makes a turnaround look like drift. And the
+     profile used `linear`, a triangle wave with a hard reversal, on the one
+     element large enough for it to read.
+     Durations are now mutually non-harmonic and the negative delays start each
+     one part-way through its own cycle, so they never resynchronise. */
+  --animate-float-profile: float-profile 7.2s ease-in-out infinite;
+  --animate-float-bulb: float-bulb 5.5s ease-in-out -1.7s infinite;
+  --animate-float-headphones: float-headphones 6.3s ease-in-out -3.1s infinite;
+  --animate-float-folder: float-folder 6.9s ease-in-out -0.9s infinite;
+  --animate-float-turntable: float-turntable 5.9s ease-in-out -2.4s infinite;
+  --animate-float-gamepad: float-gamepad 6.6s ease-in-out -4.2s infinite;
+  --animate-float-computer: float-computer 7.4s ease-in-out -1.2s infinite;
+  --animate-reveal-rise: reveal-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
 
   /* Font families */
+  /* Open Sans used to be imported from Google Fonts and sat eighth in this
+     stack, after -apple-system, Segoe UI and Roboto — so it never actually
+     painted on any mainstream platform. The import blocked render for a font
+     nobody saw. The system stack is what the site has always looked like. */
   --font-sans:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-    Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    Cantarell, "Helvetica Neue", sans-serif;
 }
 
 /* ===========================
@@ -261,91 +277,93 @@
 
 @keyframes float-profile {
   0% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0, 0, 0);
   }
   25% {
-    transform: translate(0px, 10px);
+    transform: translate3d(0, 14px, 0);
   }
   50% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0, 0, 0);
   }
   75% {
-    transform: translate(0px, -10px);
+    transform: translate3d(0, -14px, 0);
   }
   100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes float-bulb {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(10px, 10px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(12px, 12px, 0) rotate(2deg);
   }
 }
 
 @keyframes float-headphones {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(10px, 0px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(12px, 0, 0) rotate(-2deg);
   }
 }
 
 @keyframes float-folder {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(10px, -10px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(12px, -12px, 0) rotate(1.5deg);
   }
 }
 
 @keyframes float-turntable {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-10px, 10px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(-12px, 12px, 0) rotate(-2deg);
   }
 }
 
 @keyframes float-gamepad {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-10px, 0px);
-  }
-  100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(-12px, 0, 0) rotate(2deg);
   }
 }
 
 @keyframes float-computer {
-  0% {
-    transform: translate(0px, 0px);
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-10px, -10px);
+    transform: translate3d(-12px, -12px, 0) rotate(-1.5deg);
   }
-  100% {
-    transform: translate(0px, 0px);
+}
+
+/* A single element arriving: lifts a little, settles, and comes up to full
+   opacity. The curve is a strong decelerate, so it reads as something coming
+   to rest rather than sliding into place. */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -430,8 +448,145 @@
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    /* The staggered reveals carry a delay. Without zeroing it here, a reduced
+       motion visitor would watch elements sit invisible for their stagger and
+       then pop in — the delay, not the movement, would become the effect. */
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================
+   Glass surfaces
+   ===========================
+   The public cards used to hardcode `rgba(66,66,66,0.3)` + `blur(45px)` in an
+   inline style, repeated in four components. That is 2023-era glassmorphism:
+   a flat grey tint, a uniform white hairline on all four sides, and no
+   specular response — so the panels read as grey film rather than glass.
+
+   This follows the direction Apple took with the version 27 revision of
+   Liquid Glass: less transparency, stronger diffusion so complex content
+   behind stays readable, a *darkened* outer edge for separation, and brighter
+   specular highlights. Concretely that is a three-part shadow stack —
+   outer ring, inner top highlight, inner bottom bounce — over a saturated
+   backdrop blur.
+
+   The tint is white (or black in dark mode) rather than grey, so the wave
+   behind is lightened rather than muddied. */
+
+:root {
+  --glass-tint: rgba(255, 255, 255, 0.22);
+  --glass-blur: 32px;
+  --glass-saturate: 180%;
+  /* Darkened edge — the separation that plain white hairlines never gave. */
+  --glass-ring: rgba(9, 30, 42, 0.22);
+  /* Specular: bright along the top edge, a faint bounce along the bottom. */
+  --glass-specular: rgba(255, 255, 255, 0.55);
+  --glass-specular-bounce: rgba(255, 255, 255, 0.12);
+  --glass-elevation: 0 24px 48px -16px rgba(9, 30, 42, 0.45);
+  --glass-radius: 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-tint: rgba(16, 16, 22, 0.5);
+    --glass-ring: rgba(0, 0, 0, 0.55);
+    --glass-specular: rgba(255, 255, 255, 0.3);
+    --glass-specular-bounce: rgba(255, 255, 255, 0.06);
+    --glass-elevation: 0 24px 48px -16px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background-color: var(--glass-tint);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur))
+      saturate(var(--glass-saturate));
+    border-radius: var(--glass-radius);
+    box-shadow:
+      0 0 0 0.5px var(--glass-ring),
+      inset 0 1px 0 var(--glass-specular),
+      inset 0 -1px 0 var(--glass-specular-bounce),
+      var(--glass-elevation);
+  }
+
+  /* Firefox with backdrop-filter disabled, and older WebKit. Without this the
+     panel is a 14%-opaque wash and the text on it is unreadable. */
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    .glass-panel {
+      background-color: rgba(236, 242, 247, 0.92);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .glass-panel {
+        background-color: rgba(22, 22, 30, 0.94);
+      }
+    }
+  }
+
+  /* Shared hover/press response. 280ms rather than the 800ms these cards used
+     to run at, which felt like dragging them through treacle. */
+  .motion-glass {
+    transition:
+      transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 280ms cubic-bezier(0.32, 0.72, 0, 1),
+      background-color 280ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* A scroll region that admits it scrolls. */
+  .scroll-subtle {
+    scrollbar-width: thin;
+    scrollbar-color: var(--glass-ring) transparent;
+  }
+
+  .scroll-subtle::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scroll-subtle::-webkit-scrollbar-thumb {
+    background-color: var(--glass-ring);
+    border-radius: 999px;
+  }
+
+  /* Fades the last line out instead of painting a slab over it. A solid
+     gradient cannot match translucent glass sitting on a teal-to-white wave —
+     it read as a grey band with a hard edge. A mask has nothing to match. */
+  .scroll-mask {
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - 2.5rem),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - 2.5rem),
+      transparent 100%
+    );
+  }
+}
+
+@layer utilities {
+  /* Scroll reveal.
+     The resting state is the *visible* one, so anything that never gets the
+     attribute — no JavaScript, an older browser, or a visitor who asked for
+     reduced motion — simply sees the content. `useStaggeredReveal` only marks
+     elements as pending when it is going to animate them, which is also why
+     the Playwright baseline is unaffected: it runs with reduced motion
+     emulated, so the hook leaves the DOM alone. */
+  [data-reveal="pending"] {
+    opacity: 0;
+  }
+
+  [data-reveal="in"] {
+    animation: var(--animate-reveal-rise);
+    animation-delay: var(--reveal-delay, 0ms);
   }
 }
 

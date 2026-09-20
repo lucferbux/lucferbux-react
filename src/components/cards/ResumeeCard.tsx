@@ -3,6 +3,7 @@ import { ExternalLink } from "../../data/model/externalLink";
 import ResumeeHeader from "./ResumeeHeader";
 import ResumeeCardRow from "./ResumeeCardRow";
 import { useTranslation } from "../../i18n/LanguageContext";
+import { useStaggeredReveal } from "../../hooks/useStaggeredReveal";
 
 interface ResumeeCardProps {
   works: Work[];
@@ -10,6 +11,14 @@ interface ResumeeCardProps {
 
 export default function ResumeeCard({ works }: ResumeeCardProps) {
   const { m } = useTranslation();
+  // The experience rows cascade rather than arriving as one block. A short
+  // step, because they are small and close together: at 90ms the last row of a
+  // long career lands well after the visitor has started reading the first.
+  const rowsRef = useStaggeredReveal<HTMLDivElement>(works.length, {
+    step: 55,
+    threshold: 0,
+    rootMargin: "0px",
+  });
   const headerInfo = {
     title: m.resumee.name,
     caption: m.resumee.caption,
@@ -47,6 +56,7 @@ export default function ResumeeCard({ works }: ResumeeCardProps) {
           {m.sections.resumee.experience}
         </div>
         <div
+          ref={rowsRef}
           className="mt-3 grid min-h-0 flex-1 gap-2 overflow-y-scroll [scrollbar-width:none] [-webkit-overflow-scrolling:touch]"
           style={{
             maskImage:
