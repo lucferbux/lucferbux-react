@@ -1,4 +1,16 @@
 .cache
-package.json
+coverage
+dist
+node_modules
 package-lock.json
+playwright-report
 public
+test-results
+
+# Generated content and captured baselines
+seed
+tests/visual/__screenshots__
+
+# Spec Kit scaffolding, not authored here
+.specify
+specs

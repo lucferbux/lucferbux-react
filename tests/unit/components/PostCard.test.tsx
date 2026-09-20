@@ -49,11 +49,11 @@ describe("PostCard", () => {
   });
 
   it("renders the post image", () => {
-    renderWithRouter(<PostCard post={mockPost} />);
-    const images = screen.getAllByRole("img");
-    const postImg = images.find(
-      (img) => img.getAttribute("alt") === "Post Image"
+    // Decorative image (alt=""), so it is not in the a11y tree.
+    const { container } = renderWithRouter(<PostCard post={mockPost} />);
+    const sources = Array.from(container.querySelectorAll("img")).map((img) =>
+      img.getAttribute("src")
     );
-    expect(postImg).toHaveAttribute("src", "https://example.com/post.png");
+    expect(sources).toContain("https://example.com/post.png");
   });
 });

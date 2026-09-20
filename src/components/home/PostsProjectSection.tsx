@@ -60,7 +60,7 @@ export default function PostsProjectSection() {
       <WavePostHome />
       <img
         src="/images/waves/postproject-wave5.svg"
-        alt="Background Image"
+        alt=""
         className="postproject-wave5 absolute -bottom-[10px] z-[-1] hidden 3xl:block 3xl:w-full"
       />
 

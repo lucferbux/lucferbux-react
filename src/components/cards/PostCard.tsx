@@ -20,7 +20,7 @@ export default function PostCard({ post }: PostCardProps) {
       <div className="w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)]">
         <img
           src={post.image}
-          alt="Post Image"
+          alt=""
           onLoad={() => setLoaded(true)}
           className={`m-0 w-full rounded-xl blur-[4px] ${loaded ? "block" : "hidden"}`}
         />

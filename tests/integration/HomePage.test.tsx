@@ -42,7 +42,7 @@ describe("HomePage", () => {
     vi.clearAllMocks();
     // Default mock: immediately return empty data for all onSnapshot calls
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({ docs: [] });
         return vi.fn(); // unsubscribe
       }
@@ -71,7 +71,7 @@ describe("HomePage", () => {
 
   it("renders with mocked Firestore data", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({
           docs: [
             {

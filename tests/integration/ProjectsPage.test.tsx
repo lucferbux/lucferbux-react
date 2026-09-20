@@ -47,7 +47,7 @@ describe("ProjectsPage", () => {
 
   it("renders section title after data loads", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({ docs: [] });
         return vi.fn();
       }
@@ -61,7 +61,7 @@ describe("ProjectsPage", () => {
 
   it("renders project cards with mocked data", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, onNext: Function) => {
+      (_query: unknown, onNext: (snapshot: unknown) => void) => {
         onNext({
           docs: [
             {
@@ -93,7 +93,7 @@ describe("ProjectsPage", () => {
 
   it("renders error state", async () => {
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: Function, onError: Function) => {
+      (_query: unknown, _onNext: (snapshot: unknown) => void, onError: (error: Error) => void) => {
         onError(new Error("Test error"));
         return vi.fn();
       }

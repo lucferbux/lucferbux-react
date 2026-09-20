@@ -9,7 +9,7 @@ export default function ResumeeCardRow({ work }: ResumeeCardRowProps) {
     <div className="grid w-full grid-cols-[34px_auto] gap-x-4 p-2.5">
       <img
         src={`/images/icons/${work.icon}.svg`}
-        alt="icon image"
+        alt=""
         className="h-8 w-8 rounded-full bg-black/20"
         style={{ boxShadow: "rgb(255 255 255 / 20%) 0px 0px 0px 0.5px" }}
       />

@@ -6,11 +6,8 @@
   "version": "2.0.0",
   "author": "Lucas Fernandez <lucasfernandezaragon@gmail.com>",
   "dependencies": {
-    "@vitejs/plugin-react": "^5.1.4",
     "clsx": "^2.1.1",
     "firebase": "^12.9.0",
-    "lottie-react": "^2.4.1",
-    "lottie-web": "^5.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
@@ -20,8 +17,7 @@
     "react-router-dom": "^7.13.0",
     "rehype-prism-plus": "^2.0.2",
     "remark-gfm": "^4.0.1",
-    "typewriter-effect": "^2.19.0",
-    "vite": "^7.3.1"
+    "typewriter-effect": "^2.19.0"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -31,22 +27,26 @@
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.2.0",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.5.2",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.2.0",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.0",
-    "jsdom": "^28.1.0",
-    "msw": "^2.12.10",
+    "globals": "^17.12.0",
+    "jsdom": "^29.1.1",
     "prettier": "^3.3.3",
     "tailwindcss": "^4.2.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.0",
+    "vite": "^7.3.6",
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.0.18"
   },
@@ -65,7 +65,7 @@
     "dev:fixtures": "VITE_FIXTURE_DATA=1 vite",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check .",
-    "lint": "eslint src/",
+    "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -77,8 +77,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Lucferbux/LucferbuxReact"
-  },
-  "overrides": {
-    "minimatch": "10.2.2"
   }
 }

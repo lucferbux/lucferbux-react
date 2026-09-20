@@ -25,7 +25,7 @@ export default function AboutMeSection() {
       <WaveResumeeHome />
       <img
         src="/images/waves/resumee-wave6.svg"
-        alt="Background Image"
+        alt=""
         className="resumee-wave6 absolute -bottom-[10px] z-[-1] hidden 3xl:block 3xl:w-full 4xl:-bottom-[280px] 4xl:block 4xl:w-full"
       />
 

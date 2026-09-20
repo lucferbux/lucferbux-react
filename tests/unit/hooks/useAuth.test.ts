@@ -40,7 +40,7 @@ describe("useAuth", () => {
 
   it("sets user when auth state changes", async () => {
     const mockUser = { uid: "123", email: "test@test.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(mockUser);
       return vi.fn();
     });
@@ -76,7 +76,7 @@ describe("useAuth", () => {
 
   it("calls firebaseSignOut on signOut", async () => {
     const mockUser = { uid: "123", email: "test@test.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(mockUser);
       return vi.fn();
     });

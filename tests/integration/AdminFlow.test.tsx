@@ -60,7 +60,7 @@ describe("Admin Flow", () => {
   });
 
   it("redirects unauthenticated users to login", async () => {
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(null);
       return vi.fn();
     });
@@ -73,7 +73,7 @@ describe("Admin Flow", () => {
   });
 
   it("renders login form with email and password inputs", () => {
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(null);
       return vi.fn();
     });
@@ -87,7 +87,7 @@ describe("Admin Flow", () => {
 
   it("shows dashboard for authenticated users", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(mockUser);
       return vi.fn();
     });
@@ -103,7 +103,7 @@ describe("Admin Flow", () => {
 
   it("shows collection management links on dashboard", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(mockUser);
       return vi.fn();
     });
@@ -123,7 +123,7 @@ describe("Admin Flow", () => {
 
   it("handles login form submission", async () => {
     const user = userEvent.setup();
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(null);
       return vi.fn();
     });
@@ -150,7 +150,7 @@ describe("Admin Flow", () => {
 
   it("displays error message on login failure", async () => {
     const user = userEvent.setup();
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(null);
       return vi.fn();
     });
@@ -175,7 +175,7 @@ describe("Admin Flow", () => {
 
   it("renders sign out button on dashboard", async () => {
     const mockUser = { uid: "123", email: "admin@example.com" };
-    mockOnAuthStateChanged.mockImplementation((_, callback: Function) => {
+    mockOnAuthStateChanged.mockImplementation((_, callback: (user: unknown) => void) => {
       callback(mockUser);
       return vi.fn();
     });

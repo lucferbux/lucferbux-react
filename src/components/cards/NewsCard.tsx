@@ -25,7 +25,7 @@ export default function NewsCard({ news }: NewsCardProps) {
         <div className="news-card-gradient m-0 w-full transition-all duration-800 ease-[cubic-bezier(0.075,0.82,0.165,1)] group-hover:scale-95">
           <img
             src={news.image}
-            alt="News Header Image"
+            alt=""
             onLoad={() => setLoaded(true)}
             className={`m-0 w-full rounded-xl ${loaded ? 'block' : 'hidden'}`}
           />

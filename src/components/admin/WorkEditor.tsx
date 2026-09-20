@@ -117,10 +117,14 @@ export default function WorkEditor() {
             )
           )}
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">
+            <label
+              htmlFor="work-importance"
+              className="mb-1 block text-sm font-medium text-white/80"
+            >
               importance (sort order)
             </label>
             <input
+              id="work-importance"
               type="number"
               value={form.importance}
               onChange={(e) => setForm({ ...form, importance: Number(e.target.value) })}

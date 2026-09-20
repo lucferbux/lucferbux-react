@@ -41,7 +41,7 @@ describe("useFirestoreCollection", () => {
   });
 
   it("returns data after snapshot resolves", async () => {
-    mockOnSnapshot.mockImplementation((_query: unknown, onNext: Function) => {
+    mockOnSnapshot.mockImplementation((_query: unknown, onNext: (snapshot: unknown) => void) => {
       onNext({
         docs: [
           { id: "1", data: () => ({ name: "Item 1" }) },
@@ -66,7 +66,7 @@ describe("useFirestoreCollection", () => {
   it("handles errors", async () => {
     const testError = new Error("Firestore error");
     mockOnSnapshot.mockImplementation(
-      (_query: unknown, _onNext: Function, onError: Function) => {
+      (_query: unknown, _onNext: (snapshot: unknown) => void, onError: (error: Error) => void) => {
         onError(testError);
         return mockUnsubscribe;
       }
