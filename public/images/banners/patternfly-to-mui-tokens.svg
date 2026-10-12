@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Two design systems, one source of truth">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007789" />
+      <stop offset="55%" stop-color="#b0c4c7" />
+      <stop offset="100%" stop-color="#c98c31" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 321.0 391.0 Q 321.0 391.0 305.0 473.0 Q 289.1 555.0 204.0 559.3 Q 118.9 563.5 60.2 515.0 Q 1.6 466.5 -16.0 382.5 Q -33.6 298.6 35.2 226.0 Q 104.0 153.4 212.8 169.8 Q 321.6 186.2 321.3 288.6 Z" fill="#007789" opacity="0.39" />
+    <path d="M 1213.3 92.4 Q 1213.3 92.4 1144.9 158.1 Q 1076.5 223.9 1005.3 240.3 Q 934.1 256.6 839.8 229.0 Q 745.4 201.3 748.4 93.9 Q 751.5 -13.6 835.9 -72.9 Q 920.4 -132.1 1006.1 -95.3 Q 1091.9 -58.4 1152.6 17.0 Z" fill="#b0c4c7" opacity="0.54" />
+    <path d="M 1323.0 601.2 Q 1323.0 601.2 1304.1 711.8 Q 1285.1 822.4 1176.3 802.2 Q 1067.5 782.0 961.8 752.4 Q 856.1 722.8 894.5 619.7 Q 932.9 516.5 997.5 456.6 Q 1062.1 396.8 1164.1 400.3 Q 1266.2 403.7 1294.6 502.5 Z" fill="#c98c31" opacity="0.33" />
+    <path d="M 1363.5 81.2 Q 1363.5 81.2 1332.1 165.4 Q 1300.7 249.5 1215.0 246.9 Q 1129.2 244.4 1047.3 211.2 Q 965.3 178.1 959.0 78.1 Q 952.6 -21.8 1031.7 -92.3 Q 1110.8 -162.7 1194.5 -110.8 Q 1278.2 -58.9 1320.9 11.1 Z" fill="#007789" opacity="0.34" />
+    <path d="M 600.9 99.9 Q 600.9 99.9 548.8 143.1 Q 496.7 186.3 450.3 195.3 Q 403.9 204.4 362.7 177.7 Q 321.5 151.1 295.0 87.1 Q 268.5 23.2 334.1 -0.2 Q 399.6 -23.6 446.4 -2.9 Q 493.2 17.8 547.1 58.8 Z" fill="#b0c4c7" opacity="0.32" />
+    <path d="M 529.8 595.6 Q 529.8 595.6 478.6 666.1 Q 427.3 736.5 353.9 741.9 Q 280.4 747.2 206.1 715.6 Q 131.7 683.9 127.0 593.4 Q 122.3 502.8 194.8 444.7 Q 267.3 386.6 351.7 415.2 Q 436.1 443.8 483.0 519.7 Z" fill="#c98c31" opacity="0.41" />
+    <path d="M 919.5 590.1 Q 919.5 590.1 813.7 688.5 Q 707.8 787.0 590.1 860.7 Q 472.3 934.4 338.4 845.6 Q 204.6 756.9 235.7 605.1 Q 266.8 453.3 382.1 404.5 Q 497.4 355.7 609.0 366.5 Q 720.6 377.4 820.0 483.8 Z" fill="#007789" opacity="0.38" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">ARCHITECTURE</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Two design systems, one</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">source of truth</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>
