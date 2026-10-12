@@ -64,6 +64,7 @@ const en = {
     news: {
       title: "Latest News",
       description: "Here are the latest news related to my professional work",
+      readMore: "Read more",
     },
     projectsHome: {
       title: "Recent Projects",

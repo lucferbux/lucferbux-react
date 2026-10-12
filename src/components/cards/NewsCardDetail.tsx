@@ -17,7 +17,7 @@ export default function NewsCardDetail({
   inverted,
   fill,
 }: NewsCardDetailProps) {
-  const { locale } = useTranslation();
+  const { locale, m } = useTranslation();
   return (
     <a
       href={news.url}
@@ -67,16 +67,20 @@ export default function NewsCardDetail({
               visible and the last line fades out, so there are two signals
               that the text continues.
 
-              Mobile scrolls too. It used to flow freely, which sounds kinder
-              but is not: the section around it is a fixed 1200px box with
-              `overflow-hidden`, so at 390px the content came to 1750px and 550
-              of them were simply cut off — including the end of every article.
-              Bounded and scrollable, nothing is lost. */}
-          <div className="scroll-subtle scroll-mask max-h-[360px] overflow-y-auto pr-2 whitespace-pre-line max-md:max-h-[170px]">
-            <p className="text-left text-[17px] leading-[140%] font-normal text-black max-xs:text-[14px] dark:text-white/80">
+              On a phone the box is not scrollable: a scroll area inside a
+              scrolling page traps the thumb, and the fade cut the text
+              mid-sentence with nothing to say why. Six lines and a "read more"
+              instead — the whole card is already the link. The height stays
+              bounded either way, which the landing needs: its section is a
+              fixed box with `overflow-hidden` and clips whatever outgrows it. */}
+          <div className="scroll-subtle scroll-mask max-h-[360px] overflow-y-auto pr-2 whitespace-pre-line max-md:max-h-none max-md:overflow-visible max-md:pr-0 max-md:[mask-image:none] max-md:[-webkit-mask-image:none]">
+            <p className="text-left text-[17px] leading-[140%] font-normal text-black max-md:line-clamp-6 max-xs:text-[14px] dark:text-white/80">
               {localizedField(news, "description", locale)}
             </p>
           </div>
+          <p className="mt-2 hidden text-left text-[14px] leading-none font-semibold text-primary-dark max-md:block dark:text-primary-light">
+            {m.sections.news.readMore} <span aria-hidden="true">&#8599;</span>
+          </p>
         </div>
       </div>
     </a>
