@@ -45,15 +45,23 @@ export default function ProjectCard({
             project.version ? "pr-16" : ""
           }`}
         >
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener"
-            // Stretched link: covers the whole card without nesting anchors.
-            className="font-bold !text-black no-underline after:absolute after:inset-0 after:content-[''] dark:!text-white"
-          >
-            {localizedField(project, "title", locale)}
-          </a>
+          {project.link ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener"
+              // Stretched link: covers the whole card without nesting anchors.
+              className="font-bold !text-black no-underline after:absolute after:inset-0 after:content-[''] dark:!text-white"
+            >
+              {localizedField(project, "title", locale)}
+            </a>
+          ) : (
+            // A project with nowhere to send you renders as plain text. The
+            // anchor used to be unconditional, so an empty `link` produced
+            // `href=""`, which reloads the current page — a card that looks
+            // clickable and then throws the reader back to the top.
+            localizedField(project, "title", locale)
+          )}
         </h3>
         <p className="text-[17px] leading-[130%] font-normal text-black/70 max-xs:text-[14px] max-xs:leading-[100%] dark:text-white/70">
           {localizedField(project, "description", locale)}
