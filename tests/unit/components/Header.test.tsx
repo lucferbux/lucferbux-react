@@ -38,4 +38,13 @@ describe("Header", () => {
     expect(hrefs).toContain("/en/projects");
     expect(hrefs).toContain("/en/posts");
   });
+
+  it("marks the current section, and an article as part of posts", () => {
+    renderWithProviders(<Header />, { route: "/en/blog/react-solid" });
+    const current = screen
+      .getAllByRole("link")
+      .filter((link) => link.getAttribute("aria-current") === "page");
+    expect(current).toHaveLength(1);
+    expect(current[0]).toHaveAttribute("href", "/en/posts");
+  });
 });

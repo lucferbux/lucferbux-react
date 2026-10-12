@@ -1,8 +1,17 @@
 import type { Messages } from "../i18n/LanguageContext";
+import {
+  HomeIcon,
+  NewsIcon,
+  PostsIcon,
+  ProjectsIcon,
+  TeachingIcon,
+  type NavIcon,
+} from "../components/icons/NavIcons";
 
 export interface FooterItem {
   labelKey: keyof Messages["nav"];
-  icon: string;
+  /** A component from the shared nav set, or a path for the one-off items. */
+  icon: string | NavIcon;
   link: string;
   external: boolean;
 }
@@ -10,31 +19,31 @@ export interface FooterItem {
 export const footerData: FooterItem[] = [
   {
     labelKey: "home",
-    icon: "/images/icons/home.svg",
+    icon: HomeIcon,
     link: "/",
     external: false,
   },
   {
     labelKey: "projects",
-    icon: "/images/icons/code.svg",
+    icon: ProjectsIcon,
     link: "/projects",
     external: false,
   },
   {
     labelKey: "news",
-    icon: "/images/icons/courses.svg",
+    icon: NewsIcon,
     link: "/news",
     external: false,
   },
   {
     labelKey: "posts",
-    icon: "/images/icons/vector.svg",
+    icon: PostsIcon,
     link: "/posts",
     external: false,
   },
   {
     labelKey: "teaching",
-    icon: "/images/icons/courses.svg",
+    icon: TeachingIcon,
     link: "/teaching",
     external: false,
   },

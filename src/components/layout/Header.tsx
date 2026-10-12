@@ -3,6 +3,7 @@ import { menuData } from "../../data/menuData";
 import NavButton from "../buttons/NavButton";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { useLocalePath } from "../../i18n/useLocalePath";
+import { useActiveSection } from "../../hooks/useActiveSection";
 
 /**
  * Sits at the top of the page and scrolls away with it. It is `absolute`
@@ -16,6 +17,7 @@ import { useLocalePath } from "../../i18n/useLocalePath";
 export default function Header() {
   const { m } = useTranslation();
   const localePath = useLocalePath();
+  const active = useActiveSection();
 
   return (
     <header className="absolute top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)]">
@@ -29,10 +31,11 @@ export default function Header() {
         <div className="flex items-center gap-[30px] max-md:gap-3 max-xs:gap-1.5">
           {menuData.map((item) => (
             <NavButton
-              icon={item.icon}
+              icon={item.Icon}
               text={m.nav[item.labelKey]}
               link={localePath(item.link)}
-              key={item.labelKey}
+              key={item.key}
+              active={item.key === active}
               collapse
             />
           ))}
