@@ -42,6 +42,49 @@
     "date": "2026-01-13T12:00:00Z"
   },
   {
+    "_id": "newsletter-generator",
+    "date": "2025-11-20T12:00:00Z",
+    "link": "https://github.com/lucferbux/Newsletter-Generator",
+    "version": "",
+    "tags": [
+      "IA",
+      "HTML",
+      "Email",
+      "Automatización"
+    ],
+    "title": {
+      "es": "Generador de newsletters con IA",
+      "en": "AI newsletter generator"
+    },
+    "description": {
+      "es": "Convierte unas notas de versión escuetas en una newsletter en HTML que se ve bien en Gmail, en dos pasos: primero expandir las notas, después maquetar.\n\nEl HTML para correo es un formato hostil —tablas, estilos en línea, un cliente que ignora la mitad de lo que le mandas— y es exactamente el tipo de tarea que nadie quiere hacer a mano cada quincena. Separar el paso de redacción del de maquetación resultó clave: el modelo escribe mal cuando además tiene que preocuparse de que no se rompa la tabla.",
+      "en": "Turns terse release notes into an HTML newsletter that survives Gmail, in two steps: expand the notes first, lay them out second.\n\nEmail HTML is a hostile format — tables, inline styles, a client that ignores half of what you send it — and it is exactly the kind of task nobody wants to do by hand every fortnight. Splitting writing from layout turned out to be the key: the model writes badly when it also has to worry about not breaking the table."
+    },
+    "featured": false
+  },
+  {
+    "_id": "react-portfolio-dash",
+    "date": "2025-09-15T12:00:00Z",
+    "link": "https://github.com/lucferbux/react-portfolio-dash",
+    "version": "",
+    "tags": [
+      "React",
+      "TypeScript",
+      "JWT",
+      "i18n",
+      "Tailwind"
+    ],
+    "title": {
+      "es": "Portfolio Dashboard en React",
+      "en": "React Portfolio Dashboard"
+    },
+    "description": {
+      "es": "Una aplicación de referencia con lo que casi toda aplicación acaba necesitando y casi ningún tutorial enseña junto: autenticación con JWT y manejo del token, internacionalización, hooks reutilizables y rutas protegidas, sobre React 19 y TypeScript.\n\nLa uso como proyecto base en clase. Un tutorial que enseña una pieza aislada deja fuera lo difícil, que es cómo encajan: dónde vive el token, qué pasa cuando caduca a mitad de una navegación, y qué ve el usuario mientras tanto.",
+      "en": "A reference application with the things almost every application ends up needing and almost no tutorial teaches together: JWT authentication and token handling, internationalisation, reusable hooks and protected routes, on React 19 and TypeScript.\n\nI use it as the starting project in class. A tutorial that teaches one piece in isolation leaves out the hard part, which is how they fit: where the token lives, what happens when it expires mid-navigation, and what the user sees while that resolves."
+    },
+    "featured": false
+  },
+  {
     "_id": "mod-arch-library",
     "title": {
       "en": "Modular Architecture Library",
@@ -104,6 +147,91 @@
     "featured": true,
     "version": "",
     "date": "2024-09-04T12:00:00Z"
+  },
+  {
+    "_id": "curso-nivelador-ia",
+    "date": "2023-08-20T12:00:00Z",
+    "link": "https://github.com/lucferbux/Curso-Nivelador-IA",
+    "version": "",
+    "tags": [
+      "Python",
+      "Jupyter",
+      "NumPy",
+      "Pandas",
+      "IA"
+    ],
+    "title": {
+      "es": "Curso nivelador de IA",
+      "en": "AI levelling course"
+    },
+    "description": {
+      "es": "Material para poner a toda una promoción en el mismo punto de partida antes de empezar un máster de IA: Python desde cero orientado a datos, los cuadernos y las librerías con las que se trabaja después.\n\nEs el repositorio propio con más alcance que tengo. Nivelar es una necesidad poco glamurosa y muy real: en un aula conviven quien programa desde hace diez años y quien viene de negocio, y sin un punto común la primera clase la pierden los dos.",
+      "en": "Material for getting a whole cohort to the same starting point before an AI master's begins: Python from scratch oriented towards data, the notebooks and the libraries they will work with afterwards.\n\nIt is the most widely used of my own repositories. Levelling is an unglamorous and very real need: a classroom holds people who have programmed for ten years alongside people coming from business, and without common ground the first session is wasted on both."
+    },
+    "featured": false
+  },
+  {
+    "_id": "tensorflow-serving-example",
+    "date": "2023-02-15T12:00:00Z",
+    "link": "https://github.com/lucferbux/Tensorflow-Serving-Example",
+    "version": "",
+    "tags": [
+      "Python",
+      "TensorFlow",
+      "Serving",
+      "Docker"
+    ],
+    "title": {
+      "es": "Ejemplo de TensorFlow Serving",
+      "en": "TensorFlow Serving example"
+    },
+    "description": {
+      "es": "Entrenar un modelo, guardarlo en el formato que espera TensorFlow Serving y servirlo detrás de una API, de principio a fin y en local.\n\nLo escribí porque el salto del notebook al modelo servido es donde se atasca casi todo el mundo, y la documentación oficial lo da por sabido. Aquí está el camino entero: qué forma tiene un SavedModel, cómo se versiona, qué devuelve el servidor y por qué la primera petición tarda más que las siguientes.",
+      "en": "Train a model, save it in the layout TensorFlow Serving expects, and serve it behind an API — end to end, running locally.\n\nI wrote it because the jump from notebook to served model is where almost everyone gets stuck, and the official documentation treats it as assumed knowledge. The whole path is here: what a SavedModel actually looks like, how versioning works, what the server returns, and why the first request is slower than the ones after it."
+    },
+    "featured": false
+  },
+  {
+    "_id": "lucferbux-ios",
+    "date": "2021-09-20T12:00:00Z",
+    "link": "https://github.com/lucferbux/Lucferbux-iOS",
+    "version": "",
+    "tags": [
+      "Swift",
+      "SwiftUI",
+      "iOS",
+      "TestFlight"
+    ],
+    "title": {
+      "es": "Lucferbux iOS",
+      "en": "Lucferbux iOS"
+    },
+    "description": {
+      "es": "La versión para iOS de este mismo portfolio, escrita en SwiftUI y distribuida por TestFlight. Hermana de la app de Android, que salió unos meses antes.\n\nEl interés no era la app sino el ejercicio: el mismo contenido servido desde Firestore, renderizado por tres clientes distintos —web, Android y iOS— sin un backend propio en medio. Obliga a decidir qué es contenido y qué es presentación, que es una frontera que en una sola plataforma se difumina sin que te des cuenta.",
+      "en": "The iOS build of this same portfolio, written in SwiftUI and distributed through TestFlight. Sibling to the Android app, which shipped a few months earlier.\n\nThe app was not the point; the exercise was. The same content served from Firestore and rendered by three different clients — web, Android and iOS — with no backend of my own in between. It forces you to decide what is content and what is presentation, a line that blurs on a single platform without you noticing."
+    },
+    "featured": false
+  },
+  {
+    "_id": "leader-election-go",
+    "date": "2021-09-15T12:00:00Z",
+    "link": "https://github.com/lucferbux/Leader-Election",
+    "version": "",
+    "tags": [
+      "Go",
+      "Kubernetes",
+      "client-go",
+      "Informers"
+    ],
+    "title": {
+      "es": "Leader Election en Kubernetes",
+      "en": "Kubernetes Leader Election"
+    },
+    "description": {
+      "es": "Un controlador mínimo en Go que usa informers y el paquete de leader election de client-go. Leader election es un cerrojo distribuido que gestiona el propio Kubernetes: varias réplicas arrancan, una sola toma el liderazgo, y solo esa escribe.\n\nSalió de un problema real: un componente desplegado en alta disponibilidad hacía su trabajo tres veces, una por réplica. El ejemplo se quedó como repositorio aparte porque explicar el mecanismo con un controlador de veinte líneas es mucho más claro que señalarlo dentro de un operador de verdad.",
+      "en": "A minimal Go controller built on informers and the client-go leader election package. Leader election is a distributed lock that Kubernetes manages for you: several replicas start, exactly one takes leadership, and only that one writes.\n\nIt came out of a real problem — a component deployed for high availability was doing its job three times over, once per replica. The example stayed as its own repository because explaining the mechanism with a twenty-line controller is far clearer than pointing at it inside a real operator."
+    },
+    "featured": false
   },
   {
     "_id": "odh-dashboard",
@@ -481,6 +609,27 @@
       "python",
       "flask"
     ],
+    "featured": false
+  },
+  {
+    "_id": "easyview-visiotech",
+    "date": "2016-10-01T12:00:00Z",
+    "link": "",
+    "version": "",
+    "tags": [
+      "Objective-C",
+      "C",
+      "iOS",
+      "CCTV"
+    ],
+    "title": {
+      "es": "EasyView",
+      "en": "EasyView"
+    },
+    "description": {
+      "es": "App iOS de videovigilancia para cámaras IP, con vídeo en directo, cambio entre flujo principal y secundario, control de giro y zoom, capturas y reproducción de grabaciones.\n\nSe escribió entera en Objective-C y C, a propósito: los SDK de los fabricantes venían en esos lenguajes y el puente con Swift era el riesgo mayor en 2016. Se distribuía con marca blanca, un target de Xcode por distribuidor y su propia ficha en la App Store. El código es anterior a mi GitHub público y ya no existe.",
+      "en": "An iOS video surveillance app for IP cameras: live video, switching between main and sub stream, pan-tilt-zoom control, snapshots and recording playback.\n\nIt was written entirely in Objective-C and C, deliberately — the vendor SDKs shipped in those languages and bridging to Swift was the bigger risk in 2016. It was distributed white-labelled, one Xcode target per reseller, each with its own App Store listing. The code predates my public GitHub and no longer exists."
+    },
     "featured": false
   }
 ]
