@@ -26,7 +26,7 @@ export default function ProjectSection() {
   // Shared by the placeholders and the real grid, so nothing moves when the
   // data arrives.
   const grid =
-    "relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-4 gap-10 px-[30px] pt-5 pb-[120px] max-3xl:grid-cols-3 max-3xl:justify-items-center max-[990px]:grid-cols-2 max-[990px]:gap-[26px] max-md:grid-cols-1 max-md:px-5";
+    "relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-3 gap-8 px-[30px] pt-5 pb-[120px] max-xl:grid-cols-2 max-xl:gap-[26px] max-md:grid-cols-1 max-md:px-5";
 
   return (
     <div className="h-auto">

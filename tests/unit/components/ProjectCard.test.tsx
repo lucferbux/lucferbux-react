@@ -27,9 +27,53 @@ describe("ProjectCard", () => {
     expect(screen.getByText("Test project description")).toBeInTheDocument();
   });
 
-  it("renders tags as a string", () => {
+  it("renders each tag as a chip, from a legacy comma-separated string", () => {
     renderWithProviders(<ProjectCard project={mockProject} />);
-    expect(screen.getByText("React, TypeScript, Vite")).toBeInTheDocument();
+    for (const tag of ["React", "TypeScript", "Vite"]) {
+      expect(screen.getByText(tag)).toBeInTheDocument();
+    }
+  });
+
+  it("collapses tags beyond the third into a count", () => {
+    const manyTags = {
+      ...mockProject,
+      tags: ["React", "TypeScript", "Vite", "Firebase", "Playwright"],
+    };
+    renderWithProviders(<ProjectCard project={manyTags} />);
+    expect(screen.getByText("Vite")).toBeInTheDocument();
+    expect(screen.queryByText("Firebase")).not.toBeInTheDocument();
+    expect(screen.getByText("+2")).toHaveAttribute(
+      "title",
+      "Firebase, Playwright"
+    );
+  });
+
+  it("shows the year the project dates from", () => {
+    renderWithProviders(<ProjectCard project={mockProject} />);
+    expect(screen.getByText("2024")).toBeInTheDocument();
+  });
+
+  it("is not a link when the project has no URL", () => {
+    renderWithProviders(<ProjectCard project={{ ...mockProject, link: "" }} />);
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    expect(screen.getByText("Test Project")).toBeInTheDocument();
+  });
+
+  it("draws its own cover unless an image was uploaded", () => {
+    const { container, rerender } = renderWithProviders(
+      <ProjectCard project={mockProject} />
+    );
+    expect(container.querySelector("img")).toBeNull();
+
+    rerender(
+      <ProjectCard
+        project={{ ...mockProject, image: "https://example.com/shot.png" }}
+      />
+    );
+    expect(container.querySelector("img")).toHaveAttribute(
+      "src",
+      "https://example.com/shot.png"
+    );
   });
 
   it("renders version badge", () => {

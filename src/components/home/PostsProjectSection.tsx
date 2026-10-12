@@ -48,7 +48,7 @@ export default function PostsProjectSection() {
     .slice(0, 2);
 
   return (
-    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1700px]">
+    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1900px]">
       <WavePostHome />
       <img
         src="/images/waves/postproject-wave5.svg"
@@ -77,14 +77,18 @@ export default function PostsProjectSection() {
               stays mounted while loading and only the cards are placeholders. */}
           {projLoading &&
             [0, 1].map((index) => (
-              <div className="w-[280px] max-md:w-full" key={index}>
+              <div
+                className="h-[433px] w-[280px] max-md:h-[380px] max-md:w-full max-md:max-w-[450px]"
+                key={index}
+              >
                 <CardSkeleton variant="project" />
               </div>
             ))}
           {featured.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
-              captionText="FEATURED"
+              captionText={infoProject.featured}
+              variant="compact"
               key={index}
             />
           ))}

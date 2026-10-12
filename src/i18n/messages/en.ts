@@ -70,6 +70,7 @@ const en = {
       description:
         "These are a few of my latests projects I've been working on. Some of them are propietary, so there's no source code.",
       button: "Browse projects",
+      featured: "Featured",
     },
     projects: {
       title: "Explore Projects",

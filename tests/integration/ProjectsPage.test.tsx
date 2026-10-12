@@ -81,7 +81,7 @@ describe("ProjectsPage", () => {
     renderPage();
     await waitFor(() => {
       expect(screen.getByText("Project Title 1")).toBeInTheDocument();
-      expect(screen.getByText("React, TypeScript")).toBeInTheDocument();
+      expect(screen.getByText("TypeScript")).toBeInTheDocument();
     });
   });
 

@@ -73,6 +73,7 @@ const es = {
       description:
         "Algunos de los últimos proyectos en los que he trabajado. Varios son propietarios, así que no tienen código público.",
       button: "Ver proyectos",
+      featured: "Destacado",
     },
     projects: {
       title: "Explora los proyectos",
