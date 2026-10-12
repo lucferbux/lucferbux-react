@@ -80,6 +80,102 @@
     "loaded": true
   },
   {
+    "_id": "angular-flask-to-react-fastapi",
+    "title": {
+      "en": "From Angular and Flask to React and FastAPI",
+      "es": "De Angular y Flask a React y FastAPI"
+    },
+    "description": {
+      "en": "A team's default stack changed completely between 2018 and 2021. The interesting part is not what got picked, but why the old choice stopped being picked.",
+      "es": "El stack por defecto de un equipo cambió entero entre 2018 y 2021. Lo interesante no es qué se eligió, sino por qué se dejó de elegir lo anterior."
+    },
+    "internalLink": "angular-flask-to-react-fastapi",
+    "link": "",
+    "image": "/images/banners/angular-flask-to-react-fastapi.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "bff-to-bff-communication",
+    "title": {
+      "en": "When one backend has to call another",
+      "es": "Cuando un backend necesita llamar a otro"
+    },
+    "description": {
+      "en": "A service per module works until one needs data from another. That is where the uncomfortable question shows up: with whose permissions?",
+      "es": "Un servicio por módulo funciona hasta que uno necesita datos de otro. Ahí aparece la pregunta incómoda: ¿con los permisos de quién?"
+    },
+    "internalLink": "bff-to-bff-communication",
+    "link": "",
+    "image": "/images/banners/bff-to-bff-communication.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "microfrontend-cross-boundary-state",
+    "title": {
+      "en": "The state that will not cross the boundary",
+      "es": "El estado que no cruza la frontera"
+    },
+    "description": {
+      "en": "Two federated modules share React, share the page, and do not share context. The reason is more interesting than the symptom.",
+      "es": "Dos módulos federados comparten React, comparten la página y no comparten el contexto. El motivo es más interesante que el síntoma."
+    },
+    "internalLink": "microfrontend-cross-boundary-state",
+    "link": "",
+    "image": "/images/banners/microfrontend-cross-boundary-state.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "monorepo-turbo-semantic-release",
+    "title": {
+      "en": "A monorepo that publishes itself",
+      "es": "Un monorepo que publica solo"
+    },
+    "description": {
+      "en": "Four packages that use each other, consumed by different teams. Publishing by hand lasted exactly until the third version.",
+      "es": "Cuatro paquetes que se usan entre sí y que consumen equipos distintos. Publicar a mano duró exactamente hasta la tercera versión."
+    },
+    "internalLink": "monorepo-turbo-semantic-release",
+    "link": "",
+    "image": "/images/banners/monorepo-turbo-semantic-release.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "objective-c-in-2016",
+    "title": {
+      "en": "Why we wrote a whole app in Objective-C in 2016",
+      "es": "Por qué escribimos una app entera en Objective-C en 2016"
+    },
+    "description": {
+      "en": "Swift had been out for two years and was the obvious bet. We picked the old language, and the reason was not fear of change.",
+      "es": "Swift llevaba dos años fuera y era la apuesta evidente. Elegimos el lenguaje viejo, y la razón no fue el miedo al cambio."
+    },
+    "internalLink": "objective-c-in-2016",
+    "link": "",
+    "image": "/images/banners/objective-c-in-2016.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "server-side-apply-field-manager",
+    "title": {
+      "en": "The field I renamed and the probe that broke",
+      "es": "El campo que renombré y la sonda que se rompió"
+    },
+    "description": {
+      "en": "Changing an operator's field manager name looked cosmetic. Server-Side Apply merged two probes into an impossible one and the pod went into a loop.",
+      "es": "Cambiar el nombre del gestor de campos de un operador parecía cosmético. Server-Side Apply fusionó dos sondas en una imposible y el pod entró en bucle."
+    },
+    "internalLink": "server-side-apply-field-manager",
+    "link": "",
+    "image": "/images/banners/server-side-apply-field-manager.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "spec-driven-ai-sdlc",
     "title": {
       "en": "Spec-driven development with AI",
