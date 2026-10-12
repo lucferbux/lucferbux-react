@@ -1,4 +1,5 @@
 import { useState } from "react";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { Post } from "../../data/model/post";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -8,9 +9,11 @@ import { formatDate, type DateLike } from "../../i18n/formatDate";
 
 interface PostCardProps {
   post: Post;
+  /** Fill the grid column instead of stopping at 500px. */
+  fill?: boolean;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, fill }: PostCardProps) {
   const { locale } = useTranslation();
   const localePath = useLocalePath();
   const [loaded, setLoaded] = useState(false);
@@ -23,7 +26,12 @@ export default function PostCard({ post }: PostCardProps) {
     // edges. That left a large dead band through the middle of every card. Now
     // the banner is a background layer and the text is in normal flow, so the
     // card is exactly as tall as its content.
-    <div className="group glass-panel relative flex h-full min-h-[200px] min-w-[200px] max-w-[500px] animate-[fadein_0.4s] flex-col gap-4 overflow-hidden p-6 text-black max-[520px]:p-5 dark:text-white">
+    <div
+      className={clsx(
+        "group glass-panel relative flex h-full min-h-[200px] min-w-[200px] animate-[fadein_0.4s] flex-col gap-4 overflow-hidden p-6 text-black max-[520px]:p-5 dark:text-white",
+        !fill && "max-w-[500px]"
+      )}
+    >
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <img
           src={post.image}

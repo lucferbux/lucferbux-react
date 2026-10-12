@@ -1,6 +1,6 @@
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
-import InfoBox from "../text/infoBox";
+import PageTitle from "../text/PageTitle";
 import { Post } from "../../data/model/post";
 import PostCard from "../cards/PostCard";
 import { useStaggeredReveal } from "../../hooks/useStaggeredReveal";
@@ -27,19 +27,13 @@ export default function PostSection() {
   return (
     <div className="h-auto">
       <WaveBody />
-      <div className="relative mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] pt-page pb-[30px] max-xl:grid-cols-1 max-xl:justify-items-center max-xl:text-center max-md:px-[30px] max-md:pb-[10px]">
-        <InfoBox
-          title={info.title}
-          description={info.description}
-          displayButton={false}
-        />
-      </div>
+      <PageTitle title={info.title} description={info.description} />
       <div
         ref={gridRef}
-        className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-[1020px]:justify-items-center max-md:gap-[26px]"
+        className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-md:grid-cols-1 max-md:gap-[26px] max-md:px-5"
       >
         {posts?.map((postEntry, index) => (
-          <PostCard post={postEntry} key={index} />
+          <PostCard fill post={postEntry} key={index} />
         ))}
       </div>
     </div>

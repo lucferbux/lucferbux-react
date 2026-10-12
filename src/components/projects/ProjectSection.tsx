@@ -1,6 +1,6 @@
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
-import InfoBox from "../text/infoBox";
+import PageTitle from "../text/PageTitle";
 import { Project } from "../../data/model/project";
 import ProjectCard from "../cards/ProjectCard";
 import { useStaggeredReveal } from "../../hooks/useStaggeredReveal";
@@ -29,16 +29,10 @@ export default function ProjectSection() {
   return (
     <div className="h-auto">
       <WaveBody />
-      <div className="relative mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] pt-page pb-[30px] max-xl:grid-cols-1 max-xl:justify-items-center max-xl:text-center max-md:grid-cols-1 max-md:justify-items-center max-md:px-[30px] max-md:pb-0">
-        <InfoBox
-          title={info.title}
-          description={info.description}
-          displayButton={false}
-        />
-      </div>
+      <PageTitle title={info.title} description={info.description} />
       <div
         ref={gridRef}
-        className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-4 gap-10 px-[30px] pt-5 pb-[120px] max-3xl:grid-cols-3 max-3xl:justify-items-center max-[990px]:grid-cols-2 max-[990px]:gap-[26px] max-md:grid-cols-1"
+        className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-4 gap-10 px-[30px] pt-5 pb-[120px] max-3xl:grid-cols-3 max-3xl:justify-items-center max-[990px]:grid-cols-2 max-[990px]:gap-[26px] max-md:grid-cols-1 max-md:px-5"
       >
         {projects?.map((projectEntry, index) => (
           <ProjectCard project={projectEntry} key={index} />
