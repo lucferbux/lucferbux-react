@@ -1,6 +1,6 @@
 export default function WaveFooter() {
   return (
-    <div className="absolute top-0 h-[600px] w-full overflow-hidden">
+    <div className="absolute top-0 h-[600px] w-full overflow-hidden max-md:h-full">
       {/* Background fill */}
       <div className="absolute top-[200px] h-[900px] w-full bg-[#1B2E2D] 3xl:top-[600px]" />
       {/* Wave 1 */}

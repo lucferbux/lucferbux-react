@@ -1,4 +1,5 @@
-import { useState } from "react";
+import FadeImage from "../common/FadeImage";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { Post } from "../../data/model/post";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -8,12 +9,13 @@ import { formatDate, type DateLike } from "../../i18n/formatDate";
 
 interface PostCardProps {
   post: Post;
+  /** Fill the grid column instead of stopping at 500px. */
+  fill?: boolean;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, fill }: PostCardProps) {
   const { locale } = useTranslation();
   const localePath = useLocalePath();
-  const [loaded, setLoaded] = useState(false);
 
   const date = formatDate(post.date as DateLike, locale);
 
@@ -23,23 +25,22 @@ export default function PostCard({ post }: PostCardProps) {
     // edges. That left a large dead band through the middle of every card. Now
     // the banner is a background layer and the text is in normal flow, so the
     // card is exactly as tall as its content.
-    <div className="group glass-panel relative flex h-full min-h-[200px] min-w-[200px] max-w-[500px] animate-[fadein_0.4s] flex-col gap-4 overflow-hidden p-6 text-black max-[520px]:p-5 dark:text-white">
+    <div
+      className={clsx(
+        "group glass-panel relative flex h-full min-h-[200px] min-w-[200px] animate-[fadein_0.4s] flex-col gap-4 overflow-hidden p-6 text-black max-[520px]:p-5 dark:text-white",
+        !fill && "max-w-[500px]"
+      )}
+    >
       <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <img
+        {/* The banner has its title rasterised into the SVG, in English. At
+            blur(4px) it stayed legible under the card's own localised title,
+            so every post read as two overlapping headlines. Blurred harder it
+            becomes texture, which is all it was ever meant to be. `scale-110`
+            hides the soft edge the blur leaves at the boundary. */}
+        <FadeImage
           src={post.image}
-          alt=""
-          onLoad={() => setLoaded(true)}
-          // The banner has its title rasterised into the SVG, in English. At
-          // blur(4px) it stayed legible under the card's own localised title,
-          // so every post read as two overlapping headlines. Blurred harder it
-          // becomes texture, which is all it was ever meant to be. `scale-110`
-          // hides the soft edge the blur leaves at the boundary.
-          className={`h-full w-full scale-110 object-cover blur-[14px] ${loaded ? "block" : "hidden"}`}
-        />
-        <img
-          src="/images/animations/loading.gif"
-          alt=""
-          className={`h-full w-full object-cover ${!loaded ? "block" : "hidden"}`}
+          wrapperClassName="h-full w-full"
+          className="h-full w-full scale-110 object-cover blur-[14px]"
         />
         {/* Scrim over the banner. This layer sits at `-z-10`, so the card's
             own glass tint is painted on top of it as well — at 72% the two

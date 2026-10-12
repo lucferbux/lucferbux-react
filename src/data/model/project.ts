@@ -9,6 +9,8 @@ export interface Project {
   tags: string | string[];
   /** Extra destinations beyond `link`, e.g. sub-sections of a site. */
   links?: { label: string; url: string }[];
+  /** An uploaded cover. Without one the card draws its own. */
+  image?: string;
   featured: boolean;
   date: Timestamp | Date;
   version: string;

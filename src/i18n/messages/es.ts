@@ -67,12 +67,14 @@ const es = {
     news: {
       title: "Últimas novedades",
       description: "Estas son las últimas novedades sobre mi trabajo",
+      readMore: "Leer más",
     },
     projectsHome: {
       title: "Proyectos recientes",
       description:
         "Algunos de los últimos proyectos en los que he trabajado. Varios son propietarios, así que no tienen código público.",
       button: "Ver proyectos",
+      featured: "Destacado",
     },
     projects: {
       title: "Explora los proyectos",
@@ -137,6 +139,7 @@ const es = {
     switchToEnglish: "Switch to English",
     switchToSpanish: "Cambiar a español",
     skipToContent: "Saltar al contenido",
+    loading: "Cargando…",
   },
 } as const satisfies WidenMessages<typeof en>;
 

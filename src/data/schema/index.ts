@@ -207,6 +207,16 @@ export const PROJECTS_SCHEMA: CollectionSchema = {
       },
     },
     {
+      name: "image",
+      type: "image",
+      storagePath: "images/project",
+      label: { en: "Cover image", es: "Imagen de portada" },
+      help: {
+        en: "Optional. A screenshot, ideally 16:9. Without one the card draws a cover from the title and tags.",
+        es: "Opcional. Una captura, idealmente 16:9. Sin ella, la tarjeta dibuja una portada a partir del título y las etiquetas.",
+      },
+    },
+    {
       name: "version",
       type: "text",
       label: { en: "Version", es: "Versión" },

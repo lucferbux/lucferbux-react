@@ -3,24 +3,25 @@ import { menuData } from "../../data/menuData";
 import NavButton from "../buttons/NavButton";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { useLocalePath } from "../../i18n/useLocalePath";
+import { useActiveSection } from "../../hooks/useActiveSection";
 
 /**
- * Fixed, full-width and opaque — all three deliberately.
+ * Sits at the top of the page and scrolls away with it. It is `absolute`
+ * rather than in flow because the wave backgrounds are positioned from the top
+ * of `<main>`: an in-flow header would push them down and leave a bare band
+ * behind the nav. Transparent for the same reason — the page's own gradient
+ * shows through, so there is nothing to keep in sync.
  *
- * Fixed and opaque is what Safari 26 samples to tint its toolbar (see the
- * page-tint block in globals.css), and it also stops the header scrolling away,
- * which it did when it was `position: absolute`.
- *
- * Full width matters: the constrained `max-w-[1234px]` used to sit on the
- * positioned element itself, which on a wide screen is under the 80%-of-
- * viewport threshold Safari requires, so it would not have qualified.
+ * It has nothing to do with the browser tint any more: that is the colour of
+ * the canvas (see "Page tint" in globals.css), not of any element.
  */
 export default function Header() {
   const { m } = useTranslation();
   const localePath = useLocalePath();
+  const active = useActiveSection();
 
   return (
-    <header className="page-tint-bar fixed top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)]">
+    <header className="absolute top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)]">
       <nav
         aria-label={m.a11y.mainNav}
         className="mx-auto flex h-14 max-w-[1234px] items-center justify-between gap-4 px-[30px] max-sm:px-5 max-xs:gap-2"
@@ -31,10 +32,11 @@ export default function Header() {
         <div className="flex items-center gap-[30px] max-md:gap-3 max-xs:gap-1.5">
           {menuData.map((item) => (
             <NavButton
-              icon={item.icon}
+              icon={item.Icon}
               text={m.nav[item.labelKey]}
               link={localePath(item.link)}
-              key={item.labelKey}
+              key={item.key}
+              active={item.key === active}
               collapse
             />
           ))}

@@ -34,8 +34,9 @@ describe("ProjectsPage", () => {
   it("renders loading state initially", () => {
     mockOnSnapshot.mockImplementation(() => vi.fn());
     renderPage();
-    const spinner = document.querySelector(".animate-spin");
-    expect(spinner).toBeTruthy();
+    // Placeholders stand in for the cards, and the page keeps its title.
+    expect(screen.getByRole("status")).toBeInTheDocument();
+    expect(screen.getByText("Explore Projects")).toBeInTheDocument();
   });
 
   it("renders section title after data loads", async () => {
@@ -80,7 +81,7 @@ describe("ProjectsPage", () => {
     renderPage();
     await waitFor(() => {
       expect(screen.getByText("Project Title 1")).toBeInTheDocument();
-      expect(screen.getByText("React, TypeScript")).toBeInTheDocument();
+      expect(screen.getByText("TypeScript")).toBeInTheDocument();
     });
   });
 

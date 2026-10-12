@@ -79,8 +79,12 @@
 
 /* ── Responsive ── */
 @media (max-width: 450px) {
+  /* Was 46px, which on a phone put two or three words on a line and pushed
+     the article itself below the fold. */
   .title-blog {
-    font-size: 46px;
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
   .subtitle-blog {

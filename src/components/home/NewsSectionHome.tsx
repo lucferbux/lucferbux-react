@@ -4,7 +4,8 @@ import WaveNewsHome from "../backgrounds/WaveNewsHome";
 import NewsCard from "../cards/NewsCard";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import InfoBox from "../text/infoBox";
-import LoadingSpinner from "../common/LoadingSpinner";
+import Skeleton from "../common/Skeleton";
+import CardSkeleton from "../cards/CardSkeleton";
 import ErrorFallback from "../common/ErrorFallback";
 import { useTranslation } from "../../i18n/LanguageContext";
 
@@ -20,7 +21,6 @@ export default function NewsSectionHome() {
     limit: 6,
   });
 
-  if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load news" />;
 
   return (
@@ -37,6 +37,13 @@ export default function NewsSectionHome() {
           linkButton="news"
           darkColor={true}
         />
+        {/* The section is a fixed-height box drawn around its waves, so it
+            stays mounted while loading and only the cards are placeholders. */}
+        {loading && (
+          <div className="w-full max-w-[586px] max-md:mt-5">
+            <CardSkeleton variant="news" />
+          </div>
+        )}
         {news?.[0] && <NewsCardDetail news={news[0]} inverted={true} />}
       </div>
 
@@ -49,6 +56,13 @@ export default function NewsSectionHome() {
           version left the widest layout on the old 40px, where the shadow was
           still being cut. */}
       <div className="relative mx-auto my-10 -top-10 grid max-w-[1234px] grid-cols-[repeat(auto-fit,218px)] justify-items-center gap-5 px-[30px] pt-10 pb-16 max-md:-top-[60px] max-[500px]:px-5 max-2xl:grid-cols-[repeat(5,minmax(200px,1fr))] max-2xl:overflow-x-scroll max-2xl:[&::-webkit-scrollbar]:hidden">
+        {loading &&
+          Array.from({ length: 5 }, (_, index) => (
+            <Skeleton
+              key={index}
+              className="h-[250px] w-full max-w-[260px] min-w-[200px] rounded-[20px]"
+            />
+          ))}
         {news?.slice(1, 6).map((newsEntry, index) => (
           <NewsCard news={newsEntry} key={index} />
         ))}

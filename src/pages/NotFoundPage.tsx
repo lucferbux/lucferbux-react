@@ -23,7 +23,7 @@ export default function NotFoundPage() {
       />
       <div className="overflow-hidden 4xl:pb-[100px]">
         <WaveShort />
-        <div className="mx-auto grid max-w-[1234px] gap-[30px] px-[30px] pt-[180px] pb-[120px] max-lg:px-5">
+        <div className="mx-auto grid max-w-[1234px] gap-[30px] px-[30px] pt-page pb-[120px] [--page-gap:124px] max-md:[--page-gap:60px] max-lg:px-5">
           <p className="text-[80px] leading-none font-bold text-black/20 dark:text-white/20">
             404
           </p>

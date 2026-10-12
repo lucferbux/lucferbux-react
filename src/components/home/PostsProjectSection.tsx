@@ -6,7 +6,7 @@ import ProjectCard from "../cards/ProjectCard";
 import WavePostHome from "../backgrounds/WavePostHome";
 import Tilt from "react-parallax-tilt";
 import PostCard from "../cards/PostCard";
-import LoadingSpinner from "../common/LoadingSpinner";
+import CardSkeleton from "../cards/CardSkeleton";
 import ErrorFallback from "../common/ErrorFallback";
 import { toDate } from "../../i18n/formatDate";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -41,8 +41,6 @@ export default function PostsProjectSection() {
     limit: 1,
   });
 
-  if (projLoading || postLoading) return <LoadingSpinner />;
-
   // Newest first, then the two most recent. Done here rather than in the query
   // so no composite index is required.
   const featured = [...(projects ?? [])]
@@ -50,7 +48,7 @@ export default function PostsProjectSection() {
     .slice(0, 2);
 
   return (
-    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1700px]">
+    <div className="relative h-[1150px] overflow-hidden pt-[5px] max-xl:h-[1420px] max-md:h-[1900px]">
       <WavePostHome />
       <img
         src="/images/waves/postproject-wave5.svg"
@@ -75,10 +73,22 @@ export default function PostsProjectSection() {
           {projError ? (
             <ErrorFallback message="Failed to load projects" />
           ) : null}
+          {/* The section is a fixed-height box drawn around its waves, so it
+              stays mounted while loading and only the cards are placeholders. */}
+          {projLoading &&
+            [0, 1].map((index) => (
+              <div
+                className="h-[433px] w-[280px] max-md:h-[380px] max-md:w-full max-md:max-w-[450px]"
+                key={index}
+              >
+                <CardSkeleton variant="project" />
+              </div>
+            ))}
           {featured.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
-              captionText="FEATURED"
+              captionText={infoProject.featured}
+              variant="compact"
               key={index}
             />
           ))}
@@ -100,6 +110,11 @@ export default function PostsProjectSection() {
         </div>
         <div className="relative grid grid-cols-1 justify-items-center px-5 [direction:ltr]">
           {postError ? <ErrorFallback message="Failed to load posts" /> : null}
+          {postLoading && (
+            <div className="w-[500px] max-w-full">
+              <CardSkeleton variant="post" />
+            </div>
+          )}
           {posts?.map((postEntry, index) => (
             <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} key={index}>
               <PostCard post={postEntry} />

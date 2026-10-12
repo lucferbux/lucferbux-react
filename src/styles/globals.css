@@ -76,6 +76,7 @@
   --animate-float-gamepad: float-gamepad 6.6s ease-in-out -4.2s infinite;
   --animate-float-computer: float-computer 7.4s ease-in-out -1.2s infinite;
   --animate-reveal-rise: reveal-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
 
   /* Font families */
   /* Open Sans used to be imported from Google Fonts and sat eighth in this
@@ -265,6 +266,15 @@
 /* ===========================
    Keyframe Animations
    =========================== */
+
+@keyframes shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
 
 @keyframes fadein {
   from {
@@ -510,9 +520,12 @@
 @layer components {
   .glass-panel {
     background-color: var(--glass-tint);
-    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    /* Prefixed first. Written the other way round, the build keeps only the
+       `-webkit-` declaration, which Chromium and Firefox do not read — the
+       panels then shipped with no blur at all outside Safari. */
     -webkit-backdrop-filter: blur(var(--glass-blur))
       saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border-radius: var(--glass-radius);
     box-shadow:
       0 0 0 0.5px var(--glass-ring),
@@ -534,6 +547,70 @@
       .glass-panel {
         background-color: rgba(22, 22, 30, 0.94);
       }
+    }
+  }
+
+  /* Loading placeholders: a faint block with a sheen crossing it. The colours
+     are tints rather than greys so a placeholder reads correctly on a glass
+     panel, on the teal gradient and on the plain page alike. */
+  .skeleton {
+    border-radius: 8px;
+    background-color: rgba(9, 30, 42, 0.1);
+    background-image: linear-gradient(
+      100deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.55) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: var(--animate-shimmer);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .skeleton {
+      background-color: rgba(255, 255, 255, 0.09);
+      background-image: linear-gradient(
+        100deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 70%
+      );
+    }
+  }
+
+  /* The phone tab bar: the same glass as the cards, as a capsule, with a
+     lighter blur so what scrolls beneath stays recognisable. */
+  .tab-bar {
+    --glass-tint: rgba(255, 255, 255, 0.7);
+    --glass-radius: 999px;
+    --glass-blur: 28px;
+    --glass-saturate: 190%;
+    --glass-elevation:
+      0 10px 34px rgba(9, 30, 42, 0.22), 0 2px 6px rgba(9, 30, 42, 0.1);
+  }
+
+  /* The spring's overshoot (the 1.35) is what makes the pill feel thrown
+     rather than slid. */
+  .tab-bar-pill {
+    background-color: rgba(120, 120, 128, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    translate: calc(var(--tab-index, 0) * 100%) 0;
+    transition:
+      translate 0.5s cubic-bezier(0.3, 1.35, 0.45, 1),
+      opacity 0.2s;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .tab-bar {
+      --glass-tint: rgba(40, 40, 44, 0.68);
+      --glass-ring: rgba(255, 255, 255, 0.14);
+      --glass-elevation:
+        0 10px 34px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-bar-pill {
+      background-color: rgba(120, 120, 128, 0.36);
     }
   }
 
@@ -785,22 +862,30 @@
 }
 
 /* ===========================
-   Page tint (header + Safari toolbar)
+   Page tint (Safari toolbar, iPhone status bar)
    ===========================
-   Safari 26 parses but ignores `theme-color`. It derives the toolbar tint from
-   the background-color of a fixed element within 4px of the viewport top that
-   is at least 80% of the viewport wide, at least 3px tall, and opaque —
-   otherwise it falls back to `body`, which is why the orange home page used to
-   render a near-white toolbar.
+   The colour behind the iPhone status bar, in Safari's toolbar and in the
+   rubber-band bounce is the colour of the canvas: `body`'s background. So on
+   the public site the canvas is the colour of the top of the page (gold on
+   the landing, teal elsewhere), and the pale page background moves on to
+   `.page-canvas`, the wrapper `Layout` renders.
 
-   The fixed header is that element. `--nav-from` is its opaque background-color
-   (what Safari samples) and the gradient on top of it continues the page's own
-   wave gradient at the same geometry, so the bar is visually seamless.
+   This replaced sampling a fixed element, which is how the fixed header used
+   to do it and how the admin still does. Safari tints from a fixed, opaque,
+   full-width element whose box reaches a band a few pixels below the top edge
+   (a 4px strip was not found; 10px was). That is fine for a header that is
+   always there. For a tint that should exist only at the top of the page it is
+   not: Safari keeps the colour it sampled until it samples again, so a strip
+   that came and went left the status bar a beat behind, pale over a gold page,
+   and the bounce showed the body colour around it. A canvas colour is paint,
+   not a sample — nothing can lag.
 
-   Setting this from CSS on a `data-page` attribute, rather than from an effect
-   writing to documentElement, is deliberate: the previous attempt at this
-   (70d92b1, reverted in 88b2d24) used an effect with no cleanup, so whichever
-   page mounted last won. */
+   The custom properties sit on `:root` (through `:has`) rather than on the
+   `data-page` element so that `body`, its ancestor, can read them.
+
+   Do not move this to `html` (AGENTS.md, landmine 12), and do not set it from
+   an effect: the attempt that did (70d92b1, reverted in 88b2d24) had no
+   cleanup, so whichever page mounted last won. */
 
 :root {
   color-scheme: light dark;
@@ -815,14 +900,14 @@
   --nav-span: 800px;
 }
 
-[data-page="home"] {
+:root:has([data-page="home"]) {
   /* WaveHero */
   --nav-from: #c98c31;
   --nav-gradient: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
   --nav-span: 800px;
 }
 
-[data-page="short"] {
+:root:has([data-page="short"]) {
   /* /terms, /privacy, 404 — WaveShort, 400px tall and angled */
   --nav-gradient: linear-gradient(
     189.16deg,
@@ -842,12 +927,12 @@
     );
   }
 
-  [data-page="home"] {
+  :root:has([data-page="home"]) {
     --nav-from: #a08153;
     --nav-gradient: linear-gradient(180deg, #a08153 0%, #674716 100%);
   }
 
-  [data-page="short"] {
+  :root:has([data-page="short"]) {
     --nav-gradient: linear-gradient(
       189.16deg,
       rgb(43, 40, 48) 13.57%,
@@ -856,9 +941,59 @@
   }
 }
 
+/* ===========================
+   Page top spacing
+   ===========================
+   Every page starts its content the height of the top chrome plus a gap below
+   it. `--chrome-top` is that chrome; `--page-gap` is the breathing room, which
+   a page overrides on its own wrapper (`[--page-gap:84px]`) when its design
+   wants a different rhythm. */
+
+:root {
+  --header-h: 56px;
+  --chrome-top: calc(env(safe-area-inset-top, 0px) + var(--header-h));
+  --page-gap: 94px;
+}
+
+/* Phones have no header: the tab bar at the bottom is the navigation, so the
+   top chrome is only the status-bar inset and the title sits close under it.
+   `--tabbar-clearance` is what the footer leaves free so the bar never covers
+   its last line. Keep this width in step with `useMediaQuery` in Layout. */
+@media (width < 650px) {
+  :root {
+    --chrome-top: env(safe-area-inset-top, 0px);
+    --page-gap: 40px;
+    --tabbar-clearance: calc(env(safe-area-inset-bottom, 0px) * 0.35 + 70px);
+  }
+}
+
+@utility pt-page {
+  padding-top: calc(var(--chrome-top) + var(--page-gap));
+}
+
+body:has(.page-canvas) {
+  background: var(--nav-from);
+}
+
+/* `isolation` makes this a stacking context. Without it the wave backgrounds,
+   which sit at negative z-index, would be painted underneath this element's
+   own background instead of on top of it. */
+.page-canvas {
+  isolation: isolate;
+  min-height: 100dvh;
+  background-color: var(--color-background-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .page-canvas {
+    background-color: var(--color-background-dark);
+  }
+}
+
 @layer components {
   .page-tint-bar {
-    /* The opaque colour is what Safari samples; the gradient is what people see.
+    /* The admin's fixed header. The opaque colour is what Safari samples; the
+       gradient is what people see.
        It must reproduce the page's gradient EXACTLY, stops included: the wave
        gradients start at 13.57%, so a 0%-to-100% copy was already lightening
        within the header's 56px while the page below was still flat teal. */

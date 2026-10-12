@@ -64,12 +64,14 @@ const en = {
     news: {
       title: "Latest News",
       description: "Here are the latest news related to my professional work",
+      readMore: "Read more",
     },
     projectsHome: {
       title: "Recent Projects",
       description:
         "These are a few of my latests projects I've been working on. Some of them are propietary, so there's no source code.",
       button: "Browse projects",
+      featured: "Featured",
     },
     projects: {
       title: "Explore Projects",
@@ -135,6 +137,7 @@ const en = {
     switchToEnglish: "Switch to English",
     switchToSpanish: "Cambiar a español",
     skipToContent: "Skip to content",
+    loading: "Loading…",
   },
 } as const;
 

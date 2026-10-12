@@ -1,14 +1,15 @@
 import clsx from "clsx";
+import type { NavIcon } from "../icons/NavIcons";
 
 interface NavButtonExternalProps {
-  icon: string;
+  icon: string | NavIcon;
   text: string;
   link: string;
   collapse?: boolean;
 }
 
 export default function NavButtonExternal({
-  icon,
+  icon: Icon,
   text,
   link,
   collapse,
@@ -22,11 +23,20 @@ export default function NavButtonExternal({
           collapse && "max-xs:block"
         )}
       >
-        <img
-          src={icon}
-          alt={text}
-          className={clsx(collapse && "max-xs:h-[30px] max-xs:w-[30px]")}
-        />
+        {typeof Icon === "string" ? (
+          <img
+            src={Icon}
+            alt={text}
+            className={clsx(collapse && "max-xs:h-[30px] max-xs:w-[30px]")}
+          />
+        ) : (
+          <Icon
+            className={clsx(
+              "h-6 w-6",
+              collapse && "max-xs:h-[30px] max-xs:w-[30px]"
+            )}
+          />
+        )}
         <span className={clsx(collapse && "max-xs:hidden")}>{text}</span>
       </div>
     </a>

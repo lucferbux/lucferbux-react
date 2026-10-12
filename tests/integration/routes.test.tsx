@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -203,5 +203,47 @@ describe("routes", () => {
         expect(document.documentElement.lang).toBe("es");
       });
     });
+  });
+});
+
+describe("navigation by width", () => {
+  beforeEach(() => {
+    mockOnAuthStateChanged.mockImplementation(() => () => {});
+    mockOnSnapshot.mockImplementation(() => () => {});
+  });
+
+  const stubViewport = (narrow: boolean) =>
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({
+        matches: narrow && query.includes("width < 650px"),
+        media: query,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }))
+    );
+
+  it("renders the header, and only the header, on a wide screen", () => {
+    stubViewport(false);
+    renderRoute("/en/terms");
+
+    const navs = screen.getAllByRole("navigation");
+    expect(navs).toHaveLength(1);
+    expect(within(navs[0]).getByAltText("Lucferbux")).toBeInTheDocument();
+    vi.unstubAllGlobals();
+  });
+
+  it("renders the tab bar, and only the tab bar, on a phone", () => {
+    stubViewport(true);
+    renderRoute("/en/terms");
+
+    const navs = screen.getAllByRole("navigation");
+    expect(navs).toHaveLength(1);
+    expect(within(navs[0]).queryByAltText("Lucferbux")).toBeNull();
+    expect(within(navs[0]).getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/en"
+    );
+    vi.unstubAllGlobals();
   });
 });

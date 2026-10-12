@@ -163,6 +163,39 @@ tried in `70d92b1` and reverted in `88b2d24`. Safari also never reaches `html` w
 has a background, so it does not even achieve what it was for — see the page-tint notes
 before touching `index.html`, `SEO.tsx` or the body background.
 
+### 13. The navigation is two components switched at 650px, and the tint is the canvas
+
+- `Header` — `absolute`, transparent, scrolls away with the page. It must not be in flow: the
+  wave backgrounds are positioned from the top of `<main>`.
+- `TabBar` — the phone's navigation, a fixed glass capsule at the bottom. `Layout` renders
+  **either** the header or the tab bar from `useMediaQuery("(width < 650px)")`, never both.
+- **The browser tint is `body`'s background**, not an element. On the public site the canvas
+  is the colour of the page top (`--nav-from`: gold on the landing, teal elsewhere) and the
+  pale page background lives on `.page-canvas`, the wrapper `Layout` renders. That is what
+  shows behind the iPhone status bar, in Safari's toolbar and in the rubber-band bounce.
+  `.page-canvas` needs its `isolation: isolate`, or the negative-z-index waves paint under it.
+
+Do not bring back a fixed element at the top of the public pages to carry the tint. Safari
+samples such an element (it must be opaque, full width, hit-testable and reach ~6px below the
+top edge) and then holds the colour until it samples again; a strip that came and went left
+the status bar pale over a gold page for a few frames on every partial scroll. The admin's
+always-present fixed header still works that way and is fine. The story is in the "Page tint"
+comment in `globals.css`; `tests/visual/page-tint.spec.ts` guards both.
+
+The same 650px switches the spacing variables in `globals.css`: `--chrome-top` (header height
+plus the status-bar inset; just the inset on a phone), `--page-gap`, and `--tabbar-clearance`
+(what the footer leaves free under its last line). Pages take their top padding from the
+`pt-page` utility and tune it with `[--page-gap:…]` — do not go back to hardcoded `pt-[150px]`.
+If you change the breakpoint, change it in both `Layout.tsx` and `globals.css`.
+
+### 14. The visual suite cannot see `backdrop-filter`
+
+Playwright's headless Chromium computes `backdrop-filter` but does not paint it, so every
+baseline shows glass as a flat tint. That hid a real bug for months: the build kept only the
+`-webkit-` declaration and Chrome shipped with no blur at all. In `.glass-panel` the prefixed
+declaration must come **first**. To check blur, use a real browser
+(`chromium.launch({ channel: "chrome" })`), not the suite.
+
 ---
 
 ## Directory Structure
@@ -194,7 +227,7 @@ before touching `index.html`, `SEO.tsx` or the body background.
 │   │   ├── source/           # QueryDescriptor + Firestore/fixture data sources
 │   │   ├── model/            # TypeScript interfaces
 │   │   └── schema/           # CollectionSchema descriptors driving the admin
-│   ├── hooks/                # useFirestoreCollection, useAuth, usePageTheme, useMediaQuery
+│   ├── hooks/                # useFirestoreCollection, useAuth, useActiveSection, useMediaQuery
 │   ├── styles/               # globals.css (@theme + dark mode), blog.css
 │   └── utils/                # parseFrontmatter, localized
 ├── tests/

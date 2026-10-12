@@ -1,10 +1,10 @@
 import { useFirestoreCollection } from "../../hooks/useFirestoreCollection";
 import WaveBody from "../backgrounds/WaveBody";
 import { News } from "../../data/model/news";
-import InfoBox from "../text/infoBox";
+import PageTitle from "../text/PageTitle";
 import NewsCardDetail from "../cards/NewsCardDetail";
 import { useStaggeredReveal } from "../../hooks/useStaggeredReveal";
-import LoadingSpinner from "../common/LoadingSpinner";
+import SkeletonGrid from "../cards/SkeletonGrid";
 import ErrorFallback from "../common/ErrorFallback";
 import { useTranslation } from "../../i18n/LanguageContext";
 
@@ -19,35 +19,35 @@ export default function NewsSection() {
     orderBy: [["timestamp", "desc"]],
   });
 
-  // Declared before the early returns below, as hooks must be. Until the
-  // data arrives the ref is empty and the effect is a no-op.
+  // Until the data arrives the grid is not mounted, the ref is empty and the
+  // effect is a no-op.
   const gridRef = useStaggeredReveal<HTMLDivElement>(news?.length ?? 0);
 
-  if (loading) return <LoadingSpinner />;
-  if (error) return <ErrorFallback message="Failed to load news" />;
+  // Shared by the placeholders and the real grid, so nothing moves when the
+  // data arrives.
+  const grid =
+    "relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-md:gap-[26px] max-md:px-5";
 
   return (
     <div className="h-auto">
       <WaveBody />
-      <div className="relative mx-auto grid max-w-[1234px] grid-cols-[360px_auto] px-[30px] pt-[150px] pb-[30px] max-xl:grid-cols-1 max-xl:justify-items-center max-xl:text-center max-md:px-[30px] max-md:pt-[120px] max-md:pb-[10px]">
-        <InfoBox
-          title={info.title}
-          description={info.description}
-          displayButton={false}
-        />
-      </div>
-      <div
-        ref={gridRef}
-        className="relative mx-auto grid min-h-[1000px] max-w-[1234px] grid-cols-2 gap-10 px-[30px] pt-5 pb-20 max-[1020px]:grid-cols-1 max-[1020px]:justify-items-center max-md:gap-[26px]"
-      >
-        {news?.map((newsEntry, index) => (
-          <NewsCardDetail
-            news={newsEntry}
-            inverted={index % 2 === 0}
-            key={index}
-          />
-        ))}
-      </div>
+      <PageTitle title={info.title} description={info.description} />
+      {loading ? (
+        <SkeletonGrid variant="news" count={4} className={grid} />
+      ) : error ? (
+        <ErrorFallback message="Failed to load news" />
+      ) : (
+        <div ref={gridRef} className={grid}>
+          {news?.map((newsEntry, index) => (
+            <NewsCardDetail
+              fill
+              news={newsEntry}
+              inverted={index % 2 === 0}
+              key={index}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

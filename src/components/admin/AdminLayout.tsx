@@ -42,7 +42,10 @@ export default function AdminLayout() {
       {/* Same technique as the public header: opaque, so Safari can sample it
           for the toolbar tint, painting the page's own gradient at the page's
           own geometry so there is no visible seam. */}
-      <header className="page-tint-bar fixed top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)]">
+      <header
+        data-page-tint
+        className="page-tint-bar fixed top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)]"
+      >
         <nav
           aria-label="Admin"
           className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-6 max-md:px-4"

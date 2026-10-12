@@ -16,6 +16,14 @@ for (const route of ROUTES) {
         await page.goto(route.path, { waitUntil: "domcontentloaded" });
         await settle(page, route.ready);
 
+        // A full-page capture is taller than the viewport, so a fixed bar is
+        // painted wherever the first screenful ended: mid-page, over content.
+        if (fullPage) {
+          await page.addStyleTag({
+            content: ".tab-bar { display: none !important; }",
+          });
+        }
+
         await expect(page).toHaveScreenshot(
           `${route.name}-${width}-${testInfo.project.name}.png`,
           { fullPage }
