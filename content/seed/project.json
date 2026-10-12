@@ -1,5 +1,27 @@
 [
   {
+    "_id": "lucferbux-react",
+    "title": {
+      "en": "Lucferbux.dev",
+      "es": "Lucferbux.dev"
+    },
+    "description": {
+      "en": "The site you are reading. Vite, React and Tailwind v4 over Cloud Firestore, bilingual, installable as a PWA, with a schema-driven admin and a Playwright visual-regression baseline covering every route at seven widths in both colour schemes.",
+      "es": "La web que estás leyendo. Vite, React y Tailwind v4 sobre Cloud Firestore, bilingüe, instalable como PWA, con un panel de administración dirigido por esquemas y una base de regresión visual en Playwright que cubre cada ruta en siete anchos y en ambos esquemas de color."
+    },
+    "link": "https://github.com/lucferbux/lucferbux-react",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Firebase",
+      "Playwright"
+    ],
+    "featured": false,
+    "version": "2.0.0",
+    "date": "2026-09-20T12:00:00Z"
+  },
+  {
     "_id": "casa-diego-de-siloe",
     "title": {
       "en": "Casa Diego de Siloé",
@@ -31,29 +53,27 @@
     ],
     "featured": false,
     "version": "",
-    "date": "2026-09-20T12:00:00Z"
+    "date": "2026-01-13T12:00:00Z"
   },
   {
-    "_id": "lucferbux-react",
+    "_id": "mod-arch-library",
     "title": {
-      "en": "Lucferbux.dev",
-      "es": "Lucferbux.dev"
+      "en": "Modular Architecture Library",
+      "es": "Modular Architecture Library"
     },
     "description": {
-      "en": "The site you are reading. Vite, React and Tailwind v4 over Cloud Firestore, bilingual, installable as a PWA, with a schema-driven admin and a Playwright visual-regression baseline covering every route at seven widths in both colour schemes.",
-      "es": "La web que estás leyendo. Vite, React y Tailwind v4 sobre Cloud Firestore, bilingüe, instalable como PWA, con un panel de administración dirigido por esquemas y una base de regresión visual en Playwright que cubre cada ruta en siete anchos y en ambos esquemas de color."
+      "en": "The shared UI library behind the modular dashboard: common components, routing and platform plumbing that every module builds on. Designing it is what let module teams ship independently without a platform engineer in the loop.",
+      "es": "La librería de UI compartida tras el dashboard modular: componentes comunes, enrutado y fontanería de plataforma sobre la que se apoya cada módulo. Diseñarla es lo que permitió a los equipos de módulo publicar de forma independiente, sin necesidad de un ingeniero de plataforma."
     },
-    "link": "https://github.com/lucferbux/lucferbux-react",
+    "link": "https://github.com/opendatahub-io/mod-arch-library",
     "tags": [
-      "React",
       "TypeScript",
-      "Tailwind",
-      "Firebase",
-      "Playwright"
+      "React",
+      "Micro-frontends"
     ],
-    "featured": false,
-    "version": "2.0.0",
-    "date": "2026-09-20T12:00:00Z"
+    "featured": true,
+    "version": "",
+    "date": "2025-04-22T12:00:00Z"
   },
   {
     "_id": "totp-authenticator",
@@ -75,50 +95,7 @@
     ],
     "featured": false,
     "version": "",
-    "date": "2026-09-19T12:00:00Z"
-  },
-  {
-    "_id": "golang-tutorial",
-    "title": {
-      "en": "Go for BFFs and Operators",
-      "es": "Go para BFFs y operadores"
-    },
-    "description": {
-      "en": "A written course taking a senior JavaScript or Python developer to production Go: syntax and types, error handling and interfaces, concurrency, HTTP services and backend-for-frontend patterns, then Kubernetes controllers with controller-runtime.",
-      "es": "Un curso escrito que lleva a un desarrollador sénior de JavaScript o Python hasta Go en producción: sintaxis y tipos, manejo de errores e interfaces, concurrencia, servicios HTTP y patrones backend-for-frontend, y de ahí a controladores de Kubernetes con controller-runtime."
-    },
-    "link": "https://github.com/lucferbux/golang-tutorial",
-    "tags": [
-      "Go",
-      "Kubernetes",
-      "Operators",
-      "Teaching"
-    ],
-    "featured": false,
-    "version": "",
-    "date": "2026-09-04T12:00:00Z"
-  },
-  {
-    "_id": "odh-dashboard",
-    "title": {
-      "en": "OpenShift AI Dashboard",
-      "es": "Dashboard de OpenShift AI"
-    },
-    "description": {
-      "en": "The dashboard for Red Hat OpenShift AI and Open Data Hub. I architected and lead the modular platform it runs on: micro-frontends plus Go backend-for-frontend services, replacing a monolith. Ten AI product modules ship on it across five releases.",
-      "es": "El dashboard de Red Hat OpenShift AI y Open Data Hub. Diseñé y lidero la plataforma modular sobre la que funciona: micro-frontends y servicios backend-for-frontend en Go, en sustitución de un monolito. Diez módulos de producto de IA se publican sobre ella a lo largo de cinco releases."
-    },
-    "link": "https://github.com/opendatahub-io/odh-dashboard",
-    "tags": [
-      "TypeScript",
-      "React",
-      "Go",
-      "Kubernetes",
-      "OpenShift"
-    ],
-    "featured": true,
-    "version": "",
-    "date": "2026-09-01T12:00:00Z"
+    "date": "2025-03-10T12:00:00Z"
   },
   {
     "_id": "kubeflow-model-registry-ui",
@@ -140,27 +117,148 @@
     ],
     "featured": true,
     "version": "",
-    "date": "2026-08-01T12:00:00Z"
+    "date": "2024-09-04T12:00:00Z"
   },
   {
-    "_id": "mod-arch-library",
+    "_id": "odh-dashboard",
     "title": {
-      "en": "Modular Architecture Library",
-      "es": "Modular Architecture Library"
+      "en": "OpenShift AI Dashboard",
+      "es": "Dashboard de OpenShift AI"
     },
     "description": {
-      "en": "The shared UI library behind the modular dashboard: common components, routing and platform plumbing that every module builds on. Designing it is what let module teams ship independently without a platform engineer in the loop.",
-      "es": "La librería de UI compartida tras el dashboard modular: componentes comunes, enrutado y fontanería de plataforma sobre la que se apoya cada módulo. Diseñarla es lo que permitió a los equipos de módulo publicar de forma independiente, sin necesidad de un ingeniero de plataforma."
+      "en": "The dashboard for Red Hat OpenShift AI and Open Data Hub. I architected and lead the modular platform it runs on: micro-frontends plus Go backend-for-frontend services, replacing a monolith. Ten AI product modules ship on it across five releases.",
+      "es": "El dashboard de Red Hat OpenShift AI y Open Data Hub. Diseñé y lidero la plataforma modular sobre la que funciona: micro-frontends y servicios backend-for-frontend en Go, en sustitución de un monolito. Diez módulos de producto de IA se publican sobre ella a lo largo de cinco releases."
     },
-    "link": "https://github.com/opendatahub-io/mod-arch-library",
+    "link": "https://github.com/opendatahub-io/odh-dashboard",
     "tags": [
       "TypeScript",
       "React",
-      "Micro-frontends"
+      "Go",
+      "Kubernetes",
+      "OpenShift"
     ],
     "featured": true,
     "version": "",
-    "date": "2026-07-01T12:00:00Z"
+    "date": "2021-05-13T12:00:00Z"
+  },
+  {
+    "_id": "golang-tutorial",
+    "title": {
+      "en": "Go for BFFs and Operators",
+      "es": "Go para BFFs y operadores"
+    },
+    "description": {
+      "en": "A written course taking a senior JavaScript or Python developer to production Go: syntax and types, error handling and interfaces, concurrency, HTTP services and backend-for-frontend patterns, then Kubernetes controllers with controller-runtime.",
+      "es": "Un curso escrito que lleva a un desarrollador sénior de JavaScript o Python hasta Go en producción: sintaxis y tipos, manejo de errores e interfaces, concurrencia, servicios HTTP y patrones backend-for-frontend, y de ahí a controladores de Kubernetes con controller-runtime."
+    },
+    "link": "https://github.com/lucferbux/golang-tutorial",
+    "tags": [
+      "Go",
+      "Kubernetes",
+      "Operators",
+      "Teaching"
+    ],
+    "featured": false,
+    "version": "",
+    "date": "2021-04-15T12:00:00Z"
+  },
+  {
+    "_id": "ZT3rk1oMPJIk2on6m5Lf",
+    "featured": false,
+    "link": "https://github.com/lucferbux/Lucferbux-Android-App",
+    "description": {
+      "es": "Aplicación desarrollada en Kotlin siguiendo la arquitectura de MVVM. Tiene todas las funcionalidades de una app moderna como el estilo de Material You, Modo Oscuro, Animaciones...",
+      "en": "App built on Kotlin, following the MVVM architecture. It has all the features of a modern Android App such as Material You support, Dark Mode,  Fragment Navigation..."
+    },
+    "title": {
+      "es": "Lucferbux Android App",
+      "en": "Lucferbux Android App"
+    },
+    "tags": [
+      "Kotlin",
+      "MVVM",
+      "Firebase"
+    ],
+    "date": "2021-03-02T08:50:24.000Z",
+    "version": "1.5.0"
+  },
+  {
+    "_id": "MLAFGPpGg27Xkz7wvnsR",
+    "date": "2020-11-29T23:00:00.000Z",
+    "featured": false,
+    "link": "https://blogthinkbig.com/living-app-de-olivia-pop",
+    "description": {
+      "es": "CMS de tiendas asociadas a Telefónica que permite navegar y comprar el catálogo dentro de una Living App",
+      "en": "Custom CMS created for associates of Telefonica, which enables shopping through the Living App's platform"
+    },
+    "title": {
+      "es": "Movistar Shop TV",
+      "en": "Movistar Shop TV"
+    },
+    "version": "0.0.1",
+    "tags": [
+      "React",
+      "FastApi"
+    ]
+  },
+  {
+    "_id": "D8VSsiAVfAMKg5tI9oiP",
+    "date": "2020-07-15T22:00:00.000Z",
+    "link": "https://empresas.blogthinkbig.com/fitco-moves-estrena-living-app/",
+    "description": {
+      "es": "Living App (web app diseñada para la TV de Movistar) desarrollada para la Start Up Fitco. Se trata de un reproductor de video fitness con retos y rankings.",
+      "en": "Living App (web app designed for Movistar's TV) developed for the FitCo StartUp. Fitness video player with challenges and ranks."
+    },
+    "title": {
+      "es": "FitCo Living App",
+      "en": "FitCo Living App"
+    },
+    "version": "1.0.2",
+    "tags": [
+      "React",
+      "Azure",
+      "gRPC"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "H1Tpb8Tg2U96rVCunLEm",
+    "link": "https://github.com/ElevenPaths/HomePWN",
+    "description": {
+      "es": "Homepwn es una navaja suiza para dispositivos IoT con una gran cantidad de plugins para múltiples escenarios.",
+      "en": "Homepwn is a Swiss Army Knife for IoT devices with a large number of plugins for multiple scenarios."
+    },
+    "title": {
+      "es": "Homepwn",
+      "en": "Homepwn"
+    },
+    "version": "0.1.0",
+    "date": "2019-08-10T13:06:02.000Z",
+    "tags": [
+      "python",
+      "security"
+    ],
+    "featured": true
+  },
+  {
+    "_id": "5J8CspW0Db5Gi0iiycjL",
+    "link": "https://github.com/lucferbux/airdrop-crazy-app",
+    "title": {
+      "es": "Airdrop Crazy App",
+      "en": "Airdrop Crazy App"
+    },
+    "version": "0.0.1",
+    "date": "2019-08-10T12:54:42.000Z",
+    "description": {
+      "es": "Aplicación que acompaña al servidor de Airdrop Crazy para mostrar la información de forma visual e intuitiva, escrita en Swift UI con SocketIO.",
+      "en": "Companion App for the Airdrop Crazy server to display information visually and intuitively, written in Swift UI with SocketIO."
+    },
+    "tags": [
+      "iOS",
+      "SwiftUI",
+      "WebSocket"
+    ],
+    "featured": false
   },
   {
     "_id": "airdrop-crazy",
@@ -182,5 +280,221 @@
     "featured": false,
     "version": "",
     "date": "2019-06-01T12:00:00Z"
+  },
+  {
+    "_id": "C7PtZrBVCq178LzD5rGa",
+    "date": "2019-02-04T23:00:00.000Z",
+    "link": "https://github.com/lucferbux/WebPageLucferbux",
+    "description": {
+      "es": "Antigua página web creada en Angular utilizando diferentes patrones y buenas prácticas del framework. Tiene login, i18n, modo oscuro...",
+      "en": "Old webpage created in Angular, using different patterns and best practices related to the Framework as i18n, dark mode, accesibility..."
+    },
+    "title": {
+      "es": "Lucferbux Angular Web",
+      "en": "Lucferbux Angular Web"
+    },
+    "version": "1.0.1",
+    "tags": [
+      "Angular",
+      "Firebase",
+      "Typescript"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "5SBXdklPt7Shrdmw45Q4",
+    "link": "https://github.com/lucferbux/OCR-Card-Reader",
+    "description": {
+      "es": "POC usando el Vision API de Google para extraer la información de una tarjeta de contacto y luego clasificar su contenido.",
+      "en": "POC using Google's Vision API to extract information from a contact card and then classify its content."
+    },
+    "title": {
+      "es": "OCR Card Reader",
+      "en": "OCR Card Reader"
+    },
+    "version": "1.0.0",
+    "date": "2018-12-16T23:00:00.000Z",
+    "tags": [
+      "Angular",
+      "AI",
+      "OCR"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "We2aL0eWkwlzvjr6nWEr",
+    "link": "https://github.com/ElevenPaths/SDK-SMS-Stack",
+    "title": {
+      "es": "Sms Stack",
+      "en": "Stack Sms"
+    },
+    "version": "1.1.0",
+    "description": {
+      "es": "Sms Stack es un framework que añade características de la capa TCP/IP a los Sms tradicionales.",
+      "en": "Stack Sms is a framework that adds features of the TCP / IP layer to traditional Sms"
+    },
+    "tags": [
+      "typescript",
+      "java",
+      "python"
+    ],
+    "date": "2018-10-19T17:33:39.000Z",
+    "featured": false
+  },
+  {
+    "_id": "0q8cnM9zpY6BC7jZWeh9",
+    "description": {
+      "es": "App Android que recrea un chat con múltiples características.\nIncluye SMS Stack para enviar mensajes cuando hay mala recepción.\n(Repo privado)",
+      "en": "Android app that recreates a chat with multiple features.\nIncludes SMS Stack to send messages when there is poor reception.\n(Private repo)"
+    },
+    "title": {
+      "es": "Movistar Team App",
+      "en": "Movistar Team App"
+    },
+    "version": "1.0.2",
+    "tags": [
+      "Android",
+      "Kotlin",
+      "SMS"
+    ],
+    "date": "2018-09-23T23:00:00.000Z",
+    "link": "https://www.elladodelmal.com/2018/12/el-big-data-y-la-ia-al-servicio-de.html",
+    "featured": false
+  },
+  {
+    "_id": "mQRyXJ3E9nAKimNw4p7o",
+    "link": "https://github.com/cybercamp18isecurity/iSecurity",
+    "description": {
+      "es": "Servicio que mezcla un backend con servicios de machine learning especializados en el análisis de una PYME ayudado de un asistente virtual.",
+      "en": "Service that mixes a backend with machine learning services specialized in the analysis of an SME with the help of a virtual assistant."
+    },
+    "title": {
+      "es": "iSecurity App",
+      "en": "iSecurity App"
+    },
+    "version": "0.1.0",
+    "date": "2018-08-24T23:00:00.000Z",
+    "tags": [
+      "IA",
+      "NLP",
+      "Security"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "JFbMmCbqiyuipNIxkrs2",
+    "link": "https://www.elladodelmal.com/2019/05/dirty-business-card-reader-mas-detalles.html?m=1",
+    "description": {
+      "es": "Servicio OSINT para extraer la mayor cantidad posible de información de una persona a través de unos pocos datos de contacto como el nombre, telefono, mail o nombre de usuario.",
+      "en": "OSINT service to extract as much information as possible from a person through a few contact details such as name, telephone, mail or username."
+    },
+    "title": {
+      "es": "Dirty Business Card",
+      "en": "Dirty Business Card"
+    },
+    "version": "2.1.2",
+    "date": "2018-07-29T23:00:00.000Z",
+    "tags": [
+      "angular",
+      "OSINT",
+      "OCR"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "pSkywXmDdmu1EB3kqxde",
+    "link": "https://github.com/lucferbux/LatchTouchbar",
+    "description": {
+      "es": "Implementación de latch en la touchbar de los nuevos modelos de Maccbok Pro.",
+      "en": "Latch implementation in the touchbar of the new Maccbok Pro models."
+    },
+    "title": {
+      "es": "Latch Touchbar",
+      "en": "Latch Touchbar"
+    },
+    "version": "0.0.2",
+    "date": "2018-06-06T22:00:00.000Z",
+    "tags": [
+      "macOS",
+      "Swift"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "EJRqy6idQgFUd4Jm6Pcf",
+    "link": "https://github.com/lucferbux/EvilgramEvil",
+    "description": {
+      "es": "PoC de PWA con rastreamiento de localización para concienciar del peligro de una falta de revisión de aplicaciones instaladas en nuestros dispositivos.",
+      "en": "PWA PoC with location tracking to raise awareness of the danger of a lack of review of applications installed on our devices."
+    },
+    "title": {
+      "es": "Evilgram",
+      "en": "Evilgram"
+    },
+    "version": "0.0.1",
+    "date": "2018-03-05T22:00:00.000Z",
+    "tags": [
+      "angular",
+      "location"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "qK6mjZmR0XRivN1QfK2H",
+    "link": "https://github.com/lucferbux/LatchExfiltrationModule",
+    "description": {
+      "es": "Módulo en python para la exfiltración de datos a través de Latch como canal.",
+      "en": "Module in python for exfiltration of data through Latch as a channel."
+    },
+    "title": {
+      "es": "Latch Exfiltration",
+      "en": "Latch Exfiltration"
+    },
+    "version": "0.0.1",
+    "date": "2017-11-09T23:00:00.000Z",
+    "featured": false,
+    "tags": [
+      "iOS",
+      "Swift"
+    ]
+  },
+  {
+    "_id": "gsu64ayxGLs8gooQOqdQ",
+    "link": "https://apps.apple.com/es/app/safepost/id1431862886?l=en",
+    "description": {
+      "es": "App en Swift que sirve como cliente al servicio de Safepost, permite publicar en redes sociales a través de SMS.",
+      "en": "Swift App that serves as a client to the Safepost service, allows you to publish on social networks through SMS."
+    },
+    "title": {
+      "es": "Safepost iOS",
+      "en": "Safepost iOS"
+    },
+    "version": "1.0.4",
+    "date": "2017-01-12T23:00:00.000Z",
+    "tags": [
+      "iOS",
+      "Swift",
+      "SMS"
+    ],
+    "featured": false
+  },
+  {
+    "_id": "puMR9FguJBxdhCciv4hq",
+    "link": "https://safepost.luca-d3.com/",
+    "description": {
+      "es": "Servicio para publicar en tus redes sociales en situaciones de emergencia por SMS. Diseñado en flask.",
+      "en": "Service to publish on your social networks in emergency situations by SMS. Designed in flask."
+    },
+    "title": {
+      "es": "Safepost Web",
+      "en": "Safepost Web"
+    },
+    "version": "1.0.4",
+    "date": "2016-12-23T23:00:00.000Z",
+    "tags": [
+      "python",
+      "flask"
+    ],
+    "featured": false
   }
 ]
