@@ -4,7 +4,7 @@ export default function PrivacySection() {
   return (
     <div className="overflow-hidden 4xl:pb-[100px]">
       <WaveShort />
-      <div className="mx-auto max-w-[1234px] px-[30px] pt-page pb-[30px] [--page-gap:84px] max-lg:gap-[60px] max-lg:px-5 max-lg:[--page-gap:94px] max-lg:pb-[290px]">
+      <div className="mx-auto max-w-[1234px] px-[30px] pt-page pb-[30px] [--page-gap:84px] max-lg:gap-[60px] max-lg:px-5 max-lg:[--page-gap:94px] max-md:[--page-gap:16px] max-lg:pb-[290px]">
         <div className="grid gap-[10px]">
           <h1 className="my-[30px] mb-[10px] text-[50px] font-bold text-black max-xs:text-[48px] dark:text-white">
             Privacy Policy

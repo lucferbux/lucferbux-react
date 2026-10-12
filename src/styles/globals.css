@@ -510,9 +510,12 @@
 @layer components {
   .glass-panel {
     background-color: var(--glass-tint);
-    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    /* Prefixed first. Written the other way round, the build keeps only the
+       `-webkit-` declaration, which Chromium and Firefox do not read — the
+       panels then shipped with no blur at all outside Safari. */
     -webkit-backdrop-filter: blur(var(--glass-blur))
       saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border-radius: var(--glass-radius);
     box-shadow:
       0 0 0 0.5px var(--glass-ring),
@@ -534,6 +537,41 @@
       .glass-panel {
         background-color: rgba(22, 22, 30, 0.94);
       }
+    }
+  }
+
+  /* The phone tab bar: the same glass as the cards, as a capsule, with a
+     lighter blur so what scrolls beneath stays recognisable. */
+  .tab-bar {
+    --glass-tint: rgba(255, 255, 255, 0.7);
+    --glass-radius: 999px;
+    --glass-blur: 28px;
+    --glass-saturate: 190%;
+    --glass-elevation:
+      0 10px 34px rgba(9, 30, 42, 0.22), 0 2px 6px rgba(9, 30, 42, 0.1);
+  }
+
+  /* The spring's overshoot (the 1.35) is what makes the pill feel thrown
+     rather than slid. */
+  .tab-bar-pill {
+    background-color: rgba(120, 120, 128, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    translate: calc(var(--tab-index, 0) * 100%) 0;
+    transition:
+      translate 0.5s cubic-bezier(0.3, 1.35, 0.45, 1),
+      opacity 0.2s;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .tab-bar {
+      --glass-tint: rgba(40, 40, 44, 0.68);
+      --glass-ring: rgba(255, 255, 255, 0.14);
+      --glass-elevation:
+        0 10px 34px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-bar-pill {
+      background-color: rgba(120, 120, 128, 0.36);
     }
   }
 
@@ -871,9 +909,15 @@
   --page-gap: 94px;
 }
 
+/* Phones have no header: the tab bar at the bottom is the navigation, so the
+   top chrome is only the status-bar inset and the title sits close under it.
+   `--tabbar-clearance` is what the footer leaves free so the bar never covers
+   its last line. Keep this width in step with `useMediaQuery` in Layout. */
 @media (width < 650px) {
   :root {
-    --page-gap: 64px;
+    --chrome-top: env(safe-area-inset-top, 0px);
+    --page-gap: 40px;
+    --tabbar-clearance: calc(env(safe-area-inset-bottom, 0px) * 0.35 + 70px);
   }
 }
 

@@ -11,7 +11,7 @@ export default function Footer() {
   const localePath = useLocalePath();
 
   return (
-    <div className="relative h-[440px] w-full pt-[250px] max-sm:top-[10px]">
+    <div className="relative h-[440px] w-full pt-[250px] max-md:h-auto max-md:pb-[calc(var(--tabbar-clearance,0px)+24px)] max-sm:top-[10px]">
       <WaveFooter />
       <div className="relative mx-auto grid max-w-[660px] grid-cols-[auto_auto] gap-x-10 px-5 max-[600px]:grid-cols-1 max-[600px]:justify-items-center">
         <div className="grid max-w-[340px] grid-cols-[144px_144px] gap-x-2">
