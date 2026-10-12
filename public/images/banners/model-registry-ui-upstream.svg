@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Building the Model Registry UI in the open">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00565f" />
+      <stop offset="55%" stop-color="#007789" />
+      <stop offset="100%" stop-color="#eabe7d" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1136.3 129.8 Q 1136.3 129.8 1098.3 178.5 Q 1060.2 227.2 998.9 277.0 Q 937.6 326.8 902.7 256.0 Q 867.7 185.1 834.7 113.9 Q 801.8 42.7 872.2 -1.3 Q 942.6 -45.4 1004.8 -10.7 Q 1067.0 23.9 1101.7 76.8 Z" fill="#00565f" opacity="0.47" />
+    <path d="M 772.6 78.6 Q 772.6 78.6 700.6 198.6 Q 628.6 318.7 503.3 328.2 Q 377.9 337.8 244.8 286.6 Q 111.6 235.4 106.8 76.3 Q 102.0 -82.8 237.3 -143.4 Q 372.6 -203.9 516.8 -203.0 Q 661.0 -202.1 716.8 -61.8 Z" fill="#007789" opacity="0.57" />
+    <path d="M 591.6 0.6 Q 591.6 0.6 522.5 107.1 Q 453.4 213.7 332.9 263.0 Q 212.4 312.3 151.0 203.1 Q 89.6 94.0 49.3 -18.8 Q 9.1 -131.6 123.8 -163.9 Q 238.6 -196.3 334.8 -190.4 Q 431.1 -184.5 511.3 -91.9 Z" fill="#eabe7d" opacity="0.50" />
+    <path d="M 375.2 306.7 Q 375.2 306.7 327.3 385.8 Q 279.5 464.9 183.6 529.2 Q 87.8 593.5 23.1 497.1 Q -41.7 400.6 -40.5 307.3 Q -39.3 213.9 29.2 138.3 Q 97.6 62.7 202.6 87.9 Q 307.7 113.1 341.4 209.9 Z" fill="#00565f" opacity="0.43" />
+    <path d="M 419.6 324.8 Q 419.6 324.8 390.1 382.8 Q 360.6 440.8 294.7 468.8 Q 228.8 496.8 182.1 442.8 Q 135.4 388.7 142.3 328.1 Q 149.2 267.5 187.6 204.0 Q 226.0 140.5 286.9 182.8 Q 347.7 225.1 383.7 274.9 Z" fill="#007789" opacity="0.38" />
+    <path d="M 1236.2 331.8 Q 1236.2 331.8 1200.4 395.9 Q 1164.7 460.0 1097.2 467.4 Q 1029.8 474.8 943.6 452.7 Q 857.4 430.5 866.8 336.3 Q 876.2 242.1 946.4 186.5 Q 1016.6 130.8 1113.9 138.0 Q 1211.3 145.1 1223.7 238.4 Z" fill="#eabe7d" opacity="0.36" />
+    <path d="M 424.9 124.0 Q 424.9 124.0 394.6 184.3 Q 364.3 244.6 295.8 273.3 Q 227.4 301.9 164.8 252.9 Q 102.2 203.9 99.1 122.5 Q 95.9 41.1 166.9 16.6 Q 238.0 -7.9 300.6 -1.7 Q 363.3 4.5 394.1 64.3 Z" fill="#00565f" opacity="0.53" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">NEWS</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Building the Model</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Registry UI in the open</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>
