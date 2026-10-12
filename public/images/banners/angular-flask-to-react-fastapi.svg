@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="From Angular and Flask to React and FastAPI">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 404.9 67.2 Q 404.9 67.2 333.3 146.4 Q 261.8 225.7 173.2 257.5 Q 84.7 289.3 -2.0 232.2 Q -88.6 175.1 -51.5 85.1 Q -14.3 -4.9 40.3 -57.4 Q 94.9 -110.0 191.0 -116.6 Q 287.1 -123.1 346.0 -28.0 Z" fill="#a08153" opacity="0.50" />
+    <path d="M 638.5 525.9 Q 638.5 525.9 608.7 607.5 Q 578.8 689.1 489.5 713.9 Q 400.2 738.6 322.3 681.5 Q 244.4 624.3 275.5 540.9 Q 306.5 457.5 358.4 407.7 Q 410.4 357.9 503.8 348.8 Q 597.2 339.7 617.8 432.8 Z" fill="#eabe7d" opacity="0.31" />
+    <path d="M 1332.1 503.4 Q 1332.1 503.4 1300.7 573.3 Q 1269.4 643.2 1192.7 665.3 Q 1115.9 687.4 1058.9 633.0 Q 1001.9 578.6 987.2 496.3 Q 972.5 414.1 1040.1 348.8 Q 1107.7 283.5 1212.0 294.3 Q 1316.2 305.0 1324.1 404.2 Z" fill="#2b2830" opacity="0.54" />
+    <path d="M 947.1 72.1 Q 947.1 72.1 878.0 148.1 Q 809.0 224.2 720.2 271.3 Q 631.5 318.4 571.1 237.8 Q 510.8 157.2 479.6 57.0 Q 448.3 -43.2 543.9 -90.9 Q 639.6 -138.6 755.6 -148.5 Q 871.5 -158.5 909.3 -43.2 Z" fill="#a08153" opacity="0.47" />
+    <path d="M 1054.1 184.8 Q 1054.1 184.8 1028.2 224.5 Q 1002.3 264.3 957.2 282.9 Q 912.2 301.5 870.3 269.7 Q 828.4 237.9 815.3 178.4 Q 802.1 118.9 857.0 92.8 Q 911.9 66.6 968.3 71.8 Q 1024.8 76.9 1039.5 130.8 Z" fill="#eabe7d" opacity="0.32" />
+    <path d="M 722.8 378.8 Q 722.8 378.8 714.9 445.3 Q 707.0 511.9 641.1 501.3 Q 575.2 490.7 525.2 465.0 Q 475.2 439.3 467.3 375.0 Q 459.5 310.7 512.0 265.2 Q 564.5 219.7 633.7 235.1 Q 703.0 250.6 712.9 314.7 Z" fill="#2b2830" opacity="0.56" />
+    <path d="M 538.3 582.7 Q 538.3 582.7 504.9 639.8 Q 471.4 696.9 408.8 714.8 Q 346.1 732.7 310.0 683.3 Q 273.9 633.9 256.8 574.4 Q 239.7 515.0 296.4 489.0 Q 353.0 463.1 416.0 461.0 Q 479.0 458.9 508.7 520.8 Z" fill="#a08153" opacity="0.46" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">RETROSPECTIVE</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">From Angular and Flask to</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">React and FastAPI</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

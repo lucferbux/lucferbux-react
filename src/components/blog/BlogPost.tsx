@@ -4,6 +4,7 @@ import rehypePrismPlus from "rehype-prism-plus";
 import CodePenEmbed from "./CodePenEmbed";
 import WaveBody from "../backgrounds/WaveBody";
 import type { Components } from "react-markdown";
+import { useMemo } from "react";
 import type { ReactNode, ReactElement } from "react";
 import "../../styles/blog.css";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -50,7 +51,7 @@ function isCodePenUrl(children: ReactNode): string | null {
   return null;
 }
 
-const components: Components = {
+const makeComponents = (localePath: (p: string) => string): Components => ({
   // Override <p> to detect CodePen URLs
   p({ children }) {
     const codepenUrl = isCodePenUrl(children);
@@ -69,6 +70,18 @@ const components: Components = {
     return <h3 className="emphasis-title-blog">{children}</h3>;
   },
   a({ href, children }) {
+    // Internal cross-links between articles stay in the tab and keep the
+    // reader's language. Every link used to get `target="_blank"`, so a link to
+    // another article on this site opened a second tab at an unprefixed path,
+    // which is neither where the reader was nor in the language they were
+    // reading.
+    if (href?.startsWith("/")) {
+      return (
+        <Link to={localePath(href)} className="link-blog">
+          {children}
+        </Link>
+      );
+    }
     return (
       <a
         href={href}
@@ -102,7 +115,7 @@ const components: Components = {
   strong({ children }) {
     return <strong className="strong-blog">{children}</strong>;
   },
-};
+});
 
 export default function BlogPost({
   title,
@@ -113,6 +126,7 @@ export default function BlogPost({
 }: BlogPostProps) {
   const { locale, m } = useTranslation();
   const localePath = useLocalePath();
+  const components = useMemo(() => makeComponents(localePath), [localePath]);
 
   return (
     <div className="overflow-hidden">
