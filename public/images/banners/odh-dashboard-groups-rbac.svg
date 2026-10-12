@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Groups and permissions in the dashboard">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007789" />
+      <stop offset="55%" stop-color="#b0c4c7" />
+      <stop offset="100%" stop-color="#c98c31" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 499.4 474.6 Q 499.4 474.6 465.2 550.0 Q 431.0 625.3 350.8 638.2 Q 270.6 651.0 182.8 614.8 Q 95.0 578.6 138.3 495.5 Q 181.5 412.4 219.5 326.5 Q 257.4 240.7 344.9 281.4 Q 432.5 322.1 465.9 398.4 Z" fill="#007789" opacity="0.52" />
+    <path d="M 1427.6 522.6 Q 1427.6 522.6 1361.2 588.3 Q 1294.8 654.0 1226.3 659.0 Q 1157.8 664.1 1083.0 637.1 Q 1008.3 610.1 1015.1 525.9 Q 1021.8 441.6 1082.6 379.8 Q 1143.4 318.0 1229.2 342.0 Q 1315.0 366.0 1371.3 444.3 Z" fill="#b0c4c7" opacity="0.32" />
+    <path d="M 497.4 474.6 Q 497.4 474.6 475.3 569.7 Q 453.1 664.8 349.6 691.3 Q 246.0 717.8 206.9 628.4 Q 167.7 539.1 118.9 451.1 Q 70.0 363.1 162.9 318.9 Q 255.9 274.6 334.1 305.1 Q 412.3 335.7 454.9 405.2 Z" fill="#c98c31" opacity="0.59" />
+    <path d="M 305.2 532.0 Q 305.2 532.0 256.8 596.7 Q 208.3 661.3 140.3 668.9 Q 72.3 676.4 10.9 641.7 Q -50.5 607.0 -27.6 543.1 Q -4.7 479.1 34.2 435.1 Q 73.1 391.2 125.3 416.2 Q 177.6 441.2 241.4 486.6 Z" fill="#007789" opacity="0.50" />
+    <path d="M 775.6 94.5 Q 775.6 94.5 727.0 215.3 Q 678.4 336.1 552.1 347.0 Q 425.7 357.9 355.3 274.6 Q 284.9 191.3 280.4 92.4 Q 275.9 -6.6 346.0 -108.9 Q 416.0 -211.3 523.9 -149.9 Q 631.8 -88.6 703.7 3.0 Z" fill="#b0c4c7" opacity="0.40" />
+    <path d="M 865.0 627.9 Q 865.0 627.9 816.7 678.7 Q 768.3 729.5 707.2 769.0 Q 646.1 808.5 615.8 742.7 Q 585.6 676.8 577.8 624.1 Q 570.1 571.4 613.5 533.2 Q 657.0 495.0 725.4 494.6 Q 793.9 494.2 829.4 561.0 Z" fill="#c98c31" opacity="0.49" />
+    <path d="M 1358.8 224.6 Q 1358.8 224.6 1318.4 295.6 Q 1277.9 366.5 1195.3 409.7 Q 1112.7 452.9 1060.1 376.6 Q 1007.6 300.3 997.8 219.9 Q 988.0 139.5 1048.1 58.1 Q 1108.2 -23.4 1204.4 15.4 Q 1300.7 54.2 1329.7 139.4 Z" fill="#007789" opacity="0.34" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">NEWS</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Groups and permissions in</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">the dashboard</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

@@ -30,6 +30,21 @@
     "loaded": true
   },
   {
+    "_id": "mod-arch-installer-cli",
+    "title": {
+      "es": "Un CLI para arrancar un módulo nuevo",
+      "en": "A CLI for scaffolding a new module"
+    },
+    "description": {
+      "es": "`npx mod-arch-installer` genera un módulo listo para empezar: estructura, dependencias, configuración de federación y la variante visual que toque, porque el mismo módulo tiene que verse bien en dos entornos con sistemas de diseño distintos.\n\nLa razón de existir de esta herramienta es menos técnica de lo que parece. Dar de alta un módulo nuevo era un documento de varios pasos que alguien seguía a mano, y cada equipo lo seguía un poco distinto, así que las diferencias se consolidaban antes de que nadie las revisara. Un generador no impide equivocarse; impide equivocarse de formas distintas cada vez, que es lo que hace imposible arreglar nada a escala.",
+      "en": "`npx mod-arch-installer` generates a module ready to start from: structure, dependencies, federation configuration and whichever visual flavour applies, because the same module has to look right in two environments with different design systems.\n\nThis tool exists for a less technical reason than it appears. Onboarding a new module was a multi-step document somebody followed by hand, and every team followed it slightly differently, so the differences set before anyone reviewed them. A generator does not stop you making mistakes; it stops you making a different mistake every time, which is what makes anything impossible to fix at scale."
+    },
+    "url": "https://www.npmjs.com/package/mod-arch-installer",
+    "image": "/images/banners/mod-arch-installer-cli.svg",
+    "timestamp": "2025-11-17T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "kubeflow-1-10-module",
     "title": {
       "en": "First Red Hat UI module upstream in Kubeflow 1.10",
@@ -42,6 +57,21 @@
     "url": "https://github.com/kubeflow/hub",
     "image": "/images/banners/kubeflow-1-10-module.svg",
     "timestamp": "2025-06-01T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "mod-arch-shared-npm",
+    "title": {
+      "es": "La librería de arquitectura modular, en NPM",
+      "en": "The modular architecture library, on NPM"
+    },
+    "description": {
+      "es": "El día anterior entró upstream el cambio que conectaba la librería compartida con el Model Registry; al día siguiente el paquete estaba publicado en NPM. Esos dos hechos son el mismo hito visto desde dentro y desde fuera.\n\nLa idea es sencilla de contar y costosa de sostener: si cada módulo de una plataforma reimplementa sus tablas, sus formularios, su manejo de errores y su cliente de API, acabas con una interfaz que parece hecha por seis equipos distintos, porque lo está. Una librería compartida publicada como paquete obliga a versionar esas decisiones y a romperlas en público. Es incómodo a propósito.",
+      "en": "The day before, the upstream change wiring the shared library into Model Registry landed; the next day the package was published on NPM. Those two facts are the same milestone seen from inside and from outside.\n\nThe idea is easy to state and expensive to hold: if every module in a platform reimplements its tables, its forms, its error handling and its API client, you end up with an interface that looks like six teams made it, because they did. A shared library published as a package forces those decisions to be versioned and broken in public. That is deliberately uncomfortable."
+    },
+    "url": "https://www.npmjs.com/package/mod-arch-shared",
+    "image": "/images/banners/mod-arch-shared-npm.svg",
+    "timestamp": "2025-04-22T12:00:00Z",
     "loaded": true
   },
   {
@@ -72,6 +102,36 @@
     "url": "https://docs.redhat.com/en/documentation/red_hat_ai/3",
     "image": "/images/banners/rhoai-ga-and-growth.svg",
     "timestamp": "2024-11-20T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "model-registry-ui-upstream",
+    "title": {
+      "es": "Construyendo el Model Registry UI en abierto",
+      "en": "Building the Model Registry UI in the open"
+    },
+    "description": {
+      "es": "Entre septiembre y octubre de 2024, la interfaz del Model Registry de Kubeflow se construyó a la vista de todo el mundo, PR a PR: primero el andamiaje de las vistas y los ajustes, luego la especificación de la API, el contexto y los hooks, la vista de modelo registrado, la pantalla de configuración y los formularios de alta de modelo y de versión.\n\nUn registro de modelos es el sitio donde un equipo apunta qué modelos existen, qué versiones hay de cada uno y de dónde salió cada artefacto. Sin él, esa información vive en hojas de cálculo y en la memoria de quien entrenó el modelo. Hacerlo en abierto significó que cada decisión de diseño quedara discutida en el PR correspondiente, que es la mejor documentación que he escrito nunca sin proponérmelo.",
+      "en": "Through September and October 2024 the Kubeflow Model Registry UI was built in plain sight, PR by PR: first the scaffolding for the views and settings, then the API spec, the context and hooks, the registered-model view, the settings screen, and the forms for registering a model and a version.\n\nA model registry is where a team records which models exist, what versions each has, and where every artifact came from. Without one, that lives in spreadsheets and in the memory of whoever trained the model. Doing it in the open meant every design decision was argued out in its pull request — the best documentation I have ever written without meaning to."
+    },
+    "url": "https://github.com/kubeflow/hub/pull/345",
+    "image": "/images/banners/model-registry-ui-upstream.svg",
+    "timestamp": "2024-09-04T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "kubeflow-first-contribution",
+    "title": {
+      "es": "Primera contribución a Kubeflow",
+      "en": "First contribution to Kubeflow"
+    },
+    "description": {
+      "es": "Después de tres años trabajando aguas abajo, el primer cambio mío aceptado en Kubeflow: documentación del cliente de interfaz y la configuración del empaquetado. Un comienzo deliberadamente poco ambicioso, porque entrar en un proyecto de la CNCF con una propuesta grande es la mejor forma de que no te lea nadie.\n\nContribuir upstream cambia el orden de los argumentos. Dentro de un producto puedes decidir y seguir; en un proyecto comunitario tienes que convencer primero, en público, a gente con prioridades distintas a las tuyas. Es más lento y el resultado aguanta mejor, porque ha pasado por manos que no comparten tus supuestos.",
+      "en": "After three years working downstream, my first change accepted into Kubeflow: documentation for the UI client and the bundler configuration. A deliberately unambitious start, because walking into a CNCF project with a large proposal is the surest way to have nobody read it.\n\nContributing upstream reorders the arguments. Inside a product you can decide and move on; in a community project you have to convince people with different priorities first, in public. It is slower and the result holds up better, because it has been through hands that do not share your assumptions."
+    },
+    "url": "https://github.com/kubeflow/hub/pull/233",
+    "image": "/images/banners/kubeflow-first-contribution.svg",
+    "timestamp": "2024-07-30T12:00:00Z",
     "loaded": true
   },
   {
@@ -120,6 +180,21 @@
     "timestamp": "2022-11-04T11:24:54.816Z"
   },
   {
+    "_id": "odh-dashboard-groups-rbac",
+    "title": {
+      "es": "Grupos y permisos en el dashboard",
+      "en": "Groups and permissions in the dashboard"
+    },
+    "description": {
+      "es": "Un panel de administración para decidir qué grupos de OpenShift pueden entrar en el dashboard y cuáles además lo administran. Suena menor y no lo es: hasta entonces la respuesta era editar un ConfigMap a mano, y cualquier error dejaba a un equipo entero fuera de su propia plataforma.\n\nBuena parte de 2022 se fue en esto y en lo que arrastra: recuperar los grupos del cluster sin pedir permisos que la cuenta no debía tener, distinguir «todos los autenticados» de un grupo real, y que un fallo al leerlos no tumbara la página sino que explicara qué pasaba. Los permisos son de esas cosas que solo se notan cuando están mal.",
+      "en": "An admin panel for deciding which OpenShift groups can get into the dashboard, and which of them also administer it. It sounds minor and it is not: until then the answer was hand-editing a ConfigMap, and one mistake locked an entire team out of their own platform.\n\nMuch of 2022 went into this and what it drags along: fetching the cluster's groups without asking for permissions the account should not have, telling \"all authenticated users\" apart from a real group, and making a failure to read them explain itself rather than take the page down. Permissions are one of those things you only notice when they are wrong."
+    },
+    "url": "https://github.com/opendatahub-io/odh-dashboard/pull/270",
+    "image": "/images/banners/odh-dashboard-groups-rbac.svg",
+    "timestamp": "2022-07-07T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "qpIdPHq0do7Yp9F1IE5H",
     "description": {
       "es": "Después de varios cambios, creo que ya puedo enseñar otro \"side-project\" en el que he estado trabajando estos últimos meses. Se trata de una versión en Android de mi web. \nEl estilo imita a Material You e intenta usar los patrones más importantes de Android: MVVM, Room, Retrofit, kotlin... \nEn el roadmap tengo algunas mejoras como los nuevos Widgets, soportar colores dinámicos, ARCore y algunas otras cosas que quiero seguir explorando de Android.",
@@ -133,6 +208,21 @@
     "loaded": false,
     "timestamp": "2021-06-25T18:31:15.614Z",
     "image": "https://firebasestorage.googleapis.com/v0/b/lucferbux-web-page.appspot.com/o/introImage%2F1652393396047_intro_image?alt=media&token=6db7748c-2ad8-4aad-9fb8-2fbcd56b63f9"
+  },
+  {
+    "_id": "odh-first-contribution",
+    "title": {
+      "es": "Primera contribución a Open Data Hub",
+      "en": "First contribution to Open Data Hub"
+    },
+    "description": {
+      "es": "Mi primer cambio aceptado en Open Data Hub, el proyecto comunitario sobre el que se construye Red Hat OpenShift AI. No fue nada glamuroso: hacer que los pods del núcleo se volvieran a desplegar cuando cambiaba su imagen, que hasta entonces había que forzar a mano.\n\nEmpezar por los manifiestos resultó ser la mejor forma de entender la plataforma. Antes de tocar una sola línea de interfaz, pasé meses en kustomize, en cómo se encadenan los componentes y en qué pasa exactamente cuando el operador reconcilia. Ese contexto es el que después permitió discutir de arquitectura en vez de solo de pantallas.",
+      "en": "My first change accepted into Open Data Hub, the community project Red Hat OpenShift AI is built on. Nothing glamorous: making the core pods redeploy when their image changed, which until then had to be forced by hand.\n\nStarting in the manifests turned out to be the best way to understand the platform. Before touching a line of interface I spent months in kustomize, in how components chain together, and in what exactly happens when the operator reconciles. That context is what later made it possible to argue about architecture rather than only about screens."
+    },
+    "url": "https://github.com/opendatahub-io/odh-manifests/pull/429",
+    "image": "/images/banners/odh-first-contribution.svg",
+    "timestamp": "2021-05-24T12:00:00Z",
+    "loaded": true
   },
   {
     "_id": "vfv5cSr4qHyXh2gBYV0i",
