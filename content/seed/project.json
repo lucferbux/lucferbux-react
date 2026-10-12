@@ -31,21 +31,7 @@
       "en": "Documentation site for building my own house: construction progress in photos, current renders, and the phased plan with its backlog. Built as a docs site so the whole project stays in one place.",
       "es": "Web de documentación de la construcción de mi casa: el avance de la obra en fotos, los renders actuales y el plan por fases con su backlog. Montada como sitio de documentación para tener todo el proyecto en un único sitio."
     },
-    "link": "https://plan-construccion.netlify.app/main#/",
-    "links": [
-      {
-        "label": "Progress",
-        "url": "https://plan-construccion.netlify.app/main#/progress/README"
-      },
-      {
-        "label": "Renders",
-        "url": "https://plan-construccion.netlify.app/main#/renders/galeria"
-      },
-      {
-        "label": "Plan",
-        "url": "https://plan-construccion.netlify.app/main#/planning/plan-obra"
-      }
-    ],
+    "link": "",
     "tags": [
       "Docs",
       "Netlify",
