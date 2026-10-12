@@ -163,15 +163,24 @@ tried in `70d92b1` and reverted in `88b2d24`. Safari also never reaches `html` w
 has a background, so it does not even achieve what it was for — see the page-tint notes
 before touching `index.html`, `SEO.tsx` or the body background.
 
-### 13. The navigation is three pieces, switched at 650px
+### 13. The navigation is two components switched at 650px, and the tint is the canvas
 
-- `PageTint` — a 4px `fixed` strip at the top. It is the element Safari 26 samples for its
-  toolbar colour (fixed, opaque, full width, ≥3px). Remove it, make it translucent or make it
-  `absolute`, and the toolbar silently goes white. `tests/visual/page-tint.spec.ts` guards it.
 - `Header` — `absolute`, transparent, scrolls away with the page. It must not be in flow: the
   wave backgrounds are positioned from the top of `<main>`.
 - `TabBar` — the phone's navigation, a fixed glass capsule at the bottom. `Layout` renders
   **either** the header or the tab bar from `useMediaQuery("(width < 650px)")`, never both.
+- **The browser tint is `body`'s background**, not an element. On the public site the canvas
+  is the colour of the page top (`--nav-from`: gold on the landing, teal elsewhere) and the
+  pale page background lives on `.page-canvas`, the wrapper `Layout` renders. That is what
+  shows behind the iPhone status bar, in Safari's toolbar and in the rubber-band bounce.
+  `.page-canvas` needs its `isolation: isolate`, or the negative-z-index waves paint under it.
+
+Do not bring back a fixed element at the top of the public pages to carry the tint. Safari
+samples such an element (it must be opaque, full width, hit-testable and reach ~6px below the
+top edge) and then holds the colour until it samples again; a strip that came and went left
+the status bar pale over a gold page for a few frames on every partial scroll. The admin's
+always-present fixed header still works that way and is fine. The story is in the "Page tint"
+comment in `globals.css`; `tests/visual/page-tint.spec.ts` guards both.
 
 The same 650px switches the spacing variables in `globals.css`: `--chrome-top` (header height
 plus the status-bar inset; just the inset on a phone), `--page-gap`, and `--tabbar-clearance`

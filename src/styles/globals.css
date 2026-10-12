@@ -862,23 +862,30 @@
 }
 
 /* ===========================
-   Page tint (Safari toolbar)
+   Page tint (Safari toolbar, iPhone status bar)
    ===========================
-   Safari 26 parses but ignores `theme-color`. It derives the toolbar tint from
-   the background-color of a fixed element within 4px of the viewport top that
-   is at least 80% of the viewport wide, at least 3px tall, and opaque —
-   otherwise it falls back to `body`, which is why the orange home page used to
-   render a near-white toolbar.
+   The colour behind the iPhone status bar, in Safari's toolbar and in the
+   rubber-band bounce is the colour of the canvas: `body`'s background. So on
+   the public site the canvas is the colour of the top of the page (gold on
+   the landing, teal elsewhere), and the pale page background moves on to
+   `.page-canvas`, the wrapper `Layout` renders.
 
-   `PageTint`, a thin fixed strip, is that element (the admin's fixed header is
-   its own). `--nav-from` is its opaque background-color (what Safari samples)
-   and the gradient on top of it continues the page's own wave gradient at the
-   same geometry, so the strip is visually seamless at the top of the page.
+   This replaced sampling a fixed element, which is how the fixed header used
+   to do it and how the admin still does. Safari tints from a fixed, opaque,
+   full-width element whose box reaches a band a few pixels below the top edge
+   (a 4px strip was not found; 10px was). That is fine for a header that is
+   always there. For a tint that should exist only at the top of the page it is
+   not: Safari keeps the colour it sampled until it samples again, so a strip
+   that came and went left the status bar a beat behind, pale over a gold page,
+   and the bounce showed the body colour around it. A canvas colour is paint,
+   not a sample — nothing can lag.
 
-   Setting this from CSS on a `data-page` attribute, rather than from an effect
-   writing to documentElement, is deliberate: the previous attempt at this
-   (70d92b1, reverted in 88b2d24) used an effect with no cleanup, so whichever
-   page mounted last won. */
+   The custom properties sit on `:root` (through `:has`) rather than on the
+   `data-page` element so that `body`, its ancestor, can read them.
+
+   Do not move this to `html` (AGENTS.md, landmine 12), and do not set it from
+   an effect: the attempt that did (70d92b1, reverted in 88b2d24) had no
+   cleanup, so whichever page mounted last won. */
 
 :root {
   color-scheme: light dark;
@@ -893,14 +900,14 @@
   --nav-span: 800px;
 }
 
-[data-page="home"] {
+:root:has([data-page="home"]) {
   /* WaveHero */
   --nav-from: #c98c31;
   --nav-gradient: linear-gradient(180deg, #c98c31 0%, #eabe7d 100%);
   --nav-span: 800px;
 }
 
-[data-page="short"] {
+:root:has([data-page="short"]) {
   /* /terms, /privacy, 404 — WaveShort, 400px tall and angled */
   --nav-gradient: linear-gradient(
     189.16deg,
@@ -920,12 +927,12 @@
     );
   }
 
-  [data-page="home"] {
+  :root:has([data-page="home"]) {
     --nav-from: #a08153;
     --nav-gradient: linear-gradient(180deg, #a08153 0%, #674716 100%);
   }
 
-  [data-page="short"] {
+  :root:has([data-page="short"]) {
     --nav-gradient: linear-gradient(
       189.16deg,
       rgb(43, 40, 48) 13.57%,
@@ -964,9 +971,29 @@
   padding-top: calc(var(--chrome-top) + var(--page-gap));
 }
 
+body:has(.page-canvas) {
+  background: var(--nav-from);
+}
+
+/* `isolation` makes this a stacking context. Without it the wave backgrounds,
+   which sit at negative z-index, would be painted underneath this element's
+   own background instead of on top of it. */
+.page-canvas {
+  isolation: isolate;
+  min-height: 100dvh;
+  background-color: var(--color-background-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .page-canvas {
+    background-color: var(--color-background-dark);
+  }
+}
+
 @layer components {
   .page-tint-bar {
-    /* The opaque colour is what Safari samples; the gradient is what people see.
+    /* The admin's fixed header. The opaque colour is what Safari samples; the
+       gradient is what people see.
        It must reproduce the page's gradient EXACTLY, stops included: the wave
        gradients start at 13.57%, so a 0%-to-100% copy was already lightening
        within the header's 56px while the page below was still flat teal. */

@@ -1,7 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "./Header";
-import PageTint from "./PageTint";
 import TabBar from "./TabBar";
 import Footer from "./Footer";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -9,9 +8,9 @@ import { stripLocale } from "../../i18n/stripLocale";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 /**
- * Which background each route paints at the top of the page. `PageTint` reads
- * this to colour itself identically, which is how Safari 26 decides what colour
- * to make its toolbar.
+ * Which background each route paints at the top of the page. globals.css keys
+ * the colour of the browser canvas on it (see "Page tint" there), which is what
+ * shows behind the iPhone status bar and in Safari's toolbar.
  */
 /** Routes rendering WaveBody, an 800px gradient. */
 const BODY_ROUTES = new Set(["news", "posts", "projects", "blog", "teaching"]);
@@ -40,14 +39,13 @@ export default function Layout() {
   }, [pathname]);
 
   return (
-    <div data-page={pageKind(pathname)} className="relative">
+    <div data-page={pageKind(pathname)} className="page-canvas relative">
       <a
         href="#main"
         className="sr-only rounded-lg bg-primary px-4 py-2 text-white focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100]"
       >
         {m.a11y.skipToContent}
       </a>
-      <PageTint />
       {!tabs && <Header />}
       <main id="main" tabIndex={-1}>
         <Outlet />

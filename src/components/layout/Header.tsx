@@ -12,7 +12,8 @@ import { useActiveSection } from "../../hooks/useActiveSection";
  * behind the nav. Transparent for the same reason — the page's own gradient
  * shows through, so there is nothing to keep in sync.
  *
- * It is no longer what Safari samples for its toolbar tint; `PageTint` is.
+ * It has nothing to do with the browser tint any more: that is the colour of
+ * the canvas (see "Page tint" in globals.css), not of any element.
  */
 export default function Header() {
   const { m } = useTranslation();
