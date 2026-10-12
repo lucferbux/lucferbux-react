@@ -1,4 +1,4 @@
-import { useState } from "react";
+import FadeImage from "../common/FadeImage";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { Post } from "../../data/model/post";
@@ -16,7 +16,6 @@ interface PostCardProps {
 export default function PostCard({ post, fill }: PostCardProps) {
   const { locale } = useTranslation();
   const localePath = useLocalePath();
-  const [loaded, setLoaded] = useState(false);
 
   const date = formatDate(post.date as DateLike, locale);
 
@@ -33,21 +32,15 @@ export default function PostCard({ post, fill }: PostCardProps) {
       )}
     >
       <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <img
+        {/* The banner has its title rasterised into the SVG, in English. At
+            blur(4px) it stayed legible under the card's own localised title,
+            so every post read as two overlapping headlines. Blurred harder it
+            becomes texture, which is all it was ever meant to be. `scale-110`
+            hides the soft edge the blur leaves at the boundary. */}
+        <FadeImage
           src={post.image}
-          alt=""
-          onLoad={() => setLoaded(true)}
-          // The banner has its title rasterised into the SVG, in English. At
-          // blur(4px) it stayed legible under the card's own localised title,
-          // so every post read as two overlapping headlines. Blurred harder it
-          // becomes texture, which is all it was ever meant to be. `scale-110`
-          // hides the soft edge the blur leaves at the boundary.
-          className={`h-full w-full scale-110 object-cover blur-[14px] ${loaded ? "block" : "hidden"}`}
-        />
-        <img
-          src="/images/animations/loading.gif"
-          alt=""
-          className={`h-full w-full object-cover ${!loaded ? "block" : "hidden"}`}
+          wrapperClassName="h-full w-full"
+          className="h-full w-full scale-110 object-cover blur-[14px]"
         />
         {/* Scrim over the banner. This layer sits at `-z-10`, so the card's
             own glass tint is painted on top of it as well — at 72% the two

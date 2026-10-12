@@ -3,7 +3,7 @@ import WaveResumeeHome from "../backgrounds/WaveResumeeHome";
 import InfoBox from "../text/infoBox";
 import { Work } from "../../data/model/work";
 import ResumeeCard from "../cards/ResumeeCard";
-import LoadingSpinner from "../common/LoadingSpinner";
+import Skeleton from "../common/Skeleton";
 import ErrorFallback from "../common/ErrorFallback";
 import { useTranslation } from "../../i18n/LanguageContext";
 
@@ -18,7 +18,6 @@ export default function AboutMeSection() {
     orderBy: [["importance", "asc"]],
   });
 
-  if (loading) return <LoadingSpinner />;
   if (error) return <ErrorFallback message="Failed to load work experience" />;
 
   return (
@@ -40,6 +39,9 @@ export default function AboutMeSection() {
       </div>
 
       <div className="grid justify-items-center">
+        {loading && (
+          <Skeleton className="mx-5 h-[400px] w-[min(786px,calc(100%-40px))] rounded-3xl max-md:h-[800px]" />
+        )}
         {works.length > 0 && <ResumeeCard works={works} />}
       </div>
     </div>

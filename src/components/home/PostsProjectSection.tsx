@@ -6,7 +6,7 @@ import ProjectCard from "../cards/ProjectCard";
 import WavePostHome from "../backgrounds/WavePostHome";
 import Tilt from "react-parallax-tilt";
 import PostCard from "../cards/PostCard";
-import LoadingSpinner from "../common/LoadingSpinner";
+import CardSkeleton from "../cards/CardSkeleton";
 import ErrorFallback from "../common/ErrorFallback";
 import { toDate } from "../../i18n/formatDate";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -41,8 +41,6 @@ export default function PostsProjectSection() {
     limit: 1,
   });
 
-  if (projLoading || postLoading) return <LoadingSpinner />;
-
   // Newest first, then the two most recent. Done here rather than in the query
   // so no composite index is required.
   const featured = [...(projects ?? [])]
@@ -75,6 +73,14 @@ export default function PostsProjectSection() {
           {projError ? (
             <ErrorFallback message="Failed to load projects" />
           ) : null}
+          {/* The section is a fixed-height box drawn around its waves, so it
+              stays mounted while loading and only the cards are placeholders. */}
+          {projLoading &&
+            [0, 1].map((index) => (
+              <div className="w-[280px] max-md:w-full" key={index}>
+                <CardSkeleton variant="project" />
+              </div>
+            ))}
           {featured.map((projectEntry, index) => (
             <ProjectCard
               project={projectEntry}
@@ -100,6 +106,11 @@ export default function PostsProjectSection() {
         </div>
         <div className="relative grid grid-cols-1 justify-items-center px-5 [direction:ltr]">
           {postError ? <ErrorFallback message="Failed to load posts" /> : null}
+          {postLoading && (
+            <div className="w-[500px] max-w-full">
+              <CardSkeleton variant="post" />
+            </div>
+          )}
           {posts?.map((postEntry, index) => (
             <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} key={index}>
               <PostCard post={postEntry} />

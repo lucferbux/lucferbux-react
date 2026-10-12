@@ -1,4 +1,4 @@
-import { useState } from "react";
+import FadeImage from "../common/FadeImage";
 import { News } from "../../data/model/news";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
@@ -19,7 +19,6 @@ interface NewsCardProps {
 
 export default function NewsCard({ news, interactive = true }: NewsCardProps) {
   const { locale } = useTranslation();
-  const [loaded, setLoaded] = useState(false);
 
   return (
     <a
@@ -37,19 +36,14 @@ export default function NewsCard({ news, interactive = true }: NewsCardProps) {
           match the tallest one's content, so they stay even without anybody
           choosing a number. */}
       <div className="news-card-surface relative flex h-full min-w-[200px] max-w-[260px] flex-col gap-3 rounded-[20px] p-2.5 text-center">
-        <div className="motion-glass m-0 w-full group-hover:scale-[0.97]">
-          <img
-            src={news.image}
-            alt=""
-            onLoad={() => setLoaded(true)}
-            className={`m-0 w-full rounded-xl ${loaded ? "block" : "hidden"}`}
-          />
-          <img
-            src="/images/animations/loading.gif"
-            alt="News Header Loading"
-            className={`m-0 w-full rounded-xl ${!loaded ? "block" : "hidden"}`}
-          />
-        </div>
+        <FadeImage
+          src={news.image}
+          wrapperClassName="motion-glass m-0 w-full rounded-xl group-hover:scale-[0.97]"
+          // The banners are 1200x630; holding that shape open keeps the title
+          // below from jumping when the image lands.
+          pendingClassName="aspect-[1200/630]"
+          className="m-0 w-full rounded-xl"
+        />
         <p className="px-1 text-[21px] leading-[1.2] font-semibold break-words text-black max-[470px]:text-[18px] dark:text-white">
           {localizedField(news, "title", locale)}
         </p>

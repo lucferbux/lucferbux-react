@@ -34,9 +34,9 @@ describe("NewsPage", () => {
   it("renders loading state initially", () => {
     mockOnSnapshot.mockImplementation(() => vi.fn());
     renderPage();
-    // Should show loading spinner (animated div)
-    const spinner = document.querySelector(".animate-spin");
-    expect(spinner).toBeTruthy();
+    // Placeholders stand in for the cards, and the page keeps its title.
+    expect(screen.getByRole("status")).toBeInTheDocument();
+    expect(screen.getByText("Latest News")).toBeInTheDocument();
   });
 
   it("renders section title after data loads", async () => {

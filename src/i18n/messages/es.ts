@@ -137,6 +137,7 @@ const es = {
     switchToEnglish: "Switch to English",
     switchToSpanish: "Cambiar a español",
     skipToContent: "Saltar al contenido",
+    loading: "Cargando…",
   },
 } as const satisfies WidenMessages<typeof en>;
 

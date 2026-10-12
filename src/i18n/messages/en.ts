@@ -135,6 +135,7 @@ const en = {
     switchToEnglish: "Switch to English",
     switchToSpanish: "Cambiar a español",
     skipToContent: "Skip to content",
+    loading: "Loading…",
   },
 } as const;
 

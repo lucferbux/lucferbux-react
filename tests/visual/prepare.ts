@@ -18,8 +18,6 @@ const FREEZE_CSS = `
     transition: none !important;
     caret-color: transparent !important;
   }
-  /* The cards swap in an animated GIF until their image loads. */
-  img[src$="loading.gif"] { visibility: hidden !important; }
 `;
 
 export async function preparePage(page: Page): Promise<void> {
