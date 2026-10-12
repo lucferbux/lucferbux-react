@@ -163,6 +163,30 @@ tried in `70d92b1` and reverted in `88b2d24`. Safari also never reaches `html` w
 has a background, so it does not even achieve what it was for — see the page-tint notes
 before touching `index.html`, `SEO.tsx` or the body background.
 
+### 13. The navigation is three pieces, switched at 650px
+
+- `PageTint` — a 4px `fixed` strip at the top. It is the element Safari 26 samples for its
+  toolbar colour (fixed, opaque, full width, ≥3px). Remove it, make it translucent or make it
+  `absolute`, and the toolbar silently goes white. `tests/visual/page-tint.spec.ts` guards it.
+- `Header` — `absolute`, transparent, scrolls away with the page. It must not be in flow: the
+  wave backgrounds are positioned from the top of `<main>`.
+- `TabBar` — the phone's navigation, a fixed glass capsule at the bottom. `Layout` renders
+  **either** the header or the tab bar from `useMediaQuery("(width < 650px)")`, never both.
+
+The same 650px switches the spacing variables in `globals.css`: `--chrome-top` (header height
+plus the status-bar inset; just the inset on a phone), `--page-gap`, and `--tabbar-clearance`
+(what the footer leaves free under its last line). Pages take their top padding from the
+`pt-page` utility and tune it with `[--page-gap:…]` — do not go back to hardcoded `pt-[150px]`.
+If you change the breakpoint, change it in both `Layout.tsx` and `globals.css`.
+
+### 14. The visual suite cannot see `backdrop-filter`
+
+Playwright's headless Chromium computes `backdrop-filter` but does not paint it, so every
+baseline shows glass as a flat tint. That hid a real bug for months: the build kept only the
+`-webkit-` declaration and Chrome shipped with no blur at all. In `.glass-panel` the prefixed
+declaration must come **first**. To check blur, use a real browser
+(`chromium.launch({ channel: "chrome" })`), not the suite.
+
 ---
 
 ## Directory Structure
@@ -194,7 +218,7 @@ before touching `index.html`, `SEO.tsx` or the body background.
 │   │   ├── source/           # QueryDescriptor + Firestore/fixture data sources
 │   │   ├── model/            # TypeScript interfaces
 │   │   └── schema/           # CollectionSchema descriptors driving the admin
-│   ├── hooks/                # useFirestoreCollection, useAuth, usePageTheme, useMediaQuery
+│   ├── hooks/                # useFirestoreCollection, useAuth, useActiveSection, useMediaQuery
 │   ├── styles/               # globals.css (@theme + dark mode), blog.css
 │   └── utils/                # parseFrontmatter, localized
 ├── tests/
