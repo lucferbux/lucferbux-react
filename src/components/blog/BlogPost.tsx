@@ -131,7 +131,7 @@ export default function BlogPost({
   return (
     <div className="overflow-hidden">
       <WaveBody />
-      <div className="relative mx-auto max-w-[800px] px-[30px] pt-[140px] pb-[30px]">
+      <div className="relative mx-auto max-w-[800px] px-[30px] pt-page pb-[30px] [--page-gap:84px]">
         {/* A post is usually arrived at from a card somewhere else on the
             site, and the only way back was the browser's own button — which an
             installed PWA does not show. `blog.backToPosts` was already in both

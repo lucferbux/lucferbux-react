@@ -3,9 +3,11 @@ import { preparePage, settle } from "./prepare";
 
 /**
  * Safari 26 ignores `theme-color` and instead samples a fixed element near the
- * viewport top. These assertions encode its documented requirements, so the
- * moment someone makes the header translucent, narrow, or absolutely
- * positioned again, this fails rather than the toolbar quietly turning white.
+ * viewport top. These assertions encode its documented requirements for the
+ * element that carries the tint (`[data-page-tint]`: the `PageTint` strip on
+ * the public site, the fixed header in the admin), so the moment someone makes
+ * it translucent, narrow, or absolutely positioned, this fails rather than the
+ * toolbar quietly turning white.
  *
  * Chromium cannot reproduce Safari's tint derivation, so this checks the
  * preconditions rather than the outcome; the outcome needs a real device.
@@ -29,13 +31,19 @@ const CASES = [
     ready: "text=Terms & Conditions",
     expected: "rgb(0, 119, 137)",
   },
+  {
+    name: "admin",
+    path: "/admin",
+    ready: "text=Dashboard",
+    expected: "rgb(0, 119, 137)",
+  },
 ];
 
 test.describe("page tint", () => {
   test.skip(({ colorScheme }) => colorScheme === "dark", "light project only");
 
   for (const { name, path, ready, expected } of CASES) {
-    test(`${name} header satisfies Safari's sampling rules`, async ({
+    test(`${name} tint carrier satisfies Safari's sampling rules`, async ({
       page,
     }) => {
       await page.setViewportSize({ width: 390, height: 900 });
@@ -44,7 +52,7 @@ test.describe("page tint", () => {
       await settle(page, ready);
 
       const header = await page.evaluate(() => {
-        const el = document.querySelector("header");
+        const el = document.querySelector("[data-page-tint]");
         if (!el) return null;
         const style = getComputedStyle(el);
         const box = el.getBoundingClientRect();
@@ -68,6 +76,18 @@ test.describe("page tint", () => {
       expect(header!.backgroundColor).toBe(expected);
     });
   }
+
+  test("the public header scrolls away with the page", async ({ page }) => {
+    await preparePage(page);
+    await page.goto("/en/news", { waitUntil: "domcontentloaded" });
+    await settle(page, "text=Latest News");
+
+    expect(
+      await page.evaluate(
+        () => getComputedStyle(document.querySelector("header")!).position
+      )
+    ).not.toBe("fixed");
+  });
 
   test("the page declares a colour scheme", async ({ page }) => {
     await preparePage(page);

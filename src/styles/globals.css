@@ -785,7 +785,7 @@
 }
 
 /* ===========================
-   Page tint (header + Safari toolbar)
+   Page tint (Safari toolbar)
    ===========================
    Safari 26 parses but ignores `theme-color`. It derives the toolbar tint from
    the background-color of a fixed element within 4px of the viewport top that
@@ -793,9 +793,10 @@
    otherwise it falls back to `body`, which is why the orange home page used to
    render a near-white toolbar.
 
-   The fixed header is that element. `--nav-from` is its opaque background-color
-   (what Safari samples) and the gradient on top of it continues the page's own
-   wave gradient at the same geometry, so the bar is visually seamless.
+   `PageTint`, a thin fixed strip, is that element (the admin's fixed header is
+   its own). `--nav-from` is its opaque background-color (what Safari samples)
+   and the gradient on top of it continues the page's own wave gradient at the
+   same geometry, so the strip is visually seamless at the top of the page.
 
    Setting this from CSS on a `data-page` attribute, rather than from an effect
    writing to documentElement, is deliberate: the previous attempt at this
@@ -854,6 +855,30 @@
       rgb(40, 119, 137) 98.38%
     );
   }
+}
+
+/* ===========================
+   Page top spacing
+   ===========================
+   Every page starts its content the height of the top chrome plus a gap below
+   it. `--chrome-top` is that chrome; `--page-gap` is the breathing room, which
+   a page overrides on its own wrapper (`[--page-gap:84px]`) when its design
+   wants a different rhythm. */
+
+:root {
+  --header-h: 56px;
+  --chrome-top: calc(env(safe-area-inset-top, 0px) + var(--header-h));
+  --page-gap: 94px;
+}
+
+@media (width < 650px) {
+  :root {
+    --page-gap: 64px;
+  }
+}
+
+@utility pt-page {
+  padding-top: calc(var(--chrome-top) + var(--page-gap));
 }
 
 @layer components {

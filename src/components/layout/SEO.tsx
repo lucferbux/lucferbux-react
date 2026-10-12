@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { LOCALES, type Locale } from "../../i18n/locales";
+import { stripLocale } from "../../i18n/stripLocale";
 
 interface SEOProps {
   title: string;
@@ -60,7 +61,7 @@ export default function SEO({
   const metaUrl = absolute(url || pathname);
 
   // Path without its locale segment, so the alternates can be rebuilt.
-  const pathWithoutLocale = pathname.replace(/^\/(en|es)(?=\/|$)/, "") || "/";
+  const pathWithoutLocale = stripLocale(pathname) || "/";
 
   return (
     <Helmet
