@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="We built TCP on top of SMS">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1077.5 301.3 Q 1077.5 301.3 1076.2 369.1 Q 1074.8 436.8 1001.4 454.0 Q 928.0 471.2 891.9 413.0 Q 855.9 354.7 841.5 294.4 Q 827.2 234.1 884.9 214.7 Q 942.6 195.3 994.9 197.8 Q 1047.3 200.4 1062.4 250.8 Z" fill="#a08153" opacity="0.48" />
+    <path d="M 200.6 422.5 Q 200.6 422.5 174.6 500.4 Q 148.6 578.2 71.9 564.2 Q -4.7 550.1 -45.5 513.0 Q -86.3 475.8 -117.9 407.3 Q -149.5 338.8 -76.1 321.3 Q -2.7 303.8 47.8 316.9 Q 98.2 330.0 149.4 376.2 Z" fill="#eabe7d" opacity="0.40" />
+    <path d="M 216.5 337.0 Q 216.5 337.0 170.8 390.6 Q 125.1 444.2 68.6 450.7 Q 12.2 457.2 -59.6 438.3 Q -131.3 419.3 -107.6 348.4 Q -83.9 277.5 -43.0 215.8 Q -2.2 154.0 68.0 183.8 Q 138.1 213.6 177.3 275.3 Z" fill="#2b2830" opacity="0.58" />
+    <path d="M 818.4 466.0 Q 818.4 466.0 755.7 527.8 Q 693.0 589.7 620.0 631.6 Q 547.0 673.5 501.7 602.9 Q 456.5 532.4 436.6 456.4 Q 416.7 380.4 488.0 346.6 Q 559.4 312.8 642.2 307.5 Q 725.0 302.1 771.7 384.0 Z" fill="#a08153" opacity="0.51" />
+    <path d="M 786.9 48.5 Q 786.9 48.5 779.5 183.9 Q 772.1 319.3 628.6 339.6 Q 485.1 359.9 366.6 278.4 Q 248.1 196.8 242.3 45.7 Q 236.4 -105.5 360.6 -185.2 Q 484.7 -264.8 623.2 -237.0 Q 761.7 -209.2 774.3 -80.4 Z" fill="#eabe7d" opacity="0.57" />
+    <path d="M 1054.9 80.8 Q 1054.9 80.8 1045.1 205.6 Q 1035.2 330.3 899.6 363.5 Q 764.1 396.6 694.3 289.7 Q 624.6 182.7 616.7 77.0 Q 608.9 -28.7 685.2 -137.2 Q 761.6 -245.8 874.3 -177.1 Q 987.0 -108.4 1021.0 -13.8 Z" fill="#2b2830" opacity="0.31" />
+    <path d="M 135.7 98.8 Q 135.7 98.8 109.0 145.2 Q 82.3 191.7 27.6 222.5 Q -27.0 253.3 -70.2 205.3 Q -113.4 157.3 -97.3 106.5 Q -81.1 55.7 -48.3 25.5 Q -15.4 -4.8 33.2 0.8 Q 81.8 6.5 108.8 52.6 Z" fill="#a08153" opacity="0.55" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="252.9" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">RETROSPECTIVE</text>
+  <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="78" font-weight="700" fill="#ffffff">We built TCP on top of SMS</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

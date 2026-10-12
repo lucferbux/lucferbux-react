@@ -186,11 +186,17 @@ function collectNews() {
   } catch {
     return [];
   }
-  return rows.map((row) => ({
-    slug: row._id,
-    title: row.title?.en ?? row.title?.es ?? row._id,
-    kicker: "News",
-  }));
+  // Only entries that actually point at a generated banner. The archive
+  // carries its own artwork in Firebase Storage, and generating files for
+  // those left orphans in `public/images/banners/` that nothing referenced —
+  // twice, before this check existed.
+  return rows
+    .filter((row) => String(row.image ?? "").startsWith("/images/banners/"))
+    .map((row) => ({
+      slug: row._id,
+      title: row.title?.en ?? row.title?.es ?? row._id,
+      kicker: "News",
+    }));
 }
 
 function collectPosts() {

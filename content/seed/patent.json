@@ -1,5 +1,85 @@
 [
   {
+    "_id": "bff-per-module-go",
+    "title": {
+      "en": "One BFF per module, written in Go",
+      "es": "Un BFF por módulo, escrito en Go"
+    },
+    "description": {
+      "en": "If every module in a console talks to Kubernetes from the browser, you end up handing out permissions you should not. A backend per module changes that conversation.",
+      "es": "Si cada módulo de una consola habla con Kubernetes desde el navegador, acabas repartiendo permisos que no deberías. Un backend por módulo cambia esa conversación."
+    },
+    "internalLink": "bff-per-module-go",
+    "link": "",
+    "image": "/images/banners/bff-per-module-go.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "ios-white-label-2016",
+    "title": {
+      "en": "White-labelling iOS before Xcode made it easy",
+      "es": "Marca blanca en iOS antes de que Xcode lo pusiera fácil"
+    },
+    "description": {
+      "en": "One app, twenty-odd resellers, an App Store listing for each. In 2016 you solved that by duplicating targets and hoping.",
+      "es": "Una app, veintitantos distribuidores, una ficha en la App Store para cada uno. En 2016 eso se resolvía duplicando targets y rezando."
+    },
+    "internalLink": "ios-white-label-2016",
+    "link": "",
+    "image": "/images/banners/ios-white-label-2016.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "module-federation-kubernetes",
+    "title": {
+      "en": "Module Federation in a Kubernetes product",
+      "es": "Module Federation en un producto de Kubernetes"
+    },
+    "description": {
+      "en": "Loading UI modules at runtime is the easy part. The hard part is each one pointing at the right place in a cluster you cannot know about at build time.",
+      "es": "Cargar módulos de interfaz en tiempo de ejecución es la parte fácil. La difícil es que cada uno apunte al sitio correcto en un clúster que no conoces al compilar."
+    },
+    "internalLink": "module-federation-kubernetes",
+    "link": "",
+    "image": "/images/banners/module-federation-kubernetes.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "patternfly-to-mui-tokens",
+    "title": {
+      "en": "Two design systems, one source of truth",
+      "es": "Dos sistemas de diseño, una sola fuente de verdad"
+    },
+    "description": {
+      "en": "The same module had to look native in two products with different design systems. The way out was not maintaining two themes, but generating one from the other.",
+      "es": "El mismo módulo tenía que verse nativo en dos productos con sistemas de diseño distintos. La salida no fue mantener dos temas, sino generar uno a partir del otro."
+    },
+    "internalLink": "patternfly-to-mui-tokens",
+    "link": "",
+    "image": "/images/banners/patternfly-to-mui-tokens.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "sms-stack-tcp-over-sms",
+    "title": {
+      "en": "We built TCP on top of SMS",
+      "es": "Construimos TCP sobre SMS"
+    },
+    "description": {
+      "en": "In 2018 we built a reliable transport layer over text messages. The hard part was not the protocol: it was keeping three implementations compatible on the wire.",
+      "es": "En 2018 hicimos una pila de transporte fiable sobre mensajes de texto. La parte difícil no fue el protocolo: fue mantener tres implementaciones compatibles a nivel de cable."
+    },
+    "internalLink": "sms-stack-tcp-over-sms",
+    "link": "",
+    "image": "/images/banners/sms-stack-tcp-over-sms.svg",
+    "date": "2026-10-12T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "spec-driven-ai-sdlc",
     "title": {
       "en": "Spec-driven development with AI",

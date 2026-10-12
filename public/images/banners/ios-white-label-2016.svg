@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="White-labelling iOS before Xcode made it easy">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007789" />
+      <stop offset="55%" stop-color="#b0c4c7" />
+      <stop offset="100%" stop-color="#c98c31" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 630.1 4.5 Q 630.1 4.5 554.0 72.2 Q 477.9 140.0 403.7 160.9 Q 329.4 181.9 251.4 140.5 Q 173.4 99.1 183.3 9.2 Q 193.1 -80.6 254.9 -154.5 Q 316.7 -228.3 417.1 -204.4 Q 517.4 -180.5 573.8 -88.0 Z" fill="#007789" opacity="0.34" />
+    <path d="M 1410.5 433.1 Q 1410.5 433.1 1353.9 519.9 Q 1297.3 606.7 1204.6 622.5 Q 1111.9 638.2 1020.6 590.9 Q 929.3 543.6 926.6 431.8 Q 923.9 319.9 1012.3 249.2 Q 1100.7 178.5 1180.6 242.0 Q 1260.5 305.5 1335.5 369.3 Z" fill="#b0c4c7" opacity="0.45" />
+    <path d="M 1132.3 437.4 Q 1132.3 437.4 1061.7 497.6 Q 991.1 557.8 923.0 585.9 Q 854.8 614.1 774.5 574.1 Q 694.2 534.2 711.9 445.9 Q 729.6 357.7 795.4 323.4 Q 861.3 289.1 938.5 287.6 Q 1015.8 286.1 1074.0 361.8 Z" fill="#c98c31" opacity="0.60" />
+    <path d="M 1311.1 53.7 Q 1311.1 53.7 1289.9 152.7 Q 1268.6 251.8 1162.6 270.9 Q 1056.6 290.0 943.9 239.1 Q 831.1 188.2 840.7 58.3 Q 850.4 -71.6 946.3 -158.9 Q 1042.2 -246.1 1153.9 -193.4 Q 1265.5 -140.7 1288.3 -43.5 Z" fill="#007789" opacity="0.53" />
+    <path d="M 856.2 446.6 Q 856.2 446.6 809.1 512.9 Q 762.0 579.3 687.4 608.0 Q 612.8 636.7 541.5 586.4 Q 470.3 536.1 487.3 454.8 Q 504.4 373.4 555.7 302.4 Q 607.1 231.4 716.5 232.6 Q 825.9 233.8 841.0 340.2 Z" fill="#b0c4c7" opacity="0.39" />
+    <path d="M 970.6 506.6 Q 970.6 506.6 908.1 625.4 Q 845.6 744.3 727.3 728.7 Q 608.9 713.2 485.6 680.6 Q 362.3 648.0 402.8 526.1 Q 443.3 404.1 515.8 307.0 Q 588.3 209.8 704.9 254.6 Q 821.4 299.3 896.0 402.9 Z" fill="#c98c31" opacity="0.56" />
+    <path d="M 1258.0 108.0 Q 1258.0 108.0 1253.0 196.6 Q 1247.9 285.2 1155.3 292.7 Q 1062.7 300.3 1017.1 236.6 Q 971.6 173.0 937.7 91.7 Q 903.7 10.3 979.3 -54.4 Q 1054.8 -119.1 1153.8 -97.2 Q 1252.8 -75.3 1255.4 16.4 Z" fill="#007789" opacity="0.48" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="222.28" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">RETROSPECTIVE</text>
+  <text x="80" y="287" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">White-labelling iOS before</text>
+    <text x="80" y="367" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Xcode made it easy</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>
