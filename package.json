@@ -62,7 +62,7 @@
     "banners": "node scripts/generate-banners.mjs",
     "banners:upload": "node scripts/upload-banners.mjs",
     "build": "tsc --noEmit && vite build",
-    "deploy:rules": "firebase deploy --only firestore:rules,firestore:indexes,storage:rules",
+    "deploy:rules": "firebase deploy --only firestore:rules,firestore:indexes,storage",
     "dev": "vite",
     "dev:fixtures": "VITE_FIXTURE_DATA=1 vite",
     "emulators": "firebase emulators:start --only firestore,auth,storage",
