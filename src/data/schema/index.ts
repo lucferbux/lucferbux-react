@@ -1,8 +1,10 @@
 import type { CollectionSchema, FieldSchema, SelectOption } from "./types";
-import { KNOWN_POST_SLUGS } from "../../pages/BlogPostPage";
+import { KNOWN_POST_SLUGS } from "../posts";
 import { isSafeUrl } from "../../utils/safeHref";
+import type { CollectionKey } from "./keys";
 
 export * from "./types";
+export * from "./keys";
 
 const required = {
   en: "This field is required",
@@ -396,6 +398,6 @@ export const SCHEMAS = {
   projects: PROJECTS_SCHEMA,
   work: WORK_SCHEMA,
   teaching: TEACHING_SCHEMA,
-} as const;
+} as const satisfies Record<CollectionKey, CollectionSchema>;
 
 export const REQUIRED_MESSAGE = required;

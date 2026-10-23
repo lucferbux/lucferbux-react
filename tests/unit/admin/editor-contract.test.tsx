@@ -47,7 +47,9 @@ vi.mock("firebase/firestore", () => ({
   },
 }));
 
-vi.mock("@/firebase", () => ({ auth: {}, db: {}, app: {} }));
+vi.mock("@/firebase", () => ({ db: {}, app: {} }));
+vi.mock("@/firebaseAuth", () => ({ auth: {} }));
+vi.mock("@/firebaseStorage", () => ({ storage: {} }));
 
 import CollectionEditor from "@/components/admin/CollectionEditor";
 import { SCHEMAS } from "@/data/schema";

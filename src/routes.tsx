@@ -1,22 +1,43 @@
+import { lazy, Suspense } from "react";
 import { Outlet, Routes, Route } from "react-router";
+import { Helmet } from "react-helmet-async";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import NewsPage from "./pages/NewsPage";
 import PostsPage from "./pages/PostsPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import TeachingPage from "./pages/TeachingPage";
-import PrivacyPage from "./pages/PrivacyPage";
-import TermsPage from "./pages/TermsPage";
-import BlogPostPage from "./pages/BlogPostPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import AdminLayout from "./components/admin/AdminLayout";
-import LoginForm from "./components/admin/LoginForm";
-import Dashboard from "./components/admin/Dashboard";
-import CollectionEditor from "./components/admin/CollectionEditor";
-import { SCHEMAS } from "./data/schema";
+import LoadingSpinner from "./components/common/LoadingSpinner";
+import { COLLECTION_KEYS } from "./data/schema/keys";
 import LocaleRoute, { RedirectToLocale } from "./i18n/LocaleRoute";
 import { LanguageProvider, useTranslation } from "./i18n/LanguageContext";
-import { Helmet } from "react-helmet-async";
+
+/*
+ * Code splitting. The listing pages stay in the main bundle so navigating
+ * between them never shows a fallback. Split out:
+ * - the admin, which brings Firebase Auth and Storage, the schemas and the
+ *   post index — none of which a visitor needs;
+ * - the article page, which brings every post body, react-markdown and Prism;
+ * - the legal pages, which are long and rarely visited.
+ * The admin routes themselves stay declared here, with static paths: see
+ * `data/schema/keys.ts` for why they cannot be a lazily loaded `/admin/*` tree.
+ */
+const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
+const LoginForm = lazy(() => import("./components/admin/LoginForm"));
+const Dashboard = lazy(() => import("./components/admin/Dashboard"));
+const AdminCollection = lazy(
+  () => import("./components/admin/AdminCollection")
+);
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
+const TermsPage = lazy(() => import("./pages/TermsPage"));
+
+/** The public pages set `<html lang>` through `SEO`; the admin has no `SEO`. */
+function AdminDocumentLang() {
+  const { locale } = useTranslation();
+  return <Helmet htmlAttributes={{ lang: locale }} />;
+}
 
 /**
  * Admin is deliberately not locale-prefixed: it is private and single-audience.
@@ -27,15 +48,17 @@ function AdminLocaleBoundary() {
   return (
     <LanguageProvider>
       <AdminDocumentLang />
-      <Outlet />
+      <Suspense
+        fallback={
+          <div className="flex min-h-[60vh] items-center justify-center">
+            <LoadingSpinner />
+          </div>
+        }
+      >
+        <Outlet />
+      </Suspense>
     </LanguageProvider>
   );
-}
-
-/** The public pages set `<html lang>` through `SEO`; the admin has no `SEO`. */
-function AdminDocumentLang() {
-  const { locale } = useTranslation();
-  return <Helmet htmlAttributes={{ lang: locale }} />;
 }
 
 export default function AppRoutes() {
@@ -46,11 +69,11 @@ export default function AppRoutes() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          {Object.values(SCHEMAS).map((schema) => (
+          {COLLECTION_KEYS.map((key) => (
             <Route
-              key={schema.key}
-              path={schema.key}
-              element={<CollectionEditor schema={schema} />}
+              key={key}
+              path={key}
+              element={<AdminCollection schemaKey={key} />}
             />
           ))}
         </Route>

@@ -16,10 +16,11 @@ vi.mock("firebase/auth", () => ({
 }));
 
 vi.mock("@/firebase", () => ({
-  auth: {},
   db: {},
   app: {},
 }));
+vi.mock("@/firebaseAuth", () => ({ auth: {} }));
+vi.mock("@/firebaseStorage", () => ({ storage: {} }));
 
 import { useAuth } from "@/hooks/useAuth";
 

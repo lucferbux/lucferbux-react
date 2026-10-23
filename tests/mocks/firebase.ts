@@ -95,9 +95,9 @@ export function setupFirebaseMocks(
   // Mock the app's firebase module
   vi.mock("@/firebase", () => ({
     db: mockDb,
-    auth: mockAuth,
     app: mockApp,
   }));
+  vi.mock("@/firebaseAuth", () => ({ auth: mockAuth }));
 
   return { mockOnSnapshot };
 }

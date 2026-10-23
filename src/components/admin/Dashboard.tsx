@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { SCHEMAS } from "@/data/schema";
 import { useTranslation } from "@/i18n/LanguageContext";
 import type { Locale } from "@/i18n/locales";
-import { KNOWN_POST_SLUGS } from "@/pages/BlogPostPage";
+import { KNOWN_POST_SLUGS } from "@/data/posts";
 
 const COPY = {
   en: {

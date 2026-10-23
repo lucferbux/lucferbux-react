@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import Header from "./Header";
 import TabBar from "./TabBar";
 import Footer from "./Footer";
@@ -48,7 +48,11 @@ export default function Layout() {
       </a>
       {!tabs && <Header />}
       <main id="main" tabIndex={-1}>
-        <Outlet />
+        {/* Lazily loaded pages (see routes.tsx). The fallback holds a screen of
+            height so the footer does not flash up under the header. */}
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
       {tabs && <TabBar />}

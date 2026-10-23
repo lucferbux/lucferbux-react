@@ -32,7 +32,9 @@ vi.mock("firebase/auth", () => ({
   getAuth: vi.fn(),
 }));
 
-vi.mock("@/firebase", () => ({ auth: {}, db: {}, app: {} }));
+vi.mock("@/firebase", () => ({ db: {}, app: {} }));
+vi.mock("@/firebaseAuth", () => ({ auth: {} }));
+vi.mock("@/firebaseStorage", () => ({ storage: {} }));
 
 import AppRoutes from "@/routes";
 
@@ -112,9 +114,14 @@ describe("routes", () => {
 
   it("renders a blog post from markdown", async () => {
     renderRoute("/blog/react-solid");
-    await waitFor(() => {
-      expect(screen.getAllByText(/SOLID/i).length).toBeGreaterThan(0);
-    });
+    // The article page is a lazy chunk carrying every post body, markdown and
+    // Prism; its first import here takes longer than waitFor's 1s default.
+    await waitFor(
+      () => {
+        expect(screen.getAllByText(/SOLID/i).length).toBeGreaterThan(0);
+      },
+      { timeout: 10_000 }
+    );
   });
 
   it("renders the admin login form for an unauthenticated visitor", async () => {

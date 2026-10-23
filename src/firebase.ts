@@ -1,7 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API,
@@ -12,10 +10,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+/**
+ * Only what the public site needs. Auth and Storage live in
+ * `firebaseAuth.ts` / `firebaseStorage.ts`, which only the lazily loaded admin
+ * imports — importing them here would put both SDKs in every visitor's bundle.
+ */
+export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const auth = getAuth(app);
-// The bucket was already in the config; nothing consumed it until the admin
-// gained image uploads.
-export const storage = getStorage(app);
 export default app;

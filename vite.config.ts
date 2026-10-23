@@ -138,12 +138,6 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
-        // The app ships as one chunk of ~2 MiB (just under Workbox's default
-        // precache limit; the fixture build, which bundles the seed corpus, is
-        // just over). vite-plugin-pwa 2 fails the build on an oversized asset
-        // instead of warning, so headroom here keeps a dependency bump from
-        // breaking the deploy. Code-splitting is the real fix.
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
@@ -194,6 +188,43 @@ export default defineConfig({
     // "hidden" emits maps for error reporting without advertising them to
     // visitors via a sourceMappingURL comment.
     sourcemap: "hidden",
+    rolldownOptions: {
+      output: {
+        // Vendor code changes far less often than the app, so separate chunks
+        // keep it cached across deploys. Auth and Storage get their own groups
+        // so that they stay with the lazily loaded admin instead of riding
+        // along with Firestore into every visitor's download.
+        //
+        // A group also captures its dependencies, so the core group must claim
+        // the shared Firebase modules (app, util, component) first — hence the
+        // priorities. Otherwise the auth chunk swallows them, Firestore imports
+        // from it, and Auth is back in the eager graph.
+        codeSplitting: {
+          groups: [
+            {
+              name: "react",
+              priority: 30,
+              test: /node_modules[\\/](react|react-dom|scheduler|react-router)[\\/]/,
+            },
+            {
+              name: "firebase",
+              priority: 20,
+              test: /node_modules[\\/](@firebase[\\/](?!auth|storage)|firebase[\\/](?!auth|storage))/,
+            },
+            {
+              name: "firebase-auth",
+              priority: 10,
+              test: /node_modules[\\/](@firebase[\\/]auth|firebase[\\/]auth)[\\/]/,
+            },
+            {
+              name: "firebase-storage",
+              priority: 10,
+              test: /node_modules[\\/](@firebase[\\/]storage|firebase[\\/]storage)[\\/]/,
+            },
+          ],
+        },
+      },
+    },
   },
   server: {
     port: 5173,
