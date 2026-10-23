@@ -349,9 +349,10 @@ block back to `firebase.json` or the site ends up served from two places.
 `.github/workflows/ci.yml` runs `npm ci --ignore-scripts` → registry signature check →
 audit → format → lint → type-check → coverage → build on push and PR.
 
-`.github/workflows/security.yml` runs CodeQL (TypeScript and the workflows themselves),
-gitleaks over the full history, OSV-Scanner on the lockfile and, on PRs, dependency review.
+`.github/workflows/security.yml` runs gitleaks over the full history, OSV-Scanner on the lockfile and, on PRs, dependency review.
 It also runs weekly, so a new advisory against an unchanged dependency still surfaces.
+CodeQL runs as the repository's code-scanning default setup (extended query suite), not
+from a workflow — GitHub rejects workflow CodeQL results while default setup is enabled.
 Results are in the repository's **Security** tab. Every action is pinned to a commit SHA;
 Dependabot (`.github/dependabot.yml`) bumps both npm packages and those pins.
 
