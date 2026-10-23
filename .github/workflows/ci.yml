@@ -10,25 +10,38 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [22]
+    timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      # Actions are pinned to a commit SHA, not a tag: a tag can be moved to
+      # point at different code, a SHA cannot. Dependabot keeps the pins fresh.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: ${{ matrix.node-version }}
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        # --ignore-scripts: no dependency gets to run code at install time.
+        # Nothing in the tree needs a postinstall to build or test.
+        run: npm ci --ignore-scripts
+
+      - name: Verify registry signatures and provenance
+        run: npm audit signatures
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate
 
       - name: Check formatting
         run: npm run format:check
@@ -41,9 +54,6 @@ jobs:
 
       - name: Run tests
         run: npm run test:coverage
-
-      - name: Audit dependencies
-        run: npm audit --audit-level=high
 
       - name: Build
         run: npm run build

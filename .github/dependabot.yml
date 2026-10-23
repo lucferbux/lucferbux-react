@@ -1,11 +1,25 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
+    # A release gets three days in the wild before it is proposed here. Most
+    # hijacked npm releases are caught and pulled within hours. Security
+    # updates are not delayed by this.
+    cooldown:
+      default-days: 3
+    groups:
+      # One PR for the routine minor/patch churn instead of a dozen.
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # Keeps the SHA pins in .github/workflows current.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
