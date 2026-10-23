@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { menuData } from "../../data/menuData";
 import NavButton from "../buttons/NavButton";
 import { useTranslation } from "../../i18n/LanguageContext";

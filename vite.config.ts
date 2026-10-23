@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
@@ -14,10 +14,56 @@ const dataSourceImpl =
     ? "./src/data/source/fixture.ts"
     : "./src/data/source/firestore.ts";
 
+/**
+ * Content-Security-Policy, injected into the built `index.html` as a <meta>.
+ *
+ * Build-only: the dev server relies on an inline React refresh preamble. As a
+ * <meta> rather than a Netlify header it binds the document but not `/sw.js`,
+ * whose runtime image cache must fetch images from any https origin (see the
+ * note in netlify.toml). `frame-ancestors` is not honoured in a <meta>, so
+ * X-Frame-Options carries that rule.
+ *
+ * - script-src has no 'unsafe-inline': the build emits no inline script, and
+ *   that is what makes an injected <script> or `on*=` attribute inert.
+ * - style-src needs 'unsafe-inline': typewriter-effect injects a <style>.
+ * - img-src allows any https origin: post bodies embed images from dev.to,
+ *   GitHub and Firebase Storage, and admins can paste image URLs.
+ * - connect-src lists exactly what the Firebase SDK talks to (Firestore,
+ *   Storage uploads, email/password Auth and token refresh).
+ */
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data:",
+  "connect-src 'self' https://firestore.googleapis.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com",
+  "frame-src https://codepen.io",
+  "worker-src 'self'",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+const contentSecurityPolicy: Plugin = {
+  name: "content-security-policy",
+  apply: "build",
+  transformIndexHtml: () => [
+    {
+      tag: "meta",
+      attrs: { "http-equiv": "Content-Security-Policy", content: CSP },
+      injectTo: "head-prepend",
+    },
+  ],
+};
+
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    contentSecurityPolicy,
     VitePWA({
       registerType: "autoUpdate",
       // `src/registerServiceWorker.ts` does the registering. The script this
@@ -92,6 +138,12 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+        // The app ships as one chunk of ~2 MiB (just under Workbox's default
+        // precache limit; the fixture build, which bundles the seed corpus, is
+        // just over). vite-plugin-pwa 2 fails the build on an oversized asset
+        // instead of warning, so headroom here keeps a dependency bump from
+        // breaking the deploy. Code-splitting is the real fix.
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
@@ -133,8 +185,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@datasource": path.resolve(__dirname, dataSourceImpl),
+      "@": path.resolve(import.meta.dirname, "./src"),
+      "@datasource": path.resolve(import.meta.dirname, dataSourceImpl),
     },
   },
   build: {

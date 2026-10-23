@@ -2,6 +2,7 @@ import type { Teaching, TeachingLink } from "../../data/model/teaching";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
 import EntityIcon from "../common/EntityIcon";
+import { safeHref } from "../../utils/safeHref";
 
 interface TeachingCardProps {
   course: Teaching;
@@ -10,7 +11,7 @@ interface TeachingCardProps {
 function LinkPill({ label, url }: TeachingLink) {
   return (
     <a
-      href={url}
+      href={safeHref(url)}
       target="_blank"
       rel="noopener noreferrer"
       className="motion-glass rounded-full border border-black/15 bg-black/[0.07] px-3 py-1.5 text-[13px] font-medium !text-black no-underline hover:bg-black/15 dark:border-white/25 dark:bg-white/10 dark:!text-white dark:hover:bg-white/20"
@@ -57,7 +58,7 @@ export default function TeachingCard({ course }: TeachingCardProps) {
           <h3 className="text-[22px] leading-[1.2] font-bold break-words text-black max-xs:text-[18px] dark:text-white">
             {primary ? (
               <a
-                href={primary}
+                href={safeHref(primary)}
                 target="_blank"
                 rel="noopener noreferrer"
                 // Stretched link: the whole card is clickable without nesting

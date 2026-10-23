@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { LOCALES, type Locale } from "../../i18n/locales";
 import { stripLocale } from "../../i18n/stripLocale";

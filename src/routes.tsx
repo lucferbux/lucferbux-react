@@ -1,4 +1,4 @@
-import { Outlet, Routes, Route } from "react-router-dom";
+import { Outlet, Routes, Route } from "react-router";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import NewsPage from "./pages/NewsPage";
@@ -15,7 +15,8 @@ import Dashboard from "./components/admin/Dashboard";
 import CollectionEditor from "./components/admin/CollectionEditor";
 import { SCHEMAS } from "./data/schema";
 import LocaleRoute, { RedirectToLocale } from "./i18n/LocaleRoute";
-import { LanguageProvider } from "./i18n/LanguageContext";
+import { LanguageProvider, useTranslation } from "./i18n/LanguageContext";
+import { Helmet } from "react-helmet-async";
 
 /**
  * Admin is deliberately not locale-prefixed: it is private and single-audience.
@@ -25,9 +26,16 @@ import { LanguageProvider } from "./i18n/LanguageContext";
 function AdminLocaleBoundary() {
   return (
     <LanguageProvider>
+      <AdminDocumentLang />
       <Outlet />
     </LanguageProvider>
   );
+}
+
+/** The public pages set `<html lang>` through `SEO`; the admin has no `SEO`. */
+function AdminDocumentLang() {
+  const { locale } = useTranslation();
+  return <Helmet htmlAttributes={{ lang: locale }} />;
 }
 
 export default function AppRoutes() {

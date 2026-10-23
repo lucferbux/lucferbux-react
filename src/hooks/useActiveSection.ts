@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { stripLocale } from "../i18n/stripLocale";
 
 export type Section = "home" | "news" | "projects" | "posts" | "teaching";

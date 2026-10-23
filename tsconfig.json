@@ -24,13 +24,12 @@
     "allowJs": true,
 
     /* Path aliases */
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
       /* Swapped for the fixture source at build time when VITE_FIXTURE_DATA=1.
          Both modules export the same `dataSource` shape, so type-checking
          against either is equivalent. */
-      "@datasource": ["src/data/source/firestore.ts"]
+      "@datasource": ["./src/data/source/firestore.ts"]
     }
   },
   "include": ["src", "content", "vite-env.d.ts"],

@@ -4,6 +4,7 @@ import NewsCard from "./NewsCard";
 import NewsCardCollapsed from "./NewsCardCollapsed";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { safeHref } from "../../utils/safeHref";
 
 interface NewsCardDetailProps {
   news: News;
@@ -20,7 +21,7 @@ export default function NewsCardDetail({
   const { locale, m } = useTranslation();
   return (
     <a
-      href={news.url}
+      href={safeHref(news.url)}
       target="_blank"
       rel="noopener"
       className="group cursor-pointer motion-glass hover:scale-[1.02] active:scale-[1.005]"

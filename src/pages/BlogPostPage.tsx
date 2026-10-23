@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { useMemo } from "react";
 import { parseFrontmatter } from "../utils/parseFrontmatter";
 import SEO from "../components/layout/SEO";

@@ -2,6 +2,8 @@ rules_version = '2';
 
 // Images are served publicly by the site, but only an administrator may upload,
 // and only images within the size the admin UI also enforces client-side.
+// SVG is refused: it is a script-capable document, and an uploaded one runs
+// its script when its download URL is opened directly.
 service firebase.storage {
   match /b/{bucket}/o {
 
@@ -10,19 +12,21 @@ service firebase.storage {
           && request.auth.token.get('admin', false) == true;
     }
 
+    function isRasterImageUnder5MB() {
+      return request.resource.size < 5 * 1024 * 1024
+          && request.resource.contentType.matches('image/.*')
+          && !request.resource.contentType.matches('image/svg.*');
+    }
+
     match /images/{collection}/{allPaths=**} {
       allow read: if true;
-      allow write: if isAdmin()
-                   && request.resource.size < 5 * 1024 * 1024
-                   && request.resource.contentType.matches('image/.*');
+      allow write: if isAdmin() && isRasterImageUnder5MB();
     }
 
     // Generated post banners, uploaded by scripts/upload-banners.
     match /banners/{allPaths=**} {
       allow read: if true;
-      allow write: if isAdmin()
-                   && request.resource.size < 5 * 1024 * 1024
-                   && request.resource.contentType.matches('image/.*');
+      allow write: if isAdmin() && isRasterImageUnder5MB();
     }
 
     match /{allPaths=**} {

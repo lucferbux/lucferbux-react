@@ -1,5 +1,5 @@
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router";
 import AppRoutes from "./routes";
 
 function App() {
