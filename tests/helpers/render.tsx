@@ -1,6 +1,6 @@
 import { render, type RenderOptions } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import type { ReactElement, ReactNode } from "react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import type { Locale } from "@/i18n/locales";

@@ -1,0 +1,15 @@
+# gitleaks configuration, used by the Security workflow and `gitleaks git .`.
+
+[extend]
+useDefault = true
+
+# Firebase Storage download URLs end in `?alt=media&token=<uuid>`. The token is
+# part of the public image URL the site renders to every visitor (and the bucket
+# is public-read in storage.rules), so it is not a secret. Only that exact URL
+# shape is allowed; anything else in the same files is still reported.
+[[allowlists]]
+description = "Firebase Storage public download tokens"
+regexTarget = "line"
+regexes = [
+  '''https://firebasestorage\.googleapis\.com/v0/b/[a-z0-9.-]+/o/[^"\s?]+\?alt=media&token=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}''',
+]

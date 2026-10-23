@@ -2,6 +2,7 @@ import FadeImage from "../common/FadeImage";
 import { News } from "../../data/model/news";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { safeHref } from "../../utils/safeHref";
 import { formatDate, type DateLike } from "../../i18n/formatDate";
 
 interface NewsCardProps {
@@ -22,7 +23,7 @@ export default function NewsCard({ news, interactive = true }: NewsCardProps) {
 
   return (
     <a
-      href={news.url}
+      href={safeHref(news.url)}
       target="_blank"
       rel="noopener"
       className={`group max-w-[260px] cursor-pointer ${

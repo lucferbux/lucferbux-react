@@ -45,7 +45,8 @@ export async function uploadImage(
   prefix: string,
   onProgress?: (percent: number) => void
 ): Promise<string> {
-  if (!file.type.startsWith("image/")) {
+  // SVG is refused here and in storage.rules: it can carry script.
+  if (!file.type.startsWith("image/") || file.type.startsWith("image/svg")) {
     throw new UploadError("Only image files can be uploaded", "wrong-type");
   }
   if (file.size > MAX_IMAGE_BYTES) {

@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
   useParams,
-} from "react-router-dom";
+} from "react-router";
 import { LanguageProvider, detectLocale } from "./LanguageContext";
 import { isLocale, type Locale } from "./locales";
 

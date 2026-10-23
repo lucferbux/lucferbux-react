@@ -1,5 +1,6 @@
 import type { CollectionSchema, FieldSchema, SelectOption } from "./types";
 import { KNOWN_POST_SLUGS } from "../../pages/BlogPostPage";
+import { isSafeUrl } from "../../utils/safeHref";
 
 export * from "./types";
 
@@ -8,17 +9,15 @@ const required = {
   es: "Este campo es obligatorio",
 };
 
+// `new URL()` alone accepts any scheme, including `javascript:`, which would
+// render as a script-running link on the public site.
 function url(value: unknown) {
   if (typeof value !== "string" || value === "") return null;
-  try {
-    new URL(value);
-    return null;
-  } catch {
-    return {
-      en: "Enter a full URL, including https://",
-      es: "Introduce una URL completa, incluyendo https://",
-    };
-  }
+  if (isSafeUrl(value)) return null;
+  return {
+    en: "Enter a full URL, including https://",
+    es: "Introduce una URL completa, incluyendo https://",
+  };
 }
 
 /**

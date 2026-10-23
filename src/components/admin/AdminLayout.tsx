@@ -1,4 +1,4 @@
-import { Navigate, NavLink, Outlet, Link } from "react-router-dom";
+import { Navigate, NavLink, Outlet, Link } from "react-router";
 import { useAuth } from "@/hooks/useAuth";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import WaveShort from "@/components/backgrounds/WaveShort";

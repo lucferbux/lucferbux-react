@@ -7,7 +7,7 @@
 ## Project Description
 
 Personal website and PWA for Lucas Fernández Aragón (`lucferbux.dev`), built with Vite +
-React 18 as a single-page application. Displays news, blog posts, projects, teaching material
+React 19 as a single-page application. Displays news, blog posts, projects, teaching material
 and a résumé section. Dynamic data lives in Cloud Firestore; blog posts are static Markdown
 files loaded at build time. Includes a Firebase Auth-protected admin section for CRUD on the
 Firestore collections.
@@ -16,18 +16,18 @@ Firestore collections.
 
 | Layer                  | Technology                                                                         |
 | ---------------------- | ---------------------------------------------------------------------------------- |
-| Build                  | Vite 7                                                                             |
-| UI                     | React 18, TypeScript 5 (strict)                                                    |
+| Build                  | Vite 8 (Rolldown), Node 24 (`.nvmrc`)                                              |
+| UI                     | React 19, TypeScript 6 (strict)                                                    |
 | Styling                | Tailwind CSS v4 (CSS-based `@theme` config — there is **no** `tailwind.config.js`) |
-| Routing                | React Router v7                                                                    |
-| Backend                | Firebase JS SDK v12 (modular imports only)                                         |
+| Routing                | React Router v8 (import from `react-router`; `react-router-dom` is gone)           |
+| Backend                | Firebase JS SDK v13 (modular imports only)                                         |
 | Database               | Cloud Firestore                                                                    |
 | Auth                   | Firebase Authentication (email/password)                                           |
 | Blog                   | react-markdown + remark-gfm + rehype-prism-plus                                    |
-| Unit/integration tests | Vitest 4 + React Testing Library                                                   |
+| Unit/integration tests | Vitest 5 + React Testing Library                                                   |
 | Visual regression      | Playwright (`tests/visual/`)                                                       |
 | PWA                    | vite-plugin-pwa (Workbox `generateSW`)                                             |
-| CI                     | GitHub Actions (`ci.yml`)                                                          |
+| CI                     | GitHub Actions (`ci.yml`, `security.yml`)                                          |
 | **Deploy**             | **Netlify** (`netlify.toml`) — _not_ Firebase Hosting                              |
 
 ---
@@ -196,6 +196,30 @@ baseline shows glass as a flat tint. That hid a real bug for months: the build k
 declaration must come **first**. To check blur, use a real browser
 (`chromium.launch({ channel: "chrome" })`), not the suite.
 
+### 15. The Content-Security-Policy is a build-time `<meta>`, not a header
+
+`vite.config.ts` injects it into the built `index.html` (`apply: "build"` — the dev server
+needs an inline React refresh preamble, so `npm run dev` runs without it). `npm run preview`
+and the visual suite **do** run under it. The other security headers (HSTS, `nosniff`,
+`X-Frame-Options`, `Permissions-Policy`, COOP) are in `netlify.toml`.
+
+It is a `<meta>` on purpose: as a header it would also bind `/sw.js`, and the service
+worker's runtime image cache fetches cross-origin images, which `connect-src` would then
+have to allow from everywhere.
+
+When something stops loading in production, check the console for a CSP violation first:
+
+- a new **API origin** (another Firebase product, analytics, an embed) goes in `connect-src`
+  or `frame-src`;
+- **never add `'unsafe-inline'` or `'unsafe-eval'` to `script-src`** — the build emits no
+  inline script, and that is what makes injected markup inert;
+- a Firebase Auth popup/redirect sign-in would need the auth domain in `frame-src` and a
+  relaxed `Cross-Origin-Opener-Policy`.
+
+External links that come from Firestore render through `safeHref()`
+(`src/utils/safeHref.ts`), which drops anything that is not `http(s):`/`mailto:` — React
+still renders `javascript:` URLs. Use it for any new link field.
+
 ---
 
 ## Directory Structure
@@ -322,8 +346,19 @@ publishes `dist/`. There is no deploy workflow in `.github/workflows/`, and the
 Firebase Hosting site on the same project is unused — do not add a `hosting`
 block back to `firebase.json` or the site ends up served from two places.
 
-`.github/workflows/ci.yml` runs format → lint → type-check → coverage → audit →
-build on push and PR.
+`.github/workflows/ci.yml` runs `npm ci --ignore-scripts` → registry signature check →
+audit → format → lint → type-check → coverage → build on push and PR.
+
+`.github/workflows/security.yml` runs gitleaks over the full history, OSV-Scanner on the lockfile and, on PRs, dependency review.
+It also runs weekly, so a new advisory against an unchanged dependency still surfaces.
+CodeQL runs as the repository's code-scanning default setup (extended query suite), not
+from a workflow — GitHub rejects workflow CodeQL results while default setup is enabled.
+Results are in the repository's **Security** tab. Every action is pinned to a commit SHA;
+Dependabot (`.github/dependabot.yml`) bumps both npm packages and those pins.
+
+Dependency install scripts are off: `package.json` `allowScripts` denies the two packages
+that have one, and nothing needs them. Approve a new one with
+`npm install-scripts approve <pkg>` only after reading what it runs.
 
 Firestore and Storage rules deploy separately, and **the order matters**:
 

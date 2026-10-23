@@ -9,7 +9,7 @@ import type { ReactNode, ReactElement } from "react";
 import "../../styles/blog.css";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { formatDate } from "../../i18n/formatDate";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useLocalePath } from "../../i18n/useLocalePath";
 
 interface BlogPostProps {

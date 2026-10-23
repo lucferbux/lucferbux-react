@@ -23,21 +23,21 @@
 
 | Layer        | Technology                                                          |
 | ------------ | ------------------------------------------------------------------- |
-| **Build**    | [Vite](https://vite.dev) 7+                                         |
-| **UI**       | React 18, TypeScript 5 (strict mode)                                |
+| **Build**    | [Vite](https://vite.dev) 8+                                         |
+| **UI**       | React 19, TypeScript 6 (strict mode)                                |
 | **Styling**  | Tailwind CSS v4 (`@theme` config in CSS — no JS config file)        |
-| **Routing**  | React Router v7                                                     |
-| **Backend**  | Firebase JS SDK v12+ (modular, tree-shakeable imports)              |
+| **Routing**  | React Router v8                                                     |
+| **Backend**  | Firebase JS SDK v13+ (modular, tree-shakeable imports)              |
 | **Database** | Cloud Firestore — collections: `intro`, `patent`, `project`, `team` |
 | **Auth**     | Firebase Authentication (email / password)                          |
 | **Blog**     | react-markdown + remark-gfm + rehype-prism-plus                     |
-| **Testing**  | Vitest + React Testing Library + MSW                                |
+| **Testing**  | Vitest + React Testing Library                                      |
 | **PWA**      | vite-plugin-pwa (Workbox generateSW)                                |
 | **CI/CD**    | GitHub Actions → Firebase Hosting                                   |
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) 22+
+- [Node.js](https://nodejs.org/) 24.12+ (see `.nvmrc`)
 - npm 10+
 - [Firebase CLI](https://firebase.google.com/docs/cli) (for deployment)
 

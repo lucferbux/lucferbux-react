@@ -12,6 +12,28 @@
   to = "/index.html"
   status = 200
 
+# Security headers for every response. The Content-Security-Policy is not here:
+# it is a <meta> tag that vite.config.ts injects at build time, so it governs
+# the document only. As a header it would also bind /sw.js, and the service
+# worker's runtime image cache fetches cross-origin images, which `connect-src`
+# would then have to allow from anywhere. `frame-ancestors` cannot be set from a
+# <meta> tag, so X-Frame-Options carries the anti-framing rule.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(self), camera=(), geolocation=(), gyroscope=(self), magnetometer=(self), microphone=(), payment=(), usb=(), browsing-topics=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+
+# The admin is behind Firebase Auth, but there is no reason for it to be indexed.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Cache hashed assets immutably
 [[headers]]
   for = "/assets/*"

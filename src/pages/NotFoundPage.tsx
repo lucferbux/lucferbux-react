@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import SEO from "../components/layout/SEO";
 import WaveShort from "../components/backgrounds/WaveShort";
 import { useTranslation } from "../i18n/LanguageContext";

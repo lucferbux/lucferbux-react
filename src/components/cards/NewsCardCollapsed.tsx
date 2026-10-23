@@ -2,6 +2,7 @@ import FadeImage from "../common/FadeImage";
 import { News } from "../../data/model/news";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { safeHref } from "../../utils/safeHref";
 
 interface NewsCardCollapsedProps {
   news: News;
@@ -12,7 +13,7 @@ export default function NewsCardCollapsed({ news }: NewsCardCollapsedProps) {
 
   return (
     <a
-      href={news.url}
+      href={safeHref(news.url)}
       target="_blank"
       rel="noopener"
       // No hover scale: the surrounding NewsCardDetail already scales.

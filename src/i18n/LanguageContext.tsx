@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -92,11 +91,10 @@ export function LanguageProvider({
     [onLocaleChange]
   );
 
-  // Setting an attribute is idempotent and paints nothing, so unlike a
-  // background-colour effect this is safe to drive from React.
-  useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
+  // `<html lang>` is written by `SEO` (Helmet `htmlAttributes`), which every
+  // public page renders, so that its `lang` override can win. Do not set it here
+  // as well: on React 19 Helmet applies attributes during commit, children
+  // first, so a provider effect runs last and silently reverts the override.
 
   const value = useMemo<LanguageContextValue>(
     () => ({ locale, setLocale, m: dictionaries[locale] }),

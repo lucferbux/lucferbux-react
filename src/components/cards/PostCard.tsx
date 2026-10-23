@@ -1,9 +1,10 @@
 import FadeImage from "../common/FadeImage";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Post } from "../../data/model/post";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { safeHref } from "../../utils/safeHref";
 import { useLocalePath } from "../../i18n/useLocalePath";
 import { formatDate, type DateLike } from "../../i18n/formatDate";
 
@@ -84,7 +85,7 @@ export default function PostCard({ post, fill }: PostCardProps) {
 
   return (
     <a
-      href={post.link}
+      href={safeHref(post.link)}
       target="_blank"
       rel="noopener"
       className="motion-glass relative block h-full cursor-pointer hover:scale-[1.02] active:scale-[1.005]"

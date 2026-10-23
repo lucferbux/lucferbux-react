@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Project } from "../../data/model/project";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { localizedField } from "../../i18n/localized";
+import { safeHref } from "../../utils/safeHref";
 import { toDate, type DateLike } from "../../i18n/formatDate";
 import { toTagArray } from "../../utils/tags";
 import ProjectCover from "../projects/ProjectCover";
@@ -103,7 +104,7 @@ export default function ProjectCard({
           <h3 className="line-clamp-2 text-[22px] leading-[1.2] font-bold text-black dark:text-white">
             {project.link ? (
               <a
-                href={project.link}
+                href={safeHref(project.link)}
                 target="_blank"
                 rel="noopener"
                 className="font-bold !text-black no-underline after:absolute after:inset-0 after:content-[''] dark:!text-white"
@@ -130,7 +131,7 @@ export default function ProjectCard({
                 {links.map((link) => (
                   <a
                     key={link.url}
-                    href={link.url}
+                    href={safeHref(link.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="motion-glass rounded-full bg-black/15 px-2.5 py-1 text-[12px] font-semibold !text-black no-underline hover:bg-black/30 dark:bg-white/15 dark:!text-white dark:hover:bg-white/30"

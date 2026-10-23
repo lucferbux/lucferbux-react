@@ -161,13 +161,16 @@ test.describe("page tint", () => {
     await page.goto("/en/news", { waitUntil: "domcontentloaded" });
     await settle(page, "text=Latest News");
 
+    // On React 19, Helmet lets React hoist real <meta> elements, which carry
+    // no `data-rh` marker. The page's pair follows the two static ones in
+    // index.html.
     const metas = await page.evaluate(() =>
-      Array.from(
-        document.querySelectorAll('meta[name="theme-color"][data-rh]')
-      ).map((m) => ({
-        content: m.getAttribute("content"),
-        media: m.getAttribute("media"),
-      }))
+      Array.from(document.querySelectorAll('meta[name="theme-color"]'))
+        .slice(2)
+        .map((m) => ({
+          content: m.getAttribute("content"),
+          media: m.getAttribute("media"),
+        }))
     );
 
     expect(metas).toHaveLength(2);
