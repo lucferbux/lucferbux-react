@@ -373,6 +373,19 @@ from a workflow — GitHub rejects workflow CodeQL results while default setup i
 Results are in the repository's **Security** tab. Every action is pinned to a commit SHA;
 Dependabot (`.github/dependabot.yml`) bumps both npm packages and those pins.
 
+OSV-Scanner reads `osv-scanner.toml`: each ignored advisory carries a reason and an
+`ignoreUntil` date, after which the scan fails again until someone re-checks it. Never ignore
+one without both.
+
+**Dependabot PRs merge themselves.** `.github/workflows/dependabot-auto-merge.yml` approves
+patch and minor updates (security fixes included) and enables auto-merge. `main` requires
+the `build`, `Secret scan (gitleaks)` and `OSV-Scanner / osv-scan` checks, so GitHub merges
+only once they pass, and a broken update stays open. Majors get a comment and wait for a
+person. Dependabot rebases its own PRs when they conflict, so do not push to a Dependabot
+branch: it stops rebasing one that someone else has touched. An auto-merge deploys the site
+like any other merge to `main`. Majors that cannot land yet are in the `ignore` list in
+`dependabot.yml`, each with its blocker.
+
 Dependency install scripts are off: `package.json` `allowScripts` denies the two packages
 that have one, and nothing needs them. Approve a new one with
 `npm install-scripts approve <pkg>` only after reading what it runs.
