@@ -1,0 +1,11 @@
+# Advisories OSV-Scanner should not fail on, each with a reason and an expiry.
+# When `ignoreUntil` passes, the scan fails again and the entry has to be
+# re-checked: drop it if a fix has shipped, or extend it with a new reason.
+
+[[IgnoredVulns]]
+id = "GHSA-gcqx-w48m-w2h4"
+ignoreUntil = 2027-02-06
+reason = """deepmerge <= 4.3.1, prototype poisoning in mergeObject(). No fixed \
+release exists. It is a dev dependency of @rollup/plugin-node-resolve inside \
+workbox-build, which merges the build's own configuration while generating the \
+service worker. It never runs in the browser or on untrusted input."""

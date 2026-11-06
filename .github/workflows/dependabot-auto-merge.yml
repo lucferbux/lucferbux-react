@@ -1,0 +1,50 @@
+name: Dependabot auto-merge
+
+# Approves Dependabot's patch and minor updates, security fixes included, and
+# turns on auto-merge. GitHub then merges each one only once every required
+# check on `main` has passed, so a broken update simply stays open.
+#
+# Majors are left for a person: they are where breaking changes live (eslint 10
+# needed plugins that did not support it yet). The workflow says so on the PR.
+#
+# Conflicts need nothing from here: Dependabot rebases its own PRs when they
+# conflict, as long as nobody else has pushed to the branch. Merging to `main`
+# deploys the site, so an auto-merged update goes live like any other merge.
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+
+      - name: Approve and enable auto-merge
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        env:
+          PR: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPDATE: ${{ steps.metadata.outputs.update-type }}
+        run: |
+          gh pr review "$PR" --approve --body "Auto-approved: ${UPDATE#version-update:}. It merges once the required checks pass."
+          gh pr merge "$PR" --auto --squash
+
+      - name: Leave majors for review
+        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        env:
+          PR: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NAMES: ${{ steps.metadata.outputs.dependency-names }}
+        run: |
+          # Only once: Dependabot's rebases re-run this workflow.
+          if ! gh pr view "$PR" --json comments --jq '.comments[].body' | grep -q "Major update"; then
+            gh pr comment "$PR" --body "Major update of ${NAMES}: not merged automatically. Check the changelog and merge by hand."
+          fi
