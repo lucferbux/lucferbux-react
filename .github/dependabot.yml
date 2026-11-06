@@ -14,6 +14,23 @@ updates:
       # One PR for the routine minor/patch churn instead of a dozen.
       minor-and-patch:
         update-types: ["minor", "patch"]
+    # Majors that cannot land yet, so their PRs don't sit open failing. Remove
+    # an entry once its blocker is gone. This also holds back a security fix
+    # that only ships as a new major of one of these; all four are dev tools,
+    # and OSV-Scanner and npm audit would still flag the advisory in CI.
+    ignore:
+      # eslint-plugin-jsx-a11y 6.10 peers on eslint <= 9, so eslint 10 does not
+      # install; @eslint/js has to move with eslint.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      # typescript-eslint 8 peers on typescript < 6.1.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # Types follow the Node major in .nvmrc (24), not the newest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   # Keeps the SHA pins in .github/workflows current.
   - package-ecosystem: "github-actions"
