@@ -1,5 +1,27 @@
 [
   {
+    "_id": "embalse-san-juan",
+    "title": {
+      "en": "Embalse San Juan",
+      "es": "Embalse San Juan"
+    },
+    "description": {
+      "en": "Native iOS, iPadOS, watchOS and Android apps, with widgets, showing the live state of the San Juan reservoir from official data. A free backend on GitHub Actions and Firestore collects SAIH Tajo every hour and MITECO every week, validates it against a shared contract and publishes it for the apps to read over REST.",
+      "es": "Apps nativas para iOS, iPadOS, watchOS y Android, con widgets, que enseñan el estado del embalse de San Juan en tiempo real a partir de datos oficiales. Un backend gratuito en GitHub Actions y Firestore recoge el SAIH Tajo cada hora y MITECO cada semana, lo valida contra un contrato compartido y lo publica para que las apps lo lean por REST."
+    },
+    "link": "https://github.com/lucferbux/embalse-san-juan",
+    "tags": [
+      "SwiftUI",
+      "WidgetKit",
+      "Jetpack Compose",
+      "Firestore",
+      "GitHub Actions"
+    ],
+    "featured": false,
+    "version": "1.0",
+    "date": "2026-11-04T12:00:00Z"
+  },
+  {
     "_id": "lucferbux-react",
     "title": {
       "en": "Lucferbux.dev",

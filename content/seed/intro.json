@@ -1,5 +1,20 @@
 [
   {
+    "_id": "embalse-san-juan-launch",
+    "title": {
+      "en": "Embalse San Juan is out on the App Store",
+      "es": "Embalse San Juan, ya en el App Store"
+    },
+    "description": {
+      "en": "My new app is out: Embalse San Juan shows how much water there is in the San Juan reservoir, on the Alberche river in Madrid, right now. It's on the App Store for iPhone, iPad and Apple Watch, with widgets whose water rises and falls with the real level, and the Android version is in testing on Google Play.\n\nThe official figures were already public, but scattered across technical websites. The app brings them together on one screen: fill percentage, volume, level, outflow, weather at the dam, the weekly bulletin compared with last year and the 10-year average, and the full history since 1988. Every figure shows its source and date, and the two sources, SAIH Tajo and MITECO, are never mixed.\n\nThe backend costs nothing to run: GitHub Actions collect the data every hour, Firestore publishes it, and the apps read it over REST without the Firebase SDK, so the widgets stay light. No accounts, no ads and no tracking.\n\nThe code is open on GitHub.",
+      "es": "Ya está publicada mi nueva app: Embalse San Juan enseña cuánta agua hay ahora mismo en el embalse de San Juan, en el río Alberche, en Madrid. Está en el App Store para iPhone, iPad y Apple Watch, con widgets en los que el agua sube y baja con el nivel real, y la versión de Android está en pruebas en Google Play.\n\nLos datos oficiales ya eran públicos, pero estaban repartidos por webs técnicas. La app los junta en una sola pantalla: porcentaje, volumen, cota, caudal desembalsado, el tiempo en la presa, el boletín semanal comparado con el año pasado y con la media de 10 años, y el histórico completo desde 1988. Cada cifra lleva su fuente y su fecha, y las dos fuentes, el SAIH Tajo y MITECO, nunca se mezclan.\n\nEl backend no cuesta nada: GitHub Actions recoge los datos cada hora, Firestore los publica y las apps los leen por REST, sin el SDK de Firebase, para que los widgets sigan siendo ligeros. Sin cuentas, sin anuncios y sin rastreo.\n\nEl código está abierto en GitHub."
+    },
+    "url": "https://embalse-san-juan.web.app/",
+    "image": "/images/banners/embalse-san-juan-launch.jpg",
+    "timestamp": "2026-11-04T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "rhoai-3-modular-platform",
     "title": {
       "en": "OpenShift AI 3.x and the modular dashboard platform",
