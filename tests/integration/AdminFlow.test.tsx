@@ -38,10 +38,11 @@ vi.mock("firebase/firestore", () => ({
 }));
 
 vi.mock("@/firebase", () => ({
-  auth: {},
   db: {},
   app: {},
 }));
+vi.mock("@/firebaseAuth", () => ({ auth: {} }));
+vi.mock("@/firebaseStorage", () => ({ storage: {} }));
 
 import AppRoutes from "@/routes";
 
@@ -112,7 +113,8 @@ describe("Admin Flow", () => {
       ).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/admin@example\.com/)).toBeInTheDocument();
+    // Dashboard is its own lazy chunk; wait for its body, not just a heading.
+    expect(await screen.findByText(/admin@example\.com/)).toBeInTheDocument();
   });
 
   it("shows collection management links on dashboard", async () => {

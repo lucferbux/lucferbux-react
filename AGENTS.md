@@ -220,6 +220,23 @@ External links that come from Firestore render through `safeHref()`
 (`src/utils/safeHref.ts`), which drops anything that is not `http(s):`/`mailto:` — React
 still renders `javascript:` URLs. Use it for any new link field.
 
+### 16. The bundle is split, and three imports would quietly undo it
+
+`routes.tsx` lazy-loads the admin, the article page and the legal pages; the listing pages
+stay eager so moving between them never shows a fallback. Vendor code is grouped in
+`vite.config.ts` (`react`, `firebase`, `firebase-auth`, `firebase-storage`). A visitor
+downloads ~870 KB of JS instead of one ~2 MB chunk. Check `<link rel="modulepreload">` in
+`dist/index.html` after touching any of these:
+
+- **`src/firebase.ts` is app + Firestore only.** Auth is `src/firebaseAuth.ts`, Storage is
+  `src/firebaseStorage.ts`. Importing either from public code puts that SDK back in every
+  visitor's download. Tests mock all three modules.
+- **`src/data/posts.ts` imports every article body eagerly.** Only lazily loaded code (the
+  blog page, the admin) may import it.
+- **The admin routes are static paths built from `data/schema/keys.ts`, not a lazy
+  `/admin/*` tree.** React Router ranks `/:lang/news` above `/admin/*`, so `/admin/news`
+  would render the public 404. `/admin/:collection` would tie with it.
+
 ---
 
 ## Directory Structure

@@ -4,7 +4,7 @@ import {
   uploadBytesResumable,
   type UploadTask,
 } from "firebase/storage";
-import { storage } from "../firebase";
+import { storage } from "../firebaseStorage";
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
