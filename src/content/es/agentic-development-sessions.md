@@ -34,6 +34,23 @@ Lo que funciona es tratar cada fase como un trabajo distinto, con su propio cont
 
 El artefacto entre fases es lo que hace que funcione. Un plan en markdown, un diff, la salida de una suite. Cada uno es pequeño, revisable por una persona, y no arrastra el desorden del paso anterior.
 
+```mermaid title="Four jobs, three artifacts between them"
+flowchart LR
+  PL["Plan<br/>read-only session"] -- "plan.md" --> IM["Implement<br/>fresh session"]
+  IM -- "diff" --> RV["Review<br/>clean session"]
+  PL -. "plan.md" .-> RV
+  RV -- "findings" --> VE["Verify<br/>tests · lint · build"]
+```
+
+Lo que cada sesión puede ver es, en realidad, todo el diseño:
+
+| Sesión | Ve | No ve | Produce |
+| --- | --- | --- | --- |
+| **Planificar** | El repositorio, tus respuestas | — | `plan.md` |
+| **Implementar** | El plan, el repositorio | La exploración | Un diff |
+| **Revisar** | El diff, el plan | La conversación que lo escribió | Hallazgos |
+| **Verificar** | El código | Todo lo demás | Pasa o falla |
+
 ## El handoff es donde se pierde información
 
 La parte frágil no es ninguna fase: es el paso entre ellas. Un plan que dice «refactorizar el módulo de autenticación» no es un handoff, es un título.
@@ -45,7 +62,31 @@ Lo que un plan necesita para que la siguiente sesión no tenga que reconstruirlo
 - **Las trampas**: lo que parece correcto y no lo es. Aquí es donde un fichero de reglas del repositorio paga su coste.
 - **Cómo se verifica**, en comandos concretos.
 
+Un handoff que lleva las cuatro cosas, para un cambio real de este sitio:
+
+```md title="plan.md" {10-12}
+# Move auth out of the public bundle
+
+## Files
+- `src/firebase.ts` — keep app + Firestore only.
+- `src/firebaseAuth.ts` — new; the only module that imports `firebase/auth`.
+
+## Reuse
+- `useAuth()` already wraps sign-in state. Change its import, not its API.
+
+## Traps
+- Any public component importing `firebaseAuth.ts` puts the Auth SDK back
+  in every visitor's download.
+
+## Verify
+- `npm run build`, then check no `firebase-auth` modulepreload in `dist/index.html`.
+- `npm test`
+```
+
 Sin eso, la sesión de implementación vuelve a explorar el repositorio desde cero y toma decisiones distintas de las que acordó el plan.
+
+> [!IMPORTANT]
+> Si la sesión de implementación tiene que abrir más ficheros de los que nombra el plan, el plan no era un handoff. Corrige el plan, no la sesión.
 
 ## Paralelizar sólo lo independiente
 
@@ -55,13 +96,44 @@ Lo que no funciona es paralelizar cosas que escriben en los mismos ficheros. Dos
 
 Una heurística sencilla: si dos trabajos pueden leer lo mismo, van en paralelo; si pueden escribir lo mismo, van en serie.
 
+```mermaid title="Parallel or in series?"
+flowchart LR
+  W{"Might two jobs write<br/>the same files?"} -- "yes" --> SE["In series"]
+  W -- "no" --> PA["In parallel"]
+```
+
 ## La revisión adversarial
 
 De todas las fases, la que más valor me ha dado es una revisión hecha por una sesión que no tiene ni idea de por qué se escribió el código.
 
 El encargo tiene que ser explícito: *busca el fallo*. Una revisión con instrucciones vagas produce felicitaciones. Una con la instrucción de encontrar entradas concretas que rompan el código produce hallazgos, y cada hallazgo se puede comprobar ejecutándolo.
 
-El criterio que uso para filtrar: un hallazgo sin un caso concreto que lo demuestre es una opinión. Un hallazgo con «con esta entrada, esta línea devuelve esto otro» es un bug, y no hace falta debatirlo: se ejecuta.
+```text title="review-brief.txt"
+You are reviewing a diff you did not write. Assume it has a bug.
+For each finding, give a concrete input, the line it reaches and the
+wrong result it produces. No style comments. No praise.
+```
+
+> [!TIP]
+> Un hallazgo sin un caso concreto que lo demuestre es una opinión. Un hallazgo con «con esta entrada, esta línea devuelve esto otro» es un bug, y no hace falta debatirlo: se ejecuta.
+
+```mermaid title="Filtering review findings"
+sequenceDiagram
+  autonumber
+  participant You
+  participant R as Reviewer session
+  participant T as Terminal
+  You->>R: Diff + "find inputs that break it"
+  R-->>You: Finding: "given X, line 42 returns Y"
+  You->>T: Run it with X
+  alt Reproduces
+    T-->>You: Returns Y
+    Note over You,T: A bug. Fix it, add the test.
+  else Does not reproduce
+    T-->>You: Correct output
+    Note over You,T: An opinion. Discard it.
+  end
+```
 
 ## Lo que hay que llevarse
 

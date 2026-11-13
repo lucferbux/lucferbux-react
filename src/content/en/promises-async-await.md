@@ -14,11 +14,21 @@ Most bugs in asynchronous code come from one wrong idea: thinking a promise *doe
 
 A promise is in one of three states: **pending**, **fulfilled** or **rejected**. The transition happens **exactly once** and is irreversible.
 
-```js
+```js {3}
 const p = new Promise((resolve, reject) => {
   setTimeout(() => resolve(42), 1000);
   setTimeout(() => resolve(99), 2000); // ignored entirely
 });
+```
+
+```mermaid title="A promise settles exactly once"
+stateDiagram-v2
+  [*] --> Pending: new Promise(executor)
+  Pending --> Fulfilled: resolve(value)
+  Pending --> Rejected: reject(reason) or throw
+  Fulfilled --> [*]
+  Rejected --> [*]
+  note right of Fulfilled: settled — later calls are ignored
 ```
 
 The second `resolve` does nothing. The promise already settled. That's a useful guarantee: whoever consumes the promise knows the callback runs at most once.
@@ -47,15 +57,21 @@ fetchUser()
 
 Each `.then` creates a new promise. If the callback returns a value, the new promise fulfils with it. If it returns a promise, **that promise is awaited** before continuing. If it throws, the new promise rejects.
 
+```mermaid title="What the next promise in the chain does"
+flowchart TB
+  C["Your .then callback runs"] --> Q{"What did it do?"}
+  Q -- "returned a value" --> F["Next promise fulfils<br/>with that value"]
+  Q -- "returned a promise" --> W["Next promise waits for it<br/>and copies its outcome"]
+  Q -- "returned nothing" --> U["Next promise fulfils<br/>with undefined — immediately"]
+  Q -- "threw" --> R["Next promise rejects<br/>with the error"]
+```
+
 Which produces the most common chaining bug: a missing `return`.
 
-```js
-// Wrong: the chain doesn't wait for fetchOrders
-.then((id) => { fetchOrders(id); })
-
-// Right
-.then((id) => { return fetchOrders(id); })
-.then((id) => fetchOrders(id))  // equivalent
+```diff
+- .then((id) => { fetchOrders(id); })        // wrong: the chain doesn't wait
++ .then((id) => { return fetchOrders(id); }) // right
++ .then((id) => fetchOrders(id))             // also right: implicit return
 ```
 
 Without `return` the callback yields `undefined`, the chain continues immediately, and the next `.then` gets `undefined` while the request is still in flight.
@@ -74,6 +90,25 @@ async function total() {
   return orders.length;
 }
 // equivalent to the .then chain above
+```
+
+```mermaid title="What await actually does"
+sequenceDiagram
+  participant Caller
+  participant T as total()
+  participant L as Event loop
+  participant API
+  Caller->>T: total()
+  T->>API: fetchUser()
+  T-->>Caller: returns a pending promise
+  Note over Caller,L: the thread is free — other tasks run
+  API-->>L: user arrives, promise fulfils
+  L->>T: resume after the first await (microtask)
+  T->>API: fetchOrders(user.id)
+  Note over T,API: suspended again
+  API-->>L: orders arrive
+  L->>T: resume (microtask)
+  T-->>Caller: promise fulfils with orders.length
 ```
 
 The real win is that `try/catch` works again, and with it intermediate variables:
@@ -105,7 +140,28 @@ If `fetchConfig` doesn't depend on `user`, you're waiting for no reason. Start b
 const [user, config] = await Promise.all([fetchUser(), fetchConfig()]);
 ```
 
-The difference is *when you call the function*, not where you put the `await`. `Promise.all` receives promises that have already started.
+```mermaid title="Same two calls, half the wait"
+sequenceDiagram
+  participant C as Your code
+  participant U as fetchUser
+  participant K as fetchConfig
+  Note over C,K: Sequential await — 600 ms
+  C->>U: call
+  U-->>C: user (300 ms)
+  C->>K: call
+  K-->>C: config (300 ms)
+  Note over C,K: Promise.all — 300 ms
+  par both in flight
+    C->>U: call
+  and
+    C->>K: call
+  end
+  U-->>C: user
+  K-->>C: config
+```
+
+> [!TIP]
+> The difference is *when you call the function*, not where you put the `await`. `Promise.all` receives promises that have already started.
 
 Mind the semantics: `Promise.all` **rejects as soon as one fails**, discarding the rest. When you want every result regardless, use `Promise.allSettled`:
 
@@ -116,11 +172,18 @@ const results = await Promise.allSettled([a(), b(), c()]);
 
 And for races: `Promise.race` settles with the first to finish either way; `Promise.any` with the first to **succeed**.
 
+| Combinator | Fulfils when | Rejects when | Use it for |
+| --- | --- | --- | --- |
+| **`Promise.all`** | All fulfil | The first one rejects | Independent requests you need every result of |
+| **`Promise.allSettled`** | All settle, either way | Never | Batches where partial failure is fine |
+| **`Promise.race`** | The first to settle fulfils | The first to settle rejects | Timeouts |
+| **`Promise.any`** | The first one fulfils | All reject | Redundant sources, the fastest mirror |
+
 ## Unhandled rejections
 
 A rejected promise with no `catch` is a silent failure in many environments, and an uncaught exception in modern Node. Two places it escapes:
 
-```js
+```js {3,8,12}
 // The catch covers nothing: the error happens later
 try {
   setTimeout(() => { throw new Error("lost"); }, 0);
@@ -135,7 +198,8 @@ items.forEach(async (item) => {
 await Promise.all(items.map((item) => save(item)));
 ```
 
-`forEach` ignores its callback's return value, so the promises are orphaned: nothing awaits them and nothing catches their errors.
+> [!WARNING]
+> `forEach` ignores its callback's return value, so the promises are orphaned: nothing awaits them and nothing catches their errors.
 
 ## What to take away
 

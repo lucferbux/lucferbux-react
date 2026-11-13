@@ -29,7 +29,7 @@ mandar el objeto entero y machacar, cada cliente declara **solo los campos que
 le importan** y se identifica con un nombre, el *field manager*. La API guarda,
 dentro del propio objeto, qué gestor es dueño de qué campo:
 
-```yaml
+```yaml {3,13}
 metadata:
   managedFields:
     - manager: dashboard
@@ -47,6 +47,30 @@ metadata:
 Esa contabilidad es lo que permite que dos controladores toquen el mismo objeto
 sin pisarse: cada uno solo puede cambiar lo suyo, y si suelta un campo, la API
 lo retira.
+
+```mermaid title="Each manager owns a set of fields, and only that set"
+flowchart LR
+  subgraph clients["Clients"]
+    A["Operator<br/>manager: dashboard"]
+    B["Another controller<br/>manager: scaler"]
+  end
+  subgraph obj["Deployment in the cluster"]
+    F1["spec.template...livenessProbe"]
+    F2["spec.replicas"]
+  end
+  A -- "owns" --> F1
+  B -- "owns" --> F2
+```
+
+La regla de propiedad es lo que importa para el resto de la historia:
+
+| El apply de un gestor… | Qué hace la API |
+| --- | --- |
+| **Fija un campo que no es de nadie** | Lo fija y apunta al gestor como dueño |
+| **Fija un campo que ya es suyo** | Lo actualiza |
+| **Fija un campo de otro gestor, con otro valor** | Lo rechaza como conflicto, salvo que el apply sea forzado |
+| **Deja de declarar un campo que era suyo** | Retira el campo |
+| **Nunca menciona un campo de otro gestor** | No lo toca |
 
 ## Lo que hice
 
@@ -66,6 +90,48 @@ declarando `httpGet`. La API hizo exactamente lo que se le pide que haga: no
 tenía ninguna razón para quitar el campo de otro dueño, así que conservó
 `tcpSocket` y añadió `httpGet`.
 
+```mermaid title="Two applies, two owners, one probe"
+sequenceDiagram
+  autonumber
+  participant Old as Operator v1<br/>(dashboard)
+  participant New as Operator v2<br/>(dashboard-operator)
+  participant API as API server
+  participant K as kubelet
+  Old->>API: apply livenessProbe.tcpSocket
+  Note over API: tcpSocket owned by dashboard
+  New->>API: apply livenessProbe.httpGet
+  Note over API: httpGet owned by dashboard-operator<br/>tcpSocket still owned by dashboard
+  API-->>New: 200 OK, no conflict
+  Note over API,K: minutes later, the pod is replaced
+  API->>K: pod spec with httpGet + tcpSocket
+  K-->>API: invalid probe, CrashLoopBackOff
+```
+
+Así quedó el objeto tras la actualización, recortado:
+
+```yaml {3,8,19-20}
+metadata:
+  managedFields:
+    - manager: dashboard            # the old name, still holding its field
+      operation: Apply
+      fieldsV1:
+        # … f:livenessProbe:
+        #     f:tcpSocket: {}
+    - manager: dashboard-operator   # the new name, a stranger to the API
+      operation: Apply
+      fieldsV1:
+        # … f:livenessProbe:
+        #     f:httpGet: {}
+spec:
+  template:
+    spec:
+      containers:
+        - name: main
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            tcpSocket: { port: 8080 }   # nobody asked for both
+```
+
 El resultado es un objeto que **ningún cliente pidió** y que ninguna validación
 rechaza, porque cada campo por separado es legal. Solo el kubelet, al intentar
 ejecutar la sonda, descubre que la combinación no tiene sentido.
@@ -76,10 +142,11 @@ imposible.
 
 ## La lección
 
-**El nombre del gestor de campos es parte de tu API, aunque no lo parezca.**
-Está escrito dentro de cada objeto que tu controlador ha tocado. Cambiarlo no es
-renombrar una variable: es decirle a la API que llega un cliente nuevo, y la
-contabilidad del anterior se queda ahí.
+> [!IMPORTANT]
+> **El nombre del gestor de campos es parte de tu API, aunque no lo parezca.**
+> Está escrito dentro de cada objeto que tu controlador ha tocado. Cambiarlo no
+> es renombrar una variable: es decirle a la API que llega un cliente nuevo, y la
+> contabilidad del anterior se queda ahí.
 
 Las tres formas de salir, de menos a más agresiva:
 

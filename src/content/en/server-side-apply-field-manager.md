@@ -27,7 +27,7 @@ the whole object and overwriting, each client declares **only the fields it
 cares about** and identifies itself with a name, the field manager. The API
 records, inside the object itself, which manager owns which field:
 
-```yaml
+```yaml {3,13}
 metadata:
   managedFields:
     - manager: dashboard
@@ -46,6 +46,30 @@ That bookkeeping is what lets two controllers touch the same object without
 fighting: each can only change what is theirs, and when one drops a field, the
 API removes it.
 
+```mermaid title="Each manager owns a set of fields, and only that set"
+flowchart LR
+  subgraph clients["Clients"]
+    A["Operator<br/>manager: dashboard"]
+    B["Another controller<br/>manager: scaler"]
+  end
+  subgraph obj["Deployment in the cluster"]
+    F1["spec.template...livenessProbe"]
+    F2["spec.replicas"]
+  end
+  A -- "owns" --> F1
+  B -- "owns" --> F2
+```
+
+The ownership rule is what matters for the rest of the story:
+
+| A manager's apply… | What the API does |
+| --- | --- |
+| **Sets a field nobody owns** | Sets it and records the manager as owner |
+| **Sets a field it already owns** | Updates it |
+| **Sets a field another manager owns, with a different value** | Rejects it as a conflict, unless the apply is forced |
+| **Stops declaring a field it owned** | Removes the field |
+| **Never mentions a field another manager owns** | Leaves it alone |
+
 ## What I did
 
 I renamed the manager. The operator stopped identifying as `dashboard` and
@@ -63,6 +87,48 @@ The object already in the cluster had its probe recorded under `dashboard`, with
 API did exactly what it is asked to do: it had no reason to remove another
 owner's field, so it kept `tcpSocket` and added `httpGet`.
 
+```mermaid title="Two applies, two owners, one probe"
+sequenceDiagram
+  autonumber
+  participant Old as Operator v1<br/>(dashboard)
+  participant New as Operator v2<br/>(dashboard-operator)
+  participant API as API server
+  participant K as kubelet
+  Old->>API: apply livenessProbe.tcpSocket
+  Note over API: tcpSocket owned by dashboard
+  New->>API: apply livenessProbe.httpGet
+  Note over API: httpGet owned by dashboard-operator<br/>tcpSocket still owned by dashboard
+  API-->>New: 200 OK, no conflict
+  Note over API,K: minutes later, the pod is replaced
+  API->>K: pod spec with httpGet + tcpSocket
+  K-->>API: invalid probe, CrashLoopBackOff
+```
+
+This is what the object looked like after the upgrade, trimmed:
+
+```yaml {3,8,19-20}
+metadata:
+  managedFields:
+    - manager: dashboard            # the old name, still holding its field
+      operation: Apply
+      fieldsV1:
+        # … f:livenessProbe:
+        #     f:tcpSocket: {}
+    - manager: dashboard-operator   # the new name, a stranger to the API
+      operation: Apply
+      fieldsV1:
+        # … f:livenessProbe:
+        #     f:httpGet: {}
+spec:
+  template:
+    spec:
+      containers:
+        - name: main
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            tcpSocket: { port: 8080 }   # nobody asked for both
+```
+
 The result is an object **no client asked for** and that no validation rejects,
 because each field on its own is legal. Only the kubelet, trying to run the
 probe, discovers the combination is nonsense.
@@ -73,10 +139,11 @@ with the impossible probe.
 
 ## The lesson
 
-**A field manager's name is part of your API, even though it does not look like
-it.** It is written inside every object your controller has touched. Changing it
-is not renaming a variable: it is telling the API a new client has arrived, and
-the previous one's bookkeeping stays where it is.
+> [!IMPORTANT]
+> **A field manager's name is part of your API, even though it does not look like
+> it.** It is written inside every object your controller has touched. Changing
+> it is not renaming a variable: it is telling the API a new client has arrived,
+> and the previous one's bookkeeping stays where it is.
 
 Three ways out, least to most aggressive:
 

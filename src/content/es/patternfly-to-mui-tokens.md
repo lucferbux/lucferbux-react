@@ -18,6 +18,13 @@ PatternFly y todo lo que hay alrededor es PatternFly. En el otro, el proyecto
 comunitario usa Material UI y todo lo que hay alrededor es MUI. El módulo es el
 mismo en ambos, y en los dos tiene que parecer que siempre estuvo ahí.
 
+```mermaid title="One module, two hosts"
+flowchart TB
+  M["UI module"]
+  M --> H1["Product<br/>PatternFly everywhere"]
+  M --> H2["Community project<br/>Material UI everywhere"]
+```
+
 Las salidas obvias son todas malas:
 
 - **Mantener dos ramas del módulo.** Se separan en la segunda semana.
@@ -37,13 +44,35 @@ medio, qué radio tiene una tarjeta, cómo escala la tipografía. Arriba están 
 componentes que las usan. La capa de abajo es la que de verdad define el aspecto
 de un producto, y es sorprendentemente pequeña.
 
+```mermaid title="The two layers of a design system"
+flowchart TB
+  PF["PatternFly components<br/>replaceable, not shared"] -- "consumes" --> T
+  MUI["MUI components<br/>replaceable, not shared"] -- "consumes" --> T
+  T[("Decisions<br/>colours · spacing · radii<br/>type scale · shadows")]
+```
+
 Así que esa capa pasa a ser un fichero: un JSON de tokens con los valores de
 PatternFly, declarado como el origen único. Y un script genera a partir de él el
 objeto de tema que MUI espera.
 
+```mermaid title="One source, one derived artifact"
+flowchart LR
+  S[("pf-tokens-SSOT.json<br/>source")] --> G["generate-mui-theme<br/>script"] --> T["MUI theme<br/>derived, never edited"]
+  S --> PF["PatternFly host<br/>uses the values as-is"]
 ```
-pf-tokens-SSOT.json  ──▶  generate-mui-theme  ──▶  MUI theme
-       (origen)                (script)            (derivado)
+
+El origen son las propias variables de PatternFly, capturadas como datos:
+
+```json title="mod-arch-kubeflow/style/pf-tokens-SSOT.json"
+{
+  "components": {
+    "_index": {
+      "--pf-v6-c-about-modal-box--BackgroundColor": "var(--pf-t--global--background--color--floating--default)",
+      "--pf-v6-c-about-modal-box__brand--PaddingBlockStart": "var(--pf-t--global--spacer--2xl)",
+      "--pf-v6-c-about-modal-box__brand--PaddingInlineEnd": "var(--pf-t--global--spacer--xl)"
+    }
+  }
+}
 ```
 
 El tema de MUI no se edita nunca. Es un artefacto, como un bundle. Si alguien
@@ -59,8 +88,21 @@ neutros, cada actualización de PatternFly obliga a traducir sus cambios a tu
 vocabulario intermedio. Si los tokens *son* los de PatternFly, actualizar es
 copiar un fichero.
 
-Elegir un origen asimétrico cuando la realidad es asimétrica ahorra una capa de
-traducción permanente. La simetría bonita se paga todos los meses.
+```mermaid title="Symmetric on paper, asymmetric in practice"
+flowchart TB
+  subgraph pf["Option B — PatternFly is the source"]
+    P[("PatternFly tokens")] --> PM["MUI theme"]
+    PFR2["PatternFly release"] -. "copy a file" .-> P
+  end
+  subgraph neutral["Option A — neutral tokens"]
+    N[("Neutral tokens")] --> NP["PatternFly theme"]
+    N --> NM["MUI theme"]
+    PFR1["PatternFly release"] -. "translate every change" .-> N
+  end
+```
+
+> Elegir un origen asimétrico cuando la realidad es asimétrica ahorra una capa de
+> traducción permanente. La simetría bonita se paga todos los meses.
 
 ## Lo que no se traduce
 
@@ -80,6 +122,12 @@ universal por la puerta de atrás.
 sobre cuánta información cabe en una pantalla, y eso no está en ningún token:
 está repartido entre los paddings por defecto de treinta componentes.
 
+| Capa | ¿Viaja entre los dos? | Por qué |
+| --- | --- | --- |
+| **Tokens** | Sí | Son valores, y un valor es portable |
+| **Componentes** | No | Catálogos distintos; donde coinciden, se comportan distinto |
+| **Densidad** | No | Vive en los paddings por defecto de treinta componentes, no en un token |
+
 Así que la regla acabó siendo: comparten los valores, no las piezas. El módulo
 se escribe una vez con la librería de la plataforma en la que está, y lo que
 viaja entre las dos es el vocabulario visual.
@@ -91,9 +139,25 @@ fichero generado no coincide con su origen. Sin eso, alguien edita el derivado
 —con toda la buena intención, para arreglar algo un viernes— y el sistema deja
 de tener un origen único sin que nadie se entere hasta meses después.
 
-Es el mismo patrón que `npm ci` frente a `npm install`, o que un `--check` en un
-formateador: **lo que importa no es poder generar, es poder detectar que lo
-generado está obsoleto.**
+```mermaid title="The check that keeps one source"
+flowchart TB
+  E["Someone edits the MUI theme"] --> CI["CI regenerates it from the tokens"]
+  CI --> D{"Same as<br/>committed?"}
+  D -- "yes" --> OK(["Pass"])
+  D -- "no" --> F(["Fail: edit the tokens instead"])
+```
+
+En CI son dos líneas: regenerar y fallar si el árbol ha cambiado:
+
+```bash title="CI step"
+node scripts/generate-mui-theme.mjs
+git diff --exit-code   # non-zero if the derived file was hand-edited
+```
+
+> [!IMPORTANT]
+> Es el mismo patrón que `npm ci` frente a `npm install`, o que un `--check` en un
+> formateador: **lo que importa no es poder generar, es poder detectar que lo
+> generado está obsoleto.**
 
 ## Lo que me llevo
 

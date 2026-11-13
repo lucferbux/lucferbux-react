@@ -37,6 +37,18 @@ A BFF — backend for frontend — is a small service whose only client is one
 specific interface. It is not a general-purpose API: it is that screen's
 backend.
 
+```mermaid title="Where the stitching happens"
+flowchart TB
+  subgraph withbff["With a BFF per module"]
+    B2["Browser"] -- "one call" --> F["Module BFF"]
+    F -- "five calls" --> K2["Kubernetes API"]
+    F -- "only the fields<br/>the screen needs" --> B2
+  end
+  subgraph direct["Without a BFF"]
+    B1["Browser"] -- "five calls,<br/>full objects" --> K1["Kubernetes API"]
+  end
+```
+
 ## The central piece: a client per user
 
 This is the decision that most defines the design, and the one most often got
@@ -46,7 +58,7 @@ The BFF does **not** hold a broadly-privileged service account it serves
 everybody with. Every request arrives with the user's token, and the BFF builds
 an ephemeral Kubernetes client from that token, for that request:
 
-```go
+```go {8}
 func (a *App) clientFor(r *http.Request) (client.Client, error) {
     token := bearerToken(r)
     if token == "" {
@@ -64,11 +76,30 @@ could not do themselves.** If they lack permission to read a resource, the
 request fails at the API server, not at a check of ours. We are not implementing
 authorisation; we are letting the component that already has it do its job.
 
-That `BearerTokenFile = ""` on the fourth line is a detail that costs an
-afternoon to find: if the pod has its service account token mounted and you do
-not explicitly clear it from the copied config, the client uses the file and you
-find yourself serving requests with the pod's permissions. Which is exactly what
-you set out to avoid, working apparently fine.
+```mermaid title="One request, one client, the user's permissions"
+sequenceDiagram
+  autonumber
+  participant B as Browser
+  participant F as Module BFF
+  participant K as API server
+  B->>F: GET /api/v1/models with Bearer token
+  Note over F: secure() builds a client from that token
+  F->>K: list resources as the user
+  alt user has RBAC for them
+    K-->>F: objects
+    F-->>B: envelope with data
+  else user does not
+    K-->>F: 403 Forbidden
+    F-->>B: envelope with error
+  end
+```
+
+> [!WARNING]
+> That highlighted `BearerTokenFile = ""` is a detail that costs an
+> afternoon to find: if the pod has its service account token mounted and you do
+> not explicitly clear it from the copied config, the client uses the file and you
+> find yourself serving requests with the pod's permissions. Which is exactly what
+> you set out to avoid, working apparently fine.
 
 ## `App` as the dependency container
 
@@ -88,6 +119,15 @@ type App struct {
 cluster and fake data. That is not a luxury for tests: it is what lets someone
 on the UI team work from a laptop without provisioning anything.
 
+```go {2-4}
+func NewRepositories(cfg Config) Repositories {
+    if cfg.MockK8sClient {
+        return mocks.NewRepositories() // fake data, no cluster
+    }
+    return k8s.NewRepositories()
+}
+```
+
 ## Tiered middleware
 
 Different routes need different guarantees, and it helps if that reads in the
@@ -104,6 +144,12 @@ user's client. `admin` additionally checks admin group membership. They are
 three short wrappers, and their value is not technical: reading the routes file
 tells you the access level of every endpoint without opening anything else.
 
+| Wrapper | Identity | Builds the user's client | Extra check |
+| --- | --- | --- | --- |
+| **`public`** | None | No | — |
+| **`secure`** | Valid token | Yes | — |
+| **`admin`** | Valid token | Yes | Admin group membership |
+
 ## An envelope for responses
 
 Every response is wrapped:
@@ -119,6 +165,11 @@ It looks like ceremony and it saves arguments. The client has one way to tell
 success from failure, and adding metadata later — pagination, warnings — breaks
 nobody.
 
+```json
+{ "data": [{ "name": "fraud-detector", "status": "Ready" }] }
+{ "data": null, "error": { "code": "403", "message": "cannot list models in project-a" } }
+```
+
 ## What it cost
 
 **One BFF per module is a lot of BFFs.** Ten modules are ten services, ten
@@ -130,5 +181,7 @@ get it wrong.
 stops working within a month and nobody notices until a new colleague tries to
 start the project.
 
-If I had to keep one idea: the BFF is not there to add logic. It is there so the
-browser does not need permissions.
+If I had to keep one idea:
+
+> The BFF is not there to add logic. It is there so the browser does not need
+> permissions.

@@ -447,6 +447,11 @@
   white-space: nowrap;
 }
 
+.table-blog th code {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 .table-blog tr:last-child td {
   border-bottom: 0;
 }
@@ -511,13 +516,16 @@
 }
 
 .diagram-svg {
-  display: flex;
-  justify-content: center;
+  display: block;
   overflow-x: auto;
 }
 
+/* Mermaid emits width="100%" plus an inline max-width at the diagram's
+   natural size: a wide diagram shrinks to the column, a narrow one keeps its
+   size. Centring with flexbox instead cropped both edges of a wide one. */
 .diagram-svg svg {
-  max-width: 100%;
+  display: block;
+  margin-inline: auto;
   height: auto;
 }
 
@@ -530,7 +538,7 @@
     display: none;
   }
   .diagram-dark {
-    display: flex;
+    display: block;
   }
 }
 

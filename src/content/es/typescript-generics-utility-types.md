@@ -20,7 +20,7 @@ function first(items: any[]): any {
 }
 
 const n = first([1, 2, 3]); // any
-n.toUpperCase();            // compila, explota en runtime
+n.toUpperCase();            // compiles, explodes at runtime
 ```
 
 `any` apaga el compilador. `unknown` es más honesto pero obliga a comprobar en cada uso. Lo que queremos decir es otra cosa: *el tipo que devuelvo es el mismo que contiene el array que me das*.
@@ -40,30 +40,52 @@ No hemos anotado nada en las llamadas. TypeScript **infiere** `T` a partir del a
 
 Un genérico sin restricciones no te deja hacer nada con el valor, porque podría ser cualquier cosa. `extends` acota el conjunto.
 
-```ts
+```ts {1,7}
 function longest<T extends { length: number }>(a: T, b: T): T {
   return a.length >= b.length ? a : b;
 }
 
-longest("hola", "adiós");    // string
-longest([1, 2], [1, 2, 3]);  // number[]
-longest(1, 2);               // Error: number no tiene length
+longest("hello", "goodbye");  // string
+longest([1, 2], [1, 2, 3]);   // number[]
+longest(1, 2);                // Error: number has no length
+```
+
+```mermaid title="extends narrows the set of types T can be"
+flowchart TB
+  subgraph all["Any type"]
+    N["number"]
+    B["boolean"]
+    subgraph ok["T extends { length: number }"]
+      S["string"]
+      A["number[]"]
+      F["(a, b) => void"]
+    end
+  end
+  C["longest(a, b)"] -- "accepts" --> ok
+  C -. "rejects" .-> N
 ```
 
 El caso que más rendimiento da en el día a día es restringir a las claves de un objeto:
 
-```ts
+```ts {1}
 function get<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];
 }
 
 const user = { name: "Lucas", age: 34 };
-get(user, "name"); // string
-get(user, "age");  // number
-get(user, "email"); // Error: "email" no existe en el objeto
+get(user, "name");  // string
+get(user, "age");   // number
+get(user, "email"); // Error: "email" is not on the object
 ```
 
 `T[K]` es un *indexed access type*: el tipo de la propiedad `K` dentro de `T`. La función no devuelve «algo del objeto», devuelve exactamente el tipo de esa clave.
+
+```mermaid title="How get(user, 'name') resolves its return type"
+flowchart LR
+  T["T = { name: string;<br/>age: number }"] --> K["keyof T =<br/>&quot;name&quot; | &quot;age&quot;"]
+  K --> P["K = &quot;name&quot;<br/>(from the argument)"]
+  P --> R["T[K] = string"]
+```
 
 ## Los utility types son genéricos escritos por otros
 
@@ -83,23 +105,56 @@ interface User {
   createdAt: Date;
 }
 
-// Todo opcional — el clásico para un formulario de edición
+// Everything optional — the classic for an edit form
 type UserPatch = Partial<User>;
 
-// Sólo algunas claves
+// Only some keys
 type UserPreview = Pick<User, "id" | "name">;
 
-// Todas menos algunas — mejor para campos que el cliente no envía
+// Everything but some — better for fields the client doesn't send
 type NewUser = Omit<User, "id" | "createdAt">;
 
-// Un diccionario con claves acotadas
+// A dictionary with constrained keys
 type UsersById = Record<string, User>;
 
-// Quitar null y undefined
+// Strip null and undefined
 type Defined = NonNullable<string | null>; // string
 ```
 
-La elección entre `Pick` y `Omit` no es de estilo. `Pick` es una lista blanca: si mañana añades un campo a `User`, `UserPreview` no cambia. `Omit` es una lista negra: el campo nuevo aparece automáticamente. Para un DTO que va a la red suele querer una lista blanca; para «el modelo menos lo que genera el servidor», una lista negra.
+```mermaid title="Four types derived from one interface"
+classDiagram
+  class User {
+    id: string
+    name: string
+    email: string
+    createdAt: Date
+  }
+  class UserPatch {
+    id?: string
+    name?: string
+    email?: string
+    createdAt?: Date
+  }
+  class UserPreview {
+    id: string
+    name: string
+  }
+  class NewUser {
+    name: string
+    email: string
+  }
+  User --> UserPatch : Partial
+  User --> UserPreview : Pick id, name
+  User --> NewUser : Omit id, createdAt
+```
+
+La elección entre `Pick` y `Omit` no es de estilo. `Pick` es una lista blanca: si mañana añades un campo a `User`, `UserPreview` no cambia. `Omit` es una lista negra: el campo nuevo aparece automáticamente. Para un DTO que va a la red sueles querer una lista blanca; para «el modelo menos lo que genera el servidor», una lista negra.
+
+| | Pick | Omit |
+| --- | --- | --- |
+| **Tipo de lista** | Lista blanca | Lista negra |
+| **Se añade un campo a `User`** | No aparece | Aparece automáticamente |
+| **Uso típico** | DTOs que viajan por la red | «El modelo menos lo que genera el servidor» |
 
 ## Tipos condicionales
 
@@ -120,6 +175,13 @@ type ElementOf<T> = T extends (infer U)[] ? U : never;
 type C = ElementOf<string[]>; // string
 ```
 
+```mermaid title="How the compiler evaluates ElementOf<T>"
+flowchart LR
+  I["ElementOf&lt;string[]&gt;"] --> Q{"Does T match<br/>(infer U)[] ?"}
+  Q -- "yes, U = string" --> U["string"]
+  Q -- "no" --> N["never"]
+```
+
 Así está definido `ReturnType`, que es probablemente el utility type más práctico que existe:
 
 ```ts
@@ -134,7 +196,8 @@ type Config = ReturnType<typeof buildConfig>;
 // { retries: number; timeout: number }
 ```
 
-Ese patrón —derivar el tipo de la implementación en lugar de declararlo aparte— es el que evita que tipos y código se desincronicen.
+> [!TIP]
+> Ese patrón —derivar el tipo de la implementación en lugar de declararlo aparte— es el que evita que tipos y código se desincronicen.
 
 ## Reglas prácticas
 
@@ -145,3 +208,16 @@ Tres criterios que uso al revisar código:
 **Prefiere inferir a declarar.** `typeof`, `ReturnType` y `keyof` derivan tipos del código real. Un tipo escrito a mano junto a su implementación es un tipo que acabará mintiendo.
 
 **`as` no es una conversión, es una promesa.** `value as User` le dice al compilador que confíe en ti sin comprobar nada. Cuando el dato viene de fuera —de una API, de `localStorage`, de un formulario— lo que hace falta no es una aserción sino una validación en runtime; ahí es donde un `type guard` o un esquema tipo Zod hacen el trabajo de verdad.
+
+```ts {1,3}
+const user = JSON.parse(raw) as User; // checks nothing at runtime
+
+function isUser(value: unknown): value is User {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as Record<string, unknown>).id === "string" &&
+    typeof (value as Record<string, unknown>).email === "string"
+  );
+}
+```

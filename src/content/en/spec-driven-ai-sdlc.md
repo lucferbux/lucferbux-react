@@ -18,6 +18,16 @@ With manual development, design is implicit in the code and can be reconstructed
 
 The agent generates a lot of coherent code very fast, so volume no longer marks where the hard decision was. And it defaults to whatever is most common in its training distribution, which needn't be right for your repository. Without a specification, those defaults become the architecture, and nobody decided anything.
 
+```mermaid title="Who makes the decisions"
+flowchart TB
+  subgraph spec["With a spec"]
+    S2["Spec<br/>problem · constraints · reuse · checks"] --> D2["Agent explores inside those limits"] --> C2["Code"] --> X2["Decisions written down"]
+  end
+  subgraph nospec["Without a spec"]
+    P1["Prompt"] --> D1["Training-data defaults"] --> C1["Code"] --> X1["An architecture nobody chose"]
+  end
+```
+
 ## What a useful specification contains
 
 Not a twenty-page design document. One page, with four things an agent cannot invent:
@@ -29,6 +39,24 @@ Not a twenty-page design document. One page, with four things an agent cannot in
 **What already exists and should be reused.** This is the highest-return item. An agent that doesn't know you already have a translation resolver will write another one.
 
 **How to check it's right.** Concrete commands, and what should happen when you run them.
+
+For a small feature on this site, the whole thing fits in a screen:
+
+```md title="specs/reading-time.md"
+# Reading time on blog posts
+
+**Problem.** Readers can't tell a two-minute note from a twenty-minute guide.
+
+**Constraints.**
+- Both locales. The label goes through `useT()`, never a string literal.
+- Computed at build time: no extra work in the visitor's browser.
+
+**Reuse.** `parseFrontmatter` already strips the YAML; count words after it.
+
+**Check.**
+- `npx vitest run tests/unit/content` passes.
+- `/en/blog/<slug>` and `/es/blog/<slug>` show the time next to the date.
+```
 
 And what it deliberately **doesn't** carry: how to implement it. If the specification dictates the implementation, you've written the code in prose and lost the one thing the agent does better than you, which is exploring the solution space quickly.
 
@@ -85,10 +113,23 @@ With a written specification, review answers two separable questions instead of 
 1. **Does it do what the specification said?** Checkable by anyone, including another agent, by comparing diff and document.
 2. **Was the specification right?** Requires human judgement, and is the question that actually matters.
 
+```mermaid title="Two questions, two kinds of reviewer"
+flowchart LR
+  D["Diff"] --> Q1{"Does it match the spec?<br/>anyone can check"}
+  S["Spec"] --> Q1
+  Q1 -- "no" --> F["Fix the code"]
+  Q1 -- "yes" --> Q2{"Was the spec right?<br/>human judgement"}
+  Q2 -- "no" --> U["Fix the spec, then the code"]
+  Q2 -- "yes" --> M(["Merge"])
+```
+
 Without a specification, both collapse into "does this code look fine to me?", which is the form of review that lets the most through.
 
 ## What it doesn't fix
 
-Being honest about this matters. A specification doesn't stop an agent writing incorrect code; it stops it writing *unexpected* code. You still need tests, adversarial review and executable verification.
+Being honest about this matters.
+
+> [!IMPORTANT]
+> A specification doesn't stop an agent writing incorrect code; it stops it writing *unexpected* code. You still need tests, adversarial review and executable verification.
 
 And it has a real cost: writing the specification takes time, and for a five-line change it's pure ceremony. The threshold I use is simple: if I'll have to explain this decision in six months, I write it down now.

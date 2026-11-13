@@ -40,7 +40,7 @@ Nothing was annotated at the call sites. TypeScript **infers** `T` from the argu
 
 An unconstrained generic lets you do nothing with the value, because it could be anything. `extends` narrows the set.
 
-```ts
+```ts {1,7}
 function longest<T extends { length: number }>(a: T, b: T): T {
   return a.length >= b.length ? a : b;
 }
@@ -50,9 +50,24 @@ longest([1, 2], [1, 2, 3]);   // number[]
 longest(1, 2);                // Error: number has no length
 ```
 
+```mermaid title="extends narrows the set of types T can be"
+flowchart TB
+  subgraph all["Any type"]
+    N["number"]
+    B["boolean"]
+    subgraph ok["T extends { length: number }"]
+      S["string"]
+      A["number[]"]
+      F["(a, b) => void"]
+    end
+  end
+  C["longest(a, b)"] -- "accepts" --> ok
+  C -. "rejects" .-> N
+```
+
 The variant that pays off most day to day is constraining to an object's keys:
 
-```ts
+```ts {1}
 function get<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];
 }
@@ -64,6 +79,13 @@ get(user, "email"); // Error: "email" is not on the object
 ```
 
 `T[K]` is an *indexed access type*: the type of property `K` within `T`. The function doesn't return "something from the object", it returns exactly that key's type.
+
+```mermaid title="How get(user, 'name') resolves its return type"
+flowchart LR
+  T["T = { name: string;<br/>age: number }"] --> K["keyof T =<br/>&quot;name&quot; | &quot;age&quot;"]
+  K --> P["K = &quot;name&quot;<br/>(from the argument)"]
+  P --> R["T[K] = string"]
+```
 
 ## Utility types are generics someone else wrote
 
@@ -99,7 +121,40 @@ type UsersById = Record<string, User>;
 type Defined = NonNullable<string | null>; // string
 ```
 
+```mermaid title="Four types derived from one interface"
+classDiagram
+  class User {
+    id: string
+    name: string
+    email: string
+    createdAt: Date
+  }
+  class UserPatch {
+    id?: string
+    name?: string
+    email?: string
+    createdAt?: Date
+  }
+  class UserPreview {
+    id: string
+    name: string
+  }
+  class NewUser {
+    name: string
+    email: string
+  }
+  User --> UserPatch : Partial
+  User --> UserPreview : Pick id, name
+  User --> NewUser : Omit id, createdAt
+```
+
 Choosing between `Pick` and `Omit` isn't a style question. `Pick` is an allowlist: add a field to `User` tomorrow and `UserPreview` is unchanged. `Omit` is a denylist: the new field appears automatically. For a DTO going over the wire you usually want an allowlist; for "the model minus what the server generates", a denylist.
+
+| | Pick | Omit |
+| --- | --- | --- |
+| **Kind of list** | Allowlist | Denylist |
+| **A field is added to `User`** | Not included | Included automatically |
+| **Typical use** | DTOs that go over the wire | "The model minus what the server generates" |
 
 ## Conditional types
 
@@ -120,6 +175,13 @@ type ElementOf<T> = T extends (infer U)[] ? U : never;
 type C = ElementOf<string[]>; // string
 ```
 
+```mermaid title="How the compiler evaluates ElementOf<T>"
+flowchart LR
+  I["ElementOf&lt;string[]&gt;"] --> Q{"Does T match<br/>(infer U)[] ?"}
+  Q -- "yes, U = string" --> U["string"]
+  Q -- "no" --> N["never"]
+```
+
 That's how `ReturnType` is defined, probably the most practical utility type there is:
 
 ```ts
@@ -134,7 +196,8 @@ type Config = ReturnType<typeof buildConfig>;
 // { retries: number; timeout: number }
 ```
 
-That pattern — deriving the type from the implementation rather than declaring it separately — is what stops types and code drifting apart.
+> [!TIP]
+> That pattern — deriving the type from the implementation rather than declaring it separately — is what stops types and code drifting apart.
 
 ## Practical rules
 
@@ -145,3 +208,16 @@ Three things I look for in review:
 **Prefer inferring to declaring.** `typeof`, `ReturnType` and `keyof` derive types from real code. A type hand-written next to its implementation is a type that will eventually lie.
 
 **`as` is not a conversion, it's a promise.** `value as User` tells the compiler to trust you and check nothing. When the data comes from outside — an API, `localStorage`, a form — what you need isn't an assertion but a runtime validation; that's where a type guard or a schema library like Zod does the real work.
+
+```ts {1,3}
+const user = JSON.parse(raw) as User; // checks nothing at runtime
+
+function isUser(value: unknown): value is User {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as Record<string, unknown>).id === "string" &&
+    typeof (value as Record<string, unknown>).email === "string"
+  );
+}
+```

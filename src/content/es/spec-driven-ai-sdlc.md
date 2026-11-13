@@ -18,6 +18,16 @@ Con desarrollo manual, el diseño queda implícito en el código y se puede reco
 
 El agente genera mucho código coherente muy rápido, así que el volumen no marca dónde estaba la decisión difícil. Y elige por defecto lo más común en su distribución de entrenamiento, que no tiene por qué ser lo correcto en tu repositorio. Sin una especificación, esas elecciones por defecto se convierten en la arquitectura, y nadie decidió nada.
 
+```mermaid title="Who makes the decisions"
+flowchart TB
+  subgraph spec["With a spec"]
+    S2["Spec<br/>problem · constraints · reuse · checks"] --> D2["Agent explores inside those limits"] --> C2["Code"] --> X2["Decisions written down"]
+  end
+  subgraph nospec["Without a spec"]
+    P1["Prompt"] --> D1["Training-data defaults"] --> C1["Code"] --> X1["An architecture nobody chose"]
+  end
+```
+
 ## Qué contiene una especificación útil
 
 No un documento de diseño de veinte páginas. Una página, con cuatro cosas que un agente no puede inventar:
@@ -30,15 +40,59 @@ No un documento de diseño de veinte páginas. Una página, con cuatro cosas que
 
 **Cómo se comprueba que está bien.** Comandos concretos, y qué debe ocurrir al ejecutarlos.
 
+Para una funcionalidad pequeña de este sitio, cabe entera en una pantalla:
+
+```md title="specs/reading-time.md"
+# Reading time on blog posts
+
+**Problem.** Readers can't tell a two-minute note from a twenty-minute guide.
+
+**Constraints.**
+- Both locales. The label goes through `useT()`, never a string literal.
+- Computed at build time: no extra work in the visitor's browser.
+
+**Reuse.** `parseFrontmatter` already strips the YAML; count words after it.
+
+**Check.**
+- `npx vitest run tests/unit/content` passes.
+- `/en/blog/<slug>` and `/es/blog/<slug>` show the time next to the date.
+```
+
 Y lo que deliberadamente **no** lleva: cómo implementarlo. Si la especificación dicta la implementación, has escrito el código en prosa y has perdido lo único que el agente hace mejor que tú, que es explorar el espacio de soluciones rápido.
 
 ## El ciclo
 
+```steps loop="La implementación corrige la especificación"
+Especificar: Una página: el problema, las restricciones, qué reutilizar y cómo comprobarlo.
+Planificar: El agente propone un enfoque. Corriges el plan, no el código.
+Implementar: El agente escribe el código siguiendo el plan y las reglas del repositorio.
+Verificar: Tests, type-check y los comandos que nombraba la especificación. Ejecutable, no sensaciones.
+Revisar: ¿Hizo lo que decía la especificación? ¿Era correcta la especificación?
 ```
-especificar  ->  planificar  ->  implementar  ->  verificar  ->  revisar
-    │              │                                              │
-    └──────────────┴──────────  se actualiza  ◄───────────────────┘
+
+```mermaid title="Where each kind of knowledge lives"
+flowchart LR
+  subgraph repo["Repository — permanent"]
+    A["AGENTS.md / CLAUDE.md<br/>rules nobody could guess"]
+  end
+  subgraph task["Per task — disposable"]
+    S["Spec<br/>problem · constraints · reuse · checks"]
+    P["Plan"]
+  end
+  A --> P
+  S --> P --> I["Implementation"] --> V{"Verify"}
+  V -- "spec was wrong" --> S
+  V -- "passes" --> R["Review"]
 ```
+
+> [!TIP]
+> Cuando el plan resulta equivocado a mitad de camino, para y corrige el documento. Seguir improvisando es la forma de que el descubrimiento acabe viviendo sólo en un diff.
+
+| Vive en | Cambia | Ejemplo |
+| --- | --- | --- |
+| `AGENTS.md` | Rara vez | Aquí `md:` es 650px, no 768px |
+| Especificación | En cada tarea | «Mantener funcionando el endpoint v1» |
+| Código | Constantemente | Cómo se hace de verdad |
 
 La flecha de vuelta es la parte que todo el mundo omite y la que da valor. Casi siempre, implementar revela que la especificación era incorrecta: una restricción que no se sostiene, un caso que nadie consideró, una suposición falsa. Si ese descubrimiento sólo vive en el diff, la siguiente persona lo vuelve a descubrir.
 
@@ -59,10 +113,23 @@ Con una especificación escrita, la revisión responde dos preguntas separables 
 1. **¿Hace lo que la especificación decía?** Comprobable por cualquiera, incluido otro agente, comparando diff y documento.
 2. **¿Era correcta la especificación?** Requiere criterio humano, y es la pregunta que de verdad importa.
 
+```mermaid title="Two questions, two kinds of reviewer"
+flowchart LR
+  D["Diff"] --> Q1{"Does it match the spec?<br/>anyone can check"}
+  S["Spec"] --> Q1
+  Q1 -- "no" --> F["Fix the code"]
+  Q1 -- "yes" --> Q2{"Was the spec right?<br/>human judgement"}
+  Q2 -- "no" --> U["Fix the spec, then the code"]
+  Q2 -- "yes" --> M(["Merge"])
+```
+
 Sin especificación, las dos se colapsan en «¿me parece bien este código?», que es la forma de revisión que más deja pasar.
 
 ## Lo que no arregla
 
-Ser honesto con esto importa. Una especificación no impide que el agente escriba código incorrecto; impide que escriba código *inesperado*. Sigues necesitando tests, revisión adversarial y verificación ejecutable.
+Ser honesto con esto importa.
+
+> [!IMPORTANT]
+> Una especificación no impide que el agente escriba código incorrecto; impide que escriba código *inesperado*. Sigues necesitando tests, revisión adversarial y verificación ejecutable.
 
 Y tiene un coste real: escribir la especificación lleva tiempo, y para un cambio de cinco líneas es ceremonia pura. El umbral que uso es sencillo: si voy a tener que explicar esta decisión dentro de seis meses, la escribo ahora.

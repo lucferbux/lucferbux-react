@@ -28,6 +28,22 @@ Before choosing a tool, three contracts determine whether this works at all.
 
 The deciding question is simple: *does a team need to deploy without coordinating with the others?* If the answer is no, build-time composition is cheaper in every dimension.
 
+```mermaid title="Choosing when composition happens"
+flowchart TB
+  Q{"Does a team need to deploy<br/>without coordinating?"}
+  Q -- "no" --> B["Build time<br/>modules as npm packages"]
+  Q -- "yes" --> R["Runtime<br/>Module Federation, import maps"]
+  B --> B1["Integration errors caught in CI<br/>publishing rebuilds the container"]
+  R --> R1["Each module ships alone<br/>integration errors surface in production"]
+```
+
+| | Build time | Runtime |
+| --- | --- | --- |
+| **Deploy a module** | Publish a package, rebuild the container | Deploy the module, nothing else |
+| **Types across modules** | Shared at compile time | Need a published contract |
+| **Integration errors** | In CI | In production |
+| **Cost** | Low | Versioning, contract tests, runtime loading |
+
 **What is shared.** This causes the most trouble. React, the router and the design system must be singletons: two copies of React on the same page break hooks, and two routers fight over the URL.
 
 ```js
@@ -43,13 +59,41 @@ Everything else should be private to each module. The temptation to share utilit
 
 **How they communicate.** The boring answer is the right one: through the URL and through events, not shared state. A module reading another module's store is a monolith with extra steps.
 
+```ts
+// The URL carries what can be bookmarked…
+navigate(`/projects/${projectName}/models`);
+
+// …and an event carries what just happened. Nobody imports anybody.
+window.dispatchEvent(
+  new CustomEvent("project:selected", { detail: { projectName } }),
+);
+```
+
 ## The shared library is the product
 
 If one piece decides whether this scales, it's the common library. Not for the components — for the scaffolding.
 
 When the library provides routing, authentication, data fetching and error handling, a new module is a `package.json` and a route. When it doesn't, every team reimplements its own version, you end up with eight different ways of showing a network error, and someone from the platform team sits in on every onboarding.
 
-The real measure of success isn't the number of modules. It's **how many platform engineers it takes to add one**. When that number reaches zero, the architecture is working.
+```mermaid title="Who writes what in a new module"
+flowchart LR
+  subgraph lib["Common library — written once"]
+    direction TB
+    L1["Routing"]
+    L2["Authentication"]
+    L3["Data fetching"]
+    L4["Error handling"]
+  end
+  subgraph mod["New module — written by the team"]
+    direction TB
+    M1["package.json"]
+    M2["Route + screens"]
+  end
+  lib --> mod
+```
+
+> [!TIP]
+> The real measure of success isn't the number of modules. It's **how many platform engineers it takes to add one**. When that number reaches zero, the architecture is working.
 
 ## What it costs
 
@@ -72,8 +116,43 @@ On the platform I work on, the combination that has proved sustainable is:
 - **A versioned common library** carrying the scaffolding, not just components.
 - **A Kubernetes operator** deciding which modules exist in a given installation, so enabling one is a configuration change rather than a rebuild.
 
+```mermaid title="The shape that has held up"
+flowchart TB
+  subgraph browser["In the browser"]
+    C["Thin container<br/>layout · auth · top-level routing"]
+    MA["Module A"]
+    MB["Module B"]
+  end
+  subgraph cluster["In the cluster"]
+    OP["Kubernetes operator<br/>decides which modules exist"]
+    BA["BFF A<br/>own pod"]
+    BB["BFF B<br/>own pod"]
+  end
+  C --> MA
+  C --> MB
+  MA --> BA
+  MB --> BB
+  OP -. "enables" .-> BA
+  OP -. "enables" .-> BB
+```
+
+> [!IMPORTANT]
+> Isolating the front-end deployment without isolating the backend leaves the coupling exactly where it was. Each module gets its own BFF, or it isn't really independent.
+
 That last piece is what turns "we deploy together" into "they deploy themselves", and it's also the one that takes longest to build.
 
 ## The prior question
 
 Before any of this: how many teams touch the front end today? If the answer is one or two, a well-structured monolith — clear folder boundaries and a lint rule forbidding imports across them — gives you nearly all the benefits and none of the costs. And if real modules are ever needed, those boundaries are exactly where you cut.
+
+```js title="eslint.config.js"
+// A boundary in a monolith: features may not reach into each other.
+rules: {
+  "no-restricted-imports": ["error", {
+    patterns: [{
+      group: ["@/features/*/*"],
+      message: "Import a feature only through its public index.",
+    }],
+  }],
+}
+```

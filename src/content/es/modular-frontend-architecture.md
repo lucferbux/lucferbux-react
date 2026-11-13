@@ -28,6 +28,22 @@ Antes de elegir herramienta, hay tres contratos que definen si esto va a funcion
 
 La pregunta que decide es sencilla: *¿un equipo necesita desplegar sin coordinarse con los demás?* Si la respuesta es no, la composición en build es más barata en todos los sentidos.
 
+```mermaid title="Choosing when composition happens"
+flowchart TB
+  Q{"Does a team need to deploy<br/>without coordinating?"}
+  Q -- "no" --> B["Build time<br/>modules as npm packages"]
+  Q -- "yes" --> R["Runtime<br/>Module Federation, import maps"]
+  B --> B1["Integration errors caught in CI<br/>publishing rebuilds the container"]
+  R --> R1["Each module ships alone<br/>integration errors surface in production"]
+```
+
+| | En build | En runtime |
+| --- | --- | --- |
+| **Desplegar un módulo** | Publicar un paquete y recompilar el contenedor | Desplegar el módulo, nada más |
+| **Tipos entre módulos** | Compartidos al compilar | Hace falta un contrato publicado |
+| **Errores de integración** | En CI | En producción |
+| **Coste** | Bajo | Versionado, tests de contrato, carga en runtime |
+
 **Qué es compartido.** Esto es lo que más problemas da. React, el router y el sistema de diseño tienen que ser *singletons*: dos copias de React en la misma página rompen los hooks, y dos routers compiten por la URL.
 
 ```js
@@ -43,13 +59,41 @@ Todo lo demás debería ser privado de cada módulo. La tentación de compartir 
 
 **Cómo se comunican.** La respuesta aburrida es la correcta: por la URL y por eventos, no por estado compartido. Un módulo que lee el store de otro es un monolito con más pasos.
 
+```ts
+// The URL carries what can be bookmarked…
+navigate(`/projects/${projectName}/models`);
+
+// …and an event carries what just happened. Nobody imports anybody.
+window.dispatchEvent(
+  new CustomEvent("project:selected", { detail: { projectName } }),
+);
+```
+
 ## La librería compartida es el producto
 
 Si hay una pieza que decide si esto escala, es la librería común. No por los componentes: por el andamiaje.
 
 Cuando la librería aporta el enrutado, la autenticación, la obtención de datos y el manejo de errores, un módulo nuevo es un `package.json` y una ruta. Cuando no los aporta, cada equipo reimplementa su versión, salen ocho formas distintas de mostrar un error de red, y alguien del equipo de plataforma acaba en cada incorporación.
 
-La medida real del éxito no es el número de módulos. Es **cuánta gente de plataforma hace falta para añadir uno**. Cuando esa cifra llega a cero, la arquitectura funciona.
+```mermaid title="Who writes what in a new module"
+flowchart LR
+  subgraph lib["Common library — written once"]
+    direction TB
+    L1["Routing"]
+    L2["Authentication"]
+    L3["Data fetching"]
+    L4["Error handling"]
+  end
+  subgraph mod["New module — written by the team"]
+    direction TB
+    M1["package.json"]
+    M2["Route + screens"]
+  end
+  lib --> mod
+```
+
+> [!TIP]
+> La medida real del éxito no es el número de módulos. Es **cuánta gente de plataforma hace falta para añadir uno**. Cuando esa cifra llega a cero, la arquitectura funciona.
 
 ## Lo que se paga
 
@@ -72,8 +116,43 @@ En la plataforma sobre la que trabajo, la combinación que ha resultado sostenib
 - **Una librería común versionada** con el andamiaje, no sólo componentes.
 - **Un operador de Kubernetes** que decide qué módulos existen en cada instalación, de modo que activar uno es un cambio de configuración y no un rebuild.
 
+```mermaid title="The shape that has held up"
+flowchart TB
+  subgraph browser["In the browser"]
+    C["Thin container<br/>layout · auth · top-level routing"]
+    MA["Module A"]
+    MB["Module B"]
+  end
+  subgraph cluster["In the cluster"]
+    OP["Kubernetes operator<br/>decides which modules exist"]
+    BA["BFF A<br/>own pod"]
+    BB["BFF B<br/>own pod"]
+  end
+  C --> MA
+  C --> MB
+  MA --> BA
+  MB --> BB
+  OP -. "enables" .-> BA
+  OP -. "enables" .-> BB
+```
+
+> [!IMPORTANT]
+> Aislar el despliegue del frontend sin aislar el del backend deja el acoplamiento donde estaba. Cada módulo lleva su propio BFF, o no es independiente de verdad.
+
 Esa última pieza es la que convierte «desplegamos juntos» en «se despliegan solos», y es también la que más tarda en construirse.
 
 ## La pregunta previa
 
 Antes de todo esto: ¿cuántos equipos tocan hoy el frontend? Si la respuesta es uno o dos, un monolito bien estructurado —con fronteras claras por carpeta y una regla de lint que impida importar a través de ellas— te da casi todas las ventajas sin ninguno de los costes. Y si algún día hacen falta módulos de verdad, esas fronteras son exactamente por donde se corta.
+
+```js title="eslint.config.js"
+// A boundary in a monolith: features may not reach into each other.
+rules: {
+  "no-restricted-imports": ["error", {
+    patterns: [{
+      group: ["@/features/*/*"],
+      message: "Import a feature only through its public index.",
+    }],
+  }],
+}
+```

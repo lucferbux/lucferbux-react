@@ -29,6 +29,11 @@ function first() {
 first();
 ```
 
+```mermaid title="The call stack at the moment of the throw"
+flowchart TB
+  T["third() — throws here"] --- S["second()"] --- F["first()"] --- G["(global script)"]
+```
+
 The stack trace you see in the console is literally the contents of the stack at the moment of the error, read top to bottom. It isn't a metaphor. It's the data structure.
 
 And here's the key point: **the engine knows nothing about `setTimeout`, `fetch` or the DOM**. None of those are part of the language. They are APIs the environment provides.
@@ -38,6 +43,16 @@ And here's the key point: **the engine knows nothing about `setTimeout`, `fetch`
 When you write `setTimeout(fn, 1000)`, the engine does one thing: call a function the browser hands it, and pop it immediately. The timer is the browser's problem, on another thread, out of your control.
 
 A second later the browser can't just run `fn` — the stack might be busy, and JavaScript doesn't do two things at once. Instead it drops `fn` into the **task queue**.
+
+```mermaid title="Where a callback waits before it runs"
+flowchart TB
+  S["Call stack<br/>(the engine)"] -- "setTimeout(fn)" --> A["Environment APIs<br/>timers · fetch · DOM"]
+  S -- "promise settles" --> MQ["Microtask queue<br/>promise callbacks"]
+  A -- "timer fires" --> TQ["Task queue<br/>timers · events · I/O"]
+  MQ -- "first" --> L(("Event loop"))
+  TQ -- "then" --> L
+  L -. "only when the stack is empty" .-> S
+```
 
 The **event loop** is the loop watching both structures:
 
@@ -61,7 +76,17 @@ A 0 ms `setTimeout` doesn't mean "run this now". It means "queue this as soon as
 
 Promises don't use the task queue. They use the **microtask queue**, which has priority: the event loop drains it **completely** after each task, before taking the next one.
 
-```js
+```mermaid title="One turn of the event loop"
+flowchart TB
+  T["Take the oldest task<br/>timer · event · I/O"] --> R["Run it until the stack is empty"]
+  R --> M{"Microtask queue<br/>empty?"}
+  M -- "no" --> MR["Run the next microtask"] --> M
+  M -- "yes" --> P{"Time to paint?"}
+  P -- "yes" --> F["requestAnimationFrame,<br/>style, layout, paint"] --> T
+  P -- "no" --> T
+```
+
+```js {5}
 console.log("script");
 
 setTimeout(() => console.log("timeout"), 0);
@@ -76,6 +101,21 @@ console.log("end");
 // timeout
 ```
 
+```mermaid title="Who runs when"
+sequenceDiagram
+  participant S as Call stack
+  participant M as Microtask queue
+  participant T as Task queue
+  Note over S: logs "script"
+  S->>T: setTimeout callback
+  S->>M: then callback
+  Note over S: logs "end", script finishes
+  M->>S: drained first
+  Note over S: logs "promise"
+  T->>S: next task
+  Note over S: logs "timeout"
+```
+
 `promise` comes out before `timeout` even though it was registered later. This has an uncomfortable practical consequence: a chain of microtasks that regenerates itself **blocks rendering indefinitely**, because the event loop never reaches the next task.
 
 ```js
@@ -85,6 +125,9 @@ function loop() {
 }
 loop();
 ```
+
+> [!WARNING]
+> The microtask queue has no "one per turn" limit. Anything that keeps queueing microtasks — a recursive `.then`, an `await` in a loop that never yields to a real task — starves painting and input just as surely as a `while (true)`.
 
 With `setTimeout` the same loop would be harmless, because between tasks the browser gets to paint.
 
@@ -96,7 +139,7 @@ Three consequences you will actually feel while writing code:
 
 **The position of `await` matters.** `await` splits a function in two: everything before it runs synchronously, everything after becomes a microtask.
 
-```js
+```js {3-4}
 async function demo() {
   console.log("a"); // synchronous
   await null;
@@ -109,14 +152,19 @@ console.log("c");
 
 **Timers are not precise.** `setTimeout(fn, 100)` guarantees *at least* 100 ms, never exactly 100. If the stack is busy when the deadline passes, the task waits. For animation use `requestAnimationFrame`, which is synchronised with painting.
 
+> [!TIP]
+> When a timer fires late, the question isn't "what's wrong with the timer" but "what was on the stack". The Performance panel's long tasks (anything over 50 ms) are usually the answer.
+
 ## The mental model
 
 If you keep one picture, make it this one:
 
-- **Call stack**: what's running *now*, always one thing.
-- **Environment APIs**: what waits on your behalf, off-thread.
-- **Microtask queue**: promises. Drained completely between tasks.
-- **Task queue**: timers, events, I/O. One per turn.
-- **Event loop**: moves things from the queues to the stack, but **only when the stack is empty**.
+| Piece | What it holds | When it runs |
+| --- | --- | --- |
+| **Call stack** | What's running *now* — always one thing | Until it empties |
+| **Environment APIs** | What waits on your behalf, off-thread | In parallel, outside JavaScript |
+| **Microtask queue** | Promise callbacks, `await` continuations | Drained completely between tasks |
+| **Task queue** | Timers, events, I/O | One per turn |
+| **Event loop** | Nothing — it moves things from the queues to the stack | **Only when the stack is empty** |
 
 JavaScript isn't asynchronous. JavaScript is synchronous and single-threaded, running inside an environment that does know how to wait. All the asynchrony you use daily is that boundary.
