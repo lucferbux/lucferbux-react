@@ -85,9 +85,6 @@ flowchart LR
   V -- "passes" --> R["Review"]
 ```
 
-> [!TIP]
-> Cuando el plan resulta equivocado a mitad de camino, para y corrige el documento. Seguir improvisando es la forma de que el descubrimiento acabe viviendo sólo en un diff.
-
 | Vive en | Cambia | Ejemplo |
 | --- | --- | --- |
 | `AGENTS.md` | Rara vez | Aquí `md:` es 650px, no 768px |
@@ -96,7 +93,8 @@ flowchart LR
 
 La flecha de vuelta es la parte que todo el mundo omite y la que da valor. Casi siempre, implementar revela que la especificación era incorrecta: una restricción que no se sostiene, un caso que nadie consideró, una suposición falsa. Si ese descubrimiento sólo vive en el diff, la siguiente persona lo vuelve a descubrir.
 
-En la práctica la disciplina es sencilla: cuando el plan resulta equivocado a mitad de la implementación, se para y se corrige el documento, no se sigue improvisando.
+> [!TIP]
+> En la práctica la disciplina es sencilla: cuando el plan resulta equivocado a mitad de la implementación, se para y se corrige el documento, no se sigue improvisando.
 
 ## El repositorio como especificación permanente
 

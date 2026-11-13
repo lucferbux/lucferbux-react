@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Writing a Kubernetes operator in Go: what the reconcile loop actually promises">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c98c31" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#007789" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1241.4 0.9 Q 1241.4 0.9 1185.2 145.8 Q 1129.0 290.8 983.4 277.5 Q 837.7 264.2 740.5 193.8 Q 643.2 123.5 604.1 -18.0 Q 565.0 -159.4 694.6 -240.8 Q 824.1 -322.2 927.1 -243.7 Q 1030.2 -165.1 1135.8 -82.1 Z" fill="#c98c31" opacity="0.50" />
+    <path d="M 483.8 45.8 Q 483.8 45.8 468.8 177.4 Q 453.7 308.9 316.3 320.1 Q 178.8 331.3 90.0 247.0 Q 1.2 162.7 4.3 47.3 Q 7.4 -68.1 91.4 -161.0 Q 175.5 -254.0 282.3 -195.1 Q 389.1 -136.2 436.4 -45.2 Z" fill="#eabe7d" opacity="0.44" />
+    <path d="M 321.6 558.2 Q 321.6 558.2 308.3 629.1 Q 295.1 699.9 223.5 695.1 Q 151.9 690.3 83.1 664.7 Q 14.2 639.0 16.3 559.2 Q 18.4 479.4 86.4 458.1 Q 154.3 436.7 210.1 444.9 Q 265.9 453.1 293.8 505.6 Z" fill="#007789" opacity="0.55" />
+    <path d="M 1174.0 140.5 Q 1174.0 140.5 1126.6 223.2 Q 1079.3 305.9 983.8 352.4 Q 888.4 398.8 792.1 330.2 Q 695.9 261.6 723.6 153.9 Q 751.3 46.1 828.1 0.3 Q 904.9 -45.6 1006.4 -53.3 Q 1108.0 -61.0 1141.0 39.8 Z" fill="#c98c31" opacity="0.49" />
+    <path d="M 1375.6 545.3 Q 1375.6 545.3 1328.7 640.5 Q 1281.8 735.7 1180.9 749.8 Q 1080.1 763.9 975.7 716.8 Q 871.4 669.8 884.7 551.7 Q 898.0 433.6 991.8 392.2 Q 1085.6 350.9 1184.6 351.7 Q 1283.6 352.6 1329.6 449.0 Z" fill="#eabe7d" opacity="0.54" />
+    <path d="M 1392.8 232.2 Q 1392.8 232.2 1333.2 342.9 Q 1273.7 453.7 1156.5 469.1 Q 1039.4 484.4 933.3 423.3 Q 827.2 362.1 850.3 243.3 Q 873.4 124.5 956.4 52.0 Q 1039.4 -20.4 1136.2 20.6 Q 1233.0 61.7 1312.9 146.9 Z" fill="#007789" opacity="0.41" />
+    <path d="M 506.9 535.8 Q 506.9 535.8 421.1 621.7 Q 335.4 707.7 235.2 760.7 Q 135.0 813.7 38.5 736.5 Q -57.9 659.2 -49.3 540.0 Q -40.7 420.7 53.5 367.4 Q 147.8 314.2 261.5 314.1 Q 375.2 314.1 441.1 425.0 Z" fill="#c98c31" opacity="0.41" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="203.46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">KUBERNETES</text>
+  <text x="80" y="259" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Writing a Kubernetes operator</text>
+    <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">in Go: what the reconcile loop</text>
+    <text x="80" y="395" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">actually promises</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

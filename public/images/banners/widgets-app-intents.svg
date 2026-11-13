@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Widgets, Controls and App Intents: a reservoir and an authenticator">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1224.6 111.9 Q 1224.6 111.9 1193.1 239.4 Q 1161.6 366.9 1036.4 342.5 Q 911.1 318.2 793.7 282.9 Q 676.3 247.7 668.6 108.2 Q 660.9 -31.3 777.6 -99.7 Q 894.3 -168.1 1003.6 -125.1 Q 1112.9 -82.1 1168.8 14.9 Z" fill="#a08153" opacity="0.44" />
+    <path d="M 659.1 81.9 Q 659.1 81.9 550.7 178.9 Q 442.3 275.9 324.6 355.5 Q 206.9 435.1 81.5 338.3 Q -43.9 241.6 -40.0 83.8 Q -36.1 -73.9 88.8 -157.7 Q 213.7 -241.5 328.1 -176.9 Q 442.4 -112.3 550.8 -15.2 Z" fill="#eabe7d" opacity="0.54" />
+    <path d="M 594.6 553.8 Q 594.6 553.8 559.1 653.2 Q 523.5 752.6 414.5 783.6 Q 305.5 814.7 203.5 747.7 Q 101.5 680.8 116.7 561.1 Q 131.9 441.5 214.7 349.7 Q 297.5 257.9 387.4 335.5 Q 477.3 413.0 536.0 483.4 Z" fill="#2b2830" opacity="0.45" />
+    <path d="M 1152.2 421.3 Q 1152.2 421.3 1073.0 527.3 Q 993.9 633.3 876.8 670.0 Q 759.7 706.7 640.0 637.3 Q 520.4 567.9 557.4 439.2 Q 594.5 310.4 685.0 257.8 Q 775.5 205.3 902.5 184.9 Q 1029.6 164.6 1090.9 292.9 Z" fill="#a08153" opacity="0.41" />
+    <path d="M 352.9 570.0 Q 352.9 570.0 297.6 655.1 Q 242.3 740.2 147.3 774.5 Q 52.2 808.9 -36.5 745.3 Q -125.1 681.7 -126.8 569.2 Q -128.5 456.8 -33.2 415.9 Q 62.2 375.0 150.1 390.1 Q 238.1 405.2 295.5 487.6 Z" fill="#eabe7d" opacity="0.42" />
+    <path d="M 1254.6 574.5 Q 1254.6 574.5 1226.9 669.1 Q 1199.1 763.7 1095.8 791.3 Q 992.5 818.9 891.4 758.8 Q 790.4 698.7 777.9 568.5 Q 765.3 438.3 872.1 354.5 Q 978.9 270.8 1108.8 303.3 Q 1238.6 335.8 1246.6 455.2 Z" fill="#2b2830" opacity="0.50" />
+    <path d="M 1476.8 13.5 Q 1476.8 13.5 1433.7 154.4 Q 1390.5 295.3 1237.1 334.3 Q 1083.6 373.3 1027.9 240.0 Q 972.1 106.7 932.6 -5.5 Q 893.1 -117.8 999.0 -185.5 Q 1104.9 -253.2 1223.9 -231.0 Q 1343.0 -208.8 1409.9 -97.7 Z" fill="#a08153" opacity="0.56" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="203.46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">IOS</text>
+  <text x="80" y="259" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Widgets, Controls and App</text>
+    <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Intents: a reservoir and an</text>
+    <text x="80" y="395" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">authenticator</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

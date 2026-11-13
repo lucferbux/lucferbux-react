@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Evaluating agents: knowing whether a change made things better">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 415.1 39.8 Q 415.1 39.8 371.6 141.2 Q 328.1 242.6 216.7 275.4 Q 105.2 308.2 53.7 213.6 Q 2.3 118.9 6.1 41.7 Q 9.9 -35.5 67.1 -90.1 Q 124.3 -144.7 235.8 -165.9 Q 347.4 -187.0 381.2 -73.6 Z" fill="#a08153" opacity="0.36" />
+    <path d="M 818.2 208.5 Q 818.2 208.5 772.6 277.7 Q 726.9 346.9 651.2 367.7 Q 575.5 388.5 463.1 362.5 Q 350.7 336.5 377.5 221.4 Q 404.3 106.3 481.6 31.1 Q 558.9 -44.0 676.0 -28.4 Q 793.1 -12.8 805.7 97.8 Z" fill="#eabe7d" opacity="0.42" />
+    <path d="M 480.6 48.2 Q 480.6 48.2 434.5 146.5 Q 388.5 244.9 281.2 273.2 Q 173.8 301.6 104.9 222.0 Q 36.0 142.4 40.2 50.2 Q 44.4 -42.0 109.9 -120.0 Q 175.5 -198.0 257.7 -142.8 Q 339.9 -87.5 410.2 -19.7 Z" fill="#2b2830" opacity="0.43" />
+    <path d="M 727.6 348.3 Q 727.6 348.3 722.0 487.2 Q 716.4 626.1 581.7 592.3 Q 446.9 558.5 347.8 512.7 Q 248.7 466.8 216.1 332.5 Q 183.4 198.3 304.7 122.4 Q 426.0 46.5 556.4 77.1 Q 686.8 107.7 707.2 228.0 Z" fill="#a08153" opacity="0.50" />
+    <path d="M 229.2 288.4 Q 229.2 288.4 175.5 345.7 Q 121.7 403.0 61.9 407.9 Q 2.0 412.8 -42.4 378.8 Q -86.9 344.9 -104.9 279.7 Q -123.0 214.6 -61.4 185.2 Q 0.1 155.9 64.8 160.0 Q 129.5 164.2 179.4 226.3 Z" fill="#eabe7d" opacity="0.45" />
+    <path d="M 710.0 417.3 Q 710.0 417.3 664.6 492.0 Q 619.1 566.8 536.3 593.7 Q 453.5 620.7 378.4 566.3 Q 303.3 512.0 307.1 419.2 Q 311.0 326.3 386.2 287.5 Q 461.4 248.7 550.2 245.8 Q 639.0 242.9 674.5 330.1 Z" fill="#2b2830" opacity="0.47" />
+    <path d="M 1407.0 123.6 Q 1407.0 123.6 1338.8 224.8 Q 1270.6 326.1 1156.5 371.1 Q 1042.4 416.2 939.3 335.6 Q 836.2 255.1 861.2 135.6 Q 886.1 16.2 967.0 -64.4 Q 1047.9 -144.9 1167.8 -122.6 Q 1287.7 -100.3 1347.4 11.7 Z" fill="#a08153" opacity="0.47" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="203.46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">AI</text>
+  <text x="80" y="259" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Evaluating agents: knowing</text>
+    <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">whether a change made things</text>
+    <text x="80" y="395" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">better</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

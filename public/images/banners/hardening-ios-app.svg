@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="From TestFlight to the App Store: hardening TOTP Password">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00565f" />
+      <stop offset="55%" stop-color="#007789" />
+      <stop offset="100%" stop-color="#eabe7d" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 1300.8 320.9 Q 1300.8 320.9 1255.4 382.7 Q 1210.0 444.6 1140.5 471.1 Q 1071.0 497.6 996.1 455.1 Q 921.1 412.5 939.4 329.7 Q 957.8 246.9 1014.8 197.3 Q 1071.8 147.6 1156.8 152.5 Q 1241.7 157.5 1271.3 239.2 Z" fill="#00565f" opacity="0.33" />
+    <path d="M 287.7 297.9 Q 287.7 297.9 263.3 374.0 Q 238.9 450.0 159.0 458.1 Q 79.2 466.2 3.3 427.8 Q -72.6 389.5 -52.7 307.5 Q -32.8 225.5 22.9 176.2 Q 78.5 126.9 156.6 139.0 Q 234.7 151.1 261.2 224.5 Z" fill="#007789" opacity="0.40" />
+    <path d="M 830.4 458.8 Q 830.4 458.8 825.6 538.8 Q 820.8 618.7 738.8 618.4 Q 656.9 618.0 581.7 583.4 Q 506.5 548.8 517.4 464.1 Q 528.3 379.4 592.3 338.2 Q 656.3 297.0 719.0 322.5 Q 781.6 348.0 806.0 403.4 Z" fill="#eabe7d" opacity="0.49" />
+    <path d="M 749.7 177.3 Q 749.7 177.3 709.7 236.8 Q 669.7 296.4 599.6 335.6 Q 529.6 374.9 464.8 318.2 Q 400.0 261.5 402.6 178.6 Q 405.1 95.7 475.8 74.4 Q 546.4 53.2 619.9 40.8 Q 693.5 28.4 721.6 102.9 Z" fill="#00565f" opacity="0.51" />
+    <path d="M 430.6 7.5 Q 430.6 7.5 382.1 59.5 Q 333.7 111.6 274.0 139.0 Q 214.3 166.4 155.3 124.1 Q 96.3 81.8 79.2 -0.8 Q 62.1 -83.3 131.4 -147.3 Q 200.7 -211.2 277.5 -166.9 Q 354.3 -122.6 392.4 -57.6 Z" fill="#007789" opacity="0.42" />
+    <path d="M 771.7 83.8 Q 771.7 83.8 760.5 182.4 Q 749.3 280.9 650.2 272.3 Q 551.1 263.7 450.6 232.1 Q 350.0 200.4 366.1 91.6 Q 382.1 -17.3 461.0 -81.3 Q 539.9 -145.3 634.0 -116.0 Q 728.2 -86.7 749.9 -1.4 Z" fill="#eabe7d" opacity="0.41" />
+    <path d="M 815.3 226.8 Q 815.3 226.8 729.2 321.5 Q 643.0 416.2 531.1 480.9 Q 419.2 545.7 324.9 449.2 Q 230.5 352.7 239.3 231.0 Q 248.1 109.3 340.1 37.0 Q 432.2 -35.2 565.3 -33.7 Q 698.5 -32.2 756.9 97.3 Z" fill="#00565f" opacity="0.35" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="237.67999999999998" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">IOS</text>
+  <text x="80" y="293" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">From TestFlight to the App</text>
+    <text x="80" y="361" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Store: hardening TOTP Password</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

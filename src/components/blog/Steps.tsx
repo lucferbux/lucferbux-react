@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 interface StepsProps {
   source: string;
@@ -27,6 +27,19 @@ function parse(source: string): Step[] {
     });
 }
 
+/** `inline code` inside a step: the block's text is not run through Markdown. */
+function inline(text: string): ReactNode {
+  return text
+    .split(/(`[^`]+`)/)
+    .map((part, i) =>
+      part.startsWith("`") && part.endsWith("`") && part.length > 1 ? (
+        <code key={i}>{part.slice(1, -1)}</code>
+      ) : (
+        part
+      )
+    );
+}
+
 /**
  * A numbered sequence — a process, a cycle, a pipeline. Horizontal on wide
  * screens, a vertical timeline on narrow ones.
@@ -52,8 +65,8 @@ export default function Steps({ source, meta = "" }: StepsProps) {
             <span className="steps-blog-index" aria-hidden="true">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <strong>{step.title}</strong>
-            {step.body && <span>{step.body}</span>}
+            <strong>{inline(step.title)}</strong>
+            {step.body && <span>{inline(step.body)}</span>}
           </li>
         ))}
       </ol>

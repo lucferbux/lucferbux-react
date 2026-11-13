@@ -1,5 +1,229 @@
 [
   {
+    "_id": "harness-engineering",
+    "title": {
+      "en": "Harness engineering: the part of the agent that isn't the model",
+      "es": "Harness engineering: la parte del agente que no es el modelo"
+    },
+    "description": {
+      "en": "The agent loop is thirty lines. Everything that makes a coding agent useful — tools, context, permissions, hooks, sub-agents, compaction — lives around it, and you can change most of it.",
+      "es": "El bucle del agente son treinta líneas. Todo lo que hace útil a un agente de código — herramientas, contexto, permisos, hooks, subagentes, compactación — vive a su alrededor, y casi todo se puede cambiar."
+    },
+    "internalLink": "harness-engineering",
+    "link": "",
+    "image": "/images/banners/harness-engineering.svg",
+    "date": "2026-11-13T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "agents-on-kubernetes",
+    "title": {
+      "en": "Running AI agents on Kubernetes: what a web service never asked of you",
+      "es": "Agentes de IA en Kubernetes: lo que un servicio web nunca te pidió"
+    },
+    "description": {
+      "en": "An agent is long-lived, calls tools, runs code nobody reviewed and acts on someone's behalf. Sandboxes, identity, egress, RBAC, traces and quotas: what Kubernetes offers for each, and what it still doesn't.",
+      "es": "Un agente vive mucho tiempo, llama a herramientas, ejecuta código que nadie ha revisado y actúa en nombre de alguien. Sandboxes, identidad, salida de red, RBAC, trazas y cuotas: qué ofrece Kubernetes para cada cosa, y qué no ofrece todavía."
+    },
+    "internalLink": "agents-on-kubernetes",
+    "link": "",
+    "image": "/images/banners/agents-on-kubernetes.svg",
+    "date": "2026-11-13T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "agent-orchestration-patterns",
+    "title": {
+      "en": "Agent orchestration patterns, and when each one pays for itself",
+      "es": "Patrones de orquestación de agentes, y cuándo compensa cada uno"
+    },
+    "description": {
+      "en": "Supervisors, handoffs, pipelines, fan-out, critics, hierarchies. Every multi-agent pattern buys something with tokens, latency and new ways to fail. This is the price list.",
+      "es": "Supervisores, handoffs, pipelines, fan-out, críticos, jerarquías. Cada patrón multiagente compra algo con tokens, latencia y nuevas formas de fallar. Esta es la lista de precios."
+    },
+    "internalLink": "agent-orchestration-patterns",
+    "link": "",
+    "image": "/images/banners/agent-orchestration-patterns.svg",
+    "date": "2026-11-12T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "agent-swarms-distributed-systems",
+    "title": {
+      "en": "Agent swarms are a distributed-systems problem",
+      "es": "Los enjambres de agentes son un problema de sistemas distribuidos"
+    },
+    "description": {
+      "en": "At three agents it's prompting. At a hundred it's queues, leases, backpressure, partial failure and merge conflicts, and distributed systems already solved most of it.",
+      "es": "Con tres agentes es cuestión de prompts. Con cien son colas, leases, backpressure, fallos parciales y conflictos de merge, y los sistemas distribuidos ya resolvieron casi todo eso."
+    },
+    "internalLink": "agent-swarms-distributed-systems",
+    "link": "",
+    "image": "/images/banners/agent-swarms-distributed-systems.svg",
+    "date": "2026-11-11T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "context-engineering",
+    "title": {
+      "en": "Context engineering: keeping an agent useful through a long session",
+      "es": "Context engineering: cómo mantener útil a un agente en una sesión larga"
+    },
+    "description": {
+      "en": "The context window is a budget, not a bucket. What goes in, when it goes in and what gets thrown away decides whether hour three of a session is as sharp as minute five.",
+      "es": "La ventana de contexto es un presupuesto, no un cubo. Qué entra, cuándo entra y qué se tira decide si la tercera hora de una sesión es tan lúcida como el minuto cinco."
+    },
+    "internalLink": "context-engineering",
+    "link": "",
+    "image": "/images/banners/context-engineering.svg",
+    "date": "2026-11-10T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "mcp-vs-a2a",
+    "title": {
+      "en": "MCP and A2A: tools for agents, and agents for agents",
+      "es": "MCP y A2A: herramientas para agentes, y agentes para agentes"
+    },
+    "description": {
+      "en": "One protocol connects an agent to the things it uses; the other connects it to agents it can't see inside. They are layers, not rivals, and most of the real work is designing the MCP server well.",
+      "es": "Un protocolo conecta a un agente con lo que usa; el otro, con agentes por dentro de los que no puede ver. Son capas, no rivales, y casi todo el trabajo de verdad está en diseñar bien el servidor MCP."
+    },
+    "internalLink": "mcp-vs-a2a",
+    "link": "",
+    "image": "/images/banners/mcp-vs-a2a.svg",
+    "date": "2026-11-09T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "evaluating-agents",
+    "title": {
+      "en": "Evaluating agents: knowing whether a change made things better",
+      "es": "Evaluar agentes: saber si un cambio lo ha mejorado"
+    },
+    "description": {
+      "en": "You changed the prompt, a tool description or the harness, and the agent feels better. Here is how to replace that feeling with a number you can defend.",
+      "es": "Has cambiado el prompt, la descripción de una herramienta o el harness, y el agente parece ir mejor. Así se sustituye esa sensación por un número que puedas defender."
+    },
+    "internalLink": "evaluating-agents",
+    "link": "",
+    "image": "/images/banners/evaluating-agents.svg",
+    "date": "2026-11-08T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "agent-security",
+    "title": {
+      "en": "Agent security: the threat model of a model with tools",
+      "es": "Seguridad de agentes: el modelo de amenazas de un modelo con herramientas"
+    },
+    "description": {
+      "en": "An agent reads untrusted text and then acts with your credentials. That's the whole threat model — and the reason the fixes are architectural, not a better prompt.",
+      "es": "Un agente lee texto no fiable y después actúa con tus credenciales. Ese es todo el modelo de amenazas, y el motivo por el que las soluciones son de arquitectura, no de un prompt mejor."
+    },
+    "internalLink": "agent-security",
+    "link": "",
+    "image": "/images/banners/agent-security.svg",
+    "date": "2026-11-07T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "workflows-vs-agents",
+    "title": {
+      "en": "Workflows or agents: when to script the path and when to let the model choose",
+      "es": "Workflows o agentes: cuándo fijar el camino y cuándo dejar que elija el modelo"
+    },
+    "description": {
+      "en": "Most automation that gets called an agent should be a workflow with one or two model calls in it, and some of it really should be an agent. The trick is deciding per step, and making both survive failure.",
+      "es": "Casi toda la automatización a la que se llama agente debería ser un workflow con una o dos llamadas al modelo dentro, y una parte de verdad debería ser un agente. El truco es decidirlo paso a paso, y que ambos sobrevivan a los fallos."
+    },
+    "internalLink": "workflows-vs-agents",
+    "link": "",
+    "image": "/images/banners/workflows-vs-agents.svg",
+    "date": "2026-11-06T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "llm-inference-kubernetes",
+    "title": {
+      "en": "Serving LLMs on Kubernetes: the stack from GPU to request",
+      "es": "Servir LLMs en Kubernetes: la pila de la GPU a la petición"
+    },
+    "description": {
+      "en": "A model server, a CRD, a gateway that understands KV caches and a GPU scheduler. What each layer of LLM serving on Kubernetes does today, and why a plain Service is not enough.",
+      "es": "Un servidor de modelos, un CRD, un gateway que entiende de cachés KV y un planificador de GPUs. Qué hace hoy cada capa del serving de LLMs en Kubernetes, y por qué un Service normal no basta."
+    },
+    "internalLink": "llm-inference-kubernetes",
+    "link": "",
+    "image": "/images/banners/llm-inference-kubernetes.svg",
+    "date": "2026-11-04T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "kubernetes-operators-kubebuilder",
+    "title": {
+      "en": "Writing a Kubernetes operator in Go: what the reconcile loop actually promises",
+      "es": "Escribir un operador de Kubernetes en Go: lo que de verdad promete el bucle de reconciliación"
+    },
+    "description": {
+      "en": "A small but complete operator built with kubebuilder, from the CRD to envtest — and the handful of ideas (level-triggered, idempotent, owned, finalized) that decide whether it behaves.",
+      "es": "Un operador pequeño pero completo hecho con kubebuilder, del CRD a envtest, y el puñado de ideas (level-triggered, idempotente, con dueño, con finalizer) que deciden si se porta bien."
+    },
+    "internalLink": "kubernetes-operators-kubebuilder",
+    "link": "",
+    "image": "/images/banners/kubernetes-operators-kubebuilder.svg",
+    "date": "2026-11-03T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "widgets-app-intents",
+    "title": {
+      "en": "Widgets, Controls and App Intents: a reservoir and an authenticator",
+      "es": "Widgets, controles y App Intents: un embalse y un autenticador"
+    },
+    "description": {
+      "en": "How two of my apps put their data outside the app — a widget whose water rises and falls with a real reservoir, and a Control Center button that copies a 2FA code — and what WidgetKit and App Intents let you get away with.",
+      "es": "Cómo dos de mis apps sacan sus datos fuera de la app (un widget cuya agua sube y baja con un embalse real y un botón del Centro de control que copia un código de doble factor) y qué te deja hacer WidgetKit con App Intents."
+    },
+    "internalLink": "widgets-app-intents",
+    "link": "",
+    "image": "/images/banners/widgets-app-intents.svg",
+    "date": "2026-11-02T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "hardening-ios-app",
+    "title": {
+      "en": "From TestFlight to the App Store: hardening TOTP Password",
+      "es": "De TestFlight al App Store: cómo blindé TOTP Password"
+    },
+    "description": {
+      "en": "Three years in TestFlight, then a security review found that a locked phone could make my authenticator throw its own key away. What I changed before letting strangers trust it with their second factor.",
+      "es": "Tres años en TestFlight, y luego una revisión de seguridad descubrió que un iPhone bloqueado podía hacer que mi autenticador tirase su propia clave. Lo que cambié antes de dejar que otros le confiaran su segundo factor."
+    },
+    "internalLink": "hardening-ios-app",
+    "link": "",
+    "image": "/images/banners/hardening-ios-app.svg",
+    "date": "2026-11-01T12:00:00Z",
+    "loaded": true
+  },
+  {
+    "_id": "swiftui-compose-one-app",
+    "title": {
+      "en": "One product, two native apps: SwiftUI and Jetpack Compose share a contract, not code",
+      "es": "Un producto, dos apps nativas: SwiftUI y Jetpack Compose comparten un contrato, no código"
+    },
+    "description": {
+      "en": "Embalse San Juan is a SwiftUI app and a Jetpack Compose app that share no code at all. What they share is a JSON Schema, one fixture file and a backend that refuses to publish anything that doesn't match it.",
+      "es": "Embalse San Juan es una app en SwiftUI y otra en Jetpack Compose que no comparten ni una línea de código. Lo que comparten es un JSON Schema, un fichero de prueba y un backend que se niega a publicar nada que no encaje con él."
+    },
+    "internalLink": "swiftui-compose-one-app",
+    "link": "",
+    "image": "/images/banners/swiftui-compose-one-app.svg",
+    "date": "2026-10-31T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "bff-per-module-go",
     "title": {
       "en": "One BFF per module, written in Go",

@@ -588,6 +588,9 @@
 
 .steps-blog li {
   position: relative;
+  /* Narrow cards: hyphenate long words before overflow-wrap has to split
+     them at an arbitrary letter. */
+  hyphens: auto;
   display: flex;
   flex-direction: column;
   gap: 6px;

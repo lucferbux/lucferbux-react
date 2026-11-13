@@ -116,6 +116,8 @@ Verify: Tests and the commands the spec named.
 ```
 ````
 
+`Inline code` in backticks works inside a step; other Markdown does not.
+
 Use this instead of ASCII arrows in a code block (`a -> b -> c`) — those were
 the ugliest thing on the old blog.
 

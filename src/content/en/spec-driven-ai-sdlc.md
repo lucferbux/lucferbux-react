@@ -85,9 +85,6 @@ flowchart LR
   V -- "passes" --> R["Review"]
 ```
 
-> [!TIP]
-> When the plan turns out to be wrong halfway through, stop and fix the document. Improvising onward is how the discovery ends up living only in a diff.
-
 | Lives in | Changes | Example |
 | --- | --- | --- |
 | `AGENTS.md` | Rarely | `md:` means 650px here, not 768px |
@@ -96,7 +93,8 @@ flowchart LR
 
 The return arrow is the part everyone skips and the part that pays. Almost always, implementing reveals the specification was wrong: a constraint that doesn't hold, a case nobody considered, a false assumption. If that discovery only lives in the diff, the next person rediscovers it.
 
-In practice the discipline is simple: when the plan turns out to be wrong halfway through implementation, stop and correct the document rather than improvising onward.
+> [!TIP]
+> In practice the discipline is simple: when the plan turns out to be wrong halfway through implementation, stop and correct the document rather than improvising onward.
 
 ## The repository as a permanent specification
 
