@@ -1,5 +1,20 @@
 [
   {
+    "_id": "totp-password-launch",
+    "title": {
+      "en": "TOTP Password is out on the App Store",
+      "es": "TOTP Password, ya en el App Store"
+    },
+    "description": {
+      "en": "After three years living in TestFlight, TOTP Password is finally on the App Store, for iPhone, iPad and Mac. It is the authenticator I use every day, and I built it because the others kept missing things I needed.\n\nThe clearest one is the PIN prefix: some services expect a fixed PIN followed by the code, and the app stores that PIN, encrypted alongside the secret, and adds it whenever it copies or AutoFills a code. AutoFill also works in Safari on the Mac, and codes are one tap away from widgets, Control Center, the Action button, Siri and Shortcuts. The Mac version is a native app with a menu bar icon, search and keyboard shortcuts.\n\nOver these years it kept growing: iCloud sync through your own private database, SHA-256 and SHA-512, 6 to 10 digits, custom periods, an optional Face ID or Touch ID lock and a clipboard that clears itself. What finally convinced me to publish it was the last round of security audits and hardening: keys are never created or overwritten by accident, the PIN is sealed with the secret, the lock covers every surface, and the app now meets a very strict quality bar.\n\nNo analytics, no ads, no third-party code and no server of mine: it makes no network requests of its own. It is free, and the code is open on GitHub under the MIT license.",
+      "es": "Después de tres años viviendo en TestFlight, TOTP Password ya está en el App Store, para iPhone, iPad y Mac. Es el autenticador que uso a diario, y lo hice porque a los demás siempre les faltaba algo que yo necesitaba.\n\nEl ejemplo más claro es el prefijo PIN: hay servicios que piden un PIN fijo seguido del código, y la app guarda ese PIN, cifrado junto al secreto, y lo antepone cada vez que copia o autocompleta un código. El autocompletado funciona también en Safari en el Mac, y los códigos están a un toque desde los widgets, el Centro de Control, el botón de Acción, Siri y Atajos. La versión de Mac es una app nativa con icono en la barra de menús, búsqueda y atajos de teclado.\n\nEn estos años no ha dejado de crecer: sincronización por iCloud a través de tu propia base de datos privada, SHA-256 y SHA-512, de 6 a 10 dígitos, periodos personalizados, bloqueo opcional con Face ID o Touch ID y un portapapeles que se limpia solo. Lo que me animó por fin a publicarla fue la última ronda de auditorías de seguridad y mejoras: las claves nunca se crean ni se sobrescriben por accidente, el PIN va sellado con el secreto, el bloqueo cubre todas las superficies, y la app cumple ya unos estándares de calidad muy estrictos.\n\nSin analíticas, sin anuncios, sin código de terceros y sin servidores míos: la app no hace ninguna petición de red por su cuenta. Es gratuita, y el código está abierto en GitHub con licencia MIT."
+    },
+    "url": "https://apps.apple.com/us/app/totp-password/id6742797604",
+    "image": "/images/banners/totp-password-launch.jpg",
+    "timestamp": "2026-11-13T12:00:00Z",
+    "loaded": true
+  },
+  {
     "_id": "embalse-san-juan-launch",
     "title": {
       "en": "Embalse San Juan is out on the App Store",
