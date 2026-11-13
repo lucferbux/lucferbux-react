@@ -86,12 +86,12 @@
   {
     "_id": "totp-authenticator",
     "title": {
-      "en": "TOTP Authenticator",
-      "es": "TOTP Authenticator"
+      "en": "TOTP Password",
+      "es": "TOTP Password"
     },
     "description": {
-      "en": "A native TOTP authenticator for iOS and macOS, built entirely on Apple frameworks with no third-party dependencies. RFC 4226 and 6238, keys encrypted at rest with ChaChaPoly, CloudKit sync, widgets, Shortcuts, and an AutoFill credential provider that works on the Mac too.",
-      "es": "Un autenticador TOTP nativo para iOS y macOS, construido íntegramente sobre frameworks de Apple y sin dependencias de terceros. RFC 4226 y 6238, claves cifradas en reposo con ChaChaPoly, sincronización por CloudKit, widgets, Atajos y un proveedor de credenciales AutoFill que funciona también en Mac."
+      "en": "A native TOTP authenticator for iPhone, iPad and Mac, now on the App Store, built entirely on Apple frameworks with no third-party dependencies. RFC 4226 and 6238, a per-account PIN prefix, keys encrypted at rest with ChaChaPoly, CloudKit sync, widgets, Shortcuts, and an AutoFill credential provider that works on the Mac too.",
+      "es": "Un autenticador TOTP nativo para iPhone, iPad y Mac, ya en el App Store, construido íntegramente sobre frameworks de Apple y sin dependencias de terceros. RFC 4226 y 6238, prefijo PIN por cuenta, claves cifradas en reposo con ChaChaPoly, sincronización por CloudKit, widgets, Atajos y un proveedor de credenciales AutoFill que funciona también en Mac."
     },
     "link": "https://github.com/lucferbux/TOTP",
     "tags": [
@@ -102,7 +102,7 @@
       "Security"
     ],
     "featured": false,
-    "version": "",
+    "version": "4.5",
     "date": "2025-03-10T12:00:00Z"
   },
   {
