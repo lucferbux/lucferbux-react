@@ -6,6 +6,20 @@
   # Firebase client-side config is public by design — not secrets
   SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API,VITE_FIREBASE_AUTH_DOMAIN,VITE_FIREBASE_PROJECT_ID,VITE_FIREBASE_STORAGE_BUCKET,VITE_FIREBASE_MESSAGING_SENDER_ID,VITE_FIREBASE_APP_ID"
 
+# Static files that do not exist are a real 404, not the SPA. Without these the
+# catch-all below answered a missing image with index.html and a 200, and the
+# service worker cached that HTML as the image. Unforced rules only apply when
+# no file matches, so existing files are served as usual.
+[[redirects]]
+  from = "/images/*"
+  to = "/index.html"
+  status = 404
+
+[[redirects]]
+  from = "/assets/*"
+  to = "/index.html"
+  status = 404
+
 # SPA: redirect all routes to index.html (React Router handles routing)
 [[redirects]]
   from = "/*"

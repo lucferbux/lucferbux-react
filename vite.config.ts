@@ -157,11 +157,31 @@ export default defineConfig({
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
             handler: "CacheFirst",
             options: {
-              cacheName: "images",
+              // Renamed from "images": that cache can hold index.html stored
+              // under an image URL (see the plugin below), and CacheFirst
+              // would keep serving it for 30 days.
+              cacheName: "images-v2",
               expiration: {
                 maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
               },
+              plugins: [
+                {
+                  // Netlify answers a path with no file behind it with the
+                  // SPA's index.html and a 200. An image requested before the
+                  // deploy that adds it lands (a news item seeded first) came
+                  // back as HTML, and CacheFirst kept it. Store only real
+                  // images, and opaque cross-origin responses, which cannot
+                  // be inspected.
+                  cacheWillUpdate: async ({ response }) => {
+                    if (response.type === "opaque") return response;
+                    const type = response.headers.get("content-type") ?? "";
+                    return response.ok && type.startsWith("image/")
+                      ? response
+                      : null;
+                  },
+                },
+              ],
             },
           },
           {
