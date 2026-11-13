@@ -36,11 +36,38 @@ y la configuración. En cuanto alguien añadía una clase solo a un target para
 arreglar algo rápido, la siguiente persona pasaba una tarde entendiendo por qué
 compilaba en una marca y no en otra.
 
+```mermaid title="One codebase, one target per reseller"
+flowchart TB
+  SRC[("Shared source<br/>every .m in every target")]
+  subgraph ta["Target: Reseller A"]
+    RA["Info.plist<br/>icons · colours<br/>strings"]
+  end
+  subgraph tb["Target: Reseller B"]
+    RB["Info.plist<br/>icons · colours<br/>strings"]
+  end
+  subgraph tn["Target: … ×20"]
+    RN["Info.plist<br/>icons · colours<br/>strings"]
+  end
+  SRC --> ta & tb & tn
+  ta --> AA["App Store listing A"]
+  tb --> AB["App Store listing B"]
+  tn --> AN["App Store listing …"]
+```
+
+> [!IMPORTANT]
+> La pertenencia a un target es una casilla en el inspector de ficheros de Xcode,
+> y nada te avisa cuando las casillas de un fichero no coinciden con las del
+> resto. La regla tenía que vivir en la cabeza de la gente, porque la
+> herramienta no la iba a hacer cumplir.
+
 **Una convención para los identificadores.** El *bundle identifier* se derivaba
 del dominio del distribuidor, invertido:
 
-```
-www.distribuidor.es   ->   es.distribuidor.easyview
+```mermaid title="The bundle identifier is computed, not chosen"
+flowchart TB
+  D["www.reseller.es"] -- "drop www" --> R["reseller.es"]
+  R -- "reverse" --> V["es.reseller"]
+  V -- "append product" --> B["es.reseller.easyview"]
 ```
 
 Que fuese una regla y no una decisión caso a caso quitó de en medio una
@@ -58,6 +85,14 @@ descripciones, veinte certificados y perfiles de aprovisionamiento. Cada
 publicación era un día entero, y el fallo típico no era de código sino de
 proceso: una captura de la marca equivocada, un perfil caducado el día que
 tocaba publicar.
+
+```steps loop="×20, one per reseller"
+Build: Pick the reseller's scheme, archive, check the icon and name on the device.
+Sign: The right certificate and that brand's provisioning profile, still valid.
+Upload: Send the binary through Xcode or Application Loader and wait for processing.
+Listing: That brand's screenshots, description and keywords.
+Submit: Send it to review and move on to the next brand.
+```
 
 **Los iconos.** Cada target necesitaba su juego completo de tamaños. Un
 distribuidor mandaba un PNG grande y había que generar la familia entera. Lo
@@ -82,6 +117,24 @@ siguiera aplicando:
 - Y, sobre todo, hoy preguntaría si hacen falta veinte apps. Muchas veces lo que
   el cliente quiere es ver su logotipo, y eso no exige una ficha propia en la
   tienda.
+
+| Problema | 2016 | Hoy |
+| --- | --- | --- |
+| **Ajustes por marca** | Un target duplicado por distribuidor | Un target y un `.xcconfig` por marca |
+| **Día de publicación** | Un día de clics, veinte veces | *Lanes* de `fastlane` que recorren las marcas |
+| **Firma** | Perfiles renovados a mano, a menudo tarde | Firma gestionada o `match` |
+| **Iconos** | Generados a mano, automatizados demasiado tarde | Una imagen de origen, generada en la compilación |
+| **«Solo su logo»** | Un binario y una ficha aparte | Configuración remota en una sola app |
+
+Con un xcconfig, un distribuidor deja de ser la copia de un target y pasa a ser
+un puñado de líneas:
+
+```ini title="Config/Reseller.xcconfig"
+// Everything that varies per brand, and nothing else
+PRODUCT_BUNDLE_IDENTIFIER = es.reseller.easyview
+PRODUCT_NAME = Reseller View
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-Reseller
+```
 
 ## Lo que sigo usando
 

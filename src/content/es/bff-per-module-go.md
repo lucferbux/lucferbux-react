@@ -37,6 +37,18 @@ Un BFF —*backend for frontend*— es un servicio pequeño cuyo único cliente 
 interfaz concreta. No es una API de propósito general: es el backend de esa
 pantalla.
 
+```mermaid title="Where the stitching happens"
+flowchart TB
+  subgraph withbff["With a BFF per module"]
+    B2["Browser"] -- "one call" --> F["Module BFF"]
+    F -- "five calls" --> K2["Kubernetes API"]
+    F -- "only the fields<br/>the screen needs" --> B2
+  end
+  subgraph direct["Without a BFF"]
+    B1["Browser"] -- "five calls,<br/>full objects" --> K1["Kubernetes API"]
+  end
+```
+
 ## La pieza central: un cliente por usuario
 
 Esta es la decisión que más define el diseño, y la que más se hace mal.
@@ -45,7 +57,7 @@ El BFF **no** tiene una cuenta de servicio con permisos amplios con la que
 atiende a todo el mundo. Cada petición llega con el token del usuario, y el BFF
 construye con ese token un cliente de Kubernetes efímero para esa petición:
 
-```go
+```go {8}
 func (a *App) clientFor(r *http.Request) (client.Client, error) {
     token := bearerToken(r)
     if token == "" {
@@ -53,7 +65,7 @@ func (a *App) clientFor(r *http.Request) (client.Client, error) {
     }
     cfg := rest.CopyConfig(a.baseConfig)
     cfg.BearerToken = token
-    cfg.BearerTokenFile = ""   // si no, el fichero gana sobre el token
+    cfg.BearerTokenFile = ""   // otherwise the file wins over the token
     return client.New(cfg, client.Options{Scheme: a.scheme})
 }
 ```
@@ -64,11 +76,30 @@ petición falla en el servidor de la API, no en una comprobación nuestra. No
 estamos implementando autorización; estamos dejando que la implemente quien ya
 la tiene.
 
-Ese `BearerTokenFile = ""` de la cuarta línea es un detalle que cuesta una tarde
-descubrir: si el pod tiene montado el token de su cuenta de servicio y no lo
-borras explícitamente de la copia de la configuración, el cliente usa el fichero
-y te encuentras atendiendo peticiones con los permisos del pod. Es decir,
-exactamente lo que querías evitar, y funcionando aparentemente bien.
+```mermaid title="One request, one client, the user's permissions"
+sequenceDiagram
+  autonumber
+  participant B as Browser
+  participant F as Module BFF
+  participant K as API server
+  B->>F: GET /api/v1/models with Bearer token
+  Note over F: secure() builds a client from that token
+  F->>K: list resources as the user
+  alt user has RBAC for them
+    K-->>F: objects
+    F-->>B: envelope with data
+  else user does not
+    K-->>F: 403 Forbidden
+    F-->>B: envelope with error
+  end
+```
+
+> [!WARNING]
+> Ese `BearerTokenFile = ""` resaltado es un detalle que cuesta una tarde
+> descubrir: si el pod tiene montado el token de su cuenta de servicio y no lo
+> borras explícitamente de la copia de la configuración, el cliente usa el fichero
+> y te encuentras atendiendo peticiones con los permisos del pod. Es decir,
+> exactamente lo que querías evitar, y funcionando aparentemente bien.
 
 ## El `App` como contenedor de dependencias
 
@@ -80,7 +111,7 @@ type App struct {
     config     Config
     logger     *slog.Logger
     baseConfig *rest.Config
-    repos      Repositories   // interfaces, no implementaciones
+    repos      Repositories   // interfaces, not implementations
 }
 ```
 
@@ -88,6 +119,15 @@ Que `repos` sean interfaces es lo que permite levantar el servicio en modo
 simulado, sin clúster, con datos de mentira. Eso no es un lujo para los tests:
 es lo que permite que alguien del equipo de interfaz trabaje en su portátil sin
 tener que provisionar nada.
+
+```go {2-4}
+func NewRepositories(cfg Config) Repositories {
+    if cfg.MockK8sClient {
+        return mocks.NewRepositories() // fake data, no cluster
+    }
+    return k8s.NewRepositories()
+}
+```
 
 ## Middleware por niveles
 
@@ -106,6 +146,12 @@ administrador. Son tres envoltorios de pocas líneas, y su valor no es técnico:
 es que al leer el fichero de rutas ves el nivel de acceso de cada endpoint sin
 abrir nada más.
 
+| Envoltorio | Identidad | Construye el cliente del usuario | Comprobación extra |
+| --- | --- | --- | --- |
+| **`public`** | Ninguna | No | — |
+| **`secure`** | Token válido | Sí | — |
+| **`admin`** | Token válido | Sí | Pertenencia al grupo administrador |
+
 ## Un sobre para las respuestas
 
 Todas las respuestas van envueltas:
@@ -121,6 +167,11 @@ Parece ceremonia y ahorra discusiones. El cliente tiene una única forma de
 distinguir éxito de error, y añadir metadatos —paginación, avisos— más adelante
 no rompe a nadie.
 
+```json
+{ "data": [{ "name": "fraud-detector", "status": "Ready" }] }
+{ "data": null, "error": { "code": "403", "message": "cannot list models in project-a" } }
+```
+
 ## Lo que costó
 
 **Un BFF por módulo son muchos BFF.** Diez módulos son diez servicios, diez
@@ -132,5 +183,7 @@ mitad lo hace mal.
 en la integración continua, deja de funcionar en un mes y nadie se entera hasta
 que un compañero nuevo intenta arrancar el proyecto.
 
-Si tuviera que quedarme con una idea: el BFF no está ahí para añadir lógica.
-Está para que el navegador no tenga que tener permisos.
+Si tuviera que quedarme con una idea:
+
+> El BFF no está ahí para añadir lógica. Está para que el navegador no tenga que
+> tener permisos.

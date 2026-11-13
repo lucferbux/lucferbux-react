@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="MCP and A2A: tools for agents, and agents for agents">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 583.8 389.1 Q 583.8 389.1 544.1 492.0 Q 504.3 595.0 391.9 625.0 Q 279.4 655.0 191.9 578.8 Q 104.3 502.6 131.7 402.2 Q 159.0 301.9 219.5 213.7 Q 280.0 125.6 390.4 156.6 Q 500.7 187.7 542.3 288.4 Z" fill="#a08153" opacity="0.38" />
+    <path d="M 299.8 49.5 Q 299.8 49.5 279.1 174.9 Q 258.5 300.4 121.5 336.9 Q -15.5 373.3 -126.9 282.8 Q -238.2 192.3 -240.9 48.1 Q -243.7 -96.0 -127.2 -174.7 Q -10.8 -253.5 124.1 -227.8 Q 258.9 -202.0 279.3 -76.3 Z" fill="#eabe7d" opacity="0.45" />
+    <path d="M 909.1 365.5 Q 909.1 365.5 858.2 472.2 Q 807.3 578.8 693.0 600.5 Q 578.7 622.3 502.7 544.6 Q 426.6 467.0 411.5 358.2 Q 396.4 249.5 498.7 227.9 Q 600.9 206.3 682.5 206.5 Q 764.0 206.6 836.5 286.1 Z" fill="#2b2830" opacity="0.41" />
+    <path d="M 694.3 605.7 Q 694.3 605.7 676.3 689.8 Q 658.3 773.8 572.9 770.4 Q 487.5 766.9 435.2 720.4 Q 382.9 673.8 390.2 609.2 Q 397.5 544.7 441.6 490.8 Q 485.7 436.9 562.4 449.3 Q 639.1 461.7 666.7 533.7 Z" fill="#a08153" opacity="0.43" />
+    <path d="M 592.8 581.0 Q 592.8 581.0 587.4 650.1 Q 582.1 719.1 514.8 703.9 Q 447.4 688.7 408.7 659.4 Q 370.0 630.2 355.7 574.2 Q 341.4 518.2 394.3 495.3 Q 447.2 472.3 505.9 468.6 Q 564.6 464.9 578.7 522.9 Z" fill="#eabe7d" opacity="0.56" />
+    <path d="M 1337.7 626.1 Q 1337.7 626.1 1298.5 721.1 Q 1259.2 816.1 1151.0 863.1 Q 1042.9 910.1 907.0 849.1 Q 771.2 788.1 824.7 651.8 Q 878.1 515.5 963.6 442.4 Q 1049.1 369.2 1181.6 368.2 Q 1314.2 367.1 1326.0 496.6 Z" fill="#2b2830" opacity="0.53" />
+    <path d="M 526.5 348.2 Q 526.5 348.2 495.8 432.7 Q 465.1 517.2 369.5 556.0 Q 274.0 594.8 180.3 530.1 Q 86.7 465.5 100.5 354.8 Q 114.3 244.2 196.5 183.3 Q 278.7 122.4 362.2 162.9 Q 445.7 203.5 486.1 275.8 Z" fill="#a08153" opacity="0.55" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="237.67999999999998" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">AI</text>
+  <text x="80" y="293" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">MCP and A2A: tools for agents,</text>
+    <text x="80" y="361" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">and agents for agents</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

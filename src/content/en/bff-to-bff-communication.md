@@ -31,14 +31,21 @@ resource, two interpretations, and the second one goes stale.
 **Let one backend call the other.** The right answer, and the one that opens the
 hard question.
 
+| Option | Who composes | Who must know the topology | Duplicated logic |
+| --- | --- | --- | --- |
+| **Browser makes both calls** | The client | The client | No |
+| **A reads the cluster API itself** | A | Nobody | Yes, A and B both read it |
+| **A calls B** | A | A, given by the operator | No |
+
 ## The hard question
 
 When service A calls service B, with what identity does it call?
 
-The easy answer is to give A its own service credential. And it is the answer
-that destroys everything we had built: if A can read from B with its own
-permissions, then any user who reaches A can read from B, permitted or not. You
-have just invented privilege escalation shaped like a microservice.
+> [!CAUTION]
+> The easy answer is to give A its own service credential. And it is the answer
+> that destroys everything we had built: if A can read from B with its own
+> permissions, then any user who reaches A can read from B, permitted or not. You
+> have just invented privilege escalation shaped like a microservice.
 
 The rule we followed is stricter and much easier to reason about:
 
@@ -50,6 +57,41 @@ In practice, the user token arriving at A is forwarded to B. B builds its
 Kubernetes client from that token, exactly as it would for a direct request. If
 the user lacks permission it fails at the API server, which is where it should
 fail.
+
+```go {6-7}
+func (c *Client) get(ctx context.Context, path string, out any) error {
+    req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.baseURL+path, nil)
+    if err != nil {
+        return err
+    }
+    // The caller's token, never ours.
+    req.Header.Set("Authorization", "Bearer "+UserToken(ctx))
+    // …
+}
+```
+
+```mermaid title="Same call, two identities"
+sequenceDiagram
+  autonumber
+  participant U as Browser
+  participant A as BFF A
+  participant B as BFF B
+  participant K as API server
+  U->>A: request with the user's token
+  alt A calls with its own service account
+    A->>B: service token
+    B->>K: read as the service
+    K-->>B: allowed, the service can read it
+    B-->>A: data
+    A-->>U: data the user was never granted
+  else A forwards the user's token
+    A->>B: same user token
+    B->>K: read as the user
+    K-->>B: 403 if the user lacks RBAC
+    B-->>A: error
+    A-->>U: error, permissions never grew
+  end
+```
 
 This makes an entire class of bug impossible. There is no path by which someone
 gains access by traversing services, because there is no point in the chain
@@ -64,6 +106,14 @@ The solution is the same piece. The operator, which knows which modules are
 enabled and what `Service` each has, injects those addresses as environment
 variables into every deployment. The service reads them at startup and builds
 its clients.
+
+```mermaid title="Addresses come from the operator, identity comes from the user"
+flowchart LR
+  OP["Operator"] -- "env vars<br/>with Service URLs" --> A["BFF A"]
+  U["Browser"] -- "user token" --> A
+  A -- "same token" --> B["BFF B"]
+  B -- "same token" --> K["API server"]
+```
 
 ```go
 type Clients struct {
@@ -83,6 +133,16 @@ Making it an environment variable rather than dynamic discovery is deliberate:
 if it is missing, the service does not start. A deployment mistake shows up at
 deployment, not three days later when somebody opens the screen that needed it.
 
+```go
+func mustEnv(name string) string {
+    v := os.Getenv(name)
+    if v == "" {
+        log.Fatalf("%s is not set; refusing to start", name)
+    }
+    return v
+}
+```
+
 ## Mock mode, again
 
 The same pattern that was needed to develop without a cluster matters more here.
@@ -92,6 +152,18 @@ is going to work from a laptop.
 Every client has a mock implementation behind the same interface, and a variable
 decides which one is used. It is not for the tests: it is so that starting to
 contribute costs an `npm start` rather than an afternoon of provisioning.
+
+```diff
+ func NewClients(env Env) Clients {
++    if env.MockClients {
++        return Clients{ModelRegistry: mock.ModelRegistry{}, GenAI: mock.GenAI{}}
++    }
+     return Clients{
+         ModelRegistry: New(env.ModelRegistryURL),
+         GenAI:         New(env.GenAIURL),
+     }
+ }
+```
 
 ## What is still missing, and worth saying
 
@@ -103,9 +175,28 @@ mean everything should be able to call everything. Network policies permitting
 only the intended routes are part of the design, not a security extra bolted on
 later.
 
-**Cross-service observability.** Knowing which user request caused which
-internal call means propagating a trace identifier, and that is far easier to
-add at the start than to retrofit.
+```yaml
+# Only BFF A may reach BFF B.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: bff-b-ingress
+spec:
+  podSelector:
+    matchLabels: { app: bff-b }
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: { app: bff-a }
+      ports:
+        - port: 8080
+```
+
+> [!TIP]
+> **Cross-service observability.** Knowing which user request caused which
+> internal call means propagating a trace identifier, and that is far easier to
+> add at the start than to retrofit.
 
 ## The idea I keep
 

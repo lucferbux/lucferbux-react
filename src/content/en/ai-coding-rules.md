@@ -16,9 +16,24 @@ What it cannot work out is what looks right and is wrong.
 
 If yes, don't write it. It consumes context and changes no decision.
 
+```mermaid title="Does it belong in the rules file?"
+flowchart LR
+  C["A candidate rule"] --> Q{"Could it be discovered<br/>by reading the code?"}
+  Q -- "yes" --> O["Leave it out"]
+  Q -- "no" --> W["Write it, with the why"]
+  W --> D["Delete it in the commit<br/>that makes it false"]
+```
+
+| Rule | Discoverable from the code? | Keep it? |
+| --- | --- | --- |
+| **"Use strict TypeScript"** | Yes — `tsconfig.json` | No |
+| **"Write tests"** | Yes — there's a `tests/` folder | No |
+| **"`md:` is 650px"** | No — looks like stock Tailwind | Yes |
+| **"Posts live in `patent`"** | No — looks like a mistake | Yes |
+
 What earns a place is anything that **looks like one thing and is another**. Three real examples from this very repository:
 
-```md
+```md title="AGENTS.md"
 ### Tailwind breakpoints are redefined
 
 xs 450 · sm 550 · md 650 · lg 750 · xl 1000 · 2xl 1234
@@ -29,7 +44,7 @@ the wrong viewport.
 
 No model is going to guess that: `md:` means 768px in 99% of projects in the world, and the training distribution reflects it. One line prevents a class of bug that only shows up at one specific width.
 
-```md
+```md title="AGENTS.md"
 ### Firestore collection names are legacy
 
 News → `intro`, Posts → `patent`, Work → `team`. Do not "fix" them.
@@ -37,7 +52,7 @@ News → `intro`, Posts → `patent`, Work → `team`. Do not "fix" them.
 
 Without that note, a reasonable assistant renames `patent` to `posts` and orphans every production document.
 
-```md
+```md title="AGENTS.md"
 ### Never set a background-color on `html`
 
 `body` is the canvas painter. Tried in 70d92b1, reverted in 88b2d24.
@@ -49,14 +64,11 @@ That's the most valuable shape a rule can take: a decision with its scar attache
 
 A rule without justification gets disobeyed the moment it's inconvenient, by a person or a model alike.
 
-```md
-<!-- Useless -->
-Don't run Prettier on src/content/.
-
-<!-- Useful -->
-Prettier doesn't touch src/content/: those are articles, and it reformats
-the code samples *inside* fenced blocks, editing the teaching material and
-changing the rendered page height.
+```diff title="AGENTS.md"
+- Don't run Prettier on src/content/.
++ Prettier doesn't touch src/content/: those are articles, and it reformats
++ the code samples *inside* fenced blocks, editing the teaching material and
++ changing the rendered page height.
 ```
 
 The second version also lets you reason about new cases. If another folder of prose appears tomorrow, the rule generalises itself.
@@ -67,8 +79,14 @@ The tools multiply: `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`,
 
 What works is putting the content in one and having the rest point at it:
 
-```md
-<!-- CLAUDE.md -->
+```mermaid title="One source, several pointers"
+flowchart LR
+  C["CLAUDE.md"] --> A["AGENTS.md<br/>the only real content"]
+  G[".github/copilot-instructions.md"] --> A
+  R[".cursor/rules"] --> A
+```
+
+```md title="CLAUDE.md" {3}
 All project guidance lives in one place:
 
 @AGENTS.md
@@ -82,15 +100,31 @@ This is the failure that does the most damage, and it's silent. A rules file des
 
 In this repository, `AGENTS.md` claimed for months that deployment was Firebase Hosting. The workflow had been deleted long before and the site was on Netlify. Any assistant reading that file was reasoning about infrastructure that didn't exist.
 
-The practical conclusion: when you fix something the rules describe, **delete the rule in the same commit**. Two of this repository's landmines described problems that got solved; they went stale the day they were fixed, and were replaced with what is now true.
+```mermaid title="The life of a rule"
+stateDiagram-v2
+  [*] --> True: written, with its why
+  True --> Fixed: someone fixes the problem
+  Fixed --> Deleted: rule removed in the same commit
+  Fixed --> Stale: rule left behind
+  Stale --> Misleading: assistant trusts it
+  Deleted --> [*]
+```
+
+> [!IMPORTANT]
+> When you fix something the rules describe, **delete the rule in the same commit**.
+
+Two of this repository's landmines described problems that got solved; they went stale the day they were fixed, and were replaced with what is now true.
 
 ## Put the verification within reach
 
 Last, and the highest-leverage item: the file should say how to check that something hasn't broken.
 
-```md
-Run `npm run visual` after any visual change: it diffs every route at seven
-widths in both colour schemes against committed screenshots.
+```md title="CLAUDE.md"
+Run `npm run visual` after any visual change — it diffs every route at seven
+widths in both colour schemes.
+
+The baseline is gitignored and local. On a fresh clone, capture one on the
+unmodified tree first with `npm run visual:baseline`.
 ```
 
 An assistant that knows how to verify itself stops proposing changes and starts proposing checked changes. That's the difference between a suggestion and a patch.

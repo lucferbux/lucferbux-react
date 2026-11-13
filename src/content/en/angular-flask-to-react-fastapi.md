@@ -12,6 +12,13 @@ This covers 2018 to 2021, on a team that was constantly starting prototypes. I
 am writing it up because the whole arc is documented in the code I still have
 from both ends of it.
 
+```mermaid title="The team's default stack, 2018 to 2021"
+timeline
+  2018 : Angular front end : Flask API : a hand-rolled deploy.sh per project
+  2018–2021 : The team starts rotating : Prototypes start calling slow models
+  2021 : React + TypeScript : FastAPI + Pydantic : Poetry, Alembic, Celery : Jenkins pipelines
+```
+
 ## The starting point: Angular and Flask
 
 In 2018 every new project was Angular in front and Flask behind. And it was a
@@ -41,6 +48,13 @@ rename broke something far away.
 Flask's synchronous model pushes you into workers and queues for things that
 should just be a wait.
 
+```mermaid title="Each pain point, and what answered it"
+flowchart LR
+  P1["Team rotates every<br/>few weeks"] --> C1["Long on-ramp<br/>modules · RxJS · zones"] --> S1["React + TypeScript"]
+  P2["No schema"] --> C2["Silent key renames<br/>break the front end"] --> S2["FastAPI + Pydantic"]
+  P3["Prototypes call<br/>slow models"] --> C3["Sync workers<br/>and queues"] --> S3["async endpoints<br/>Celery where needed"]
+```
+
 ## Where it went
 
 **React with TypeScript** instead of Angular. Less framework, more library: you
@@ -53,11 +67,40 @@ that **the schema is the code**. You declare input and output types with
 Pydantic and you get validation, documentation and a generated OpenAPI spec for
 free. The contract that used to live in somebody's head became an artifact.
 
+This is the difference in miniature. In Flask, the shape of the response is whatever the dictionary happens to contain:
+
+```python title="app.py — Flask"
+@app.route("/projects/<int:project_id>")
+def get_project(project_id):
+    project = db.get_project(project_id)
+    return {"id": project.id, "name": project.name}  # this dict is the contract
+```
+
+In FastAPI the shape is declared, validated and published as OpenAPI at `/docs`:
+
+```python title="main.py — FastAPI" {1-3,6}
+class Project(BaseModel):
+    id: int
+    name: str
+
+@app.get("/projects/{project_id}")
+async def get_project(project_id: int) -> Project:
+    project = await db.get_project(project_id)
+    return Project(id=project.id, name=project.name)
+```
+
 And around them, the parts that show up most day to day: Poetry instead of
 `requirements.txt`, Alembic for migrations, Celery where genuine background work
 was needed, and Jenkins. Before 2021, every project had its own hand-rolled
 `deploy.sh` with an `scp` and an nginx config. Going from that to a pipeline
 mattered more than any framework change.
+
+| | 2018 | 2021 | Why |
+| --- | --- | --- | --- |
+| **Front end** | Angular | React + TypeScript | Shorter on-ramp; types instead of framework structure |
+| **API** | Flask | FastAPI | The schema is the code; async |
+| **Dependencies** | `requirements.txt` | Poetry | A lockfile |
+| **Deploy** | `deploy.sh`, `scp`, nginx | Jenkins pipeline | One repeatable path instead of one script per project |
 
 ## What I learned about migrating stacks
 
@@ -69,11 +112,12 @@ accumulating evidence that the on-ramp cost us more than the framework gave us.
 Rewriting something that works so it matches the new default is one of the worst
 justified expenses there is. A default applies to what comes next.
 
-**Templates are how a default actually changes.** While starting in the new
-stack was more work than copying the previous project, nobody moved. The moment
-there was a template with authentication, i18n, Docker and CI already solved,
-the change happened on its own. A team does not adopt what you recommend; it
-adopts whatever has least friction at the start.
+> [!TIP]
+> **Templates are how a default actually changes.** While starting in the new
+> stack was more work than copying the previous project, nobody moved. The moment
+> there was a template with authentication, i18n, Docker and CI already solved,
+> the change happened on its own. A team does not adopt what you recommend; it
+> adopts whatever has least friction at the start.
 
 ## What I would not change
 

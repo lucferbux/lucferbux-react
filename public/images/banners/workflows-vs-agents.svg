@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Workflows or agents: when to script the path and when to let the model choose">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c98c31" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#007789" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 499.7 421.2 Q 499.7 421.2 445.6 520.2 Q 391.4 619.2 287.2 630.9 Q 183.0 642.5 95.4 586.2 Q 7.7 529.9 -29.7 403.2 Q -67.0 276.4 50.6 206.0 Q 168.3 135.5 290.7 165.7 Q 413.2 195.8 456.5 308.5 Z" fill="#c98c31" opacity="0.45" />
+    <path d="M 1003.1 322.2 Q 1003.1 322.2 983.3 426.2 Q 963.5 530.2 858.7 521.6 Q 754.0 513.1 691.4 458.3 Q 628.7 403.5 613.2 314.7 Q 597.7 225.9 667.9 143.9 Q 738.2 61.9 852.3 86.3 Q 966.3 110.6 984.7 216.4 Z" fill="#eabe7d" opacity="0.59" />
+    <path d="M 1128.6 239.9 Q 1128.6 239.9 1111.5 340.0 Q 1094.4 440.2 992.8 435.3 Q 891.2 430.4 834.7 372.8 Q 778.2 315.2 741.1 222.0 Q 704.1 128.8 797.9 90.3 Q 891.7 51.8 976.2 66.8 Q 1060.7 81.8 1094.7 160.8 Z" fill="#007789" opacity="0.54" />
+    <path d="M 1014.8 581.1 Q 1014.8 581.1 1003.3 664.5 Q 991.9 747.8 898.5 782.3 Q 805.2 816.8 714.6 755.6 Q 623.9 694.3 651.6 594.5 Q 679.3 494.6 750.2 454.7 Q 821.0 414.7 891.1 433.8 Q 961.2 452.9 988.0 517.0 Z" fill="#c98c31" opacity="0.45" />
+    <path d="M 1006.2 336.0 Q 1006.2 336.0 965.8 419.8 Q 925.3 503.6 841.4 494.6 Q 757.5 485.6 696.6 448.4 Q 635.6 411.2 621.7 329.3 Q 607.8 247.5 674.4 180.8 Q 741.0 114.1 830.3 144.9 Q 919.5 175.7 962.9 255.9 Z" fill="#eabe7d" opacity="0.34" />
+    <path d="M 1519.6 220.7 Q 1519.6 220.7 1448.7 342.4 Q 1377.7 464.1 1248.4 483.5 Q 1119.2 502.8 993.6 437.7 Q 868.1 372.6 907.9 239.9 Q 947.8 107.2 1029.2 4.2 Q 1110.7 -98.7 1223.9 -35.3 Q 1337.2 28.1 1428.4 124.4 Z" fill="#007789" opacity="0.51" />
+    <path d="M 889.5 141.9 Q 889.5 141.9 866.9 254.1 Q 844.4 366.4 721.1 402.3 Q 597.7 438.1 507.8 349.6 Q 417.8 261.1 451.3 158.0 Q 484.8 54.9 545.6 -31.0 Q 606.3 -116.9 740.8 -119.1 Q 875.2 -121.3 882.3 10.3 Z" fill="#c98c31" opacity="0.45" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="203.46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">AI</text>
+  <text x="80" y="259" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Workflows or agents: when to</text>
+    <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">script the path and when to</text>
+    <text x="80" y="395" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">let the model choose</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

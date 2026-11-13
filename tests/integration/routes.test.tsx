@@ -126,17 +126,25 @@ describe("routes", () => {
 
   it("renders the admin login form for an unauthenticated visitor", async () => {
     renderRoute("/admin/login");
-    await waitFor(() => {
-      expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    });
+    // The admin is a lazy chunk; on CI its first import outlasts the 1s default.
+    await waitFor(
+      () => {
+        expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+      },
+      { timeout: 10_000 }
+    );
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   });
 
   it("redirects an unauthenticated visitor away from /admin", async () => {
     renderRoute("/admin");
-    await waitFor(() => {
-      expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    });
+    // The admin is a lazy chunk; on CI its first import outlasts the 1s default.
+    await waitFor(
+      () => {
+        expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+      },
+      { timeout: 10_000 }
+    );
   });
 
   describe("404 handling", () => {

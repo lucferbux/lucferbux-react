@@ -11,14 +11,14 @@ Hoy vamos a explicar los conceptos más básicos de Redux y React Redux de la fo
 
 ## Redux
 
-Redux es una biblioteca muy popular de JavaScript que permite manejar el estado de una aplicación. El estado de aplicación es un objeto global que maneja información heterogénea usada por al aplicación, por poner un ejemplo, el estado para controlar la visibilidad de un *spinner* si estamos cargando datos en nuestra aplicación.
+Redux es una biblioteca muy popular de JavaScript que permite manejar el estado de una aplicación. El estado de aplicación es un objeto global que maneja información heterogénea usada por la aplicación, por poner un ejemplo, el estado para controlar la visibilidad de un *spinner* si estamos cargando datos en nuestra aplicación.
 
 Otro de los grandes objetivos del control de estado es pasar información entre componentes sin caer en el *prop drilling* o el tener que pasar un mismo valor entre múltiples componentes padre-hijos para completar la cadena.
 
 Para todo esto necesitamos bibliotecas de manejo de estados como *Redux*. *Redux* como biblioteca es muy popular porque basa su uso en unos principios muy sencillos e intuitivos, fundamentados en los siguientes patrones:
 
 * **Single Source Of Truth**: O "única fuente de veracidad", que básicamente significa que solo tenemos un lugar (llamado `Store`) donde vamos a guardar el estado de toda la aplicación.
-* **Inmutabilidad**: En *Redux* no vamos a cambiar el estado de un objeto y sus propiedades directamente, si no que vamos a crear un nuevo objeto calculando el nuevo estado de la aplicación y así actualizandolo con el nuevo objeto creado.
+* **Inmutabilidad**: En *Redux* no vamos a cambiar el estado de un objeto y sus propiedades directamente, sino que vamos a crear un nuevo objeto calculando el nuevo estado de la aplicación y así actualizarlo con el nuevo objeto creado.
 
 ## Componentes
 
@@ -32,13 +32,13 @@ El `Store` o almacenamiento contiene el estado de la aplicación. Este `Store` e
 
 ### Actions
 
-Son objetos JavaScript que describen qué a pasado en un estado, pero no como este estado debe cambiar. Simplemente mandamos (dispatch) estas acciones a nuestro objeto `Store` siempre que queramos actualizar el estado. La gestión del cambio será efectuada por los `Reducers`.
+Son objetos JavaScript que describen qué ha pasado en un estado, pero no cómo este estado debe cambiar. Simplemente mandamos (dispatch) estas acciones a nuestro objeto `Store` siempre que queramos actualizar el estado. La gestión del cambio será efectuada por los `Reducers`.
 
 Estas acciones son objetos que tienen al menos un atributo, en este caso por convenio es `type`, para indicar la acción, y luego el resto de atributos necesarios para indicar la acción.
 
 ### Reducers
 
-Los `Reducers` son **funciones puras** que definen como debe cambiar el estado de la aplicación. Cuando enviamos (dispatch) una `Action` a nuestro `Store`, la acción pasa a un `Reducer` que la interpretará para modificar el estado.
+Los `Reducers` son **funciones puras** que definen cómo debe cambiar el estado de la aplicación. Cuando enviamos (dispatch) una `Action` a nuestro `Store`, la acción pasa a un `Reducer` que la interpretará para modificar el estado.
 
 Una función `reducer` toma dos parámetros, el estado previo y la acción que vamos a enviar y devuelve un nuevo estado.
 
@@ -50,14 +50,25 @@ Básicamente un reducer computará el nuevo estado de la aplicación basándose 
 
 ## Flujo
 
-![Flujo Redux](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cvq823pa4i07o6f45bsn.png)
- 
+```mermaid title="Redux data flow"
+flowchart TB
+  UI["UI"] -- "dispatch(action)" --> S[("Store")]
+  S -- "state, action" --> R["Reducer<br/>pure function"]
+  R -- "new state" --> S
+  S -- "notifies subscribers" --> UI
+```
+
 El flujo de la aplicación es relativamente sencillo conociendo los componentes, solo tenemos que utilizar en conjunto los elementos antes mencionados:
 
 1. Lo primero tendremos que suscribirnos al `Store` y tener un mecanismo para reaccionar.
 2. Ahora en cualquier cambio de estado que queramos hacer, solo tenemos que llamar al método `store.dispatch()` con la `Action` que queramos realizar.
 3. Redux gestiona esta acción mediante el `Reducer`.
 4. Al estar suscritos al `Store`, nos devolverá el nuevo estado que podremos añadir a nuestra aplicación.
+
+> [!IMPORTANT]
+> El `reducer` nunca modifica `previousState`: devuelve un objeto nuevo. Si
+> mutas el estado y devuelves la misma referencia, para *Redux* no ha cambiado
+> nada y la interfaz no se vuelve a pintar.
 
 Como veis, incorporar *Redux* en nuestra aplicación es relativamente sencillo una vez tenemos todos los conceptos claros. Ahora vamos a ver unos ejemplos prácticos para TypeScript y React.
 
@@ -69,16 +80,16 @@ Vamos a hacer primero una versión en TypeScript *vanilla* para asentar los conc
 
 Primero vamos a definir una interfaz para los *reminders*, que constará de un atributo `title` para el título y `description` para la descripción.
 
-```typescript
+```ts
 interface Reminder {
   title: string;
   description: string;
 }
 ```
 
-Ahora vamos a crear nuestra `Action`. De momento solo vamos a crear un acción para añadir nuevos recordatorios a nuestro estado global, es por ello que primero definiremos la `interface` de nuestra acción, seguido del atributo `type` que controlaremos en nuestro `reducer` y atributos adicionales como son `title` y `description` que servirán para crear el recordatorio.
+Ahora vamos a crear nuestra `Action`. De momento solo vamos a crear una acción para añadir nuevos recordatorios a nuestro estado global, es por ello que primero definiremos la `interface` de nuestra acción, seguido del atributo `type` que controlaremos en nuestro `reducer` y atributos adicionales como son `title` y `description` que servirán para crear el recordatorio.
 
-```typescript
+```ts {10-12}
 // ----------- Action ------------
 interface ReminderAction {
   type: string;
@@ -95,8 +106,8 @@ export function addReminder(title: string, description: string): ReminderAction 
 
 Ahora generaremos nuestro `reducer`. Como es el primero de todos será nuestro `rootReducer`, en el que controlaremos todas las acciones con un `switch` (en este caso solo tenemos una inicialmente), en la que con un [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) añadiremos un nuevo objeto `Reminder` en el array de estados de la aplicación.
 
-```typescript
-// ----------- Reducer ------------ 
+```ts {11-20}
+// ----------- Reducer ------------
 interface ReminderState {
   reminders: Reminder[];
 }
@@ -125,14 +136,20 @@ const rootReducer = (state: ReminderState  = initialState, action: ReminderActio
 
 Ya solo nos falta crear nuestra `store` y añadir nuestro `rootReducer` para tener *Redux* configurado en nuestra aplicación.
 
-```typescript
-// ----------- Store ------------ 
+```ts
+// ----------- Store ------------
 const store = createStore(rootReducer);
 ```
 
+> [!NOTE]
+> Esto es Redux tal y como se escribía a finales de 2022. Desde Redux 4.2,
+> `createStore` aparece marcado como obsoleto en favor de `configureStore` de
+> Redux Toolkit, que hace lo mismo con menos código. Los conceptos de este
+> artículo no cambian.
+
 Para la *UI*, lo más destacable es que vamos a tener una función llamada `renderReminders` que básicamente recoge el estado de nuestro `Store` y modifica el DOM de la aplicación para mostrar todos los recordatorios que tengamos guardados. Para que nuestra aplicación reaccione a los cambios vamos a suscribirnos al `Store` mediante el método `store.subscribe(() => {})` al que le pasaremos nuestra función para renderizar los recordatorios.
 
-```javascript
+```javascript {8,12,28-30}
 // ----------- UI ------------
 let button = document.getElementById("addButton");
 let remindersDashboard = document.getElementById("reminder-dashboard");
@@ -165,6 +182,22 @@ store.subscribe(() => {
 });
 ```
 
+Este es el recorrido completo de un clic en *"Add"*:
+
+```mermaid title="One click on Add, end to end"
+sequenceDiagram
+  autonumber
+  participant B as Add button
+  participant S as Store
+  participant R as rootReducer
+  participant UI as renderReminders
+  B->>S: dispatch(addReminder(…))
+  S->>R: (state, action)
+  R-->>S: new state with the reminder appended
+  S->>UI: subscribe callback
+  Note over UI: getState(), rewrite the DOM
+```
+
 https://codepen.io/lucferbux/pen/eYVWaKP
 
 ## Redux + React
@@ -176,7 +209,7 @@ Ahora vamos a reutilizar la mayor parte de la estructura del proyecto anterior, 
 
 Lo primero que vamos a tener que hacer es rodear nuestro componente de aplicación con el `Provider` de *Redux*, al que le pasaremos el objeto `store` que hemos declarado previamente. Con ello ya podremos acceder al `Store` global desde cualquiera de los componentes de nuestra aplicación.
 
-```typescript
+```tsx {2}
 ReactDOM.render(
   <Provider store={store}>
     <App />
@@ -185,45 +218,59 @@ ReactDOM.render(
 
 Vamos a hablar primero de `useSelector`. Este hook permite devolver una parte del objeto `Store` a nuestro componente. El selector va a hacer una comprobación del estado anterior, y si no es el mismo, el componente accionará un renderizado. Este `hook` acepta un segundo parámetro que permite modificar la estrategia de comparación entre estados, en este caso usaremos `shallowEqual` para que no renderice el componente si en el cambio de estado los valores permanecen igual.
 
-```typescript
+```tsx {2}
 const RemindersComponent = () => {
-    const reminders = useSelector((state) => state.reminders, shallowEqual);
-      
-    return (
-      <div class="reminders-dashboard">  
-        { reminders.map((reminder, index) => (
-          <div className="reminder-card">
-            <p className="reminder-title">{reminder.title}</p>
-            <p className="reminder-description">{reminder.description}</p>
-          </div>  
-        
-        ))}
-      </>   
-    );
+  const reminders = useSelector((state) => state.reminders, shallowEqual);
+
+  return (
+    <div className="reminders-dashboard">
+      {reminders.map((reminder, index) => (
+        <div className="reminder-card" key={index}>
+          <p className="reminder-title">{reminder.title}</p>
+          <p className="reminder-description">{reminder.description}</p>
+        </div>
+      ))}
+    </div>
+  );
 };
 ```
 
 Por otro lado tenemos `useDispatch()`, que nos permitirá mandar una acción a nuestro `Store` para que lo procese el reducer. Es tan fácil como llamar a la función y pasar la `Action` que ya teníamos generada.
 
-```typescript
+```tsx {4,6-8}
 const App = () => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const dispatch = useDispatch();
-  
-    const dispatchReminder = () {
-        dispatch(addReminder(title, description));
-    }
-  
-    return (
-      <div className="wrapper">
-          <HeaderComponent title={"Redux + React"} />
-          <FormComponent setTitle={setTitle} title={title} setDescription={setDescription} description={description} submitForm={dispatchReminder}/>
-           <RemindersComponent />
-      </div>
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
 
-    );
-}
+  const dispatchReminder = () => {
+    dispatch(addReminder(title, description));
+  };
+
+  return (
+    <div className="wrapper">
+      <HeaderComponent title={"Redux + React"} />
+      <FormComponent
+        title={title}
+        setTitle={setTitle}
+        description={description}
+        setDescription={setDescription}
+        submitForm={dispatchReminder}
+      />
+      <RemindersComponent />
+    </div>
+  );
+};
+```
+
+```mermaid title="Where each hook connects to the store"
+flowchart TB
+  P["Provider<br/>store={store}"] --> A["App<br/>useDispatch()"]
+  A --> F["FormComponent"]
+  A --> RC["RemindersComponent<br/>useSelector()"]
+  F -- "submitForm" --> A
+  A -- "dispatch(addReminder)" --> S[("Store")]
+  S -- "state.reminders" --> RC
 ```
 
 Con esto ya tendríamos configurado *Redux* en nuestro proyecto *React*. Como veis una vez dominamos los conceptos esenciales la implementación es relativamente sencilla. Abajo tenemos un codepen con el ejemplo mencionado antes.

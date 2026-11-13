@@ -28,7 +28,7 @@ because it is the decision I have most often seen made for the wrong reason.
 
 The host declares which remotes it expects and which dependencies it shares:
 
-```js
+```js {5-6}
 new ModuleFederationPlugin({
   name: "host",
   remotes: { modelRegistry: "modelRegistry@/remote/model-registry/remoteEntry.js" },
@@ -56,6 +56,18 @@ Two pieces resolve it.
 under a `module-federation` field: its name, its entry point, what it exposes.
 Putting it there rather than in a separate registry means the module's
 description travels with the module and cannot go stale relative to it.
+Roughly:
+
+```json
+{
+  "name": "@odh-dashboard/model-registry",
+  "module-federation": {
+    "name": "modelRegistry",
+    "remoteEntry": "/remoteEntry.js",
+    "exposes": { "./extensions": "./extensions.ts" }
+  }
+}
+```
 
 **Second, runtime resolution.** The operator that installs the modules knows
 which ones are enabled in this cluster and what `Service` each one has. From
@@ -71,17 +83,56 @@ The host does not resolve those URLs in the browser: it uses them to proxy from
 its own backend. The browser talks to one origin, and internal cluster addresses
 never leave the cluster.
 
-What makes this work is that **whoever knows the topology is whoever generates
-the configuration**. The operator is the only component with that information,
-so the config is produced where the knowledge lives instead of asking every
-module team to maintain it.
+```mermaid title="Loading a remote through one origin"
+sequenceDiagram
+  autonumber
+  participant B as Browser
+  participant H as Host backend
+  participant M as model-registry-bff
+  B->>H: GET /
+  H-->>B: host shell + list of enabled modules
+  B->>H: GET /remote/model-registry/remoteEntry.js
+  Note over H: URL looked up in the operator's ConfigMap
+  H->>M: proxy to model-registry-bff.svc:8080
+  M-->>H: remoteEntry.js
+  H-->>B: remoteEntry.js
+  Note over B: the module renders inside the host
+```
+
+> [!IMPORTANT]
+> What makes this work is that **whoever knows the topology is whoever generates
+> the configuration**. The operator is the only component with that information,
+> so the config is produced where the knowledge lives instead of asking every
+> module team to maintain it.
+
+```mermaid title="Who knows what, and who generates what"
+flowchart TB
+  PJ["Each module's package.json<br/>built with the module"]
+  subgraph cluster["Customer cluster — known only at install time"]
+    OP["Operator"]
+    CM[("ConfigMap<br/>module → Service URL")]
+    HB["Host backend"]
+    S1["model-registry-bff<br/>Service"]
+    S2["gen-ai-bff<br/>Service"]
+  end
+  PJ -. "describes" .-> OP
+  OP -- "generates" --> CM
+  OP -- "deploys" --> S1
+  OP -- "deploys" --> S2
+  CM -- "read on startup" --> HB
+  HB -- "proxies" --> S1
+  HB -- "proxies" --> S2
+```
 
 ## What it actually costs
 
 **Shared dependencies are a contract.** The moment you declare `shared`, you
 have coupled every module's versions. A team wanting to move from React 18 to 19
-cannot do it alone. Module Federation buys you deployment independence, not
-dependency independence, and conflating the two hurts later.
+cannot do it alone.
+
+> [!WARNING]
+> Module Federation buys you deployment independence, not dependency
+> independence, and conflating the two hurts later.
 
 **Debugging crosses a boundary.** A stack trace that starts in the host and ends
 in a remote passes through code built by another pipeline with different source
@@ -91,6 +142,17 @@ maps. It pays to invest early in making module names show up in errors.
 default outcome is that the whole console fails to load. That is worse than the
 monolith you set out to fix. Every remote needs its own error boundary: the
 failing module disappears from navigation and the rest carries on.
+
+```tsx
+const ModelRegistry = React.lazy(() => import("modelRegistry/extensions"));
+
+// One boundary per remote: if it fails, only it disappears.
+<ErrorBoundary fallback={null} onError={() => hideFromNav("modelRegistry")}>
+  <React.Suspense fallback={<Spinner />}>
+    <ModelRegistry />
+  </React.Suspense>
+</ErrorBoundary>
+```
 
 ## When it is worth it
 

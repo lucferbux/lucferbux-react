@@ -12,6 +12,13 @@ Esto cubre de 2018 a 2021, en un equipo que arrancaba prototipos continuamente.
 Lo cuento porque el arco completo está documentado en el código que conservo de
 los dos extremos.
 
+```mermaid title="The team's default stack, 2018 to 2021"
+timeline
+  2018 : Angular front end : Flask API : a hand-rolled deploy.sh per project
+  2018–2021 : The team starts rotating : Prototypes start calling slow models
+  2021 : React + TypeScript : FastAPI + Pydantic : Poetry, Alembic, Celery : Jenkins pipelines
+```
+
 ## El punto de partida: Angular y Flask
 
 En 2018, cada proyecto nuevo era Angular delante y Flask detrás. Y era una buena
@@ -41,6 +48,13 @@ silencioso de una clave rompía algo lejos.
 modelo síncrono de Flask obliga a trabajadores y colas para cosas que deberían
 ser una espera.
 
+```mermaid title="Each pain point, and what answered it"
+flowchart LR
+  P1["Team rotates every<br/>few weeks"] --> C1["Long on-ramp<br/>modules · RxJS · zones"] --> S1["React + TypeScript"]
+  P2["No schema"] --> C2["Silent key renames<br/>break the front end"] --> S2["FastAPI + Pydantic"]
+  P3["Prototypes call<br/>slow models"] --> C3["Sync workers<br/>and queues"] --> S3["async endpoints<br/>Celery where needed"]
+```
+
 ## A dónde se fue
 
 **React con TypeScript** en lugar de Angular. Menos framework y más librería:
@@ -53,11 +67,41 @@ que **el esquema es el código**. Declaras los tipos de entrada y salida con
 Pydantic y tienes validación, documentación y un OpenAPI generado, gratis. El
 contrato que antes vivía en la cabeza de alguien pasó a ser un artefacto.
 
+Esta es la diferencia en pequeño. En Flask, la forma de la respuesta es lo que
+el diccionario tenga en ese momento:
+
+```python title="app.py — Flask"
+@app.route("/projects/<int:project_id>")
+def get_project(project_id):
+    project = db.get_project(project_id)
+    return {"id": project.id, "name": project.name}  # this dict is the contract
+```
+
+En FastAPI la forma está declarada, se valida y se publica como OpenAPI en `/docs`:
+
+```python title="main.py — FastAPI" {1-3,6}
+class Project(BaseModel):
+    id: int
+    name: str
+
+@app.get("/projects/{project_id}")
+async def get_project(project_id: int) -> Project:
+    project = await db.get_project(project_id)
+    return Project(id=project.id, name=project.name)
+```
+
 Y alrededor, lo que se nota más en el día a día: Poetry en vez de `requirements.txt`,
 Alembic para migraciones, Celery donde hacía falta trabajo en segundo plano de
 verdad, y Jenkins. Antes de 2021, cada proyecto tenía su `deploy.sh` hecho a
 mano, con su `scp` y su nginx. El salto de ahí a un pipeline fue más importante
 que cualquier cambio de framework.
+
+| | 2018 | 2021 | Por qué |
+| --- | --- | --- | --- |
+| **Front** | Angular | React + TypeScript | Rampa más corta; tipos en lugar de estructura del framework |
+| **API** | Flask | FastAPI | El esquema es el código; asíncrono |
+| **Dependencias** | `requirements.txt` | Poetry | Un lockfile |
+| **Despliegue** | `deploy.sh`, `scp`, nginx | Pipeline de Jenkins | Un camino repetible en vez de un script por proyecto |
 
 ## Lo que aprendí sobre migrar stacks
 
@@ -70,11 +114,12 @@ daba.
 Angular. Reescribir algo que funciona para que coincida con el defecto nuevo es
 de los gastos peor justificados que existen. El defecto aplica a lo siguiente.
 
-**Las plantillas son la forma real de cambiar un defecto.** Mientras arrancar en
-el stack nuevo fue más trabajo que copiar el proyecto anterior, nadie cambió. En
-cuanto hubo una plantilla con autenticación, i18n, Docker y CI ya resueltos, el
-cambio se hizo solo. Un equipo no adopta lo que le recomiendas; adopta lo que
-tiene menos fricción al empezar.
+> [!TIP]
+> **Las plantillas son la forma real de cambiar un defecto.** Mientras arrancar en
+> el stack nuevo fue más trabajo que copiar el proyecto anterior, nadie cambió. En
+> cuanto hubo una plantilla con autenticación, i18n, Docker y CI ya resueltos, el
+> cambio se hizo solo. Un equipo no adopta lo que le recomiendas; adopta lo que
+> tiene menos fricción al empezar.
 
 ## Lo que no cambiaría
 

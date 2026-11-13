@@ -9,6 +9,19 @@ featuredImage: "/images/banners/markdown-blog-gatsby.svg"
 ---
 Hoy os voy a explicar como he creado una nueva sección en mi página web para renderizar blogs en formato `markdown`. El proceso es bastante sencillo, pero requiere un poco de configuración, lo voy a orientar a un nuevo proyecto, pero luego poniendo de ejemplos mis componentes y configuraciones, que contienen dependencias externas como [styled componentes](https://www.styled-components.com). Aquí os dejo los pasos:
 
+```steps
+Instalar: Gatsby CLI y un proyecto nuevo en TypeScript.
+Plugins: Los transformadores de Markdown, Prism y CodePen.
+Configurar: Registrar las fuentes y los plugins en gatsby-config.
+Escribir: Ficheros .md con su frontmatter en src/content.
+Plantilla: Una página que consulta cada post por GraphQL.
+```
+
+> [!NOTE]
+> Este artículo es de 2023 y describe cómo funcionaba este blog con Gatsby. Hoy
+> la web es una SPA con Vite y los artículos se renderizan con `react-markdown`,
+> pero el proceso con Gatsby sigue siendo el que cuento aquí.
+
 ## Instalar Gatsby y crear un nuevo proyecto
 
 Lo primero de todo será instalar **Gatsby**, puedes seguir las indicaciones en [su página oficial](https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/), pero una versión reducida sería esta:
@@ -16,8 +29,11 @@ Lo primero de todo será instalar **Gatsby**, puedes seguir las indicaciones en 
 ```bash
 npm install -g gatsby-cli
 gatsby new
+```
 
-------
+El asistente pregunta lo siguiente; estas fueron mis respuestas:
+
+```text
 What would you like to call your site?
 ✔ · Gatsby Blog
 What would you like to name the folder where your site will be created?
@@ -28,9 +44,9 @@ What would you like to name the folder where your site will be created?
 · No (or I'll add it later)
 ✔ Would you like to install a styling system?
 · No (or I'll add it later)
-------
+```
 
-
+```bash
 cd gatsby-blog
 ```
 
@@ -56,11 +72,26 @@ La funcionalidad de cada uno es la siguiente:
 
 * **gatsby-source-filesystem**: Este plugin crea nodos File a partir de archivos de tu sistema local. Permite a Gatsby leer archivos de tu sistema y hacer que el contenido esté disponible en tu sitio a través de GraphQL. Es fundamental para trabajar con archivos de markdown y otros tipos de archivos en tus proyectos de Gatsby.
 
-### Configurar los complementos en gatsby-config.js
+Cada uno actúa en una fase distinta del proceso que convierte un `.md` en una página:
+
+```mermaid title="From a Markdown file to a page, at build time (gatsby- prefixes omitted)"
+flowchart TB
+  MD[("src/content/*.md")] --> FS["source-filesystem<br/>File nodes"]
+  FS --> TR["transformer-remark<br/>MarkdownRemark nodes"]
+  subgraph remark["remark plugins, in config order"]
+    direction LR
+    C["remark-classes"] --> PR["remark-prismjs"] --> CP["remark-codepen"]
+  end
+  TR --> remark
+  remark --> GQL[("GraphQL<br/>data layer")]
+  GQL --> T["Page template"]
+```
+
+### Configurar los complementos en gatsby-config.ts
 
 Ahora hay que agregar los plugins necesarios en la configuración de gatsby para que el framework pueda utilizar todas las dependencias en nuestro código
 
-```javascript
+```ts title="gatsby-config.ts" {18-24,26}
 import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
@@ -68,9 +99,7 @@ const config: GatsbyConfig = {
     title: `Gatsby Blog`,
     siteUrl: `https://www.yourdomain.tld`,
   },
-  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
-  // If you use VSCode you can also use the GraphQL plugin
-  // Learn more at: https://gatsby.dev/graphql-typegen
+  // Generates TypeScript types for the GraphQL queries
   graphqlTypegen: true,
   plugins: [
     {
@@ -110,13 +139,7 @@ const config: GatsbyConfig = {
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
-              // Class prefix for <pre> tags containing syntax highlighting;
-              // defaults to 'language-' (e.g. <pre class="language-js">).
-              // If your site loads Prism into the browser at runtime,
-              // (e.g. for use with libraries like react-live),
-              // you may use this to prevent Prism from re-processing syntax.
-              // This is an uncommon use-case though;
-              // If you're unsure, it's best to use the default value.
+              // Class prefix for <pre> tags: <pre class="language-js">
               classPrefix: "language-",
             },
           },
@@ -140,7 +163,7 @@ export default config
 
 Ahora hay que crear la estructura de carpetas para guardar los archivos, ahora explicaremos los archivos principales, hay que notar que `404.tsx` e `index.tsx` son autogenerados por gatsby.
 
-```css
+```text
 src
   ├── content
   │   └── sample-post.md
@@ -159,7 +182,7 @@ Como hemos visto en la parte de configuración, hemos indicado a gatsby que est�
 
 Lo más importante de estos posts es la cabecera que contendrá los metadatos para crear nuestros posts, estos atributos son los que luego extraeremos:
 
-```markdown
+```markdown title="src/content/sample-post.md"
 ---
 slug: "/sample-post"
 date: "2022-11-24"
@@ -179,7 +202,7 @@ featuredImage: "https://image-cloud.example.png"
 
 Ahora, dentro del fichero `pages`, crearemos el archivo `{markdownRemark.frontmatter__slug}.jsx`, que será el responsable de dar el formato y estilo a nuestro post, dentro del código veremos que hace una consulta para obtener los metadatos de cada fichero que son los que usaremos para la cabecera del artículo.
 
-```tsx
+```jsx title="src/pages/blog/{markdownRemark.frontmatter__slug}.jsx" {16-28,42}
 import * as React from "react";
 import { graphql } from "gatsby";
 import "./blog.css";
@@ -190,7 +213,7 @@ const wrapperStyles = {
 };
 
 const contentWrapperStyle = {
-  "max-width": "800px",
+  maxWidth: "800px",
   margin: "0 auto",
   padding: "140px 30px 30px 30px",
 };
@@ -210,7 +233,7 @@ export const pageQuery = graphql`
 `;
 
 export default function BlogPostTemplate({
-  data, // this prop will be injected by the GraphQL query below.
+  data, // this prop is injected by the GraphQL query above
 }) {
   const { markdownRemark } = data; // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark;
@@ -227,6 +250,20 @@ export default function BlogPostTemplate({
   );
 }
 ```
+
+```mermaid title="How the file name becomes one page per post"
+flowchart LR
+  F["{markdownRemark.<br/>frontmatter__slug}.jsx"] -- "one page per<br/>MarkdownRemark node" --> P1["/sample-post"]
+  F --> P2["/another-post"]
+  P1 & P2 --> G["pageQuery<br/>with that $id"]
+  G --> H["html +<br/>frontmatter"]
+```
+
+> [!TIP]
+> El nombre del fichero entre llaves es la ruta: Gatsby crea una página por cada
+> nodo `MarkdownRemark` usando su `frontmatter.slug`, y le pasa el `id` del nodo
+> a la consulta. Por eso no hace falta tocar `gatsby-node` para tener una URL por
+> artículo.
 
 ## Revisar los cambios
 

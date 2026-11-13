@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Running AI agents on Kubernetes: what a web service never asked of you">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 399.6 437.9 Q 399.6 437.9 377.8 496.5 Q 355.9 555.1 292.1 571.4 Q 228.2 587.6 145.2 561.0 Q 62.2 534.3 74.6 443.9 Q 87.1 353.5 153.9 304.4 Q 220.7 255.2 291.9 283.5 Q 363.1 311.7 381.4 374.8 Z" fill="#a08153" opacity="0.52" />
+    <path d="M 669.7 357.9 Q 669.7 357.9 637.8 435.1 Q 605.9 512.4 519.2 545.0 Q 432.5 577.5 340.1 524.3 Q 247.6 471.1 277.8 372.4 Q 307.9 273.7 360.2 162.2 Q 412.5 50.6 532.8 97.3 Q 653.2 144.0 661.4 251.0 Z" fill="#eabe7d" opacity="0.56" />
+    <path d="M 899.5 582.8 Q 899.5 582.8 868.1 677.8 Q 836.7 772.9 736.8 783.3 Q 636.9 793.6 564.9 734.4 Q 492.9 675.3 482.9 577.9 Q 472.9 480.6 545.5 385.0 Q 618.0 289.4 745.9 317.8 Q 873.7 346.2 886.6 464.5 Z" fill="#2b2830" opacity="0.45" />
+    <path d="M 1133.0 281.8 Q 1133.0 281.8 1092.0 375.4 Q 1051.1 468.9 957.9 457.1 Q 864.6 445.2 788.0 409.4 Q 711.5 373.5 703.4 277.9 Q 695.3 182.3 777.1 137.7 Q 858.8 93.1 926.0 130.2 Q 993.2 167.3 1063.1 224.6 Z" fill="#a08153" opacity="0.40" />
+    <path d="M 257.6 254.0 Q 257.6 254.0 216.8 332.9 Q 176.0 411.7 92.2 424.7 Q 8.4 437.6 -56.8 387.3 Q -122.0 337.0 -98.1 265.5 Q -74.3 194.0 -36.6 116.4 Q 1.1 38.8 90.1 65.6 Q 179.1 92.5 218.4 173.2 Z" fill="#eabe7d" opacity="0.45" />
+    <path d="M 358.8 605.8 Q 358.8 605.8 309.4 720.3 Q 260.0 834.8 141.4 839.6 Q 22.9 844.5 -65.3 780.7 Q -153.4 716.9 -160.2 602.5 Q -167.0 488.1 -73.3 422.1 Q 20.4 356.1 142.9 363.0 Q 265.5 369.9 312.1 487.8 Z" fill="#2b2830" opacity="0.45" />
+    <path d="M 955.3 440.6 Q 955.3 440.6 940.6 512.4 Q 925.9 584.2 852.6 582.4 Q 779.3 580.6 699.7 556.6 Q 620.1 532.6 626.3 443.5 Q 632.4 354.4 700.7 304.7 Q 768.9 254.9 833.7 293.1 Q 898.4 331.3 926.9 386.0 Z" fill="#a08153" opacity="0.31" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="203.46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">KUBERNETES</text>
+  <text x="80" y="259" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Running AI agents on</text>
+    <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Kubernetes: what a web service</text>
+    <text x="80" y="395" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">never asked of you</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

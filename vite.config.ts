@@ -138,6 +138,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+        // Diagram code is cached on first use, not installed up front.
+        globIgnores: ["assets/diagram/**"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
@@ -155,10 +157,42 @@ export default defineConfig({
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
             handler: "CacheFirst",
             options: {
-              cacheName: "images",
+              // Renamed from "images": that cache can hold index.html stored
+              // under an image URL (see the plugin below), and CacheFirst
+              // would keep serving it for 30 days.
+              cacheName: "images-v2",
               expiration: {
                 maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+              plugins: [
+                {
+                  // Netlify answers a path with no file behind it with the
+                  // SPA's index.html and a 200. An image requested before the
+                  // deploy that adds it lands (a news item seeded first) came
+                  // back as HTML, and CacheFirst kept it. Store only real
+                  // images, and opaque cross-origin responses, which cannot
+                  // be inspected.
+                  cacheWillUpdate: async ({ response }) => {
+                    if (response.type === "opaque") return response;
+                    const type = response.headers.get("content-type") ?? "";
+                    return response.ok && type.startsWith("image/")
+                      ? response
+                      : null;
+                  },
+                },
+              ],
+            },
+          },
+          {
+            // Content-hashed, so a cached copy is never stale.
+            urlPattern: /\/assets\/diagram\/.+\.(?:js|css)$/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "diagram-code",
+              expiration: {
+                maxEntries: 150,
+                maxAgeSeconds: 60 * 60 * 24 * 90, // 90 days
               },
             },
           },
@@ -190,6 +224,21 @@ export default defineConfig({
     sourcemap: "hidden",
     rolldownOptions: {
       output: {
+        // Mermaid and everything only it pulls in (ELK, Cytoscape, KaTeX, d3…)
+        // is ~5 MB across ~90 chunks, loaded by an article that has a diagram.
+        // It goes under assets/diagram/ so the service worker can leave it out
+        // of the precache (globIgnores) and cache it on first use instead.
+        chunkFileNames: (chunk) =>
+          chunk.moduleIds.length > 0 &&
+          chunk.moduleIds.every(
+            (id) =>
+              id.includes("node_modules") &&
+              !/node_modules[\\/](react|react-dom|scheduler|react-router|firebase|@firebase|react-markdown|remark-|rehype-|refractor|prismjs)/.test(
+                id
+              )
+          )
+            ? "assets/diagram/[name]-[hash].js"
+            : "assets/[name]-[hash].js",
         // Vendor code changes far less often than the app, so separate chunks
         // keep it cached across deploys. Auth and Storage get their own groups
         // so that they stay with the lazily loaded admin instead of riding

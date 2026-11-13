@@ -16,32 +16,46 @@ Lo que no puede deducir es lo que tiene forma de estar bien y está mal.
 
 Si la respuesta es sí, no lo escribas. Ocupa contexto y no cambia ninguna decisión.
 
+```mermaid title="Does it belong in the rules file?"
+flowchart LR
+  C["A candidate rule"] --> Q{"Could it be discovered<br/>by reading the code?"}
+  Q -- "yes" --> O["Leave it out"]
+  Q -- "no" --> W["Write it, with the why"]
+  W --> D["Delete it in the commit<br/>that makes it false"]
+```
+
+| Regla | ¿Se deduce del código? | ¿Se queda? |
+| --- | --- | --- |
+| **«Usa TypeScript estricto»** | Sí: `tsconfig.json` | No |
+| **«Escribe tests»** | Sí: hay una carpeta `tests/` | No |
+| **«`md:` es 650px»** | No: parece Tailwind estándar | Sí |
+| **«Los posts están en `patent`»** | No: parece un error | Sí |
+
 Lo que sí merece un sitio es aquello que **parece una cosa y es otra**. Tres ejemplos reales de este mismo repositorio:
 
-```md
-### Los breakpoints de Tailwind están redefinidos
+```md title="AGENTS.md"
+### Tailwind breakpoints are redefined
 
 xs 450 · sm 550 · md 650 · lg 750 · xl 1000 · 2xl 1234
 
-`md:` NO es 768px. Cualquier fragmento copiado de la documentación de
-Tailwind apuntará al viewport equivocado.
+`md:` is NOT 768px. Any snippet copied from the Tailwind docs will target
+the wrong viewport.
 ```
 
 Ningún modelo va a adivinar eso: `md:` significa 768px en el 99% de los proyectos del mundo, y la distribución de entrenamiento lo refleja. Escribirlo en una línea evita una clase de error que sólo se manifiesta a un ancho concreto.
 
-```md
-### Los nombres de las colecciones de Firestore son legacy
+```md title="AGENTS.md"
+### Firestore collection names are legacy
 
-News → `intro`, Posts → `patent`, Work → `team`. No los "arregles".
+News → `intro`, Posts → `patent`, Work → `team`. Do not "fix" them.
 ```
 
 Sin esa nota, un asistente razonable renombra `patent` a `posts` y deja huérfanos todos los datos de producción.
 
-```md
-### Nunca pongas background-color en `html`
+```md title="AGENTS.md"
+### Never set a background-color on `html`
 
-`body` es quien pinta el lienzo. Se intentó en 70d92b1 y se revirtió en
-88b2d24.
+`body` is the canvas painter. Tried in 70d92b1, reverted in 88b2d24.
 ```
 
 Esa es la forma más valiosa de regla: una decisión con la cicatriz adjunta. El commit de reversión es la prueba de que alguien ya lo intentó.
@@ -50,14 +64,11 @@ Esa es la forma más valiosa de regla: una decisión con la cicatriz adjunta. El
 
 Una regla sin justificación se desobedece en cuanto estorba, tanto por una persona como por un modelo.
 
-```md
-<!-- Inútil -->
-No uses Prettier en src/content/.
-
-<!-- Útil -->
-Prettier no toca src/content/: son artículos, y reformatea los ejemplos
-de código *dentro* de los bloques cerrados, cambiando el material docente
-y la altura renderizada de la página.
+```diff title="AGENTS.md"
+- Don't run Prettier on src/content/.
++ Prettier doesn't touch src/content/: those are articles, and it reformats
++ the code samples *inside* fenced blocks, editing the teaching material and
++ changing the rendered page height.
 ```
 
 La segunda versión permite además razonar sobre casos nuevos. Si mañana aparece otra carpeta de prosa, la regla se generaliza sola.
@@ -68,13 +79,19 @@ Las herramientas proliferan: `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instruct
 
 Lo que funciona es poner el contenido en uno y que los demás apunten:
 
-```md
-<!-- CLAUDE.md -->
-Toda la guía del proyecto está en un único sitio:
+```mermaid title="One source, several pointers"
+flowchart LR
+  C["CLAUDE.md"] --> A["AGENTS.md<br/>the only real content"]
+  G[".github/copilot-instructions.md"] --> A
+  R[".cursor/rules"] --> A
+```
+
+```md title="CLAUDE.md" {3}
+All project guidance lives in one place:
 
 @AGENTS.md
 
-Antes de tocar layout o estilos, lee la sección "Landmines".
+Before touching layout or styling, read the "Landmines" section.
 ```
 
 ## Una regla desmentida por el código es peor que ninguna
@@ -83,15 +100,31 @@ Este es el fallo que más daño hace, y es silencioso. Un fichero de reglas que 
 
 En este repositorio, `AGENTS.md` afirmaba durante meses que el despliegue era Firebase Hosting. El workflow se había borrado hacía tiempo y el sitio estaba en Netlify. Cualquier asistente que leyera ese fichero razonaba sobre una infraestructura inexistente.
 
-La conclusión práctica: cuando arregles algo que estaba en las reglas, **borra la regla en el mismo commit**. Dos de las de este repositorio describían problemas que se resolvieron; se quedaron obsoletas el día que se arreglaron, y se sustituyeron por lo que ahora es cierto.
+```mermaid title="The life of a rule"
+stateDiagram-v2
+  [*] --> True: written, with its why
+  True --> Fixed: someone fixes the problem
+  Fixed --> Deleted: rule removed in the same commit
+  Fixed --> Stale: rule left behind
+  Stale --> Misleading: assistant trusts it
+  Deleted --> [*]
+```
+
+> [!IMPORTANT]
+> Cuando arregles algo que estaba en las reglas, **borra la regla en el mismo commit**.
+
+Dos de las de este repositorio describían problemas que se resolvieron; se quedaron obsoletas el día que se arreglaron, y se sustituyeron por lo que ahora es cierto.
 
 ## Deja a mano cómo se verifica
 
 Lo último, y lo que más rendimiento da: el fichero debe decir cómo comprobar que algo no se ha roto.
 
-```md
-Ejecuta `npm run visual` tras cualquier cambio visual: compara cada ruta
-en siete anchos y en ambos esquemas de color contra capturas commiteadas.
+```md title="CLAUDE.md"
+Run `npm run visual` after any visual change — it diffs every route at seven
+widths in both colour schemes.
+
+The baseline is gitignored and local. On a fresh clone, capture one on the
+unmodified tree first with `npm run visual:baseline`.
 ```
 
 Un asistente que sabe cómo verificarse a sí mismo deja de proponer cambios y empieza a proponer cambios comprobados. Es la diferencia entre una sugerencia y un parche.

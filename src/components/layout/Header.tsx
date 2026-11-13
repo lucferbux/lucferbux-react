@@ -21,7 +21,11 @@ export default function Header() {
   const active = useActiveSection();
 
   return (
-    <header className="absolute top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)]">
+    // Sits 20px below the top edge. `--chrome-top` deliberately does not
+    // include that offset: page content stays where it was and only the gap
+    // between the nav and the title shrinks — the fixed-height home sections
+    // (AGENTS.md, landmine 3) would otherwise clip.
+    <header className="absolute top-0 right-0 left-0 z-50 pt-[calc(env(safe-area-inset-top,0px)+20px)]">
       <nav
         aria-label={m.a11y.mainNav}
         className="mx-auto flex h-14 max-w-[1234px] items-center justify-between gap-4 px-[30px] max-sm:px-5 max-xs:gap-2"
@@ -29,7 +33,7 @@ export default function Header() {
         <Link to={localePath("/")} className="shrink-0">
           <img src="/images/logos/logo.svg" alt="Lucferbux" />
         </Link>
-        <div className="flex items-center gap-[30px] max-md:gap-3 max-xs:gap-1.5">
+        <div className="flex items-center gap-[30px] max-xl:gap-4 max-lg:gap-1">
           {menuData.map((item) => (
             <NavButton
               icon={item.Icon}

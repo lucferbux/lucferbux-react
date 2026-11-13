@@ -34,6 +34,23 @@ What works is treating each phase as a separate job, with its own context and it
 
 The artifact between phases is what makes it work. A markdown plan, a diff, a suite's output. Each is small, reviewable by a person, and carries none of the previous step's mess.
 
+```mermaid title="Four jobs, three artifacts between them"
+flowchart LR
+  PL["Plan<br/>read-only session"] -- "plan.md" --> IM["Implement<br/>fresh session"]
+  IM -- "diff" --> RV["Review<br/>clean session"]
+  PL -. "plan.md" .-> RV
+  RV -- "findings" --> VE["Verify<br/>tests · lint · build"]
+```
+
+What each session is allowed to see is the whole design:
+
+| Session | Sees | Doesn't see | Produces |
+| --- | --- | --- | --- |
+| **Plan** | The repository, your answers | — | `plan.md` |
+| **Implement** | The plan, the repository | The exploration | A diff |
+| **Review** | The diff, the plan | The conversation that wrote it | Findings |
+| **Verify** | The code | Everything else | Pass or fail |
+
 ## The handoff is where information is lost
 
 The fragile part isn't any phase: it's the step between them. A plan that says "refactor the auth module" isn't a handoff, it's a title.
@@ -45,7 +62,31 @@ What a plan needs so the next session doesn't rebuild everything:
 - **The traps**: what looks right and isn't. This is where a repository rules file earns its keep.
 - **How to verify**, as concrete commands.
 
+A handoff that carries all four, for a real change on this site:
+
+```md title="plan.md" {10-12}
+# Move auth out of the public bundle
+
+## Files
+- `src/firebase.ts` — keep app + Firestore only.
+- `src/firebaseAuth.ts` — new; the only module that imports `firebase/auth`.
+
+## Reuse
+- `useAuth()` already wraps sign-in state. Change its import, not its API.
+
+## Traps
+- Any public component importing `firebaseAuth.ts` puts the Auth SDK back
+  in every visitor's download.
+
+## Verify
+- `npm run build`, then check no `firebase-auth` modulepreload in `dist/index.html`.
+- `npm test`
+```
+
 Without that, the implementation session re-explores the repository from scratch and makes different decisions from the ones the plan agreed.
+
+> [!IMPORTANT]
+> If the implementation session has to open more files than the plan names, the plan wasn't a handoff. Fix the plan, not the session.
 
 ## Parallelise only what's independent
 
@@ -55,13 +96,44 @@ What doesn't work is parallelising things that write to the same files. Two agen
 
 A simple heuristic: if two jobs might read the same thing, run them in parallel; if they might write the same thing, run them in series.
 
+```mermaid title="Parallel or in series?"
+flowchart LR
+  W{"Might two jobs write<br/>the same files?"} -- "yes" --> SE["In series"]
+  W -- "no" --> PA["In parallel"]
+```
+
 ## Adversarial review
 
 Of all the phases, the one that has given me the most value is a review by a session that has no idea why the code was written.
 
 The brief has to be explicit: *find the failure*. A review with vague instructions produces congratulations. One instructed to find concrete inputs that break the code produces findings, and each finding can be checked by running it.
 
-The filter I use: a finding with no concrete case demonstrating it is an opinion. A finding with "given this input, this line returns that" is a bug, and there's nothing to debate — you run it.
+```text title="review-brief.txt"
+You are reviewing a diff you did not write. Assume it has a bug.
+For each finding, give a concrete input, the line it reaches and the
+wrong result it produces. No style comments. No praise.
+```
+
+> [!TIP]
+> A finding with no concrete case demonstrating it is an opinion. A finding with "given this input, this line returns that" is a bug, and there's nothing to debate — you run it.
+
+```mermaid title="Filtering review findings"
+sequenceDiagram
+  autonumber
+  participant You
+  participant R as Reviewer session
+  participant T as Terminal
+  You->>R: Diff + "find inputs that break it"
+  R-->>You: Finding: "given X, line 42 returns Y"
+  You->>T: Run it with X
+  alt Reproduces
+    T-->>You: Returns Y
+    Note over You,T: A bug. Fix it, add the test.
+  else Does not reproduce
+    T-->>You: Correct output
+    Note over You,T: An opinion. Discard it.
+  end
+```
 
 ## What to take away
 

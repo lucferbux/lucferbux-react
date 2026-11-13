@@ -33,7 +33,7 @@ export default function NavButton({
     <Link to={link} aria-current={active ? "page" : undefined}>
       <div
         className={clsx(
-          "grid grid-cols-[24px_auto] items-center gap-[10px] rounded-[10px] p-[10px] text-white/70 transition-all duration-500",
+          "grid grid-cols-[24px_auto] items-center gap-3 rounded-xl px-[18px] py-3 text-white/70 max-xl:px-[14px] max-lg:gap-2 max-lg:px-[10px] transition-all duration-500",
           "hover:bg-white/10 hover:shadow-[0px_10px_20px_rgba(0,0,0,0.1),inset_0px_0px_0px_0.5px_rgba(255,255,255,0.2)]",
           // 44px minimum touch target.
           "min-h-[44px] min-w-[44px]",

@@ -81,5 +81,12 @@ export async function settle(page: Page, ready: string): Promise<void> {
     { timeout: 30_000 }
   );
 
+  // Article diagrams render client-side after Mermaid's chunk loads.
+  await page.waitForFunction(
+    () => !document.querySelector('[data-diagram="pending"]'),
+    undefined,
+    { timeout: 30_000 }
+  );
+
   await page.waitForLoadState("networkidle");
 }

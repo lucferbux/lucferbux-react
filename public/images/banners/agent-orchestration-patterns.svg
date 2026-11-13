@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Agent orchestration patterns, and when each one pays for itself">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a08153" />
+      <stop offset="55%" stop-color="#eabe7d" />
+      <stop offset="100%" stop-color="#2b2830" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g filter="url(#soften)">
+    <path d="M 949.4 99.8 Q 949.4 99.8 925.8 215.8 Q 902.3 331.7 789.3 305.6 Q 676.3 279.5 591.1 240.6 Q 506.0 201.6 500.4 97.1 Q 494.8 -7.3 577.8 -77.6 Q 660.8 -147.8 746.7 -96.2 Q 832.6 -44.7 891.0 27.6 Z" fill="#a08153" opacity="0.50" />
+    <path d="M 625.4 432.0 Q 625.4 432.0 584.1 487.2 Q 542.7 542.4 484.4 550.1 Q 426.0 557.8 382.1 522.9 Q 338.3 488.0 334.3 430.1 Q 330.4 372.1 376.3 330.8 Q 422.2 289.5 492.9 292.5 Q 563.6 295.4 594.5 363.7 Z" fill="#eabe7d" opacity="0.45" />
+    <path d="M 1413.9 43.2 Q 1413.9 43.2 1359.6 137.6 Q 1305.2 232.0 1204.7 248.3 Q 1104.1 264.5 995.9 218.2 Q 887.7 171.8 920.2 58.9 Q 952.7 -54.0 1027.8 -118.8 Q 1102.9 -183.5 1188.2 -144.6 Q 1273.5 -105.8 1343.7 -31.3 Z" fill="#2b2830" opacity="0.35" />
+    <path d="M 918.0 155.3 Q 918.0 155.3 853.3 207.8 Q 788.6 260.3 727.4 292.5 Q 666.2 324.6 596.0 283.1 Q 525.7 241.5 515.1 150.2 Q 504.5 58.8 589.0 38.3 Q 673.5 17.8 750.1 10.1 Q 826.7 2.5 872.4 78.9 Z" fill="#a08153" opacity="0.60" />
+    <path d="M 1178.8 477.7 Q 1178.8 477.7 1171.5 575.5 Q 1164.3 673.3 1065.2 668.0 Q 966.1 662.7 884.3 619.8 Q 802.5 576.8 830.6 491.2 Q 858.8 405.6 906.7 323.9 Q 954.6 242.2 1054.2 268.7 Q 1153.9 295.2 1166.3 386.4 Z" fill="#eabe7d" opacity="0.58" />
+    <path d="M 875.7 371.0 Q 875.7 371.0 812.2 446.7 Q 748.8 522.3 666.1 544.5 Q 583.4 566.6 509.3 515.2 Q 435.1 463.9 443.3 374.9 Q 451.5 286.0 521.1 246.8 Q 590.8 207.7 671.2 211.9 Q 751.6 216.1 813.6 293.5 Z" fill="#2b2830" opacity="0.43" />
+    <path d="M 1153.4 578.4 Q 1153.4 578.4 1136.9 633.1 Q 1120.4 687.9 1058.8 711.9 Q 997.2 735.9 942.2 692.2 Q 887.3 648.6 886.6 578.0 Q 885.8 507.4 946.5 486.1 Q 1007.2 464.7 1061.8 469.3 Q 1116.4 473.9 1134.9 526.1 Z" fill="#a08153" opacity="0.52" />
+  </g>
+  <rect width="1200" height="630" fill="#000000" opacity="0.20" />
+
+  <text x="80" y="203.46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#ffffff" opacity="0.85">AI</text>
+  <text x="80" y="259" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Agent orchestration patterns,</text>
+    <text x="80" y="327" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">and when each one pays for</text>
+    <text x="80" y="395" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">itself</text>
+  <text x="80" y="566" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" fill="#ffffff" opacity="0.85">lucferbux.dev</text>
+</svg>

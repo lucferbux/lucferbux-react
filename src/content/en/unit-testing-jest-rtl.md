@@ -16,9 +16,26 @@ Almost everyone who complains that "tests slow us down" has the same suite: test
 
 That's Testing Library's guiding principle, and it isn't a motivational slogan — it has a direct operational consequence. Test **what the user observes**, not how it's built.
 
+```mermaid title="Two places a test can look"
+flowchart LR
+  subgraph inside["Implementation — free to change"]
+    S["useState / useReducer"]
+    H["Custom hooks"]
+    F["Filter function"]
+  end
+  subgraph outside["What the user observes — the contract"]
+    D["Rendered DOM<br/>roles · labels · text"]
+  end
+  S --> D
+  H --> D
+  F --> D
+  B["Brittle test"] -. "reads state" .-> S
+  G["Good test"] -- "types, clicks, reads" --> D
+```
+
 An example. This component renders a list and lets you filter it:
 
-```tsx
+```tsx title="src/components/UserList.tsx"
 export function UserList({ users }: { users: User[] }) {
   const [query, setQuery] = useState("");
   const visible = users.filter((u) =>
@@ -47,7 +64,7 @@ expect(result.current[0]).toBe("");
 
 The good test does what a person would:
 
-```tsx
+```tsx title="tests/UserList.test.tsx" {5,7-8}
 it("filters by name", async () => {
   const user = userEvent.setup();
   render(<UserList users={[{id:"1",name:"Ana"},{id:"2",name:"Luis"}]} />);
@@ -65,16 +82,30 @@ Swap `useState` for `useReducer` tomorrow, or move the filtering into a hook, an
 
 The three query families aren't interchangeable, and picking wrong produces tests that fail confusingly:
 
-- **`getBy`** — I expect it now and it must exist. Throws if missing, with a genuinely useful DOM dump.
-- **`queryBy`** — it may not exist. Returns `null`. **The only valid one for asserting absence.**
-- **`findBy`** — it will appear shortly. Returns a promise and retries. For anything asynchronous.
+| Family | When it's missing | Async | Use it for |
+| --- | --- | --- | --- |
+| **`getBy`** | Throws, with a genuinely useful DOM dump | No | I expect it now and it must exist |
+| **`queryBy`** | Returns `null` | No | It may not exist. **The only valid one for asserting absence** |
+| **`findBy`** | Rejects after the timeout | Yes — retries | It will appear shortly. Anything asynchronous |
 
-```tsx
+```mermaid title="Picking the query"
+flowchart TB
+  Q{"Should the element<br/>be on screen?"}
+  Q -- "no, I'm asserting absence" --> QB["queryBy"]
+  Q -- "yes" --> N{"Is it there<br/>right now?"}
+  N -- "yes" --> GB["getBy"]
+  N -- "after a request,<br/>timer or transition" --> FB["await findBy"]
+```
+
+```tsx {2}
 expect(screen.queryByText("Error")).not.toBeInTheDocument();  // right
 expect(screen.getByText("Error")).not.toBeInTheDocument();    // never passes: getBy already threw
 
 expect(await screen.findByText("Saved")).toBeInTheDocument(); // after a request
 ```
+
+> [!CAUTION]
+> `getBy` inside a `.not` assertion can never pass: when the element is absent, `getBy` throws before `expect` ever sees it. Absence is always `queryBy`.
 
 ## The query priority order
 
@@ -87,9 +118,26 @@ Testing Library orders its queries deliberately, and that order is an accessibil
 
 When you can't select a button by its role and accessible name, the test is telling you that button isn't reachable for someone using a screen reader either. Fixing the test fixes the accessibility. That's why `getByTestId` is a small defeat: it works, but you've silenced the signal.
 
+A typical case: an icon-only button. `getByRole("button", { name: /delete/i })` fails, and the fix is in the component, not the test:
+
+```diff
+- <button onClick={onDelete}><TrashIcon /></button>
++ <button onClick={onDelete} aria-label="Delete"><TrashIcon /></button>
+```
+
 ## What to mock and what not to
 
 The rule I use: **mock the boundary of the system, not the pieces inside it**.
+
+```mermaid title="Where the mock goes"
+flowchart LR
+  subgraph real["Runs for real"]
+    C["Component"] --> H["Hooks"]
+    H --> U["formatDate<br/>and other utils"]
+  end
+  H --> A["api/client"]
+  A -. "mocked here" .-> N[("Network")]
+```
 
 ```tsx
 // Good: the network is a boundary
@@ -113,6 +161,40 @@ it("renders", () => {
 
 Which is why a global 90% threshold tends to produce junk tests written to move a number. A global 70%, with high thresholds where the logic actually lives — utilities, hooks, reducers — says far more. The useful part of coverage isn't the percentage: it's opening the report and finding the error branch nobody ever exercised.
 
+In Vitest that split is a few lines of config:
+
+```ts title="vitest.config.ts" {5-6}
+export default defineConfig({
+  test: {
+    coverage: {
+      thresholds: {
+        lines: 70,
+        "src/utils/**": { lines: 95, branches: 90 },
+      },
+    },
+  },
+});
+```
+
 ## A test that fails when it should
 
-The last check, and the one almost nobody does: **break the code on purpose and confirm the test fails**. A test that has never failed has proved nothing. I do it whenever I write the first test for a module, and it has saved me from more than one green suite that was checking absolutely nothing.
+The last check, and the one almost nobody does: **break the code on purpose and confirm the test fails**. A test that has never failed has proved nothing.
+
+```steps
+Write the test: Run it and watch it go green.
+Break the code: Comment out the line the test is about.
+Watch it fail: Red, with a message that points at the cause.
+Restore: Put the line back. Now the green means something.
+```
+
+With the filter above, the sabotage is one line:
+
+```diff title="src/components/UserList.tsx"
+  const visible = users.filter((u) =>
+-   u.name.toLowerCase().includes(query.toLowerCase())
++   true // sabotage: the "filters by name" test must now fail
+  );
+```
+
+> [!TIP]
+> I do it whenever I write the first test for a module, and it has saved me from more than one green suite that was checking absolutely nothing.

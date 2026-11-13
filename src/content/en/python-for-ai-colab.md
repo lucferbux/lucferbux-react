@@ -14,7 +14,24 @@ A notebook is a lab book: mutable state, out-of-order execution, everything on d
 
 Three habits that are convenient while exploring and are bugs in production:
 
-**Out-of-order execution.** A cell defines a variable, you delete the cell, and the code keeps working because the value lives in the kernel. Restart and run top to bottom before trusting anything: it's the only way to know whether the notebook is reproducible.
+**Out-of-order execution.** A cell defines a variable, you delete the cell, and the code keeps working because the value lives in the kernel.
+
+```mermaid title="Why the notebook still works"
+sequenceDiagram
+  participant You
+  participant N as Notebook
+  participant K as Kernel
+  You->>N: Run cell 3 — model = load()
+  N->>K: model now lives here
+  You->>N: Delete cell 3
+  You->>N: Run cell 7 — model.predict(x)
+  K-->>N: Works: model is still in memory
+  You->>N: Restart and run all
+  K-->>N: NameError: name 'model' is not defined
+```
+
+> [!TIP]
+> Restart and run top to bottom before trusting anything: it's the only way to know whether the notebook is reproducible.
 
 **Implicit global state.** `df` gets transformed across fourteen different cells. When something goes wrong there's no way to tell where. The discipline that fixes it is writing transformations as pure functions, even inside the notebook:
 
@@ -40,11 +57,19 @@ api_key = userdata.get("GOOGLE_API_KEY")
 
 And outside Colab, environment variables. Never a literal.
 
+```python
+import os
+api_key = os.environ["GOOGLE_API_KEY"]  # a KeyError beats a key in the repo
+```
+
+> [!WARNING]
+> A key that reached a commit is leaked, even after you delete the cell. Revoke it and issue a new one.
+
 ## From notebook to interface in twenty lines
 
 The moment the project changes character is when someone else can use it without reading the code. Gradio makes that nearly free:
 
-```python
+```python {12}
 import gradio as gr
 
 def classify(text: str) -> dict[str, float]:
@@ -68,6 +93,17 @@ Those `examples` matter more than they look. An empty interface forces the user 
 
 As soon as someone else uses it, problems appear that the notebook never had.
 
+```mermaid title="One request, once it has users"
+flowchart TB
+  U["User input"] --> V{"Empty?"}
+  V -- "yes" --> E["gr.Error — ask again"]
+  V -- "no" --> T["Truncate to MAX_CHARS"]
+  T --> C{"In the lru_cache?"}
+  C -- "yes" --> R(["Answer"])
+  C -- "no" --> M["Model or paid API"]
+  M --> R
+```
+
 **Unexpected input.** Empty text, 50,000 characters, another language, emoji. A notebook explodes; a tool answers something reasonable.
 
 ```python
@@ -83,6 +119,14 @@ def classify(text: str) -> dict[str, float]:
 ```
 
 **The model reloads on every call.** The most common performance mistake. Load it once at module level, not inside the function.
+
+```diff
++model = load_model("sentiment")  # once, when the module is imported
++
+ def classify(text: str) -> dict[str, float]:
+-    model = load_model("sentiment")  # reads the weights on every request
+     scores = model.predict(text)
+```
 
 **Unbounded cost.** If a paid API sits behind it, every user spends your money. A length limit and elementary caching handle most of it:
 
@@ -100,20 +144,32 @@ def embed(text: str) -> tuple[float, ...]:
 
 The last habit, and the one separating a class project from a real one: keep a set of test cases from the start. Nothing sophisticated is required.
 
-```python
+```python {7-9}
 CASES = [
     ("I loved the service", "positive"),
     ("I've been waiting three days", "negative"),
     ("The order arrived on Tuesday", "neutral"),
 ]
 
+def predicted_label(text: str) -> str:
+    scores = classify(text)
+    return max(scores, key=scores.get)
+
 def accuracy() -> float:
-    ok = sum(classify(text)["label"] == expected for text, expected in CASES)
+    ok = sum(predicted_label(text) == expected for text, expected in CASES)
     return ok / len(CASES)
 ```
 
-Twenty hand-written cases turn "I think it's better now" into a number. Without them, every prompt or model change is an opinion, and opinions can't be compared to each other.
+`classify` returns a score per label, so the check takes the highest one. Twenty hand-written cases turn "I think it's better now" into a number. Without them, every prompt or model change is an opinion, and opinions can't be compared to each other.
 
 ## The summary
+
+| | In the notebook | In the tool |
+| --- | --- | --- |
+| **State** | A global `df`, changed in fourteen cells | Pure functions |
+| **Input** | Whatever you typed | Validated and bounded |
+| **Model** | Loaded wherever it was convenient | Loaded once, at import |
+| **Secrets** | Pasted into a cell | `userdata` or the environment |
+| **"Is it better?"** | An impression | A number from the test cases |
 
 The notebook is for finding out **what** you want to build. Once you know, the work is different: pure functions instead of global state, input validation, the model loaded once, secrets out of the code, and a handful of test cases. None of it is advanced, and it's exactly what separates a lab book from a tool.

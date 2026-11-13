@@ -16,11 +16,32 @@ Es la primera decisión y la que más se equivoca. Un ajuste fino enseña al mod
 
 Si tu problema es «el modelo no conoce nuestra documentación interna», el fine-tuning es una forma cara y lenta de resolverlo, y además hay que repetirlo cada vez que la documentación cambia. RAG resuelve eso cambiando un documento en un índice.
 
+| | Fine-tuning | RAG |
+| --- | --- | --- |
+| **Cambia** | Cómo se comporta el modelo: tono, formato, tarea | Lo que el modelo sabe en este momento |
+| **Cuando cambia la documentación** | Volver a entrenar | Reindexar un documento |
+| **Puede citar de dónde sale la respuesta** | No | Sí, el fragmento recuperado |
+| **Coste de una iteración** | Horas de GPU | Segundos |
+
 ## Las cuatro piezas
 
+```mermaid title="Two pipelines: index once, query every time"
+flowchart TB
+  subgraph index["Indexing — when the documents change"]
+    direction LR
+    L["Load"] --> S["Split"] --> E["Embed"]
+  end
+  subgraph query["Query — every question"]
+    direction LR
+    Q["Question"] --> R["Retrieve top k"] --> P["Prompt"] --> M["LLM"] --> A(["Answer"])
+  end
+  index --> DB[("Chroma")]
+  DB --> query
+```
+
 ```python
-# pip install langchain langchain-chroma langchain-ollama
-from langchain_community.document_loaders import DirectoryLoader
+# pip install langchain langchain-community langchain-chroma langchain-ollama
+from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings, ChatOllama
 from langchain_chroma import Chroma
@@ -29,7 +50,7 @@ from langchain_chroma import Chroma
 **1 · Cargar.** Traer los documentos a texto plano.
 
 ```python
-docs = DirectoryLoader("./docs", glob="**/*.md").load()
+docs = DirectoryLoader("./docs", glob="**/*.md", loader_cls=TextLoader).load()
 ```
 
 **2 · Trocear.** Aquí es donde se gana o se pierde el sistema.
@@ -55,7 +76,7 @@ El modelo de *embeddings* no tiene por qué ser el mismo que genera la respuesta
 
 **4 · Recuperar y generar.**
 
-```python
+```python {8-9,12-13,22}
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
@@ -63,35 +84,86 @@ from langchain_core.output_parsers import StrOutputParser
 retriever = store.as_retriever(search_kwargs={"k": 4})
 llm = ChatOllama(model="llama3.1")
 
-prompt = ChatPromptTemplate.from_template("""
-Responde usando únicamente el contexto. Si el contexto no contiene la
-respuesta, di que no lo sabes. Cita la fuente de cada afirmación.
+def format_docs(docs):
+    return "\n\n".join(f"[{d.metadata['source']}]\n{d.page_content}" for d in docs)
 
-Contexto:
+prompt = ChatPromptTemplate.from_template("""
+Answer using only the context. If the context does not contain the answer,
+say you don't know. Cite the source for each claim.
+
+Context:
 {context}
 
-Pregunta: {question}
+Question: {question}
 """)
 
 chain = (
-    {"context": retriever, "question": RunnablePassthrough()}
+    {"context": retriever | format_docs, "question": RunnablePassthrough()}
     | prompt
     | llm
     | StrOutputParser()
 )
 
-print(chain.invoke("¿Cómo se despliega el servicio?"))
+print(chain.invoke("How is the service deployed?"))
 ```
 
-Esa instrucción de «si el contexto no contiene la respuesta, di que no lo sabes» hace más por reducir alucinaciones que cualquier ajuste del modelo. Sin ella, el modelo rellenará el hueco con lo que le parezca plausible.
+Esa instrucción de «si el contexto no contiene la respuesta, di que no lo sabes» hace más por reducir alucinaciones que cualquier ajuste del modelo. > [!TIP]
+> Sin ella, el modelo rellenará el hueco con lo que le parezca plausible.
+
+`format_docs` está por lo mismo: si la ruta de la fuente no va en el contexto, el modelo no tiene nada que citar.
 
 ## Dónde se rompe de verdad
 
 Cuando un RAG da malas respuestas, el reflejo es cambiar de modelo. Casi nunca es el modelo.
 
+```mermaid title="Bad answer: where to look"
+flowchart TB
+  B["Bad answer"] --> R{"Was the right chunk<br/>among the k retrieved?"}
+  R -- "no" --> RET["Retrieval problem<br/>splitting · vocabulary · k"]
+  R -- "yes" --> U{"Did the answer<br/>use it?"}
+  U -- "no" --> PR["Prompt problem<br/>instructions · context format"]
+  U -- "yes" --> MO["Now it might be the model"]
+```
+
 **El troceado no respeta el significado.** Si una tabla se parte por la mitad, ninguna de las dos mitades responde a nada. Para documentación estructurada, trocear por secciones (`MarkdownHeaderTextSplitter`) funciona mucho mejor que por número de caracteres.
 
+```python
+from langchain_text_splitters import MarkdownHeaderTextSplitter
+
+splitter = MarkdownHeaderTextSplitter(
+    headers_to_split_on=[("#", "h1"), ("##", "h2"), ("###", "h3")],
+)
+sections = splitter.split_text(markdown_text)  # one chunk per section, headers kept as metadata
+```
+
 **La pregunta y el documento no usan las mismas palabras.** La búsqueda vectorial captura similitud semántica, pero falla con nombres propios, códigos de error y siglas. La solución práctica es la búsqueda híbrida: combinar vectores con BM25 y fusionar los resultados.
+
+```mermaid title="Hybrid search"
+flowchart LR
+  Q["Question"] --> V["Vector search<br/>similar meaning"]
+  Q --> B["BM25<br/>same words"]
+  V --> F["Rank fusion"]
+  B --> F
+  F --> K["Top k chunks"]
+```
+
+```python {9}
+from langchain_community.retrievers import BM25Retriever  # pip install rank_bm25
+
+bm25 = BM25Retriever.from_documents(chunks, k=10)
+vector = store.as_retriever(search_kwargs={"k": 10})
+
+def hybrid(question: str, k: int = 4) -> list:
+    scores, docs = {}, {}
+    for results in (vector.invoke(question), bm25.invoke(question)):
+        for rank, doc in enumerate(results):  # reciprocal rank fusion
+            docs[doc.page_content] = doc
+            scores[doc.page_content] = scores.get(doc.page_content, 0) + 1 / (60 + rank)
+    best = sorted(scores, key=scores.get, reverse=True)[:k]
+    return [docs[text] for text in best]
+```
+
+Envuelve `hybrid` en un `RunnableLambda` y entra en la cadena en lugar de `retriever`.
 
 **`k` es demasiado bajo o demasiado alto.** Con `k=2` te falta contexto; con `k=20` el fragmento bueno se pierde entre ruido y encima pagas latencia. Cuatro a seis suele ser el punto razonable, y si necesitas más, reordena con un *re-ranker* en lugar de ampliar la ventana.
 
@@ -106,7 +178,8 @@ def recall_at_k(questions, expected_sources, k=4):
     return hits / len(questions)
 ```
 
-Si ese número es bajo, el problema está en la recuperación y cambiar de LLM no va a arreglarlo.
+> [!IMPORTANT]
+> Si ese número es bajo, el problema está en la recuperación y cambiar de LLM no va a arreglarlo.
 
 ## Por qué en local
 

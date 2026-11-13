@@ -40,9 +40,31 @@ semanas reproducir.
 El cálculo fue: **el riesgo no está en el lenguaje de la app, está en la
 frontera con el C.** Y la forma de minimizar esa frontera era no tenerla.
 
+```mermaid title="Where the C boundary sat in each option"
+flowchart TB
+  subgraph swift["Swift, in 2016"]
+    direction TB
+    S1["App code"] --> S2["Bridging layer<br/>unsafe pointers<br/>struct copies<br/>callback threads"]
+    S2 --> S3["Vendor C SDK"]
+  end
+  subgraph objc["Objective-C"]
+    direction TB
+    O1["App code"] -- "#import" --> O2["Vendor C SDK"]
+  end
+```
+
 ## El contexto que hoy se olvida
 
 Hay dos cosas de 2016 que conviene recordar antes de juzgar la decisión.
+
+```mermaid title="Swift's road to stability"
+timeline
+  2014 : Swift 1
+  2015 : Swift 2 : Open source
+  2016 : Swift 3 renames APIs : Our app, in Objective-C
+  2017 : Swift 4
+  2019 : Swift 5 : ABI stability
+```
 
 **Swift aún rompía el código fuente entre versiones.** La migración de Swift 2 a
 Swift 3, a finales de 2016, renombró buena parte de la biblioteca estándar y de
@@ -73,10 +95,25 @@ lenguajes. Incorporar a alguien costaba más.
 **La dirección del ecosistema.** Cada año que pasaba, más bibliotecas salían
 primero —o solo— en Swift, y más documentación nueva asumía Swift.
 
+| Para esta app, en 2016 | Objective-C | Swift |
+| --- | --- | --- |
+| **Llamar a los SDK en C** | Directo: es un superconjunto de C | A través de una capa de puente |
+| **Estabilidad del código fuente** | Estable durante años | De Swift 2 a 3 cambiaron los nombres |
+| **Tamaño del binario** | Runtime del sistema | Runtime embebido en cada app, ×20 |
+| **Seguridad de tipos** | Los mensajes a `nil` fallan en silencio | Los opcionales lo detectan al compilar |
+| **Incorporar gente** | Sintaxis poco familiar | Más fácil para quien llega |
+| **Hacia dónde iba el ecosistema** | En contra | A favor |
+
 ## Qué haría hoy
 
 Lo mismo, pero al revés: Swift para todo y un módulo pequeño en Objective-C o en
 C aislando el SDK del fabricante, con una interfaz limpia hacia arriba.
+
+```mermaid title="The same boundary, inverted"
+flowchart TB
+  A["App in Swift"] --> W["Thin wrapper<br/>Objective-C or C"]
+  W --> SDK["Vendor C SDK"]
+```
 
 Eso es exactamente lo que no era práctico entonces y hoy es rutina. No porque la
 idea fuera mala en 2016, sino porque las herramientas la han hecho barata: los

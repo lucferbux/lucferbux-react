@@ -39,9 +39,31 @@ exactly where the memory bugs appear that later take weeks to reproduce.
 The calculation was: **the risk is not in the app's language, it is at the
 boundary with C.** And the way to minimise that boundary was not to have one.
 
+```mermaid title="Where the C boundary sat in each option"
+flowchart TB
+  subgraph swift["Swift, in 2016"]
+    direction TB
+    S1["App code"] --> S2["Bridging layer<br/>unsafe pointers<br/>struct copies<br/>callback threads"]
+    S2 --> S3["Vendor C SDK"]
+  end
+  subgraph objc["Objective-C"]
+    direction TB
+    O1["App code"] -- "#import" --> O2["Vendor C SDK"]
+  end
+```
+
 ## The context people forget
 
 Two things about 2016 are worth remembering before judging the decision.
+
+```mermaid title="Swift's road to stability"
+timeline
+  2014 : Swift 1
+  2015 : Swift 2 : Open source
+  2016 : Swift 3 renames APIs : Our app, in Objective-C
+  2017 : Swift 4
+  2019 : Swift 5 : ABI stability
+```
 
 **Swift still broke source between versions.** The Swift 2 to Swift 3 migration,
 late in 2016, renamed much of the standard library and the Cocoa APIs. It was
@@ -70,10 +92,25 @@ language. Onboarding someone cost more.
 **The ecosystem's direction.** Every passing year, more libraries shipped
 Swift-first — or Swift-only — and more new documentation assumed Swift.
 
+| For this app, in 2016 | Objective-C | Swift |
+| --- | --- | --- |
+| **Calling the C SDKs** | Direct: it is a superset of C | Through a bridging layer |
+| **Source stability** | Stable for years | Swift 2 → 3 rewrote names |
+| **Binary size** | System runtime | Runtime embedded in every app, ×20 |
+| **Type safety** | Messages to `nil` fail silently | Optionals catch it at compile time |
+| **Onboarding** | Unfamiliar syntax | Easier for newcomers |
+| **Where the ecosystem was going** | Away | Towards |
+
 ## What I would do today
 
 The same thing, inverted: Swift for everything, with a small Objective-C or C
 module isolating the vendor SDK behind a clean interface.
+
+```mermaid title="The same boundary, inverted"
+flowchart TB
+  A["App in Swift"] --> W["Thin wrapper<br/>Objective-C or C"]
+  W --> SDK["Vendor C SDK"]
+```
 
 That is exactly what was impractical then and is routine now. Not because the
 idea was bad in 2016, but because tooling made it cheap: Swift modules, improved
