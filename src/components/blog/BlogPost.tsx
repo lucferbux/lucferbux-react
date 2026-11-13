@@ -1,4 +1,13 @@
 import ReactMarkdown from "react-markdown";
+import clsx from "clsx";
+import CodeBlock from "./CodeBlock";
+import Mermaid from "./Mermaid";
+import Steps from "./Steps";
+import {
+  remarkCallouts,
+  rehypeBlocks,
+  type CalloutKind,
+} from "./markdown/plugins";
 import remarkGfm from "remark-gfm";
 import rehypePrismPlus from "rehype-prism-plus";
 import CodePenEmbed from "./CodePenEmbed";
@@ -7,7 +16,7 @@ import type { Components } from "react-markdown";
 import { useMemo } from "react";
 import type { ReactNode, ReactElement } from "react";
 import "../../styles/blog.css";
-import { useTranslation } from "../../i18n/LanguageContext";
+import { useTranslation, type Messages } from "../../i18n/LanguageContext";
 import { formatDate } from "../../i18n/formatDate";
 import { Link } from "react-router";
 import { useLocalePath } from "../../i18n/useLocalePath";
@@ -51,7 +60,37 @@ function isCodePenUrl(children: ReactNode): string | null {
   return null;
 }
 
-const makeComponents = (localePath: (p: string) => string): Components => ({
+/** Plain text of rendered children, for heading anchors. */
+function textOf(children: ReactNode): string {
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children);
+  }
+  if (Array.isArray(children)) return children.map(textOf).join("");
+  if (children && typeof children === "object" && "props" in children) {
+    return textOf(
+      (children as ReactElement<{ children?: ReactNode }>).props.children
+    );
+  }
+  return "";
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+type Props = Record<string, unknown> | undefined;
+const prop = (props: Props, key: string) =>
+  typeof props?.[key] === "string" ? (props[key] as string) : undefined;
+
+const makeComponents = (
+  localePath: (p: string) => string,
+  m: Messages
+): Components => ({
   // Override <p> to detect CodePen URLs
   p({ children }) {
     const codepenUrl = isCodePenUrl(children);
@@ -61,13 +100,32 @@ const makeComponents = (localePath: (p: string) => string): Components => ({
     return <p className="paragraph-blog">{children}</p>;
   },
   h1({ children }) {
-    return <h1 className="title-blog">{children}</h1>;
-  },
-  h2({ children }) {
     return <h2 className="subtitle-blog">{children}</h2>;
   },
+  h2({ children }) {
+    const id = slugify(textOf(children));
+    return (
+      <h2 id={id} className="subtitle-blog">
+        <a href={`#${id}`} className="anchor-blog" aria-label={m.blog.anchor}>
+          #
+        </a>
+        {children}
+      </h2>
+    );
+  },
   h3({ children }) {
-    return <h3 className="emphasis-title-blog">{children}</h3>;
+    const id = slugify(textOf(children));
+    return (
+      <h3 id={id} className="emphasis-title-blog">
+        <a href={`#${id}`} className="anchor-blog" aria-label={m.blog.anchor}>
+          #
+        </a>
+        {children}
+      </h3>
+    );
+  },
+  h4({ children }) {
+    return <h4 className="minor-title-blog">{children}</h4>;
   },
   a({ href, children }) {
     // Internal cross-links between articles stay in the tab and keep the
@@ -82,6 +140,13 @@ const makeComponents = (localePath: (p: string) => string): Components => ({
         </Link>
       );
     }
+    if (href?.startsWith("#")) {
+      return (
+        <a href={href} className="link-blog">
+          {children}
+        </a>
+      );
+    }
     return (
       <a
         href={href}
@@ -93,27 +158,78 @@ const makeComponents = (localePath: (p: string) => string): Components => ({
       </a>
     );
   },
-  ul({ children }) {
-    return <ul className="list-blog-unordered">{children}</ul>;
-  },
-  ol({ children }) {
-    return <ol className="list-blog-ordered">{children}</ol>;
-  },
-  li({ children }) {
-    return <li className="list-item">{children}</li>;
-  },
-  img({ src, alt }) {
+  ul({ children, className }) {
     return (
-      <img
-        src={src}
-        alt={alt ?? ""}
-        className="image-container-blog"
-        loading="lazy"
-      />
+      <ul className={clsx("list-blog-unordered", className)}>{children}</ul>
+    );
+  },
+  ol({ children, start }) {
+    return (
+      <ol className="list-blog-ordered" start={start}>
+        {children}
+      </ol>
+    );
+  },
+  li({ children, className }) {
+    return <li className={clsx("list-item", className)}>{children}</li>;
+  },
+  img({ src, alt, title }) {
+    // `![alt](src "Caption")` — the title becomes a visible caption.
+    return (
+      <span className="figure-blog">
+        <img
+          src={typeof src === "string" ? src : undefined}
+          alt={alt ?? ""}
+          className="image-container-blog"
+          loading="lazy"
+        />
+        {title && <span className="figure-blog-caption">{title}</span>}
+      </span>
     );
   },
   strong({ children }) {
     return <strong className="strong-blog">{children}</strong>;
+  },
+  blockquote({ node, children }) {
+    const kind = prop(node?.properties, "dataCallout") as
+      CalloutKind | undefined;
+    if (kind) {
+      return (
+        <aside className="callout-blog" data-callout={kind}>
+          <p className="callout-blog-label">{m.blog.callout[kind]}</p>
+          {children}
+        </aside>
+      );
+    }
+    return <blockquote className="quote-blog">{children}</blockquote>;
+  },
+  table({ children }) {
+    return (
+      <div className="table-blog">
+        <table>{children}</table>
+      </div>
+    );
+  },
+  hr() {
+    return <hr className="rule-blog" />;
+  },
+  pre({ node, children, className }) {
+    const props = node?.properties;
+    const block = prop(props, "dataBlock");
+    const source = prop(props, "dataSource") ?? "";
+    const meta = prop(props, "dataMeta");
+    const title = prop(props, "dataTitle");
+    if (block === "mermaid") return <Mermaid source={source} caption={title} />;
+    if (block === "steps") return <Steps source={source} meta={meta} />;
+    return (
+      <CodeBlock
+        language={prop(props, "dataLanguage")}
+        title={title}
+        className={className}
+      >
+        {children}
+      </CodeBlock>
+    );
   },
 });
 
@@ -126,7 +242,10 @@ export default function BlogPost({
 }: BlogPostProps) {
   const { locale, m } = useTranslation();
   const localePath = useLocalePath();
-  const components = useMemo(() => makeComponents(localePath), [localePath]);
+  const components = useMemo(
+    () => makeComponents(localePath, m),
+    [localePath, m]
+  );
 
   return (
     <div className="overflow-hidden">
@@ -163,13 +282,18 @@ export default function BlogPost({
             loading="lazy"
           />
         )}
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypePrismPlus]}
-          components={components}
-        >
-          {content}
-        </ReactMarkdown>
+        <article className="prose-blog">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm, remarkCallouts]}
+            rehypePlugins={[
+              rehypeBlocks,
+              [rehypePrismPlus, { ignoreMissing: true }],
+            ]}
+            components={components}
+          >
+            {content}
+          </ReactMarkdown>
+        </article>
       </div>
     </div>
   );

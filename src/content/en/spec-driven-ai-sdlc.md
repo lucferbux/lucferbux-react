@@ -34,11 +34,37 @@ And what it deliberately **doesn't** carry: how to implement it. If the specific
 
 ## The cycle
 
+```steps loop="Implementation corrects the spec"
+Specify: One page — the problem, the constraints, what to reuse, how to check it.
+Plan: The agent proposes an approach. You correct the plan, not the code.
+Implement: The agent writes the code against the plan and the repository rules.
+Verify: Tests, type-check and the commands the spec named. Executable, not vibes.
+Review: Did it do what the spec said? Was the spec right?
 ```
-specify  ->  plan  ->  implement  ->  verify  ->  review
-   │           │                                    │
-   └───────────┴─────────  updated  ◄───────────────┘
+
+```mermaid title="Where each kind of knowledge lives"
+flowchart LR
+  subgraph repo["Repository — permanent"]
+    A["AGENTS.md / CLAUDE.md<br/>rules nobody could guess"]
+  end
+  subgraph task["Per task — disposable"]
+    S["Spec<br/>problem · constraints · reuse · checks"]
+    P["Plan"]
+  end
+  A --> P
+  S --> P --> I["Implementation"] --> V{"Verify"}
+  V -- "spec was wrong" --> S
+  V -- "passes" --> R["Review"]
 ```
+
+> [!TIP]
+> When the plan turns out to be wrong halfway through, stop and fix the document. Improvising onward is how the discovery ends up living only in a diff.
+
+| Lives in | Changes | Example |
+| --- | --- | --- |
+| `AGENTS.md` | Rarely | `md:` means 650px here, not 768px |
+| Spec | Per task | "Keep the v1 endpoint working" |
+| Code | Constantly | How it is actually done |
 
 The return arrow is the part everyone skips and the part that pays. Almost always, implementing reveals the specification was wrong: a constraint that doesn't hold, a case nobody considered, a false assumption. If that discovery only lives in the diff, the next person rediscovers it.
 

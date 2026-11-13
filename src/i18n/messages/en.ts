@@ -114,6 +114,17 @@ const en = {
   },
   blog: {
     backToPosts: "Back to posts",
+    copyCode: "Copy",
+    copiedCode: "Copied",
+    copyCodeLabel: "Copy code",
+    anchor: "Link to this section",
+    callout: {
+      note: "Note",
+      tip: "Tip",
+      important: "Important",
+      warning: "Warning",
+      caution: "Caution",
+    },
     onlyAvailableIn: {
       en: "This article is only available in English.",
       es: "This article is only available in Spanish.",

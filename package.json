@@ -8,6 +8,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "firebase": "^13.1.0",
+    "mermaid": "^12.2.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-helmet-async": "^3.0.0",
